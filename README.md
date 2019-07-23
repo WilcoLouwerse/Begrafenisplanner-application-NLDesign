@@ -39,6 +39,17 @@ It means that your commonground application is usable **out of the box** with te
 * enjoy the popular [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) (used by default, but fully optional:
   you can use the data provider you want, including but not limited to MongoDB and ElasticSearch)
 
+The commonground bundle
+-------
+This repository uses the power of conductions [commonground bundle](https://packagist.org/packages/conduction/commongroundbundle) for symfony to provide common ground specific functionalty based on the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). Including  
+
+* Build in support for public API's like BAG (Kadaster), KVK (Kamer van Koophandel)
+* Build in validators for common dutch variables like BSN (Burger service nummer), RSIN(), KVK(), BTW()
+* AVG and VNG proof audit trails
+* And [muchs more](https://packagist.org/packages/conduction/commongroundbundle) .... 
+
+Be sure to alse read our [design considerations](/design.md) conserning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
+
 Getting started
 -------
 
@@ -50,4 +61,4 @@ Getting started
 Credits
 -------
 
-Created by [Kévin Dunglas](https://dunglas.fr) and extended by [Ruben van der Linde](https://www.conduction.nl/team). Commercial support for commonground components available from [Conduction](https://www.conduction.nl).
+Created by [Ruben van der Linde](https://www.conduction.nl/team) for conduction. But bassed on [api platform](https://api-platform.com) by [Kévin Dunglas](https://dunglas.fr). Commercial support for commonground components available from [Conduction](https://www.conduction.nl).
