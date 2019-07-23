@@ -1,8 +1,25 @@
-<h1 align="center"><a href="https://api-platform.com"><img src="https://api-platform.com/logo-250x250.png" alt="API Platform"></a></h1>
+<h1 align="center"><a href="https://common-ground.dev"><img src="https://common-ground.dev/logo-250x250.png" alt="Common Ground"></a></h1>
 
-API Platform is a next-generation web framework designed to easily create API-first projects without compromising extensibility
-and flexibility:
+Welkom the the VNG Common Ground proto component!
 
+This repository provides a plug and play solution for component generation on common ground. That means that it takes away all the husle of setting op codebases, containers and following the VNG Api Standaard. It does al that for you! 
+
+For that we use **[Api Platform](https://api-platform.com)**, a next-generation web framework designed to easily create API-first projects without compromising extensibility
+and flexibility. 
+
+[![Build Status](https://travis-ci.org/api-platform/core.svg?branch=master)](https://travis-ci.org/api-platform/core)
+[![Build status](https://ci.appveyor.com/api/projects/status/grwuyprts3wdqx5l?svg=true)](https://ci.appveyor.com/project/dunglas/dunglasapibundle)
+[![codecov](https://codecov.io/gh/api-platform/core/branch/master/graph/badge.svg)](https://codecov.io/gh/api-platform/core)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/92d78899-946c-4282-89a3-ac92344f9a93/mini.png)](https://insight.sensiolabs.com/projects/92d78899-946c-4282-89a3-ac92344f9a93)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/api-platform/core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/api-platform/core/?branch=master)
+
+Features
+-------
+API Platform embraces open web standards (OpenAPI, JSON-LD, GraphQL, Hydra, HAL, JSONAPI, JWT, OAuth, HTTP...) and the [Linked Data](https://www.w3.org/standards/semanticweb/data) movement. Your API will automatically expose structured data in Schema.org/JSON-LD.
+It means that your commonground application is usable **out of the box** with technologies of the semantic web.
+
+* Comes with a paired [React](https://reactjs.org/) application, to provide face to your code
+* And a fully functional (and automaticly updated) [React Admin](https://marmelab.com/react-admin/) backend to easly test and proof your component
 * Design your own data model as plain old PHP classes or [**import an existing one**](https://api-platform.com/docs/schema-generator)
   from the [Schema.org](https://schema.org/) vocabulary
 * **Expose in minutes a hypermedia REST or a GraphQL API** with pagination, data validation, access control, relation embedding,
@@ -17,37 +34,20 @@ and flexibility:
 * Install a development environment and deploy your project in production using **[Docker](https://api-platform.com/docs/distribution#using-the-official-distribution-recommended)** and [Kubernetes](https://api-platform.com/docs/deployment/kubernetes)
 * Easily add **[JSON Web Token](https://api-platform.com/docs/core/jwt) or [OAuth](https://oauth.net/) authentication**
 * Create specs and tests with a **developer friendly API testing tool** on top of [Behat](http://behat.org/)
-
-[![Build Status](https://travis-ci.org/api-platform/core.svg?branch=master)](https://travis-ci.org/api-platform/core)
-[![Build status](https://ci.appveyor.com/api/projects/status/grwuyprts3wdqx5l?svg=true)](https://ci.appveyor.com/project/dunglas/dunglasapibundle)
-[![codecov](https://codecov.io/gh/api-platform/core/branch/master/graph/badge.svg)](https://codecov.io/gh/api-platform/core)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/92d78899-946c-4282-89a3-ac92344f9a93/mini.png)](https://insight.sensiolabs.com/projects/92d78899-946c-4282-89a3-ac92344f9a93)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/api-platform/core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/api-platform/core/?branch=master)
-
-The official project documentation is available **[on the API Platform website](https://api-platform.com)**.
-
-API Platform embraces open web standards (OpenAPI, JSON-LD, GraphQL, Hydra, HAL, JSONAPI, JWT, OAuth, HTTP...) and the [Linked Data](https://www.w3.org/standards/semanticweb/data)
-movement. Your API will automatically expose structured data in Schema.org/JSON-LD.
-It means that your API Platform application is usable **out of the box** with technologies of the semantic web.
-
-It also means that **your SEO will be improved** because **[Google leverages these formats](https://developers.google.com/search/docs/guides/intro-structured-data)**.
-
-Last but not least, the server component of API Platform is built on top of the [Symfony](https://symfony.com) framework,
-while client components leverage [React](https://reactjs.org/) (a [Vue.js](https://vuejs.org/) flavor is also available).
-It means than you can:
-
 * use **thousands of Symfony bundles and React components** with API Platform
-* integrate API Platform in **any existing Symfony or React application**
 * reuse **all your Symfony and React skills**, benefit of the incredible amount of documentation available
 * enjoy the popular [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) (used by default, but fully optional:
   you can use the data provider you want, including but not limited to MongoDB and ElasticSearch)
 
-Install
+Getting started
 -------
 
-[Read the official "Getting Started" guide](https://api-platform.com/docs/distribution).
+* Get your own commonent by simply forking this repository trough [generation](https://github.com/ConductionNL/commonground-component/generate).
+* Pull a local copy of your repository trough your favorite git client (e.g [gitkraken](https://www.gitkraken.com/) or [sourcetree](https://www.sourcetreeapp.com/))
+* Start up you local instance with [docker for desktop](https://hub.docker.com/?overlay=onboarding) and the $ docker-compose up command
+* Open [http://localhost] in your favorite browser and view your component!
 
 Credits
 -------
 
-Created by [Kévin Dunglas](https://dunglas.fr). Commercial support available at [Les-Tilleuls.coop](https://les-tilleuls.coop).
+Created by [Kévin Dunglas](https://dunglas.fr) and extended by [Ruben van der Linde](https://www.conduction.nl/team). Commercial support for commonground components available from [Conduction](https://www.conduction.nl).
