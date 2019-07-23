@@ -4,6 +4,8 @@ parameters:
     # environment variables are not available yet.
     # You should not need to change this value.
     env(CONDUCTION_COMMONGROUND_BAG_APIKEY): 'Change me your .env file'
+    common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
+    common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
 
 common_ground:      
     bag:
@@ -29,9 +31,3 @@ common_ground:
         # The default BAG api location, change this if yoy are using an NLX adaptor
         location: 'https://bag.basisregistraties.overheid.nl/api/v1/' 
         
-services:    
-    # please note that last definitions always *replace* previous ones
-    conduction.commonground.bag:
-        class: App\Conduction\CommonGroundBundel\Service\KadasterService
-        arguments: 
-            - []
