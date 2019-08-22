@@ -58,6 +58,10 @@ Getting started
 * Start up you local instance with [docker for desktop](https://hub.docker.com/?overlay=onboarding) and the $ docker-compose up command
 * Open [http://localhost] in your favorite browser and view your component!
 
+
+Staying up to date
+-------
+
 Credits
 -------
 

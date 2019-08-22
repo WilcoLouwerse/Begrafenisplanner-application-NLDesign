@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}-varnish
+  name: {{ include "name" . }}-varnish
   labels:
     app.kubernetes.io/name: {{ include "name" . }}-varnish
     app.kubernetes.io/part-of: {{ include "name" . }}
@@ -20,7 +20,7 @@ spec:
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}-varnish
+        - name: {{ include "name" . }}-varnish
           image: "{{ .Values.varnish.repository }}:{{ .Values.varnish.tag }}"
           imagePullPolicy: {{ .Values.varnish.pullPolicy }}
           command: ["varnishd"]

@@ -3,7 +3,6 @@ doctrine:
         # configure these for your database server
         driver: 'pdo_pgsql'
         server_version: '10'
-
         url: '%env(resolve:DATABASE_URL)%'
     orm:
         auto_generate_proxy_classes: true

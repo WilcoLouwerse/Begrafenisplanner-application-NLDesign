@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}-nginx
+  name: {{ include "name" . }}-nginx
   labels:
     app.kubernetes.io/name: {{ include "name" . }}-nginx
     app.kubernetes.io/part-of: {{ include "name" . }}
@@ -20,7 +20,7 @@ spec:
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}-nginx
+        - name: {{ include "name" . }}-nginx
           image: "{{ .Values.nginx.repository }}:{{ .Values.nginx.tag }}"
           imagePullPolicy: {{ .Values.nginx.pullPolicy }}
           ports:

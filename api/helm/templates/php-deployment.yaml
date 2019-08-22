@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}-php
+  name: {{ include "name" . }}-php
   labels:
     app.kubernetes.io/name: {{ include "name" . }}-php
     app.kubernetes.io/part-of: {{ include "name" . }}
@@ -20,7 +20,7 @@ spec:
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}-php
+        - name: {{ include "name" . }}-php
           image: "{{ .Values.php.repository }}:{{ .Values.php.tag }}"
           imagePullPolicy: {{ .Values.php.pullPolicy }}
           ports:
