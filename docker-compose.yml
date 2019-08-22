@@ -3,47 +3,47 @@ version: '3.4'
 x-cache:
   &cache
   cache_from:
-    - ${CONTAINER_REGISTRY_BASE}/php
-    - ${CONTAINER_REGISTRY_BASE}/nginx
-    - ${CONTAINER_REGISTRY_BASE}/varnish
+    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php
+    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
+    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
 
 services:
-  php:
-    image: ${CONTAINER_REGISTRY_BASE}/php
+  commonground-php:
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php
     build:
       context: ./api
       target: api_platform_php
       <<: *cache
     depends_on:
-      - db
+      - commonground-db
     # Comment out these volumes in production
     volumes:
       - ./api:/srv/api:rw,cached
       # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
       # - ./api/var:/srv/api/var:rw
 
-  api:
-    image: ${CONTAINER_REGISTRY_BASE}/nginx
+  commonground-api:
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
     build:
       context: ./api
       target: api_platform_nginx
       <<: *cache
     depends_on:
-      - php
+      - commonground-php
     # Comment out this volume in production
     volumes:
       - ./api/public:/srv/api/public:ro
     ports:
       - "8080:80"
 
-  cache-proxy:
-    image: ${CONTAINER_REGISTRY_BASE}/varnish
+  commonground-cache-proxy:
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
     build:
       context: ./api
       target: api_platform_varnish
       <<: *cache
     depends_on:
-      - api
+      - commonground-api
     volumes:
       - ./api/docker/varnish/conf:/usr/local/etc/varnish:ro
     tmpfs:
@@ -116,8 +116,8 @@ services:
     depends_on:
       - client
       - admin
-      - api
-      - cache-proxy
+      - commonground-api
+      - commonground-cache-proxy
     ports:
       - "443:443"
       - "444:444"
