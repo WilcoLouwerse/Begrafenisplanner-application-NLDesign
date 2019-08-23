@@ -8,6 +8,8 @@
         "api-platform/api-pack": "^1.1",
         "conduction/commongroundbundle": "dev-master",
         "guzzlehttp/guzzle": "^6.3",
+        "ramsey/uuid": "^3.8",
+        "ramsey/uuid-doctrine": "^1.5",
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",
         "symfony/flex": "^1.1",

@@ -15,7 +15,7 @@ services:
       target: api_platform_php
       <<: *cache
     depends_on:
-      - commonground-db
+      - db
     # Comment out these volumes in production
     volumes:
       - ./api:/srv/api:rw,cached
