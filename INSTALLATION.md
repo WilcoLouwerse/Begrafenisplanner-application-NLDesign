@@ -37,3 +37,11 @@ Note that you can replace commonground with the namespace that you want to use (
 
 
 ## Deploying trough common-ground.dev
+
+
+## Setting up analytics and a help chat function
+As a developer you might be intrested to now how your application documumentation is used, so that you can see what parts of your documentation are most read and what parts might need some aditional love. You can masure this (and other user interactions) with google tag manager. Just add your google tag id to the .env file (replacing the default) under GOOGLE_TAG_MANAGER_ID. 
+
+Have you seen our sweet suport chat on the documentation page? We didn't build that ourselfs ;) We use a hubspot chat for that, just head over to hubspot create an acount and enter your hubspot embed code in het .env file (replacing the default) under HUBSPOT_EMBED_CODE.
+
+Would you like to use a difrend analytics or chat tool? Just shoot us a [feature request](https://github.com/ConductionNL/commonground-component/issues/new?assignees=&labels=&template=feature_request.md&title=New Analytics or Chat provider)  

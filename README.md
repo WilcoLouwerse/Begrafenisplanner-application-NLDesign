@@ -38,6 +38,7 @@ It means that your commonground application is usable **out of the box** with te
 * reuse **all your Symfony and React skills**, benefit of the incredible amount of documentation available
 * enjoy the popular [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) (used by default, but fully optional:
   you can use the data provider you want, including but not limited to MongoDB and ElasticSearch)
+  
 
 The commonground bundle
 -------
@@ -58,6 +59,10 @@ Getting started
 * Start up you local instance with [docker for desktop](https://hub.docker.com/?overlay=onboarding) and the $ docker-compose up command
 * Open [http://localhost] in your favorite browser and view your component!
 
+
+Requesting features
+-------
+Do you need a feature that is not on this list? don't hasitate to send us a [feature request](https://github.com/ConductionNL/commonground-component/issues/new?assignees=&labels=&template=feature_request.md&title=).  
 
 Staying up to date
 -------
