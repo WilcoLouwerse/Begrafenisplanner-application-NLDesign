@@ -106,6 +106,8 @@ RUN chmod +x /usr/local/bin/docker-entrypoint
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
+# Let update the docs to show the latest chages
+RUN bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
 
 # "nginx" stage
 # depends on the "php" stage above
@@ -116,6 +118,9 @@ COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 WORKDIR /srv/api
 
 COPY --from=api_platform_php /srv/api/public public/
+
+# Let update the docs to show the latest chages
+RUN bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
 
 
 # "varnish" stage

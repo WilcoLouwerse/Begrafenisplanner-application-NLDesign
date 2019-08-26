@@ -1,17 +1,9 @@
-<h1 align="center"><a href="https://common-ground.dev"><img src="https://common-ground.dev/logo-250x250.png" alt="Common Ground"></a></h1>
-
 Welkom the the VNG Common Ground proto component!
 
 This repository provides a plug and play solution for component generation on common ground. That means that it takes away all the husle of setting op codebases, containers and following the VNG Api Standaard. It does al that for you! 
 
 For that we use **[Api Platform](https://api-platform.com)**, a next-generation web framework designed to easily create API-first projects without compromising extensibility
 and flexibility. 
-
-[![Build Status](https://travis-ci.org/api-platform/core.svg?branch=master)](https://travis-ci.org/api-platform/core)
-[![Build status](https://ci.appveyor.com/api/projects/status/grwuyprts3wdqx5l?svg=true)](https://ci.appveyor.com/project/dunglas/dunglasapibundle)
-[![codecov](https://codecov.io/gh/api-platform/core/branch/master/graph/badge.svg)](https://codecov.io/gh/api-platform/core)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/92d78899-946c-4282-89a3-ac92344f9a93/mini.png)](https://insight.sensiolabs.com/projects/92d78899-946c-4282-89a3-ac92344f9a93)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/api-platform/core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/api-platform/core/?branch=master)
 
 Features
 -------

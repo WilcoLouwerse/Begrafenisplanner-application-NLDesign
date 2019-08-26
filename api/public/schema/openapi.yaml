@@ -1,0 +1,29 @@
+openapi: 3.0.2
+info:
+  title: 'Common Ground Component'
+  version: 0.0.1
+  description: |
+    Dit is een commonground voorbeeld applicatie 
+          
+    Word lid van het slackkanaal [https://zaakonline.slack.com](https://zaakonline.slack.com) voor ondersteuning door het ontwikkel team. En krijg regelmatig updates over de ontwikkelingen op het gebied van de zaakonline componenten.
+            
+    Om het voor alle partijen zo makkelijk mogelijk te maken, stellen we zo veel mogelijk informatie over dit component openbaar beschikbaar.
+    - [datamodel als pdf](/schema/datamodel.pdf)
+    - [datamodel als mwb](/schema/datamodel.mwb)
+    - [codebase op github]()
+    - [codebase als zip](/archive/master.zip)
+    - [docker container](/) 
+    - [online demo]()
+            
+    
+    Applicaties kunnen op deze API alleen wijzigingen uitvoeren waarvoor zij over de juiste rechten(scopes) beschikken. De op deze api beschikbare scopes zijn:
+    - adres:schrijven
+    - adres:lezen
+    - adres:maken
+    - adres:verwijderen   
+                     
+    Voor het gebruik van deze applicatie is een JWT Token nodig, deze hangt altijd vast aan een applicatie, ofwel user. Geldige JWT Tokens worden aangemaakt bij het registreren van een applicatie en kennen een beperkte houdbaarheid. 
+    JWT Tokens kunnen zowel worden verlengd, als opnieuw worden aangevraagd, dit aan de hand van de applicatie id en sleutel.
+    Let er bij het meegeven van JWT tokens op dat deze moet worden voorafgegaan door een Bearer en een spatie, onder de header Authorization. De volledig naam wordt daarmee: 'Authorization: Bearer [TOKEN]'.
+    
+paths: {  }
