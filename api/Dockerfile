@@ -35,6 +35,8 @@ RUN set -eux; \
 		intl \
 		pdo_pgsql \
 		zip \
+		mysqli \ 
+		pdo_mysql \
 	; \
 	pecl install \
 		apcu-${APCU_VERSION} \
@@ -43,6 +45,7 @@ RUN set -eux; \
 	docker-php-ext-enable \
 		apcu \
 		opcache \
+		mysqli \
 	; \
 	\
 	runDeps="$( \
