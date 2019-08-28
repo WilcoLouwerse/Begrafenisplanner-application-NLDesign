@@ -1,4 +1,4 @@
-#Tutorial
+# Tutorial
 
 What do you need for this tutorial?
 * browser
@@ -7,7 +7,7 @@ What do you need for this tutorial?
 * docker acount
 * docker for desktop
 
-##Generating your component (repository/codebase)
+## Generating your component (repository/codebase)
 Starting up your first common ground component is extremely easy, al you need is a GitHub account and go the link below and fill in the form press create and presto we have a component!
 
 [https://github.com/ConductionNL/commonground-component/generate](https://github.com/ConductionNL/commonground-component/generate)
@@ -17,7 +17,7 @@ After that you should be redirected to your own brand new repository
 **Oke cool but what did we just do?**
 We ran a fork of the base common ground component, that means that we copied the code of the original project into a new repository. By doing so we made sure we have all the necessities for our component including security and compliance with international standards. 
 
-##Spinning up your component
+## Spinning up your component
 Before we can spin up our component we must first get a local copy from our repository, we can either do this through the command line (example here) or use a git client. 
 
 For this example where going to use GitKraken but you can use any tool you like, feel free to skip this part if you are already familiar with setting up a local clone of your repository.
@@ -40,7 +40,7 @@ Open your browser type http://localhost/ as address and hit enter, you should no
 **What are we looking at?**
 The common ground base component provides a bit more then just a development interface, it also includes an example application and a backend that automatically hooks into your api. For now where just going to focus on our api but is good to read up on all the features of the common ground base component here.  
 
-##Adding your own objects
+## Adding your own objects
 You can now access your api at http://localhost:8080/, as you can see its pre-loaded with some example objects. Lets replace them with your own objects!
 
 First lets remove the objects currently in the api, we can do that by just removing the entities form our code base, navigate to the folder where you stored your code and open the folder api/src/Entity you can find the example entities (our name for objects) there. Just delete all the php files in that folder.
@@ -54,7 +54,7 @@ $ docker-compose exec php php bin/console make:entity --api-platform
 ```
 We should now see a wizward that allows us to either make new entities, or add parameters to existing entities (by supplying the name of an existing entity). 
 
-##Keeping your repository up to date with the Conduction common ground component 
+## Keeping your repository up to date with the Conduction common ground component 
 
 There are basically three reasons why you should want to keep your repository up to date with the Conduction proto component
 * Security, Conduction performs regular security updates on 
