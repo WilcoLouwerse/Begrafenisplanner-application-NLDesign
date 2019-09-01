@@ -119,10 +119,6 @@ WORKDIR /srv/api
 
 COPY --from=api_platform_php /srv/api/public public/
 
-# Let update the docs to show the latest chages
-RUN bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
-
-
 # "varnish" stage
 # does not depend on any of the above stages, but placed here to keep everything in one Dockerfile
 FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_platform_varnish
