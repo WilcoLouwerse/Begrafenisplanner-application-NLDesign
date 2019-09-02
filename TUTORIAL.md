@@ -89,4 +89,13 @@ git merge upstream --allow-unrelated-histories
 
 Keep in mind that you wil need to make sure to stay up to date about changes on the common ground component repository 
 
-##Sharing your work 
+## Sharing your work 
+
+
+## Commonground specific data types
+
+
+### incompleteDate
+
+### underInvestigation
+

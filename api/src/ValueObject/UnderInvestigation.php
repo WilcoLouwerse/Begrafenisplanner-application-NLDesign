@@ -20,7 +20,7 @@ class UnderInvestigation
 	 */
 	public function getProperties()
 	{
-		return $this->array;
+		return $this->properties;
 	}
 	
 	/**

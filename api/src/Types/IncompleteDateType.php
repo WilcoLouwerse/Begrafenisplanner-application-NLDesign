@@ -18,13 +18,13 @@ class IncompleteDateType extends Type
 	
 	public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
 	{
-		return 'INT(8)';
+		return 'INTEGER';
 	}
 	
 	public function convertToPHPValue($value, AbstractPlatform $platform)
 	{
 		// We save incomplete date's as YYYYMMDD integer values so that we can easily index and order on them
-		list($year, $month, $day) = sscanf($value, '[%04u][%02u][%02u]');
+		list($year, $month, $day) = sscanf($value, '%04u%02u%02u');
 		
 		return new IncompleteDate($year, $month, $day);
 	}
@@ -33,24 +33,15 @@ class IncompleteDateType extends Type
 	{
 		// We save incomplete date's as YYYYMMDD integer values so that we can easily index and order on them
 		if ($value instanceof IncompleteDate) {
-			$value = sprintf('INT([%04u][%02u][%02u])', $value->getYear(), $value->getMonth(), $value->getDay());
+			$value = sprintf('%04u%02u%02u', $value->getYear(), $value->getMonth(), $value->getDay());
+		}
+		else{
+			if(!array_key_exists("year",$value)){	$value['year']=0;}
+			if(!array_key_exists("month",$value)){	$value['month']=0;}
+			if(!array_key_exists("day",$value)){	$value['day']=0;}
+			$value = sprintf('%04u%02u%02u', (int) $value['year'], (int) $value['month'], (int) $value['day']);			
 		}
 		
 		return $value;
-	}
-	
-	public function canRequireSQLConversion()
-	{
-		return true;
-	}
-	
-	public function convertToPHPValueSQL($sqlExpr, AbstractPlatform $platform)
-	{
-		return sprintf('AsText(%s)', $sqlExpr);
-	}
-	
-	public function convertToDatabaseValueSQL($sqlExpr, AbstractPlatform $platform)
-	{
-		return sprintf('PointFromText(%s)', $sqlExpr);
 	}
 }

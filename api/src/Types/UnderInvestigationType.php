@@ -24,7 +24,8 @@ class UnderInvestigationType extends Type
 	public function convertToPHPValue($value, AbstractPlatform $platform)
 	{
 		//list($longitude, $latitude) = sscanf($value, 'JSON(%s)');
-		$data = json_decode ($value, true);
+		$value= json_decode ($value, true);
+		//var_dump($data);
 		$date = $value['date'];
 		$properties = $value['properties'];
 		return new UnderInvestigation($properties, $date);
@@ -32,26 +33,27 @@ class UnderInvestigationType extends Type
 	
 	public function convertToDatabaseValue($value, AbstractPlatform $platform)
 	{
-		if ($value instanceof UnderInvestigation) {			
-			$data = ["properties"=> $value->getProperties(),"date"=> $value->getDate()];			
-			$value = sprintf("JSON(%s)", json_encode ($data));
+		if ($value instanceof UnderInvestigation) {
+			/* @todo throw an error ir the property isn't a boolean*/
+			$value= ["properties"=> $value->getProperties(),"date"=> $value->getDate()];
+			$value = json_encode($value);	
+		}
+		else{
+			// lets make sure we have a properties array
+			if(!array_key_exists("properties",$value)){	$value['properties']=[];}
+			// Lets analyse this dataset
+			foreach ($value as $key => $property){
+				// lets skip the date and propertieskeys
+				if($key=='date' || $key=='properties'){continue;}	
+				/* @todo throw an error ir the property isn't a boolean*/
+				
+				// lets add the property to the stack
+				$value['properties'][$key] = $property;
+				unset($value[$key]);
+			}
+			$value = json_encode($value);			
 		}
 		
 		return $value;
-	}
-	
-	public function canRequireSQLConversion()
-	{
-		return true;
-	}
-	
-	public function convertToPHPValueSQL($sqlExpr, AbstractPlatform $platform)
-	{
-		return sprintf('AsText(%s)', $sqlExpr);
-	}
-	
-	public function convertToDatabaseValueSQL($sqlExpr, AbstractPlatform $platform)
-	{
-		return sprintf('PointFromText(%s)', $sqlExpr);
 	}
 }

@@ -18,7 +18,7 @@ class IncompleteDate
 	 * @param integer $month
 	 * @param integer $year
 	 */
-	public function __construct($day, $month, $year)
+	public function __construct($year, $month, $day)
 	{
 		$this->day = $day;
 		$this->month= $month;
@@ -60,6 +60,6 @@ class IncompleteDate
 	 */
 	public function getDate()
 	{
-		return sprintf('[%04u]-[%02u]-[%02u]', $this->getYear(), $this->getMonth(), $this->getDay());
+		return sprintf('%04u-%02u-%02u', $this->getYear(), $this->getMonth(), $this->getDay());
 	}
 }

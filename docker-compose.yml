@@ -119,6 +119,7 @@ services:
       cache_from:
         - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
     depends_on:
+      - db
       - client
       - admin
       - commonground-api
