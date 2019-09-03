@@ -79,6 +79,12 @@ paths:
                   $ref: '#/components/schemas/ExampleEntity'
       parameters:
         -
+          name: like_name
+          in: query
+          required: false
+          schema:
+            type: string
+        -
           name: page
           in: query
           required: false

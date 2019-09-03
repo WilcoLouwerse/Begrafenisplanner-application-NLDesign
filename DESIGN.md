@@ -35,6 +35,30 @@ NLX uses [headers](https://docs.nlx.io/further-reading/transaction-logs/) for he
 * X-NLX-Request-Data-Elements, a list of requested data elements
 * X-NLX-Request-Data-Subject 
 
+NLX Authentication
+-------
+
+Filtering
+-------
+Becouse it is based on api-platform de proto component supports filter functions as in [api platform](https://api-platform.com/docs/core/filters/) aditionaly there are custom filter types available for commonground. 
+
+__Regex Exact__
+
+__Regex Contains__
+
+__Like___
+The like filters is used to search for enities with the traditional sql LIKE operator. If pattern does not contain percent signs or underscores, then the pattern only represents the string itself; in that case LIKE acts like the equals operator. An underscore (_) in pattern stands for (matches) any single character; a percent sign (%) matches any sequence of zero or more characters.
+
+Some examples:
+
+'abc' LIKE 'abc'    true
+'abc' LIKE 'a%'     true
+'abc' LIKE '_b_'    true
+'abc' LIKE 'c'      false
+LIKE pattern matching always covers the entire string. Therefore, if it's desired to match a sequence anywhere within a string, the pattern must start and end with a percent sign.
+
+To match a literal underscore or percent sign without matching other characters, the respective character in pattern must be preceded by a backlash. 
+
 
 JSON-HAL versus JSON-LD
 -------
