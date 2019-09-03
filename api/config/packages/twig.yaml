@@ -1,0 +1,7 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        google_tag_manager_id: '%env(GOOGLE_TAG_MANAGER_ID)%'
+        hubspot_embed_code: '%env(HUBSPOT_EMBED_CODE)%' 

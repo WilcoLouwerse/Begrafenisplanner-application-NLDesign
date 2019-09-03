@@ -1,0 +1,380 @@
+openapi: 3.0.2
+info:
+  title: 'Common Ground Component'
+  version: 0.0.1
+  description: |
+    Dit is een commonground voorbeeld applicatie 
+          
+    Word lid van het slackkanaal [https://zaakonline.slack.com](https://zaakonline.slack.com) voor ondersteuning door het ontwikkel team. En krijg regelmatig updates over de ontwikkelingen op het gebied van de zaakonline componenten.
+            
+    Om het voor alle partijen zo makkelijk mogelijk te maken, stellen we zo veel mogelijk informatie over dit component openbaar beschikbaar.
+    - [datamodel als pdf](/schema/datamodel.pdf)
+    - [datamodel als mwb](/schema/datamodel.mwb)
+    - [codebase op github]()
+    - [codebase als zip](/archive/master.zip)
+    - [docker container](/) 
+    - [online demo]()
+            
+    
+    Applicaties kunnen op deze API alleen wijzigingen uitvoeren waarvoor zij over de juiste rechten(scopes) beschikken. De op deze api beschikbare scopes zijn:
+    - adres:schrijven
+    - adres:lezen
+    - adres:maken
+    - adres:verwijderen   
+                     
+    Voor het gebruik van deze applicatie is een JWT Token nodig, deze hangt altijd vast aan een applicatie, ofwel user. Geldige JWT Tokens worden aangemaakt bij het registreren van een applicatie en kennen een beperkte houdbaarheid. 
+    JWT Tokens kunnen zowel worden verlengd, als opnieuw worden aangevraagd, dit aan de hand van de applicatie id en sleutel.
+    Let er bij het meegeven van JWT tokens op dat deze moet worden voorafgegaan door een Bearer en een spatie, onder de header Authorization. De volledig naam wordt daarmee: 'Authorization: Bearer [TOKEN]'.
+    
+paths:
+  /example_entities:
+    get:
+      tags:
+        - ExampleEntity
+      operationId: getExampleEntityCollection
+      summary: 'Retrieves the collection of ExampleEntity resources.'
+      responses:
+        200:
+          description: 'ExampleEntity collection response'
+          content:
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExampleEntity'
+            application/ld+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExampleEntity'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExampleEntity'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExampleEntity'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExampleEntity'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExampleEntity'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExampleEntity'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExampleEntity'
+      parameters:
+        -
+          name: like_name
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+    post:
+      tags:
+        - ExampleEntity
+      operationId: postExampleEntityCollection
+      summary: 'Creates a ExampleEntity resource.'
+      responses:
+        201:
+          description: 'ExampleEntity resource created'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+          links:
+            GetExampleEntityItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getExampleEntityItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /example_entities/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+        description: 'The new ExampleEntity resource'
+  '/example_entities/{id}':
+    get:
+      tags:
+        - ExampleEntity
+      operationId: getExampleEntityItem
+      summary: 'Retrieves a ExampleEntity resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'ExampleEntity resource response'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+        404:
+          description: 'Resource not found'
+    delete:
+      tags:
+        - ExampleEntity
+      operationId: deleteExampleEntityItem
+      summary: 'Removes the ExampleEntity resource.'
+      responses:
+        204:
+          description: 'ExampleEntity resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+    put:
+      tags:
+        - ExampleEntity
+      operationId: putExampleEntityItem
+      summary: 'Replaces the ExampleEntity resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'ExampleEntity resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+        description: 'The updated ExampleEntity resource'
+    patch:
+      tags:
+        - ExampleEntity
+      operationId: patchExampleEntityItem
+      summary: 'Updates the ExampleEntity resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: 'ExampleEntity resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/ExampleEntity'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/ExampleEntity'
+        description: 'The updated ExampleEntity resource'
+components:
+  schemas:
+    ExampleEntity:
+      type: object
+      description: ''
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        in_onderzoek: {  }
+        ingangs_datum: {  }

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% if title %}{{ title }} - {% endif %}Common Ground Component</title>
+
+    {% if google_tag_manager_id %}     
+       <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','{{google_tag_manager_id}}');</script>
+    <!-- End Google Tag Manager -->
+    {% endif %}
+
+    {% block stylesheet %}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700">
+        <link rel="stylesheet" href="{{ asset('bundles/apiplatform/swagger-ui/swagger-ui.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/apiplatform/style.css') }}">
+    {% endblock %}
+
+    {# json_encode(65) is for JSON_UNESCAPED_SLASHES|JSON_HEX_TAG to avoid JS XSS #}
+    <script id="swagger-data" type="application/json">{{ swagger_data|json_encode(65)|raw }}</script>
+    
+   <style>
+   /** Common Ground Overwrites **/
+	.menu-content {
+		top: 70px !important; /* prefents is scrolling under the header menu*/
+	}
+	
+	header:before {
+		background-color: #FFF;
+	}
+	
+	header #logo img {
+		background-color: #FFF;
+	}
+	
+	#logo{
+		left: 20px;
+		right: auto;
+	}
+   
+   </style>
+</head>
+
+<body>
+{% if google_tag_manager_id %}     
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ google_tag_manager_id }}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+{% endif %}
+
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0">
+    <defs>
+        <symbol viewBox="0 0 20 20" id="unlocked">
+            <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V6h2v-.801C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8z"></path>
+        </symbol>
+
+        <symbol viewBox="0 0 20 20" id="locked">
+            <path d="M15.8 8H14V5.6C14 2.703 12.665 1 10 1 7.334 1 6 2.703 6 5.6V8H4c-.553 0-1 .646-1 1.199V17c0 .549.428 1.139.951 1.307l1.197.387C5.672 18.861 6.55 19 7.1 19h5.8c.549 0 1.428-.139 1.951-.307l1.196-.387c.524-.167.953-.757.953-1.306V9.199C17 8.646 16.352 8 15.8 8zM12 8H8V5.199C8 3.754 8.797 3 10 3c1.203 0 2 .754 2 2.199V8z"></path>
+        </symbol>
+
+        <symbol viewBox="0 0 20 20" id="close">
+            <path d="M14.348 14.849c-.469.469-1.229.469-1.697 0L10 11.819l-2.651 3.029c-.469.469-1.229.469-1.697 0-.469-.469-.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-.469-.469-.469-1.228 0-1.697.469-.469 1.228-.469 1.697 0L10 8.183l2.651-3.031c.469-.469 1.228-.469 1.697 0 .469.469.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c.469.469.469 1.229 0 1.698z"></path>
+        </symbol>
+
+        <symbol viewBox="0 0 20 20" id="large-arrow">
+            <path d="M13.25 10L6.109 2.58c-.268-.27-.268-.707 0-.979.268-.27.701-.27.969 0l7.83 7.908c.268.271.268.709 0 .979l-7.83 7.908c-.268.271-.701.27-.969 0-.268-.269-.268-.707 0-.979L13.25 10z"></path>
+        </symbol>
+
+        <symbol viewBox="0 0 20 20" id="large-arrow-down">
+            <path d="M17.418 6.109c.272-.268.709-.268.979 0s.271.701 0 .969l-7.908 7.83c-.27.268-.707.268-.979 0l-7.908-7.83c-.27-.268-.27-.701 0-.969.271-.268.709-.268.979 0L10 13.25l7.418-7.141z"></path>
+        </symbol>
+
+
+        <symbol viewBox="0 0 24 24" id="jump-to">
+            <path d="M19 7v4H5.83l3.58-3.59L8 6l-6 6 6 6 1.41-1.41L5.83 13H21V7z"></path>
+        </symbol>
+
+        <symbol viewBox="0 0 24 24" id="expand">
+            <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"></path>
+        </symbol>
+
+    </defs>
+</svg>
+<header>
+    <a id="logo" href="https://www.common-ground.dev/"><svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 96 49.4" style="height: 50px; enable-background:new 0 0 96 49.4;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#009FE4;}
+	.st1{fill:#004388;}
+</style>
+<g>
+	<g transform="translate(187.931 15)">
+		<path class="st0" d="M-92.6,9.7c0-13.6-11-24.6-24.6-24.7c0,0,0,0-0.1,0h-8c-1.4,0-2.5,1.1-2.5,2.5s1.1,2.5,2.5,2.5h7.9
+			c10.9,0,19.7,8.8,19.7,19.7s-8.8,19.7-19.7,19.7h-27.4v-4.6h-5v9.6h32.5l0,0C-103.6,34.4-92.6,23.3-92.6,9.7"/>
+	</g>
+	<g transform="translate(150 15)">
+		<path class="st0" d="M-149.6,9.7c0,13.6,11,24.6,24.6,24.7c0,0,0,0,0.1,0h8c1.4,0,2.5-1.1,2.5-2.5s-1.1-2.5-2.5-2.5h-7.9
+			c-10.9,0-19.7-8.8-19.7-19.7s8.8-19.7,19.7-19.7h27.4v4.6h5V-15h-32.5l0,0C-138.5-14.9-149.6-3.9-149.6,9.7"/>
+	</g>
+	<path class="st1" d="M26,26.9l-4.7-12.4h-5.7l8.1,20.4h3.9L36,14.5h-5.4L26,26.9z M52.6,27.5l-7.9-13h-6.4v20.4h5V21.6l8.1,13.3
+		h6.2V14.5h-5C52.6,14.5,52.6,27.5,52.6,27.5z M71.9,22.5v4.7h3.5v2.7c-0.5,0.2-0.9,0.4-1.4,0.5c-0.7,0.2-1.4,0.3-2.4,0.3
+		c-0.9,0-1.7-0.2-2.4-0.4c-0.7-0.3-1.3-0.7-1.8-1.2s-0.9-1.2-1.2-1.9c-0.3-0.7-0.4-1.5-0.4-2.4s0.1-1.7,0.4-2.4s0.7-1.4,1.2-1.9
+		s1.1-1,1.8-1.2c0.7-0.3,1.5-0.4,2.4-0.4c1.1,0,2,0.2,2.7,0.4c0.7,0.3,1.3,0.7,1.9,1.3l0.2,0.2l3.5-3.8l-0.2-0.2c-1-1-2.3-1.7-3.6-2
+		c-1.4-0.4-2.8-0.6-4.4-0.6s-3,0.3-4.4,0.7c-1.3,0.5-2.5,1.2-3.5,2.1s-1.7,2.1-2.3,3.4c-0.5,1.3-0.8,2.8-0.8,4.4
+		c0,1.6,0.3,3.1,0.8,4.4c0.5,1.3,1.3,2.5,2.3,3.4s2.1,1.6,3.5,2.1c1.3,0.5,2.8,0.7,4.4,0.7c1.5,0,2.9-0.2,4.3-0.5s2.8-0.8,4.1-1.5
+		l0.2-0.1V22.5H71.9L71.9,22.5z"/>
+</g>
+</svg></a>
+</header>
+
+{% if showWebby %}
+    <div class="web"><img src="{{ asset('bundles/apiplatform/web.png') }}"></div>
+    <div class="webby"><img src="{{ asset('bundles/apiplatform/webby.png') }}"></div>
+{% endif %}
+
+<div id="swagger-ui" class="api-platform"></div>
+
+<div class="swagger-ui" id="formats">
+    <div class="information-container wrapper">
+        <div class="info">
+            Available formats:
+            {% for format in formats|keys %}
+                <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_format': format})) }}">{{ format }}</a>
+            {% endfor %}
+            <br>
+            Other API docs:
+            {% set active_ui = app.request.get('ui', 'swagger_ui') %}
+            {% if swaggerUiEnabled and active_ui != 'swagger_ui' %}<a href="{{ path('api_entrypoint') }}">Swagger UI</a>{% endif %}
+            {% if reDocEnabled and active_ui != 're_doc' %}<a href="{{ path('api_entrypoint', {'ui': 're_doc'}) }}">ReDoc</a>{% endif %}
+            
+        </div>
+    </div>
+</div>
+
+
+
+{% block javascript %}
+    {% if (reDocEnabled and not swaggerUiEnabled) or (reDocEnabled and 're_doc' == active_ui) %}
+        <script src="{{ asset('bundles/apiplatform/redoc/redoc.standalone.js') }}"></script>
+        <script src="{{ asset('bundles/apiplatform/init-redoc-ui.js') }}"></script>
+    {% elseif (swaggerUiEnabled) %}
+        <script src="{{ asset('bundles/apiplatform/swagger-ui/swagger-ui-bundle.js') }}"></script>
+        <script src="{{ asset('bundles/apiplatform/swagger-ui/swagger-ui-standalone-preset.js') }}"></script>
+        <script src="{{ asset('bundles/apiplatform/init-swagger-ui.js') }}"></script>
+    {% endif %}
+   
+    {% if hubspot_embed_code %}     
+   		<!-- Start of HubSpot Embed Code -->
+   		<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/{{ hubspot_embed_code }}.js"></script>
+   		<!-- End of HubSpot Embed Code -->
+    {% endif %}
+{% endblock %}
+
+</body>
+</html>
