@@ -85,6 +85,12 @@ paths:
           schema:
             type: string
         -
+          name: like_description
+          in: query
+          required: false
+          schema:
+            type: string
+        -
           name: page
           in: query
           required: false
@@ -363,6 +369,9 @@ paths:
             schema:
               $ref: '#/components/schemas/ExampleEntity'
         description: 'The updated ExampleEntity resource'
+security:
+  -
+    apiKey: []
 components:
   schemas:
     ExampleEntity:
@@ -378,3 +387,9 @@ components:
           type: string
         in_onderzoek: {  }
         ingangs_datum: {  }
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      description: 'Value for the Authorization header'
+      name: Authorization
