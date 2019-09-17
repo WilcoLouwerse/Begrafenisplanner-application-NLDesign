@@ -90,6 +90,19 @@ git merge upstream --allow-unrelated-histories
 Keep in mind that you wil need to make sure to stay up to date about changes on the common ground component repository 
 
 ## Sharing your work 
+A vital part of te common ground community is sharing your work, and telling other people what you are working. This way people can help you wiht problems that you run into. And keep tabs on any (security) updates that you make to you code. Sounds like a lot of work right?
+
+Wel it actually isn't, there is a specific commonground platform over at common-gorund.dev that reads repositorys and updates user. So the only thing we need to do is tell this platform that we have started a new common ground repository. And tell it when we have updates ours. We can do all that by simply adding a webhook to our component. 
+
+When using Github. To set up a webhook, go to the settings page of your repository or organization. From there, click Webhooks, then Add webhook. Use te following settings:
+* Payload URL: https://www.common-ground.dev/webhook/github
+* Content type: Application/JSON
+* Secret: [leave blanck]
+* Events: [just the push event]
+
+Now every time you update your repository the commonground dev page will allerted, rescan your repository and do al the apropriate platform actions. It just as easy as that.
+
+
 
 
 ## Commonground specific data types

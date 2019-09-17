@@ -12,8 +12,8 @@ php:
   env: prod
   debug: '0'
   secret: ""
-  corsAllowOrigin: "^https?://.*?\\.example\\.com$"
-  trustedHosts: "^.*\\.example\\.com$"
+  corsAllowOrigin: ['*']
+  trustedHosts: '^.*\\.example\\.com$|localhost'
   trustedProxies:
     - 10.0.0.0/8
     - 172.16.0.0/12

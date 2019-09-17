@@ -23,6 +23,10 @@ class IncompleteDateType extends Type
 	
 	public function convertToPHPValue($value, AbstractPlatform $platform)
 	{
+		// Lets make this nullable
+		if(!$value){
+			return null;
+		}
 		// We save incomplete date's as YYYYMMDD integer values so that we can easily index and order on them
 		list($year, $month, $day) = sscanf($value, '%04u%02u%02u');
 		
@@ -31,6 +35,10 @@ class IncompleteDateType extends Type
 	
 	public function convertToDatabaseValue($value, AbstractPlatform $platform)
 	{
+		// Lets make this nullable
+		if(!$value){
+			return null;
+		}
 		// We save incomplete date's as YYYYMMDD integer values so that we can easily index and order on them
 		if ($value instanceof IncompleteDate) {
 			$value = sprintf('%04u%02u%02u', $value->getYear(), $value->getMonth(), $value->getDay());

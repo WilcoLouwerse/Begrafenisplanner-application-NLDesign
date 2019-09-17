@@ -23,6 +23,10 @@ class UnderInvestigationType extends Type
 	
 	public function convertToPHPValue($value, AbstractPlatform $platform)
 	{
+		// Lets make this nullable
+		if(!$value){
+			return null;
+		}
 		//list($longitude, $latitude) = sscanf($value, 'JSON(%s)');
 		$value= json_decode ($value, true);
 		//var_dump($data);
@@ -33,6 +37,10 @@ class UnderInvestigationType extends Type
 	
 	public function convertToDatabaseValue($value, AbstractPlatform $platform)
 	{
+		// Lets make this nullable
+		if(!$value){
+			return null;
+		}
 		if ($value instanceof UnderInvestigation) {
 			/* @todo throw an error ir the property isn't a boolean*/
 			$value= ["properties"=> $value->getProperties(),"date"=> $value->getDate()];
