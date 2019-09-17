@@ -1,9 +1,9 @@
-Welkom the the VNG Common Ground proto component!
+Welcome to the the VNG Common Ground proto component!
 
-This repository provides a plug and play solution for component generation on common ground. That means that it takes away all the husle of setting op codebases, containers and following the VNG Api Standaard. It does al that for you! 
+This repository provides a plug and play solution for component generation on common ground. That means that it takes away all the hassle of setting op codebases, containers and following the VNG Api Standaard. It does al that for you! 
 
 For that we use **[Api Platform](https://api-platform.com)**, a next-generation web framework designed to easily create API-first projects without compromising extensibility
-and flexibility. 
+and flexibility. test
 
 Features
 -------
@@ -11,7 +11,7 @@ API Platform embraces open web standards (OpenAPI, JSON-LD, GraphQL, Hydra, HAL,
 It means that your commonground application is usable **out of the box** with technologies of the semantic web.
 
 * Comes with a paired [React](https://reactjs.org/) application, to provide face to your code
-* And a fully functional (and automaticly updated) [React Admin](https://marmelab.com/react-admin/) backend to easly test and proof your component
+* And a fully functional (and automatically updated) [React Admin](https://marmelab.com/react-admin/) backend to easily test and proof your component
 * Design your own data model as plain old PHP classes or [**import an existing one**](https://api-platform.com/docs/schema-generator)
   from the [Schema.org](https://schema.org/) vocabulary
 * **Expose in minutes a hypermedia REST or a GraphQL API** with pagination, data validation, access control, relation embedding,
@@ -34,19 +34,19 @@ It means that your commonground application is usable **out of the box** with te
 
 The commonground bundle
 -------
-This repository uses the power of conductions [commonground bundle](https://packagist.org/packages/conduction/commongroundbundle) for symfony to provide common ground specific functionalty based on the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). Including  
+This repository uses the power of conductions [commonground bundle](https://packagist.org/packages/conduction/commongroundbundle) for symfony to provide common ground specific functionality based on the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). Including  
 
 * Build in support for public API's like BAG (Kadaster), KVK (Kamer van Koophandel)
 * Build in validators for common dutch variables like BSN (Burger service nummer), RSIN(), KVK(), BTW()
 * AVG and VNG proof audit trails
 * And [muchs more](https://packagist.org/packages/conduction/commongroundbundle) .... 
 
-Be sure to alse read our [design considerations](/design.md) conserning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
+Be sure to also read our [design considerations](/design.md) concerning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
 
 Getting started
 -------
 
-* Get your own commonent by simply forking this repository trough [generation](https://github.com/ConductionNL/commonground-component/generate).
+* Get your own commonent by simply forking this repository through [generation](https://github.com/ConductionNL/commonground-component/generate).
 * Pull a local copy of your repository trough your favorite git client (e.g [gitkraken](https://www.gitkraken.com/) or [sourcetree](https://www.sourcetreeapp.com/))
 * Start up you local instance with [docker for desktop](https://hub.docker.com/?overlay=onboarding) and the $ docker-compose up command
 * Open [http://localhost] in your favorite browser and view your component!
@@ -54,7 +54,7 @@ Getting started
 
 Requesting features
 -------
-Do you need a feature that is not on this list? don't hasitate to send us a [feature request](https://github.com/ConductionNL/commonground-component/issues/new?assignees=&labels=&template=feature_request.md&title=).  
+Do you need a feature that is not on this list? don't hesitate to send us a [feature request](https://github.com/ConductionNL/commonground-component/issues/new?assignees=&labels=&template=feature_request.md&title=).  
 
 Staying up to date
 -------
@@ -62,4 +62,4 @@ Staying up to date
 Credits
 -------
 
-Created by [Ruben van der Linde](https://www.conduction.nl/team) for conduction. But bassed on [api platform](https://api-platform.com) by [Kévin Dunglas](https://dunglas.fr). Commercial support for commonground components available from [Conduction](https://www.conduction.nl).
+Created by [Ruben van der Linde](https://www.conduction.nl/team) for conduction. But based on [api platform](https://api-platform.com) by [Kévin Dunglas](https://dunglas.fr). Commercial support for common ground components available from [Conduction](https://www.conduction.nl).
