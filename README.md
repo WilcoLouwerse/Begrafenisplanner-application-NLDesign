@@ -1,6 +1,6 @@
 Welcome to the the VNG Common Ground proto component!
 
-This repository provides a plug and play solution for component generation on common ground. That means that it takes away all the hassle of setting op codebases, containers and following the VNG Api Standaard. It does al that for you! 
+This "proto" component provides a plug and play solution for component generation on common ground. That means that it takes away all the hassle of setting op codebases, containers and following the VNG Api Standaard. It does al that for you! 
 
 For that we use **[Api Platform](https://api-platform.com)**, a next-generation web framework designed to easily create API-first projects without compromising extensibility
 and flexibility. test
