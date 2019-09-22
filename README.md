@@ -1,6 +1,6 @@
-# About this application
+# About this component
 
-Het "betalen" component is ontwikkeld voor de gemeente Utrecht en heeft als doel een betalingen te registreren en af te handelen voor objecten uit andere componenten. Dit stelt je in staat om voor deze objecten facturen aan te maken en te beheren.
+Het "betalen" component is ontwikkeld voor de gemeente Utrecht en heeft als doel betalingen te registreren en af te handelen voor objecten uit andere componenten. Dit stelt je in staat om voor deze objecten facturen aan te maken en te beheren.
 
 ## Documentation
 
