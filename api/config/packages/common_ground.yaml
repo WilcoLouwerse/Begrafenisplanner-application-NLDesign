@@ -9,21 +9,25 @@ parameters:
     common_ground.oas.type: tool
     common_ground.oas.servers:
             -
-              description: Conduction
+              description: Demo Omgeving
               url: 'http://proto.demo.common-ground.dev'       
     common_ground.oas.externalDocs:
             -
-              description: Conduction
+              description: OAS Documentatie
               url: 'http://proto.demo.common-ground.dev'  
     common_ground.oas.developers:
             -
               name: Conduction
               url: https://github.com/ConductionNL
-              email: ruben@conduction.nl
+              email: info@conduction.nl
             -
-              name: Ruben van der Linde
-              url: https://github.com/rubenvdlinde
-              email: ruben@conduction.nl   
+              name: Gemeente 's-Hertogenbosch
+              url: https://github.com/gemeenteshertogenboschL
+              email: info@s-hertogenbosch.nl/
+            -
+              name: Gemeente Utrecht
+              url: https://github.com/GemeenteUtrecht
+              email: info@utrecht.nl
     common_ground.oas.builds:
             -
               name: travis

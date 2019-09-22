@@ -386,11 +386,11 @@ components:
         ingangs_datum: {  }
 servers:
   -
-    description: Conduction
+    description: 'Demo Omgeving'
     url: 'http://proto.demo.common-ground.dev'
 externalDocs:
   -
-    description: Conduction
+    description: 'OAS Documentatie'
     url: 'http://proto.demo.common-ground.dev'
 x-commonground:
   type: tool
@@ -399,6 +399,14 @@ x-commonground:
       name: Conduction
       url: 'https://github.com/ConductionNL'
       email: info@conduction.nl
+    -
+      name: 'Gemeente ''s-Hertogenbosch'
+      url: 'https://github.com/gemeenteshertogenboschL'
+      email: info@s-hertogenbosch.nl/
+    -
+      name: 'Gemeente Utrecht'
+      url: 'https://github.com/GemeenteUtrecht'
+      email: info@utrecht.nl
   builds:
     -
       name: travis
