@@ -44,7 +44,7 @@ This repository uses the power of conductions [commonground bundle](https://pack
 * AVG and VNG proof audit trails
 * And [muchs more](https://packagist.org/packages/conduction/commongroundbundle) .... 
 
-Be sure to also read our [design considerations](/design.md) concerning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
+Be sure to read our [design considerations](/design.md) concerning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
 
 Getting started
 -------
