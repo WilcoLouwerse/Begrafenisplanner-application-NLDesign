@@ -1,3 +1,6 @@
+
+Readme
+-------
 Welcome to the the VNG Common Ground proto component!
 
 This "proto" component provides a plug and play solution for component generation on common ground. That means that it takes away all the hassle of setting op codebases, containers and following the VNG Api Standaard. It does al that for you! 
@@ -41,7 +44,7 @@ This repository uses the power of conductions [commonground bundle](https://pack
 * AVG and VNG proof audit trails
 * And [muchs more](https://packagist.org/packages/conduction/commongroundbundle) .... 
 
-Be sure to also read our [design considerations](/design.md) concerning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
+Be sure to read our [design considerations](/design.md) concerning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
 
 Getting started
 -------
