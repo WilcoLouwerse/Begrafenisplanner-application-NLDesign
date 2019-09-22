@@ -1,14 +1,13 @@
 
-Readme
+# Readme
 -------
 Welcome to the the VNG Common Ground proto component!
 
-This "proto" component provides a plug and play solution for component generation on common ground. That means that it takes away all the hassle of setting op codebases, containers and following the VNG Api Standaard. It does al that for you! 
+This "proto" component provides a plug and play solution for component generation on Common Ground. That means that it takes away all the hassle of setting op codebases, containers and following the VNG Api Standaard. It does all that for you! 
 
-For that we use **[Api Platform](https://api-platform.com)**, a next-generation web framework designed to easily create API-first projects without compromising extensibility
-and flexibility. test
+For that we use **[Api Platform](https://api-platform.com)**, a next-generation web framework designed to easily create API-first projects, without compromising extensibility and flexibility. 
 
-Features
+## Features
 -------
 API Platform embraces open web standards (OpenAPI, JSON-LD, GraphQL, Hydra, HAL, JSONAPI, JWT, OAuth, HTTP...) and the [Linked Data](https://www.w3.org/standards/semanticweb/data) movement. Your API will automatically expose structured data in Schema.org/JSON-LD.
 It means that your commonground application is usable **out of the box** with technologies of the semantic web.
@@ -49,7 +48,7 @@ Be sure to read our [design considerations](/design.md) concerning the [VNG Api 
 Getting started
 -------
 
-* Get your own commonent by simply forking this repository through [generation](https://github.com/ConductionNL/commonground-component/generate).
+* Get your own component by simply forking this repository through [generation](https://github.com/ConductionNL/commonground-component/generate).
 * Pull a local copy of your repository trough your favorite git client (e.g [gitkraken](https://www.gitkraken.com/) or [sourcetree](https://www.sourcetreeapp.com/))
 * Start up you local instance with [docker for desktop](https://hub.docker.com/?overlay=onboarding) and the $ docker-compose up command
 * Open [http://localhost] in your favorite browser and view your component!
