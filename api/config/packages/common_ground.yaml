@@ -22,7 +22,7 @@ parameters:
               email: info@conduction.nl
             -
               name: Gemeente 's-Hertogenbosch
-              url: https://github.com/gemeenteshertogenboschL
+              url: https://github.com/gemeenteshertogenbosch
               email: info@s-hertogenbosch.nl/
             -
               name: Gemeente Utrecht
