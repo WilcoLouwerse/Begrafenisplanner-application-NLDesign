@@ -1,3 +1,6 @@
+
+Readme
+-------
 Welcome to the the VNG Common Ground proto component!
 
 This "proto" component provides a plug and play solution for component generation on common ground. That means that it takes away all the hassle of setting op codebases, containers and following the VNG Api Standaard. It does al that for you! 
