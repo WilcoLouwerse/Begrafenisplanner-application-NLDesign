@@ -142,8 +142,26 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "lcobucci/jwt": {
+        "version": "3.3.1"
+    },
     "league/html-to-markdown": {
         "version": "4.8.1"
+    },
+    "lexik/jwt-authentication-bundle": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "5b2157bcd5778166a5696e42f552ad36529a07a6"
+        },
+        "files": [
+            "config/packages/lexik_jwt_authentication.yaml"
+        ]
+    },
+    "namshi/jose": {
+        "version": "7.2.3"
     },
     "nelmio/cors-bundle": {
         "version": "1.5",
@@ -223,6 +241,9 @@
     "symfony/cache": {
         "version": "v4.3.1"
     },
+    "symfony/cache-contracts": {
+        "version": "v1.1.5"
+    },
     "symfony/config": {
         "version": "v4.3.1"
     },
@@ -256,6 +277,9 @@
     },
     "symfony/event-dispatcher": {
         "version": "v4.3.1"
+    },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v1.1.5"
     },
     "symfony/expression-language": {
         "version": "v4.3.1"
@@ -299,6 +323,9 @@
     },
     "symfony/http-client": {
         "version": "v4.3.1"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v1.1.6"
     },
     "symfony/http-foundation": {
         "version": "v4.3.1"
@@ -405,8 +432,14 @@
     "symfony/serializer": {
         "version": "v4.3.1"
     },
+    "symfony/service-contracts": {
+        "version": "v1.1.6"
+    },
     "symfony/stopwatch": {
         "version": "v4.3.1"
+    },
+    "symfony/translation-contracts": {
+        "version": "v1.1.6"
     },
     "symfony/twig-bridge": {
         "version": "v4.3.1"

@@ -6,6 +6,45 @@ parameters:
     env(CONDUCTION_COMMONGROUND_BAG_APIKEY): 'Change me your .env file'
     common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
     common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
+    common_ground.oas.type: tool
+    common_ground.oas.servers:
+            -
+              description: Conduction
+              url: 'http://proto.demo.common-ground.dev'       
+    common_ground.oas.externalDocs:
+            -
+              description: Conduction
+              url: 'http://proto.demo.common-ground.dev'  
+    common_ground.oas.developers:
+            -
+              name: Conduction
+              url: https://github.com/ConductionNL
+              email: ruben@conduction.nl
+            -
+              name: Ruben van der Linde
+              url: https://github.com/rubenvdlinde
+              email: ruben@conduction.nl   
+    common_ground.oas.builds:
+            -
+              name: travis
+              logo: https://travis-ci.org/api-platform/core.svg?branch=master
+              url: https://travis-ci.org/api-platform/core
+            -
+              name: appveyor
+              logo: https://ci.appveyor.com/api/projects/status/grwuyprts3wdqx5l?svg=true
+              url: https://ci.appveyor.com/project/dunglas/dunglasapibundle
+            -
+              name: codecov
+              logo: https://codecov.io/gh/api-platform/core/branch/master/graph/badge.svg
+              url: https://codecov.io/gh/api-platform/core
+            -
+              name: SensioLabsInsight
+              logo: https://insight.sensiolabs.com/projects/92d78899-946c-4282-89a3-ac92344f9a93/mini.png
+              url: https://insight.sensiolabs.com/projects/92d78899-946c-4282-89a3-ac92344f9a93
+            -
+              name: Scrutinizer Code Quality
+              logo: https://scrutinizer-ci.com/g/api-platform/core/badges/quality-score.png?b=master
+              url: https://scrutinizer-ci.com/g/api-platform/core/?branch=master 
 
 common_ground:      
     bag:
