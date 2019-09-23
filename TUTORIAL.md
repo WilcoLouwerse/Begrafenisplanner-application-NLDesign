@@ -1,6 +1,11 @@
 # Tutorial
 
-For this tutorial you need the following:
+What do you need for this tutorial?
+* browser
+* github account
+* git client
+* docker account
+* docker for desktop
 
 * Browser
 * Github account
@@ -12,7 +17,7 @@ For this tutorial you need the following:
 ## Generating your component (repository/codebase)
 Starting up your first Common Ground component is extremely easy, al you need is a GitHub account and go the link below and fill in the form, press create and press to we have a component!
 
-[https://github.com/ConductionNL/Proto-component-commonground/generate](https://github.com/ConductionNL/Proto-component-commonground/generate)
+[https://github.com/ConductionNL/Proto-component-commonground/generate](https://github.com/ConductionNL/Proto-component-commonground/generate) 
 
 After that you should be redirected to your own brand new repository. 
 
@@ -24,7 +29,7 @@ Before we can spin up our component we must first get a local copy from our repo
 
 For this example where going to use GitKraken but you can use any tool you like, feel free to skip this part if you are already familiar with setting up a local clone of your repository.
 
-Open gitkraken press *“clone a repro”* and fill in the form (select where on your local machine you want the repository to be stored, and fill in the link of your repository on github), press *“clone a repro!”* and you should then see GitKraken downloading your code. After it's done press ‘open now’ (in the box on top) and voilá your codebase (you should see an initial commit on a master branche).
+Open gitkraken press "clone a repro" and fill in the form (select where on your local machine you want the repository to be stored, and fill in the link of your repository on github), press "clone a repro" and you should then see GitKraken downloading your code. After it's done press "open now" (in the box on top) and voilá your codebase (you should see an initial commit on a master branche).
 
 You can now navigate to the folder where you just installed your code, it should contain some folders and files and generally look like this. We will get into the files later, lets first spin up our component!
 
@@ -35,7 +40,7 @@ cd c:\repos\common-ground\my-component (if you installed your code on a differen
 $ docker-compose up
 ```
 
-Your computer should now start up your local development environment. Don’t worry about al the code coming by, let's just wait until it finishes. You're free to watch along and see what exactly docker is doing, you will know when it's finished when it tells you that it is ready to handle connections. 
+Your computer should now start up your local development environment. Don't worry about al the code coming by, let's just wait until it finishes. You're free to watch along and see what exactly docker is doing, you will know when it's finished when it tells you that it is ready to handle connections. 
 
 Open your browser type <http://localhost/> as address and hit enter, you should now see your common ground component up and running.
 
@@ -43,13 +48,13 @@ Open your browser type <http://localhost/> as address and hit enter, you should 
 The Common Ground base component provides a bit more than just a development interface, it also includes an example application and a backend that automatically hooks into your api. For now we're just going to focus on our api, but is good to read up on all the features of the Common Ground base component here.  
 
 ## Adding your own objects
-You can now access your api at <http://localhost:8080/>, as you can see it's pre-loaded with some example objects. Let's replace them with your own objects!
+You can now access your api at http://localhost:8080/, as you can see it's pre-loaded with some example objects. Let's replace them with your own objects!
 
 First let's remove the objects currently in the api, we can do that by just removing the entities form our code base, navigate to the folder where you stored your code and open the folder api/src/Entity , you can find the example entities (our name for objects) there. Just delete all the php files in that folder.
 
 Next let's add our own entities, we can do this in two ways, we can do old fashioned coding, but we can also use the build in maker bundle of the proto component, to quickly generate our entities for us (without the fuss of actual coding).
  
-Let's open a new command line window and navigate to our root folder, exactly like we did under *“spinning up your component”*. And then lets fire up maker bundle (make sure that your component is still running in your other command window). We can do so by the following command:
+Let's open a new command line window and navigate to our root folder, exactly like we did under "spinning up your component". And then lets fire up maker bundle (make sure that your component is still running in your other command window). We can do so by the following command:
 
 ```CLI
 $ docker-compose exec php php bin/console make:entity --api-platform
@@ -69,7 +74,7 @@ Best practice is to fetch the Conduction Common Ground component into a local up
 __Please make sure the you have commited al your changes to your current codebase and pushed a backup copy to your Git repo before continuing__
 
 ```CLI
-git remote add upstream <https://github.com/ConductionNL/Proto-component-commonground.git>
+git remote add upstream https://github.com/ConductionNL/Proto-component-commonground.git
 git fetch upstream
 git branch upstream upstream/master
 ```
@@ -98,8 +103,7 @@ A vital part of te common ground community is sharing your work, and telling oth
 Wel it actually isn't, there is a specific commonground platform over at common-gorund.dev that reads repositorys and updates user. So the only thing we need to do is tell this platform that we have started a new common ground repository. And tell it when we have updates ours. We can do all that by simply adding a webhook to our component. 
 
 When using Github. To set up a webhook, go to the settings page of your repository or organization. From there, click Webhooks, then Add webhook. Use te following settings:
-
-* Payload URL: <https://www.common-ground.dev/webhook/github>
+* Payload URL: https://www.common-ground.dev/webhook/github
 * Content type: Application/JSON
 * Secret: [leave blanck]
 * Events: [just the push event]

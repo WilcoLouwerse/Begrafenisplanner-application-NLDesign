@@ -1,5 +1,7 @@
 Design Considerations
 
+This component was designd inline with the [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie) and [https://www.noraonline.nl/wiki/Standaarden](NORA).
+
 
 Dutch versus English
 -------
@@ -62,3 +64,6 @@ To match a literal underscore or percent sign without matching other characters,
 
 JSON-HAL versus JSON-LD
 -------
+
+Error Handling
+http://www.hydra-cg.com/spec/latest/core/#description-of-http-status-codes-and-errors

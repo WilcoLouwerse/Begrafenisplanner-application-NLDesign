@@ -369,9 +369,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ExampleEntity'
         description: 'The updated ExampleEntity resource'
-security:
-  -
-    apiKey: []
 components:
   schemas:
     ExampleEntity:
@@ -387,9 +384,47 @@ components:
           type: string
         in_onderzoek: {  }
         ingangs_datum: {  }
-  securitySchemes:
-    apiKey:
-      type: apiKey
-      in: header
-      description: 'Value for the Authorization header'
-      name: Authorization
+servers:
+  -
+    description: 'Demo Omgeving'
+    url: 'http://proto.demo.common-ground.dev'
+externalDocs:
+  -
+    description: 'OAS Documentatie'
+    url: 'http://proto.demo.common-ground.dev'
+x-commonground:
+  type: tool
+  developers:
+    -
+      name: Conduction
+      url: 'https://github.com/ConductionNL'
+      email: info@conduction.nl
+    -
+      name: 'Gemeente ''s-Hertogenbosch'
+      url: 'https://github.com/gemeenteshertogenbosch'
+      email: info@s-hertogenbosch.nl/
+    -
+      name: 'Gemeente Utrecht'
+      url: 'https://github.com/GemeenteUtrecht'
+      email: info@utrecht.nl
+  builds:
+    -
+      name: travis
+      logo: 'https://travis-ci.org/api-platform/core.svg?branch=master'
+      url: 'https://travis-ci.org/api-platform/core'
+    -
+      name: appveyor
+      logo: 'https://ci.appveyor.com/api/projects/status/grwuyprts3wdqx5l?svg=true'
+      url: 'https://ci.appveyor.com/project/dunglas/dunglasapibundle'
+    -
+      name: codecov
+      logo: 'https://codecov.io/gh/api-platform/core/branch/master/graph/badge.svg'
+      url: 'https://codecov.io/gh/api-platform/core'
+    -
+      name: SensioLabsInsight
+      logo: 'https://insight.sensiolabs.com/projects/92d78899-946c-4282-89a3-ac92344f9a93/mini.png'
+      url: 'https://insight.sensiolabs.com/projects/92d78899-946c-4282-89a3-ac92344f9a93'
+    -
+      name: 'Scrutinizer Code Quality'
+      logo: 'https://scrutinizer-ci.com/g/api-platform/core/badges/quality-score.png?b=master'
+      url: 'https://scrutinizer-ci.com/g/api-platform/core/?branch=master'
