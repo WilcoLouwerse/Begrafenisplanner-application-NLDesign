@@ -3,7 +3,7 @@ info:
   title: 'Common Ground Component'
   version: 0.0.1
   description: |
-    Dit is een commonground voorbeeld applicatie 
+    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar. 
           
     Word lid van het slackkanaal [https://zaakonline.slack.com](https://zaakonline.slack.com) voor ondersteuning door het ontwikkel team. En krijg regelmatig updates over de ontwikkelingen op het gebied van de zaakonline componenten.
             
