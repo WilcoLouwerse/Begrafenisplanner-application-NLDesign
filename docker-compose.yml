@@ -11,7 +11,7 @@ x-cache:
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
 
 services:
-  commonground-php:
+  protocomponent-php:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php
     build:
       context: ./api
@@ -25,28 +25,28 @@ services:
       # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
       # - ./api/var:/srv/api/var:rw
 
-  commonground-api:
+  protocomponent-api:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
     build:
       context: ./api
       target: api_platform_nginx
       <<: *cache
     depends_on:
-      - commonground-php
+      - protocomponent-php
     # Comment out this volume in production
     volumes:
       - ./api/public:/srv/api/public:ro
     ports:
       - "8080:80"
 
-  commonground-cache-proxy:
+  protocomponent-cache-proxy:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
     build:
       context: ./api
       target: api_platform_varnish
       <<: *cache
     depends_on:
-      - commonground-api
+      - protocomponent-api
     volumes:
       - ./api/docker/varnish/conf:/usr/local/etc/varnish:ro
     tmpfs:
@@ -122,8 +122,8 @@ services:
       - db
       - client
       - admin
-      - commonground-api
-      - commonground-cache-proxy
+      - protocomponent-api
+      - protocomponent-cache-proxy
     ports:
       - "443:443"
       - "444:444"

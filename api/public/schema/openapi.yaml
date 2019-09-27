@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: 'Common Ground Component'
+  title: 'Proto Component (PC)'
   version: 0.0.1
   description: |
     Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar. 
