@@ -37,6 +37,15 @@ Your computer should now start up your local development environment. Don't worr
 
 Open your browser type http://localhost/ as address and hit enter, you should now see your common ground component up and running.
 
+### trouble shooting
+When spinning up components we make extensive use of the cashing of docker, and use volumes to reprecent server disks. When running in to unexpected trouble always remmember to clear your local docker vm with the -a command (removing image cash)
+```CLI
+$ docker system prune -a
+```
+```CLI
+$ docker volume prune
+```
+
 **What are we looking at?**
 The Common Ground base component provides a bit more than just a development interface, it also includes an example application and a backend that automatically hooks into your api. For now we're just going to focus on our api, but is good to read up on all the features of the Common Ground base component here.  
 
@@ -89,6 +98,182 @@ git merge upstream --allow-unrelated-histories
 
 Keep in mind that you wil need to make sure to stay up to date about changes on the Common Ground component repository.
 
+## Renaming your component
+Right now the name of your component is 'commonground' that's thats fine while running it localy or in its own kubernetes cluster but wil get you in when running it with other components when it without using a name space. So its good practice to name your component distinctifly. But besides al of these practical reasons its of course also just cool to name your child before you unleas it on the unsuspecting commonground community.
+
+Oke, so before we can nae the component we need to come up with a name. There are a couple of conventions here. Firts of the name should tell us what the component does, or is suposede to do with one or two words. So we would normaly call an componant aboute dogs the DogComponent and one about cats te CatComponent. The second convention is that we don't usually actually name our component 'component' but indicate its position in de commonground architecture. For that we have the following options
+* Catalogus
+* RegistratieComponent
+* Service
+* Application
+* Tool
+
+The we need to touch te following files
+* .env
+* dockercompose.yaml
+* api/.env
+* api/helm/values.yaml
+* api/docker/nginx/
+
+## Adding more openapi documantation
+
+```php
+//...
+	/**
+	 * @ApiProperty(
+	 *     attributes={
+	 *         "openapi_context"={
+	 *         	   "description" = "The name of a organisation",
+	 *             "type"="string",
+	 *             "format"="string",
+	 *             "example"="My Organisation"
+	 *         }
+	 *     }
+	 * )	 
+	 */
+	private $name;
+//...	
+```
+
+## Setting up security and acces (also helps with serialization)
+
+```PHP
+// src/Entity/Organisation.php
+namespace App\Entity;
+
+// ...
+use Symfony\Component\Serializer\Annotation\Groups;
+
+/**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}},
+ *     denormalizationContext={"groups"={"write"}}
+ * )
+ * @ORM\Entity(repositoryClass="App\Repository\OrganisationRepository")
+ */
+class Organisation
+{
+    /**
+     * @Groups({"read","write"})
+     */
+    private $name;
+}
+```
+
+## Using validation
+Right now we are just accepting data and passing them on to the database, and in a mock or poc context this is fine. Most of the calls will end up being get requests anyway. But in case that we actually want our clients to make post to the api it would be wise to add some validation to the fields we are recieving. Luckely for us the component comes pre packed with a valdiation tool that we can configure from our entity through annotion. If we for example want to make a field required we could do so as follows: 
+
+```PHP
+// src/Entity/Organisation.php
+namespace App\Entity;
+
+// ...
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ApiResource()
+ * @ORM\Entity(repositoryClass="App\Repository\OrganisationRepository")
+ */
+class Organisation
+{
+    /**
+     * @Assert\NotBlank
+     */
+    private $name;
+}
+```
+
+Keep in mind that we need to add the assert annotation to our class dependencies under 'use'.  
+
+More inforation on using validation can be found at the [symfony website](https://symfony.com/doc/current/validation.html), but it is als worth notting that tis commonent comes pre packed with some typical NL valdidators like BSN. You can find those [here]().
+
+## Using UUID
+As default doctrine uses auto increment integers as identifiers (1,2, etc). For modern webapplications we howver prefer the use of UUID's. (e.g. e2984465-190a-4562-829e-a8cca81aa35d). Why? Wel for one it is more secure integer id's are easly gasable and make it posible to "aks" endpoint about objects that you should know about. But UUID's also have a benifit in futere proofing the application. If we in the futere want to merge a table with another table (for example becouse two organisations using a component perform a merger) then we would have to reasign al id's and relations if we where using int based id's (both tables would have a row 1,2 etc) with UUID's however the change of doubles range somwhere in the biljons. Meaning that it i likly that we oly need to either re identify only a handful of rows or more likely none at al! Turning our entire migration into a copy pase action.
+
+The proto component supports ramsy's uuid objects stratagy out of the box, so to use UUID's as intifier simply replace the default id property
+
+```PHP
+//...
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+//...
+```
+with
+
+```PHP
+//...
+	/**
+	 * @var \Ramsey\Uuid\UuidInterface
+	 *
+	 * @ApiProperty(
+	 * 	   identifier=true,
+	 *     attributes={
+	 *         "openapi_context"={
+	 *         	   "description" = "The UUID identifier of this object",
+	 *             "type"="string",
+	 *             "format"="uuid",
+	 *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
+	 *         }
+	 *     }
+	 * )
+	 *
+	 * @Groups({"read"})
+	 * @ORM\Id
+	 * @ORM\Column(type="uuid", unique=true)
+	 * @ORM\GeneratedValue(strategy="CUSTOM")
+	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+	 */
+	private $id;
+//..	
+```
+
+and remove the integer on the getter turning this:
+
+```PHP
+//...
+    public function getId(): ?integer
+    {
+        return $this->id;
+    }
+//...
+```
+
+into this
+
+```PHP
+//...
+    public function getId()
+    {
+        return $this->id;
+    }
+//...
+```
+
+and your all done
+
+### trouble shooting
+If you have already spunn your component including your new entity your going to run into some trouble becouse doctrine is going to try changing your primary key collum (id) from an integer to string (tables tend not to like that). In that case its best to just drop your database and reinstall it using the following commands:
+
+```CLI
+$ bin/console doctrine:schema:drop
+$ bin/console doctrine:schema:update --force
+```
+
+## Datafixtures
+For testing cases it can be usefull to use datafixtures a predefined set of data that fills the database of your component at startup. Since we use php classes to describe our objects creating fixtures is easy (you can find an example in your project folder at api/src/DataFixtures). We simply go trough some classes asign values and persist them to the database. Once we have written our fixtures we can use a single command to load them  
+
+```CLI
+$ bin/console doctrine:fixtures:load --env=dev
+```
+
+Be mindfull of the --env=dev here! Doctrine wil only allow fixture loading on a dev enviroment (for obvius security reasons)
+
+More inforation on using datafixtures can be found at the [symfony website](https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html)(you can skipp the instalation instructions) we also enourage you to take a look at the [tabbelen component](https://github.com/ConductionNL/landelijketabellencatalogus) that makes extansive use of datafixtures.
+
 ## Sharing your work 
 A vital part of te common ground community is sharing your work, and telling other people what you are working. This way people can help you wiht problems that you run into. And keep tabs on any (security) updates that you make to you code. Sounds like a lot of work right?
 
@@ -101,9 +286,6 @@ When using Github. To set up a webhook, go to the settings page of your reposito
 * Events: [just the push event]
 
 Now every time you update your repository the commonground dev page will allerted, rescan your repository and do al the apropriate platform actions. It just as easy as that.
-
-
-
 
 ## Commonground specific data types
 

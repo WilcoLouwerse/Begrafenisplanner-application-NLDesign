@@ -87,6 +87,7 @@ RUN composer dump-env prod; \
 	rm .env
 
 # copy only specifically what we need
+COPY helm helm/
 COPY bin bin/
 COPY config config/
 COPY public public/
@@ -117,7 +118,7 @@ COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
 WORKDIR /srv/api
 
-COPY --from=api_platform_php /srv/api/public public/
+COPY public public/
 
 # "varnish" stage
 # does not depend on any of the above stages, but placed here to keep everything in one Dockerfile
