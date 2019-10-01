@@ -56,6 +56,18 @@ final class SwaggerDecorator implements NormalizerInterface
 		foreach($this->params->get('common_ground.oas.builds') as $key => $value){
 			$docs['x-commonground']['builds'][$key] = $value; 
 		}
+		
+		
+		// Loop trough the classes for descriptions 
+		
+		// Loop trough the properties @example values for example data
+		
+		// Loop trough the properties @validate values for format data
+		
+		// Loop trough the properties @validate values for required data		
+		
+		// Loop trough the properties to determine default values
+		
 		/*
 		$customDefinition = [
 				'name' => 'fields',
