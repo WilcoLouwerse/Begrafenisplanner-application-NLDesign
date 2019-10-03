@@ -27,6 +27,9 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	done
 
 	if [ "$APP_ENV" != 'prod' ]; then
+	
+		echo "Clearing the database"
+		bin/console doctrine:schema:drop --full-database --force --no-interaction	
 		echo "Updating the database"
 		bin/console doctrine:schema:update --force --no-interaction		
 		
