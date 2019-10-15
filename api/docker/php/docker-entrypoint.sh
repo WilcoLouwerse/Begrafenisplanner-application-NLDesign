@@ -28,14 +28,20 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 
 	if [ "$APP_ENV" != 'prod' ]; then
 	
+		# If you want to retain data in your dev enviroment comment this command out
 		echo "Clearing the database"
 		bin/console doctrine:schema:drop --full-database --force --no-interaction	
+		
 		echo "Updating the database"
-		bin/console doctrine:schema:update --force --no-interaction		
+		bin/console doctrine:schema:update --force --no-interaction			
+		
+		# If you want to retain data in your dev enviroment comment this command out
+		echo "Loading fixtures"
+		bin/console doctrine:fixtures:load  --no-interaction
 		
 		echo "Creating OAS documentation"
 		# Let update the docs to show the latest chages
-		bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3		
+		bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3				
 	fi
 fi
 

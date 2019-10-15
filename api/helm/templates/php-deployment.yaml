@@ -26,6 +26,12 @@ spec:
           ports:
             - containerPort: 9000
           env:
+            - name: JWT_SECRET_KEY
+              value: '%kernel.project_dir%/config/jwt/private.pem'
+            - name: JWT_PUBLIC_KEY
+              value: '%kernel.project_dir%/config/jwt/public.pem'
+            - name: JWT_PASSPHRASE
+              value: 'bafe1dc254b45471754c221081f874aa'
             - name: TRUSTED_HOSTS
               valueFrom:
                 configMapKeyRef:

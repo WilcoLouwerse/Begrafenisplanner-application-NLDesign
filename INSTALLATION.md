@@ -1,7 +1,5 @@
 # Installation
 
-
-
 ## Setting up tiller
 
 ## Setting up helm

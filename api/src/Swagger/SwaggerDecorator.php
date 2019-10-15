@@ -24,6 +24,11 @@ final class SwaggerDecorator implements NormalizerInterface
 	{
 		$docs = $this->decorated->normalize($object, $format, $context);
 		
+		// Lest add an host
+		if($this->params->get('common_ground.oas.host')){
+			$docs['host']= $this->params->get('common_ground.oas.host');
+		}
+		
 		// Lets set the servers
 		if(array_key_exists ('servers',$docs)){$docs['servers']=[];}
 		foreach($this->params->get('common_ground.oas.servers') as $key => $value){
