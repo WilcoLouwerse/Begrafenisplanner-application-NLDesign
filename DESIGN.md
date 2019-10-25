@@ -72,6 +72,10 @@ It is perceivable that in future iterations we would like to use indexed array i
 __solution__
 We support both comma and bracket notation on array's, but only document bracket notation since it is preferred.
 
+
+Container Setup
+-------
+ https://medium.com/shiphp/building-a-custom-nginx-docker-image-with-environment-variables-in-the-config-4a0c36c4a617
  
 
 Filtering

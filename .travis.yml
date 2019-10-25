@@ -44,5 +44,5 @@ deploy:
   script: docker-compose push
   skip_cleanup: true
   on:
-    repo: api-platform/api-platform
+    repo: ConductionNL/Proto-component-commonground
     branch: master
