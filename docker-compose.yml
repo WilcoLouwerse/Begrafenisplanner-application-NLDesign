@@ -72,8 +72,8 @@ services:
       - ./api/public:/srv/api/public:ro
     ports:
       - "8080:80"
-    environment:
-      - APP_NAME=${CONTAINER_PROJECT_NAME}
+    #environment:
+    #  - APP_NAME=${CONTAINER_PROJECT_NAME}
 
   dev-pc-cache-proxy:
     &varnish

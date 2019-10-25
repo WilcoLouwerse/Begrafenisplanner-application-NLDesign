@@ -223,7 +223,7 @@ paths:
           in: header
         -
           name: X-Audit-Clarification
-          description: 'A clarificationn as to why a request has been made  (doelbinding)'
+          description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
   '/example_entities/{id}':
     get:
