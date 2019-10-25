@@ -38,6 +38,9 @@ services:
       - ./api/public:/srv/api/public:ro
     ports:
       - "8080:80"
+    environment:
+      - APP_NAME=foobar.com
+      - APP_ENV=dev
 
   protocomponent-cache-proxy:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
