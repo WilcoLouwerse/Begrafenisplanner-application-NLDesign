@@ -72,8 +72,6 @@ services:
       - ./api/public:/srv/api/public:ro
     ports:
       - "8080:80"
-    #environment:
-    #  - APP_NAME=${CONTAINER_PROJECT_NAME}
 
   dev-pc-cache-proxy:
     &varnish
@@ -187,17 +185,17 @@ services:
       cache_from:
         - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
     depends_on:
-      - dev-db
-      - stag-db
-      - prod-db
+      #- dev-db
+      #- stag-db
+      #- prod-db
       - client
       - admin
       - pc-api
-      - prod-pc-cache-proxy
-      - stag-pc-cache-proxy
-      - dev-pc-cache-proxy
-    volumes:
-      - ./conf.d/:/etc/nginx/conf.d/:rw,cached
+      #- prod-pc-cache-proxy
+      #- stag-pc-cache-proxy
+      #- dev-pc-cache-proxy
+    #volumes:
+    #  - ./conf.d/:/etc/nginx/conf.d/:rw,cached
     ports:
       - "80:80" #http port
       - "443:443" #ssl port
@@ -205,8 +203,8 @@ services:
       - "8443:8443"
       - "8444:8444" 
       - "5432:5432" #postgress port
-    environment:
-      - APP_NAME=${CONTAINER_PROJECT_NAME}
+    #environment:
+    #  - APP_NAME=${CONTAINER_PROJECT_NAME}
 
 volumes:
   prod-db-data: {}
