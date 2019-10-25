@@ -287,6 +287,8 @@ When using Github. To set up a webhook, go to the settings page of your reposito
 
 Now every time you update your repository the commonground dev page will allerted, rescan your repository and do al the apropriate platform actions. It just as easy as that.
 
+## Setting up continues integration
+
 ## Commonground specific data types
 
 
