@@ -2,6 +2,6 @@
 
 export APP_NAME
 
-envsubst '${APP_NAME}' < /config.template > /etc/nginx/nginx.conf
+#envsubst '\$APP_NAME' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
 
 exec "$@"

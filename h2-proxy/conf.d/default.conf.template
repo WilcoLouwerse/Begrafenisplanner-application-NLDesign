@@ -56,7 +56,7 @@ server {
     server_name  acep.*;
 
     location / {
-        proxy_pass http://pc-api;
+        proxy_pass http://$APP_NAME-api;
         proxy_http_version 1.1;
         proxy_set_header Host            	$host;
         proxy_set_header X-Forwarded-For 	$proxy_add_x_forwarded_for;
@@ -80,7 +80,7 @@ server {
     ssl_certificate_key /etc/nginx/ssl/cert.key;
 
     location / {
-        proxy_pass http://pc-api;
+        proxy_pass http://$APP_NAME-api;
         proxy_http_version 1.1;
         proxy_set_header Host            	$host;
         proxy_set_header X-Forwarded-For 	$proxy_add_x_forwarded_for;
@@ -158,7 +158,7 @@ server {
     ssl_certificate_key /etc/nginx/ssl/cert.key;
 
     location / {
-        proxy_pass http://dev-pc-cache-proxy;
+        proxy_pass http://dev-$APP_NAME-cache-proxy;
         proxy_http_version 1.1;
         proxy_set_header Host            	$host;
         proxy_set_header X-Forwarded-For 	$proxy_add_x_forwarded_for;

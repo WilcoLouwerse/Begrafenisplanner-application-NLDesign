@@ -46,3 +46,19 @@ deploy:
   on:
     repo: ConductionNL/Proto-component-commonground
     branch: master
+    
+#deploy:
+#  provider: script
+#  script: docker-compose push test-pc-php 
+#  skip_cleanup: true
+#  on:
+#    repo: ConductionNL/Proto-component-commonground
+#    branch: testing
+    
+#deploy:
+#  provider: script
+#  script: docker-compose push dev-pc-php 
+#  skip_cleanup: true
+#  on:
+#    repo: ConductionNL/Proto-component-commonground
+#    branch: development

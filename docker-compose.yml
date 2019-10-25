@@ -11,53 +11,104 @@ x-cache:
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
 
 services:
-  protocomponent-php:
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php
+  dev-pc-php:
+    &php
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php:development
     build:
       context: ./api
       target: api_platform_php
       <<: *cache
     depends_on:
-      - db
+      - dev-db
     # Comment out these volumes in production
     volumes:
       - ./api:/srv/api:rw,cached
       # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
       # - ./api/var:/srv/api/var:rw
+    environment:
+      - APP_ENV=dev
+      - APP_DEBUG=1      
+      - APP_VERSION=${CONTAINER_PROJECT_VERSION}     
+      - APP_TITLE=${CONTAINER_PROJECT_TITLE}
+      - APP_NAME=${CONTAINER_PROJECT_NAME}
+      - DATABASE_URL=postgres://api-platform:!ChangeMe!@dev-db/api?serverVersion=10.1
+  prod-pc-php:
+    <<: *php
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php:${CONTAINER_PROJECT_VERSION}
+    depends_on:
+      - prod-db
+    environment:
+      - APP_ENV=prod
+      - APP_DEBUG=0
+      - APP_VERSION=${CONTAINER_PROJECT_VERSION}     
+      - APP_TITLE=${CONTAINER_PROJECT_TITLE}
+      - APP_NAME=${CONTAINER_PROJECT_NAME}
+      - DATABASE_URL=postgres://api-platform:!ChangeMe!@prod-db/api?serverVersion=10.1
+  stag-pc-php:
+    <<: *php
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php:staging
+    depends_on:
+      - stag-db
+    environment:
+      - APP_ENV=stag
+      - APP_DEBUG=1      
+      - APP_VERSION=${CONTAINER_PROJECT_VERSION}     
+      - APP_TITLE=${CONTAINER_PROJECT_TITLE}
+      - APP_NAME=${CONTAINER_PROJECT_NAME}
+      - DATABASE_URL=postgres://api-platform:!ChangeMe!@stag-db/api?serverVersion=10.1
 
-  protocomponent-api:
+  pc-api:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
     build:
       context: ./api
       target: api_platform_nginx
       <<: *cache
     depends_on:
-      - protocomponent-php
+      - prod-pc-php
+      - stag-pc-php
+      - dev-pc-php
     # Comment out this volume in production
     volumes:
       - ./api/public:/srv/api/public:ro
     ports:
       - "8080:80"
     environment:
-      - APP_NAME=foobar.com
-      - APP_ENV=dev
+      - APP_NAME=${CONTAINER_PROJECT_NAME}
 
-  protocomponent-cache-proxy:
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
+  dev-pc-cache-proxy:
+    &varnish
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish:development
     build:
       context: ./api
       target: api_platform_varnish
       <<: *cache
     depends_on:
-      - protocomponent-api
+      - pc-api
     volumes:
       - ./api/docker/varnish/conf:/usr/local/etc/varnish:ro
     tmpfs:
       - /usr/local/var/varnish:exec
     ports:
       - "8081:80"
+    environment:
+      - APP_NAME=${CONTAINER_PROJECT_NAME}
+            
+  prod-pc-cache-proxy:
+    <<: *varnish
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish:${CONTAINER_PROJECT_VERSION}
+    environment:
+      - APP_NAME=${CONTAINER_PROJECT_NAME}
+    ports:
+      - "8082:80"
+  stag-pc-cache-proxy:
+    <<: *varnish
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish:staging
+    environment:
+      - APP_NAME=${CONTAINER_PROJECT_NAME}
+    ports:
+      - "8083:80"
 
-  db:
+  dev-db:
     # In production, you may want to use a managed database service
     image: postgres:10-alpine
     environment:
@@ -66,11 +117,29 @@ services:
       # You should definitely change the password in production
       - POSTGRES_PASSWORD=!ChangeMe!
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-    ports:
-      - "5432:5432"
+      - dev-db-data:/var/lib/postgresql/data:rw
+
+  stag-db:
+    # In production, you may want to use a managed database service
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=api
+      - POSTGRES_USER=api-platform
+      # You should definitely change the password in production
+      - POSTGRES_PASSWORD=!ChangeMe!
+    volumes:
+      - stag-db-data:/var/lib/postgresql/data:rw
+      
+  prod-db:
+    # In production, you may want to use a managed database service
+    image: postgres:10-alpine
+    environment:
+      - POSTGRES_DB=api
+      - POSTGRES_USER=api-platform
+      # You should definitely change the password in production
+      - POSTGRES_PASSWORD=!ChangeMe!
+    volumes:
+      - prod-db-data:/var/lib/postgresql/data:rw
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks
@@ -98,8 +167,6 @@ services:
     volumes:
       - ./client:/usr/src/client:rw,cached
       - /usr/src/client/node_modules
-    ports:
-      - "80:3000"
 
   admin:
     # Use a static website hosting service in production
@@ -112,8 +179,6 @@ services:
     volumes:
       - ./admin:/usr/src/admin:rw,cached
       - /usr/src/admin/node_modules
-    ports:
-      - "81:3000"
 
   h2-proxy:
     # Don't use this proxy in prod
@@ -122,16 +187,28 @@ services:
       cache_from:
         - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
     depends_on:
-      - db
+      - dev-db
+      - stag-db
+      - prod-db
       - client
       - admin
-      - protocomponent-api
-      - protocomponent-cache-proxy
+      - pc-api
+      - prod-pc-cache-proxy
+      - stag-pc-cache-proxy
+      - dev-pc-cache-proxy
+    volumes:
+      - ./conf.d/:/etc/nginx/conf.d/:rw,cached
     ports:
-      - "443:443"
+      - "80:80" #http port
+      - "443:443" #ssl port
       - "444:444"
       - "8443:8443"
-      - "8444:8444"
+      - "8444:8444" 
+      - "5432:5432" #postgress port
+    environment:
+      - APP_NAME=${CONTAINER_PROJECT_NAME}
 
 volumes:
-  db-data: {}
+  prod-db-data: {}
+  stag-db-data: {}
+  dev-db-data: {}

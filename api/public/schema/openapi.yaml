@@ -1,27 +1,18 @@
 openapi: 3.0.2
 info:
-  title: 'Proto Component (PC)'
-  version: 0.0.1
+  title: 'Proto Component'
+  version: V.0.1
   description: |
-    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar. 
-          
-    Word lid van het slackkanaal [https://zaakonline.slack.com](https://zaakonline.slack.com) voor ondersteuning door het ontwikkel team. En krijg regelmatig updates over de ontwikkelingen op het gebied van de zaakonline componenten.
-            
-    Om het voor alle partijen zo makkelijk mogelijk te maken, stellen we zo veel mogelijk informatie over dit component openbaar beschikbaar.
-    - [datamodel als pdf](/schema/datamodel.pdf)
-    - [datamodel als mwb](/schema/datamodel.mwb)
-    - [codebase op github]()
-    - [codebase als zip](/archive/master.zip)
-    - [docker container](/) 
-    - [online demo]()
-            
+    API Details
+    - Component: Proto Component
+    - Reference: pc
+    - Enviroment: dev
+    - Version: V.0.1
+    - Repository: []() / [zip](/archive/master.zip)
+    - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
-    Applicaties kunnen op deze API alleen wijzigingen uitvoeren waarvoor zij over de juiste rechten(scopes) beschikken. De op deze api beschikbare scopes zijn:
-    - adres:schrijven
-    - adres:lezen
-    - adres:maken
-    - adres:verwijderen   
-                     
+    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar. 
+                             
     Voor het gebruik van deze applicatie is een JWT Token nodig, deze hangt altijd vast aan een applicatie, ofwel user. Geldige JWT Tokens worden aangemaakt bij het registreren van een applicatie en kennen een beperkte houdbaarheid. 
     JWT Tokens kunnen zowel worden verlengd, als opnieuw worden aangevraagd, dit aan de hand van de applicatie id en sleutel.
     Let er bij het meegeven van JWT tokens op dat deze moet worden voorafgegaan door een Bearer en een spatie, onder de header Authorization. De volledig naam wordt daarmee: 'Authorization: Bearer [TOKEN]'.
@@ -232,7 +223,7 @@ paths:
           in: header
         -
           name: X-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
+          description: 'A clarificationn as to why a request has been made  (doelbinding)'
           in: header
   '/example_entities/{id}':
     get:

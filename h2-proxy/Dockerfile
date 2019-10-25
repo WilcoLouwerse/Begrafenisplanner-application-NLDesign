@@ -15,3 +15,8 @@ FROM nginx:1.17-alpine
 RUN mkdir -p /etc/nginx/ssl/
 COPY --from=0 cert.key cert.crt /etc/nginx/ssl/
 COPY conf.d /etc/nginx/conf.d/
+
+#COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+#RUN chmod +x /usr/local/bin/docker-entrypoint
+
+#ENTRYPOINT ["docker-entrypoint"]
