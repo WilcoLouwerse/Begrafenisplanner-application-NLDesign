@@ -28,9 +28,9 @@ script:
   - docker-compose exec -T dev-pc-php bin/console security:check
   - curl -f http://localhost # Client
   - curl -f http://admin.localhost # Admin
-  - curl -f http://prod.localhost # API
-  - curl -f http://stag.localhost # API
-  - curl -f http://dev.localhost  # API
+  - curl -f http://api.localhost # API
+#  - curl -f http://stag.localhost # API
+#  - curl -f http://dev.localhost  # API
 #  - curl -fk https://localhost # Client (HTTP/2)
 #  - curl -fk https://localhost:444 # Admin (HTTP/2)
 #  - curl -fk https://localhost:8443 # API (HTTP/2)

@@ -3,7 +3,7 @@ vcl 4.0;
 import std;
 
 backend default {
-  .host = "pc-api";
+  .host = "api";
   .port = "80";
   # Health check
   #.probe = {
@@ -18,9 +18,7 @@ backend default {
 # Hosts allowed to send BAN requests
 acl invalidators {
   "localhost";
-  "prod-pc-php";
-  "stag-pc-php";
-  "dev-pc-php";
+  "php";
   # local Kubernetes network
   "10.0.0.0"/8;
   "172.16.0.0"/12;
