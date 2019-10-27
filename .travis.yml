@@ -68,13 +68,13 @@ deploy:
     skip_cleanup: true
     on:
         #repo: ConductionNL/Proto-component-commonground
-        branch: staging
+        branch: acceptation
   - provider: script
         - docker-compose push
     skip_cleanup: true
     on:
         #repo: ConductionNL/Proto-component-commonground
-        branch: development
+        branch: staging
   - provider: script
         - docker-compose push
     skip_cleanup: true
@@ -86,7 +86,7 @@ deploy:
     skip_cleanup: true
     on:
         #repo: ConductionNL/Proto-component-commonground
-        branch: acceptation
+        branch: development
     
 #deploy:
 #  provider: script
