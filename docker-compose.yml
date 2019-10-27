@@ -11,77 +11,50 @@ x-cache:
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
 
 services:
-  dev-pc-php:
+  php:
     &php
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php:development
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php:${APP_ENV}
     build:
       context: ./api
       target: api_platform_php
       <<: *cache
     depends_on:
-      - dev-db
-    # Comment out these volumes in production
+      - db
     volumes:
       - ./api:/srv/api:rw,cached
       # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
       # - ./api/var:/srv/api/var:rw
     environment:
-      - APP_ENV=dev
-      - APP_DEBUG=1      
+      - APP_ENV=${APP_ENV}
+      - APP_DEBUG=${APP_DEBUG} 
       - APP_VERSION=${CONTAINER_PROJECT_VERSION}     
       - APP_TITLE=${CONTAINER_PROJECT_TITLE}
       - APP_NAME=${CONTAINER_PROJECT_NAME}
-      - DATABASE_URL=postgres://api-platform:!ChangeMe!@dev-db/api?serverVersion=10.1
-  prod-pc-php:
-    <<: *php
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php:${CONTAINER_PROJECT_VERSION}
-    depends_on:
-      - prod-db
-    environment:
-      - APP_ENV=prod
-      - APP_DEBUG=0
-      - APP_VERSION=${CONTAINER_PROJECT_VERSION}     
-      - APP_TITLE=${CONTAINER_PROJECT_TITLE}
-      - APP_NAME=${CONTAINER_PROJECT_NAME}
-      - DATABASE_URL=postgres://api-platform:!ChangeMe!@prod-db/api?serverVersion=10.1
-  stag-pc-php:
-    <<: *php
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php:staging
-    depends_on:
-      - stag-db
-    environment:
-      - APP_ENV=stag
-      - APP_DEBUG=1      
-      - APP_VERSION=${CONTAINER_PROJECT_VERSION}     
-      - APP_TITLE=${CONTAINER_PROJECT_TITLE}
-      - APP_NAME=${CONTAINER_PROJECT_NAME}
-      - DATABASE_URL=postgres://api-platform:!ChangeMe!@stag-db/api?serverVersion=10.1
+      - DATABASE_URL=postgres://api-platform:!ChangeMe!@db/api?serverVersion=10.1
 
-  pc-api:
+  api:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
     build:
       context: ./api
       target: api_platform_nginx
       <<: *cache
     depends_on:
-      - prod-pc-php
-      - stag-pc-php
-      - dev-pc-php
+      - php
     # Comment out this volume in production
     volumes:
       - ./api/public:/srv/api/public:ro
     ports:
       - "8080:80"
 
-  dev-pc-cache-proxy:
+  cache-proxy:
     &varnish
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish:development
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish:${APP_ENV}
     build:
       context: ./api
       target: api_platform_varnish
       <<: *cache
     depends_on:
-      - pc-api
+      - api
     volumes:
       - ./api/docker/varnish/conf:/usr/local/etc/varnish:ro
     tmpfs:
@@ -89,24 +62,9 @@ services:
     ports:
       - "8081:80"
     environment:
+      - APP_ENV=${APP_ENV}
       - APP_NAME=${CONTAINER_PROJECT_NAME}
-            
-  prod-pc-cache-proxy:
-    <<: *varnish
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish:${CONTAINER_PROJECT_VERSION}
-    environment:
-      - APP_NAME=${CONTAINER_PROJECT_NAME}
-    ports:
-      - "8082:80"
-  stag-pc-cache-proxy:
-    <<: *varnish
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish:staging
-    environment:
-      - APP_NAME=${CONTAINER_PROJECT_NAME}
-    ports:
-      - "8083:80"
-
-  dev-db:
+  db:
     # In production, you may want to use a managed database service
     image: postgres:10-alpine
     environment:
@@ -116,28 +74,6 @@ services:
       - POSTGRES_PASSWORD=!ChangeMe!
     volumes:
       - dev-db-data:/var/lib/postgresql/data:rw
-
-  stag-db:
-    # In production, you may want to use a managed database service
-    image: postgres:10-alpine
-    environment:
-      - POSTGRES_DB=api
-      - POSTGRES_USER=api-platform
-      # You should definitely change the password in production
-      - POSTGRES_PASSWORD=!ChangeMe!
-    volumes:
-      - stag-db-data:/var/lib/postgresql/data:rw
-      
-  prod-db:
-    # In production, you may want to use a managed database service
-    image: postgres:10-alpine
-    environment:
-      - POSTGRES_DB=api
-      - POSTGRES_USER=api-platform
-      # You should definitely change the password in production
-      - POSTGRES_PASSWORD=!ChangeMe!
-    volumes:
-      - prod-db-data:/var/lib/postgresql/data:rw
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks
@@ -185,13 +121,12 @@ services:
       cache_from:
         - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
     depends_on:
-      #- dev-db
-      #- stag-db
-      #- prod-db
+      - db
       - client
       - admin
-      - pc-api
-      #- prod-pc-cache-proxy
+      - api
+      - cache-proxy
+      - mercure
       #- stag-pc-cache-proxy
       #- dev-pc-cache-proxy
     #volumes:
@@ -203,8 +138,9 @@ services:
       - "8443:8443"
       - "8444:8444" 
       - "5432:5432" #postgress port
-    #environment:
-    #  - APP_NAME=${CONTAINER_PROJECT_NAME}
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_NAME=${CONTAINER_PROJECT_NAME}
 
 volumes:
   prod-db-data: {}
