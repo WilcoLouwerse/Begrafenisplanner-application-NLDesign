@@ -2,6 +2,25 @@
 
 This component was designed inline with the [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie) and [https://www.noraonline.nl/wiki/Standaarden](NORA).
 
+Domain Build-up and routing
+-------
+By convention the component assumes that you follow common ground domain name build up, meaning {enviroment}.{component}.{rest of domain}. That means that only the first two ulr parts are used for routin. E.g. a propper domain for the production API of the verzoeken registratie component would be api.vrc.zaakonline.nl
+
+Enviroments
+-------
+By default the component assumes that you want to run several enviroments for development purposes, these are provided by the buildin NLX load balancer. The default API enviroments are
+- api /prod (Production)
+- acce (Acceptation)
+- stag (Staging)
+- test (Testing)
+- dev (Development)
+
+Besides the API envormiments the component also ships with
+- client (An react client frontend)
+- admin ( An read admin interface)
+
+If no enviroment is supplied to the load balancer then trafic is routed to the client interface.
+
 Loging Headers (NLX Audit trail)
 -------
 We inherit a couple of headers from the transaction logging within the [NLX schema](https://docs.nlx.io/further-reading/transaction-logs/), there does however see to be on ongoing discussion on how headers are supposed to be interpreted. The NLX schema states 

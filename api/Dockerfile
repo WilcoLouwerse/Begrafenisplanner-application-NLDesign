@@ -108,20 +108,25 @@ ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
 # Let update the docs to show the latest chages
-RUN bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
+# RUN bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
 
 # "nginx" stage
 # depends on the "php" stage above
 FROM nginx:${NGINX_VERSION}-alpine AS api_platform_nginx
 
-COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx/conf.d /etc/nginx/conf.d/
 
 WORKDIR /srv/api
 
 COPY public public/
 
+#COPY docker/nginx/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+#RUN chmod +x /usr/local/bin/docker-entrypoint
+
+#ENTRYPOINT ["docker-entrypoint"]
+
 # "varnish" stage
 # does not depend on any of the above stages, but placed here to keep everything in one Dockerfile
 FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_platform_varnish
 
-COPY docker/varnish/conf/default.vcl /usr/local/etc/varnish/default.vcl
+COPY docker/varnish/conf /usr/local/etc/varnish/
