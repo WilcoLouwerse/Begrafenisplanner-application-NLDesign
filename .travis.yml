@@ -87,6 +87,8 @@ deploy:
     on:
         #repo: ConductionNL/Proto-component-commonground
         branch: development
+        
+# kubectl rollout restart        
     
 #deploy:
 #  provider: script
