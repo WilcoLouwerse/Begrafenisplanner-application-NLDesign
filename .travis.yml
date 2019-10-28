@@ -61,32 +61,15 @@ deploy:
         - docker-compose push
     skip_cleanup: true
     on:
-        #repo: ConductionNL/Proto-component-commonground
         branch: master
-  - provider: script
-        - docker-compose push
-    skip_cleanup: true
-    on:
-        #repo: ConductionNL/Proto-component-commonground
-        branch: acceptation
-  - provider: script
-        - docker-compose push
-    skip_cleanup: true
-    on:
-        #repo: ConductionNL/Proto-component-commonground
-        branch: staging
-  - provider: script
-        - docker-compose push
-    skip_cleanup: true
-    on:
-        #repo: ConductionNL/Proto-component-commonground
-        branch: testing
-  - provider: script
-        - docker-compose push
-    skip_cleanup: true
-    on:
-        #repo: ConductionNL/Proto-component-commonground
         branch: development
+        branch: testing
+        branch: acceptation
+        branch: staging
+        
+# kubectl rollout restart       
+
+# we also want to warn the common-ground dev page that a change has been made 
     
 #deploy:
 #  provider: script
