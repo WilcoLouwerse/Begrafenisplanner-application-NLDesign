@@ -6,8 +6,8 @@ parameters:
     env(CONDUCTION_COMMONGROUND_BAG_APIKEY): 'Change me your .env file'
     common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
     common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
-    common_ground.oas.type: tool
-    common_ground.oas.host: pc.zaakonline.nl
+    common_ground.oas.type: service
+    common_ground.oas.host: irc.zaakonline.nl
     common_ground.oas.servers:
             -
               description: Demo Omgeving

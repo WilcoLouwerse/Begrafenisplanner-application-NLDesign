@@ -2,22 +2,30 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-php:
-  repository: docker.io/conduction/protocomponent-php
-  tag: latest
-  pullPolicy: Always
-  replicaCount: 1
-  mercure:
-    jwtSecret: ""
-  env: prod
+settings:
+  registryBase: docker.io/conduction
+  projectName: pc
+  env: dev
   debug: '0'
-  secret: ""
+  replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '^(.+\.)?common-ground\.dev$|^(.+\.)?zaakonline\.nl$|^(.+\.)?conduction\.nl$|^example\.com$|^(.+\.)?178.128.142.152$|178.128.142.152|localhost'
+  pullPolicy: Always
+  # You will need these proxies on kubernetes
   trustedProxies:
     - 10.0.0.0/8
     - 172.16.0.0/12
     - 192.168.0.0/16
+  loadbalancerEnabled: true
+  
+
+php:
+  repository: docker.io/conduction/protocomponent-php
+  tag: latest
+  mercure:
+    jwtSecret: ""
+  env: prod
+  secret: ""
 
 nginx:
   repository: docker.io/conduction/protocomponent-nginx

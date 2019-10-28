@@ -118,6 +118,13 @@ LIKE pattern matching always covers the entire string. Therefore, if it's desire
 
 To match a literal underscore or percent sign without matching other characters, the respective character in pattern must be preceded by a backlash. 
 
+## Kubernetes
+
+### Loadbalancers
+We no longer provide a load balancer per component, since this would require a ip per component. Draining ip's on mult component kubernetes clusters. In stead we make componentes available as an interner service
+
+### server naming
+A component is (speaking in kubernetes terms) a service that is available at 
 
 ## Data types
 
