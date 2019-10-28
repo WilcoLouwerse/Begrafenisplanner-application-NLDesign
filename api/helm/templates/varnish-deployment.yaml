@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: {{ include "name" . }}-varnish
-          image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-cash-proxy:{{ .Values.settings.env }}"
+          image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-varnish:{{ .Values.settings.env }}"
           imagePullPolicy: {{ .Values.settings.pullPolicy }}
           command: ["varnishd"]
           args: ["-F", "-f", "/usr/local/etc/varnish/default.vcl", "-p", "http_resp_hdr_len=65536", "-p", "http_resp_size=98304"]

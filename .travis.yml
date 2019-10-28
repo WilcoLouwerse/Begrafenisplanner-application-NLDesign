@@ -65,11 +65,12 @@ deploy:
         branch: development
         branch: testing
         branch: acceptation
-        branch: staging
+        branch: staging        
         
 # kubectl rollout restart       
 
 # we also want to warn the common-ground dev page that a change has been made 
+    
     
 #deploy:
 #  provider: script

@@ -33,7 +33,7 @@ services:
       - DATABASE_URL=postgres://api-platform:!ChangeMe!@db/api?serverVersion=10.1
 
   api:
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx:${APP_ENV}
     build:
       context: ./api
       target: api_platform_nginx

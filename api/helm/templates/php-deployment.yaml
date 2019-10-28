@@ -42,6 +42,11 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: trusted-proxies
+            - name: APP_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: project-name
             - name: APP_ENV
               valueFrom:
                 configMapKeyRef:
