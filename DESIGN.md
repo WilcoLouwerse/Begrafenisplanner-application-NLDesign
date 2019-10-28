@@ -4,7 +4,7 @@ This component was designed inline with the [NL API Strategie](https://docs.geos
 
 Domain Build-up and routing
 -------
-By convention the component assumes that you follow common ground domain name build up, meaning {enviroment}.{component}.{rest of domain}. That means that only the first two ulr parts are used for routin. E.g. a propper domain for the production API of the verzoeken registratie component would be api.vrc.zaakonline.nl
+By convention the component assumes that you follow the common ground domain name build up, meaning {enviroment}.{component}.{rest of domain}. That means that only the first two url parts are used for routin. E.g. a propper domain for the production API of the verzoeken registratie component would be api.vrc.zaakonline.nl
 
 Enviroments
 -------
