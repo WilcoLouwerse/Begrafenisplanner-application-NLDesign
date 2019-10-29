@@ -22,6 +22,8 @@ services:
       - db
     volumes:
       - ./api:/srv/api:rw,cached
+      - ./api/nlx-setup:/cert:rw,cached
+      #- ./nlx-setup:/Users/<your-username>/nlx-setup:rw,cached
       # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
       # - ./api/var:/srv/api/var:rw
     environment:
@@ -45,6 +47,9 @@ services:
       - ./api/public:/srv/api/public:ro
     ports:
       - "8080:80"
+    environment:
+      - PHP_SERVICE=php
+      - NLX_INWAY=nlx-inway
 
   cache-proxy:
     &varnish
@@ -64,6 +69,43 @@ services:
     environment:
       - APP_ENV=${APP_ENV}
       - APP_NAME=${CONTAINER_PROJECT_NAME}
+      
+  nlx-outway:
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-outway:${APP_ENV}
+    build:
+      context: ./api
+      target: api-nlx-outway
+    depends_on:
+      - api
+    volumes:
+      - ./nlx-setup:/certs:rw,cached
+    environment:
+      - DIRECTORY_INSPECTION_ADDRESS=directory-inspection-api.demo.nlx.io:443 
+      - TLS_NLX_ROOT_CERT=/certs/root.crt 
+      - TLS_ORG_CERT=/certs/org.crt 
+      - TLS_ORG_KEY=/certs/org.key 
+      - DISABLE_LOGDB=1 
+    #ports:
+    #  - "8081:80"
+    
+  nlx-inway:
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-inway:${APP_ENV}
+    build:
+      context: ./api
+      target: api-nlx-inway
+    depends_on:
+      - api
+    volumes:
+      - ./nlx-setup:/certs:rw,cached
+    environment:
+      - DIRECTORY_REGISTRATION_ADDRESS=directory-registration-api.demo.nlx.io:443 
+      - SELF_ADDRESS=my-organization.nl:443 
+      - SERVICE_CONFIG=/service-config.toml 
+      - TLS_NLX_ROOT_CERT=/certs/root.crt 
+      - TLS_ORG_CERT=/certs/org.crt 
+      - TLS_ORG_KEY=/certs/org.key 
+      - DISABLE_LOGDB=1 
+    
   db:
     # In production, you may want to use a managed database service
     image: postgres:10-alpine
@@ -114,6 +156,8 @@ services:
       - ./admin:/usr/src/admin:rw,cached
       - /usr/src/admin/node_modules
 
+    
+    
   h2-proxy:
     # Don't use this proxy in prod
     build:

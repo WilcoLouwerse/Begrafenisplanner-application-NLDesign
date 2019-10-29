@@ -17,6 +17,7 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 
+	# Lets setup an jwt certificate if needed
 	# lets skipp build jwt tokens for now
 	#if [ "$APP_ENV" != 'prod' ]; then
 		#jwt_passphrase=$(grep '^JWT_PASSPHRASE=' .env | cut -f 2 -d '=')
@@ -33,6 +34,15 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	if [ "$APP_ENV" != 'prod' ]; then
 		composer install --prefer-dist --no-progress --no-suggest --no-interaction
 	fi
+	
+	# Lets setup an nlx certificate if needed
+	#if [ "$APP_ENV" != 'prod' ]; then
+		#mkdir -p /cert
+		# Lets see if we already have cerificates and if we need to make any
+		#if [ ! -f /cert/org.csr ] || [ ! -f /cert/org.key ] 
+		  # openssl req -utf8 -nodes -sha256 -keyout org.key -out org.csr -subj "/C=$COUNTRY_NAME/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION_NAME/OU=$ORGANIZATION_UNIT_NAME/CN=$COMMON_NAME"
+		#fi
+	#fi
 
 	echo "Waiting for db to be ready..."
 	until bin/console doctrine:query:sql "SELECT 1" > /dev/null 2>&1; do

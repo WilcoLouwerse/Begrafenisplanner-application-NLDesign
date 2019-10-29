@@ -25,6 +25,12 @@ spec:
           imagePullPolicy: {{ .Values.settings.pullPolicy }}
           ports:
             - containerPort: 80
+          env:
+            - name: PHP_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: php-service
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

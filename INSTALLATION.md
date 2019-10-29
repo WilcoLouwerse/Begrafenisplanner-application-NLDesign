@@ -80,6 +80,13 @@ $ helm del protocomponent  --purge --kubeconfig="api/helm/kubeconfig.yaml"
 
 Note that you can replace commonground with the namespace that you want to use (normally the name of your component).
 
+
+## Making your app known on NLX
+The proto component commes with an default NLX setup, if you made your own component however you might want to provide it trough the [NLX](https://www.nlx.io/) service. Furntunatly the proto component commes with an nice setup for NLX integration.
+
+First of all change the nececery lines in the [.env](.env) file, basiccaly everything under the NLX setup tag. Keep in mind that you wil need to have your component available on an (sub)domain name (a simple IP wont sufice).
+
+
 ## Deploying trough common-ground.dev
 
 

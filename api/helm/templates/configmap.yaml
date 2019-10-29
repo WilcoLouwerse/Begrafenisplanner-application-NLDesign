@@ -16,6 +16,7 @@ data:
   trusted-proxies: {{ join "," .Values.settings.trustedProxies }}
   trusted-hosts: {{ .Values.settings.trustedHosts | quote }}
   project-name: {{ .Values.settings.projectName | quote }}
+  php-service: {{ include "name" . }}-{{ .Values.settings.env }}-php
   
   varnish-url: {{ if .Values.varnish.enabled }}http://varnish{{ else }}{{ .Values.varnish.url | quote }}{{ end }}
   mercure-publish-url: {{ .Values.mercure.publishUrl | quote }}
