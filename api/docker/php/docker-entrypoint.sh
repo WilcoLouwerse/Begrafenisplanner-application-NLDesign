@@ -37,9 +37,9 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	
 	# Lets setup an nlx certificate if needed
 	#if [ "$APP_ENV" != 'prod' ]; then
-		#mkdir -p /cert
+		mkdir -p /cert
 		# Lets see if we already have cerificates and if we need to make any
-		#if [ ! -f /cert/org.csr ] || [ ! -f /cert/org.key ] 
+		#if [ ! -f /cert/org.csr ] || [ ! -f /cert/org.key ] ; then
 		  # openssl req -utf8 -nodes -sha256 -keyout org.key -out org.csr -subj "/C=$COUNTRY_NAME/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION_NAME/OU=$ORGANIZATION_UNIT_NAME/CN=$COMMON_NAME"
 		#fi
 	#fi
