@@ -144,4 +144,4 @@ COPY nlx-setup /certs/
 COPY nlx-setup/service-config.toml.template /service-config.toml.template
 
 # Lets parse the toml file
-CMD envsubst < /service-config.toml.template > /service-config.toml
+# CMD envsubst < /service-config.toml.template > /service-config.toml

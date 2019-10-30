@@ -63,7 +63,7 @@ services:
     depends_on:
       - api
     volumes:
-      - ./api/docker/varnish/conf:/usr/local/etc/varnish:ro
+      - ./api/docker/varnish/conf:/usr/local/etc/varnish:rw,cached
     tmpfs:
       - /usr/local/var/varnish:exec
     ports:
