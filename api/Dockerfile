@@ -129,19 +129,19 @@ FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_platform_varnish
 
 COPY docker/varnish/conf /usr/local/etc/varnish/
 
+# Lets parse the toml file
+CMD envsubst < /usr/local/etc/varnish/default.vcl.template > /usr/local/etc/varnish/default.vcl
 
 # NLX "outway" stage, used to contact the NLX framework
 FROM nlxio/outway AS api-nlx-outway
 
-COPY nlx-setup/root.crt /certs/root.crt
-#COPY nlx-setup/org.crt /certs/org.crt
-#COPY nlx-setup/org.key /certs/org.key
-
+COPY nlx-setup /certs/
 
 # NLX "inway" stage, provides our service to the NLX framework
 FROM nlxio/inway AS api-nlx-inway
 
-COPY nlx-setup/root.crt /certs/root.crt
-#COPY nlx-setup/org.crt /certs/org.crt
-#COPY nlx-setup/org.key /certs/org.key
-#COPY nlx-setup/service-config.toml /service-config.toml
+COPY nlx-setup /certs/
+COPY nlx-setup/service-config.toml.template /service-config.toml.template
+
+# Lets parse the toml file
+CMD envsubst < /service-config.toml.template > /service-config.toml

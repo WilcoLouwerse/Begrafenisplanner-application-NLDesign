@@ -86,6 +86,8 @@ The proto component commes with an default NLX setup, if you made your own compo
 
 First of all change the nececery lines in the [.env](.env) file, basiccaly everything under the NLX setup tag. Keep in mind that you wil need to have your component available on an (sub)domain name (a simple IP wont sufice).
 
+To force the re-generation of certificates simply delete the org.crt en org.key in the api/nlx-setup folder
+
 
 ## Deploying trough common-ground.dev
 

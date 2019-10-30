@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.5'
 
 x-cache:
   &cache
@@ -42,6 +42,8 @@ services:
       <<: *cache
     depends_on:
       - php
+      - nlx-outway
+      - nlx-inway
     # Comment out this volume in production
     volumes:
       - ./api/public:/srv/api/public:ro
@@ -70,42 +72,71 @@ services:
       - APP_ENV=${APP_ENV}
       - APP_NAME=${CONTAINER_PROJECT_NAME}
       
-  #nlx-outway:
-  #  image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-outway:${APP_ENV}
-  #  build:
-  #    context: ./api
-  #    target: api-nlx-outway
-  #  depends_on:
-  #    - api
-  #  volumes:
-  #    - ./nlx-setup:/certs:rw,cached
-  #  environment:
-  #    - DIRECTORY_INSPECTION_ADDRESS=directory-inspection-api.demo.nlx.io:443 
-  #    - TLS_NLX_ROOT_CERT=/certs/root.crt 
-  #    - TLS_ORG_CERT=/certs/org.crt 
-  #    - TLS_ORG_KEY=/certs/org.key 
-  #    - DISABLE_LOGDB=1 
+  nlx-outway:
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-outway:${APP_ENV}
+    build:
+      context: ./api
+      target: api-nlx-outway
+    depends_on:
+      - nlx-postgres
+    volumes:
+      - ./api/nlx-setup:/certs:rw,cached
+    environment:
+      - DIRECTORY_INSPECTION_ADDRESS=directory-inspection-api.demo.nlx.io:443 
+      - TLS_NLX_ROOT_CERT=/certs/root.crt 
+      - TLS_ORG_CERT=/certs/org.crt 
+      - TLS_ORG_KEY=/certs/org.key 
+      - POSTGRES_DSN=postgres://postgres:postgres@nlx-postgres/txlog-db?sslmode=disable&connect_timeout=10
+    networks:
+      - nlx
     
-  #nlx-inway:
-  #  image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-inway:${APP_ENV}
-  #  build:
-  #    context: ./api
-  #    target: api-nlx-inway
-  #  depends_on:
-  #    - api
-  #  volumes:
-  #    - ./nlx-setup:/certs:rw,cached
-  #  environment:
-  #    - DIRECTORY_REGISTRATION_ADDRESS=directory-registration-api.demo.nlx.io:443 
-  #    - SELF_ADDRESS=my-organization.nl:443 
-  #    - SERVICE_CONFIG=/service-config.toml 
-  #    - TLS_NLX_ROOT_CERT=/certs/root.crt 
-  #    - TLS_ORG_CERT=/certs/org.crt 
-  #    - TLS_ORG_KEY=/certs/org.key 
-  #    - DISABLE_LOGDB=1 
+  nlx-inway:
+    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-inway:${APP_ENV}
+    build:
+      context: ./api
+      target: api-nlx-inway
+    depends_on:
+      - nlx-postgres
+    volumes:
+      - ./api/nlx-setup:/certs:rw,cached
+    environment:
+      - DIRECTORY_REGISTRATION_ADDRESS=directory-registration-api.demo.nlx.io:443 
+      - SELF_ADDRESS=pc.zaakonline.nl:443 
+      - SERVICE_CONFIG=/service-config.toml 
+      - TLS_NLX_ROOT_CERT=/certs/root.crt 
+      - TLS_ORG_CERT=/certs/org.crt 
+      - TLS_ORG_KEY=/certs/org.key 
+      - POSTGRES_DSN=postgres://postgres:postgres@nlx-postgres/txlog-db?sslmode=disable&connect_timeout=10
+    networks:
+      - nlx
+  
+  nlx-postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: txlog-db
+      POSTGRES_USER: postgres
+    volumes:
+      - nlx-data-2:/var/lib/postgresql/data:rw
+    networks:
+      - nlx
+      
+  txlog-db:
+    image: nlxio/txlog-db
+    depends_on:
+      - nlx-postgres
+      - nlx-outway
+      - nlx-inway
+    environment:
+      PGHOST: nlx-postgres
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      PGDATABASE: txlog-db
+    command: /usr/local/bin/upgrade-db.sh
+    networks:
+      - nlx
     
   db:
-    # In production, you may want to use a managed database service
     image: postgres:10-alpine
     environment:
       - POSTGRES_DB=api
@@ -113,7 +144,9 @@ services:
       # You should definitely change the password in production
       - POSTGRES_PASSWORD=!ChangeMe!
     volumes:
-      - dev-db-data:/var/lib/postgresql/data:rw
+      - db-data:/var/lib/postgresql/data:rw
+    networks:
+      - nlx
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks
@@ -153,8 +186,6 @@ services:
     volumes:
       - ./admin:/usr/src/admin:rw,cached
       - /usr/src/admin/node_modules
-
-    
     
   h2-proxy:
     # Don't use this proxy in prod
@@ -184,7 +215,10 @@ services:
       - APP_ENV=${APP_ENV}
       - APP_NAME=${CONTAINER_PROJECT_NAME}
 
+networks:
+  nlx:
+    name: nlx
+
 volumes:
-  prod-db-data: {}
-  stag-db-data: {}
-  dev-db-data: {}
+  db-data: {}
+  nlx-data-2: {}
