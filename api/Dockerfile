@@ -130,7 +130,7 @@ FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_platform_varnish
 COPY docker/varnish/conf /usr/local/etc/varnish/
 
 # Lets parse the toml file
-CMD envsubst < /usr/local/etc/varnish/default.vcl.template > /usr/local/etc/varnish/default.vcl
+# CMD envsubst < /usr/local/etc/varnish/default.vcl.template > /usr/local/etc/varnish/default.vcl
 
 # NLX "outway" stage, used to contact the NLX framework
 FROM nlxio/outway AS api-nlx-outway

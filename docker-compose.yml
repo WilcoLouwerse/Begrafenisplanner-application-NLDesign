@@ -42,8 +42,10 @@ services:
       <<: *cache
     depends_on:
       - php
+    # Comment out this volume in production if you do not want to use nlx
       - nlx-outway
-      - nlx-inway
+    # If you us this docker-compose file for production enviroments and want to us nlx-inway uncomment the following lins
+    #  - nlx-inway
     # Comment out this volume in production
     volumes:
       - ./api/public:/srv/api/public:ro
@@ -90,26 +92,29 @@ services:
     networks:
       - nlx
     
-  nlx-inway:
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-inway:${APP_ENV}
-    build:
-      context: ./api
-      target: api-nlx-inway
-    depends_on:
-      - nlx-postgres
-    volumes:
-      - ./api/nlx-setup:/certs:rw,cached
-    environment:
-      - DIRECTORY_REGISTRATION_ADDRESS=directory-registration-api.demo.nlx.io:443 
-      - SELF_ADDRESS=pc.zaakonline.nl:443 
-      - SERVICE_CONFIG=/service-config.toml 
-      - TLS_NLX_ROOT_CERT=/certs/root.crt 
-      - TLS_ORG_CERT=/certs/org.crt 
-      - TLS_ORG_KEY=/certs/org.key 
-      - POSTGRES_DSN=postgres://postgres:postgres@nlx-postgres/txlog-db?sslmode=disable&connect_timeout=10
-    networks:
-      - nlx
+ # Uncomment the follwoign lines if you want to deploy trough a docker-compose chart and wish to use an nlx inway
+ # 
+ # nlx-inway:
+ #   image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-inway:${APP_ENV}
+ #   build:
+ #     context: ./api
+ #     target: api-nlx-inway
+ #   depends_on:
+ #     - nlx-postgres
+ #   volumes:
+ #     - ./api/nlx-setup:/certs:rw,cached
+ #   environment:
+ #     - DIRECTORY_REGISTRATION_ADDRESS=directory-registration-api.demo.nlx.io:443 
+ #     - SELF_ADDRESS=pc.zaakonline.nl:443 
+ #     - SERVICE_CONFIG=/service-config.toml 
+ #     - TLS_NLX_ROOT_CERT=/certs/root.crt 
+ #     - TLS_ORG_CERT=/certs/org.crt 
+ #     - TLS_ORG_KEY=/certs/org.key 
+ #     - POSTGRES_DSN=postgres://postgres:postgres@nlx-postgres/txlog-db?sslmode=disable&connect_timeout=10
+ #   networks:
+ #     -  nlx
   
+  # Comment out this service in production if you do not want to use nlx
   nlx-postgres:
     image: postgres:12
     environment:
@@ -121,12 +126,14 @@ services:
     networks:
       - nlx
       
+  # Comment out this service in production if you do not want to use nlx
   txlog-db:
     image: nlxio/txlog-db
     depends_on:
       - nlx-postgres
       - nlx-outway
-      - nlx-inway
+    # If you us this docker-compose file for production enviroments and want to us nlx-inway uncomment the following lins
+    #  - nlx-inway
     environment:
       PGHOST: nlx-postgres
       PGUSER: postgres

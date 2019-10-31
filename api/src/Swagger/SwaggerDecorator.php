@@ -69,17 +69,18 @@ final class SwaggerDecorator implements NormalizerInterface
 				
 				// NLX loging headers
 				$call['parameters'][] = [
+						'name' => 'Authorization',
+						'description' => 'The JWT of the entity performing the request',
+						'in' => 'header',
+				];
+				// NLX loging headers
+				$call['parameters'][] = [
 						'name' => 'API-Version',
 						'description' => 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)',
 						'example'=>'1.0.1',
 						'in' => 'header',
 				];
-				// NLX loging headers
-				$call['parameters'][] = [
-						'name' => 'X-NLX-Request-User-Id',
-						'description' => 'The id of the user performing the request',
-						'in' => 'header',
-				];
+				/*
 				// NLX loging headers
 				$call['parameters'][] = [
 						'name' => 'X-NLX-Request-Application-Id',
@@ -90,6 +91,13 @@ final class SwaggerDecorator implements NormalizerInterface
 				$call['parameters'][] = [
 						'name' => 'X-NLX-Request-Subject-Identifier',
 						'description' => 'An subject identifier for purpose registration (doelbinding)',
+						'in' => 'header',
+				];
+				*/ 
+				// NLX loging headers
+				$call['parameters'][] = [
+						'name' => 'X-NLX-Logrecord-ID',
+						'description' => 'A  globally unique id of the request, which makes a request traceable throughout the network.',
 						'in' => 'header',
 				];
 				// NLX loging headers
@@ -107,10 +115,9 @@ final class SwaggerDecorator implements NormalizerInterface
 				// NLX loging headers
 				$call['parameters'][] = [
 						'name' => 'X-NLX-Request-Data-Subject',
-						'description' => 'A key-value list of data subjects related to this request. e.g. `bsn=12345678,kenteken=ab-12-fg`',
+						'description' => 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`',
 						'in' => 'header',
-				]; ;
-				
+				]; 
 				// NLX loging headers
 				$call['parameters'][] = [
 						'name' => 'X-Audit-Clarification',
