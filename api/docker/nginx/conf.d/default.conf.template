@@ -8,7 +8,7 @@ server {
 
     location ~ ^/index\.php(/|$) {
         # Comment the next line and uncomment the next to enable dynamic resolution (incompatible with Kubernetes)
-        fastcgi_pass php:9000;
+        fastcgi_pass $ENV{"NGINX_HOST"}:9000;
         #resolver 127.0.0.11;
         #set $upstream_host commonground-php;
         #fastcgi_pass $upstream_host:9000;
@@ -36,3 +36,6 @@ server {
       return 404;
     }
 }
+
+
+

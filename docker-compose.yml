@@ -33,6 +33,8 @@ services:
       - APP_TITLE=${CONTAINER_PROJECT_TITLE}
       - APP_NAME=${CONTAINER_PROJECT_NAME}
       - DATABASE_URL=postgres://api-platform:!ChangeMe!@db/api?serverVersion=10.1
+    ports:
+      - "8082:80"
 
   api:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx:${APP_ENV}
@@ -43,7 +45,7 @@ services:
     depends_on:
       - php
     # Comment out this volume in production if you do not want to use nlx
-      - nlx-outway
+    #  - nlx-outway
     # If you us this docker-compose file for production enviroments and want to us nlx-inway uncomment the following lins
     #  - nlx-inway
     # Comment out this volume in production
@@ -52,8 +54,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      - PHP_SERVICE=php
-      - NLX_INWAY=nlx-inway
+      - NGINX_HOST=php
 
   cache-proxy:
     &varnish
@@ -64,15 +65,15 @@ services:
       <<: *cache
     depends_on:
       - api
+      - php
     volumes:
       - ./api/docker/varnish/conf:/usr/local/etc/varnish:rw,cached
     tmpfs:
       - /usr/local/var/varnish:exec
     ports:
-      - "8081:80"
+     - "8081:80"
     environment:
-      - APP_ENV=${APP_ENV}
-      - APP_NAME=${CONTAINER_PROJECT_NAME}
+      - PHP_SERVICE=api 
       
   nlx-outway:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-outway:${APP_ENV}
@@ -152,8 +153,6 @@ services:
       - POSTGRES_PASSWORD=!ChangeMe!
     volumes:
       - db-data:/var/lib/postgresql/data:rw
-    networks:
-      - nlx
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks

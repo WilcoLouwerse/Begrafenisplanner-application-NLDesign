@@ -1,7 +1,9 @@
-#!/bin/sh
+#!/usr/local/bin/docker-entrypoint
 
-export APP_NAME
+	# Installing envsubst"
+	echo "Installing envsubst"
+	apk --no-cache add gettext
 
-envsubst '${APP_NAME}' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf
-
-exec "$@"
+	# Inserting variables
+	echo "Inserting variables"
+	envsubst < /usr/local/etc/varnish/default.vcl.template > /usr/local/etc/varnish/default.vcl

@@ -9,7 +9,10 @@ ARG NGINX_VERSION=1.17
 ARG VARNISH_VERSION=6.2
 
 
-# "php" stage
+#############################
+# 		"php" stage	 		#
+#############################
+# The base stage for all our stages
 FROM php:${PHP_VERSION}-fpm-alpine AS api_platform_php
 
 # persistent / runtime deps
@@ -110,38 +113,63 @@ CMD ["php-fpm"]
 # Let update the docs to show the latest chages
 # RUN bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
 
-# "nginx" stage
+#############################
+# 		"nginx" stage 		#
+#############################
 # depends on the "php" stage above, and with an litle bit of help from https://github.com/shiphp/nginx-env
 FROM shiphp/nginx-env AS api_platform_nginx
 
-# Set an ENV variable called ENV
-#ENV API=api
+# We use our own more secure and limited config
+#ONBUILD ADD docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
-COPY docker/nginx/conf.d /etc/nginx/conf.d/
-
+# Due to our config we need a copy of the public folder for serving static content
+COPY docker/nginx/conf.d/default.conf.template /etc/nginx/conf.d/default.conf
 WORKDIR /srv/api
+COPY --from=api_platform_php /srv/api/public public/
 
-COPY public public/
+# Old code
+#FROM nginx:${NGINX_VERSION}-alpine AS api_platform_nginx
+#COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
+#WORKDIR /srv/api
+#COPY --from=api_platform_php /srv/api/public public/
 
-# "varnish" stage
+#############################
+# 		"varnish" stage 	#
+#############################
 # does not depend on any of the above stages, but placed here to keep everything in one Dockerfile
-FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_platform_varnish
+FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_platform_varnish 
+#FROM eeacms/varnish AS api_platform_varnish
+#FROM varnish:6.3 AS api_platform_varnish
+
+# Lets install envsubst
+RUN apk --no-cache add gettext
 
 COPY docker/varnish/conf /usr/local/etc/varnish/
 
-# Lets parse the toml file
-# CMD envsubst < /usr/local/etc/varnish/default.vcl.template > /usr/local/etc/varnish/default.vcl
+RUN envsubst '$PHP_SERVICE' < /usr/local/etc/varnish/default.vcl.template > /usr/local/etc/varnish/default.vcl
 
-# NLX "outway" stage, used to contact the NLX framework
+# Lets parse the toml file
+# RUN envsubst < /usr/local/etc/varnish/default.vcl.template > /usr/local/etc/varnish/default.vcl
+
+#############################
+# 		NLX Outway	 		#
+#############################
+# does not depend on any of the above stages, but placed here to keep everything in one Dockerfile
 FROM nlxio/outway AS api-nlx-outway
 
 COPY nlx-setup /certs/
 
-# NLX "inway" stage, provides our service to the NLX framework
+#############################
+# 		NLX Inway	 		#
+#############################
+# depends on the "php" stage above
 FROM nlxio/inway AS api-nlx-inway
 
 COPY nlx-setup /certs/
 COPY nlx-setup/service-config.toml.template /service-config.toml.template
+
+# Lets install envsubst
+#RUN apk --no-cache add gettext
 
 # Lets parse the toml file
 # CMD envsubst < /service-config.toml.template > /service-config.toml

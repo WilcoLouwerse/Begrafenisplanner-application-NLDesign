@@ -22,7 +22,7 @@ spec:
       containers:
         - name: {{ include "name" . }}-{{ .Values.settings.env }}-php
           image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-php:{{ .Values.settings.env }}"
-          imagePullPolicy: {{ .Values.container.pullPolicy }}
+          imagePullPolicy: {{ .Values.settings.pullPolicy }}
           ports:
             - containerPort: 9000
           env:
