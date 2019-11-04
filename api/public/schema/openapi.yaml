@@ -4,10 +4,10 @@ info:
   version: V.0.1
   description: |
     API Details
-    - Component: 
-    - Reference: 
+    - Component: Proto Component
+    - Reference: pc
     - Enviroment: dev
-    - Version: 
+    - Version: V.0.1
     - Repository: []() / [zip](/archive/master.zip)
     - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     

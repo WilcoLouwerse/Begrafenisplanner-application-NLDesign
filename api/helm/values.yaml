@@ -6,7 +6,7 @@ settings:
   registryBase: docker.io/conduction
   projectName: pc
   env: dev
-  debug: '1'
+  debug: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '^(.+\.)?common-ground\.dev$|^(.+\.)?zaakonline\.nl$|^(.+\.)?conduction\.nl$|^example\.com$|^(.+\.)?178.128.142.152$|178.128.142.152|localhost'
@@ -20,7 +20,7 @@ settings:
   loadbalancerEnabled: false
   # If you want to enable NLX you are requered to add the appropreate certificates to you nlx-settings folder (located in the /api folder)
   nlxInwayEnabled: false
-  nlxOutwayEnabled: false
+  nlxOutwayEnabled: true
   
 
 php:
