@@ -50,9 +50,9 @@ class ApiHelmCommand extends Command
 		/** @var string $version */
 		$version = $input->getOption('spec-version');
 		
-		if (!\in_array($version, ['0.1.0'], true)) {
-			throw new InvalidOptionException(sprintf('This tool only supports version 2 and 3 of the OpenAPI specification ("%s" given).', $version));
-		}
+		//if (!\in_array($version, ['0.1.0'], true)) {
+		//	throw new InvalidOptionException(sprintf('This tool only supports version 2 and 3 of the OpenAPI specification ("%s" given).', $version));
+		//}
 		
 		$values = $this->twig->render('helm/Values.yaml.twig');
 		$chart = $this->twig->render('helm/Chart.yaml.twig');
