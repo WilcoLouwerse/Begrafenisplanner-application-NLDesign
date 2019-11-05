@@ -3,10 +3,13 @@ parameters:
     # This allows you to run cache:warmup even if your
     # environment variables are not available yet.
     # You should not need to change this value.
-    env(CONDUCTION_COMMONGROUND_BAG_APIKEY): 'Change me your .env file'
+    env(CONDUCTION_COMMONGROUND_BAG_APIKEY): 'Change me in your .env file'
+    env(NLX_OUTWAY): true
+    env(NLX_INWAY): false
     common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
     common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
-    common_ground.oas.type: tool
+    common_ground.oas.type: service
+    common_ground.oas.host: irc.zaakonline.nl
     common_ground.oas.servers:
             -
               description: Demo Omgeving

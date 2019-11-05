@@ -8,6 +8,7 @@ doctrine:
             uuid:  Ramsey\Uuid\Doctrine\UuidType
             incompleteDate:  App\Types\IncompleteDateType
             underInvestigation:  App\Types\UnderInvestigationType
+            money: Tbbc\MoneyBundle\Type\MoneyType
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore

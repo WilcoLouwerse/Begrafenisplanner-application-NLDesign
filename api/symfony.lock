@@ -160,6 +160,9 @@
             "config/packages/lexik_jwt_authentication.yaml"
         ]
     },
+    "moneyphp/money": {
+        "version": "v1.3.0"
+    },
     "namshi/jose": {
         "version": "7.2.3"
     },
@@ -223,6 +226,18 @@
             "config/packages/ramsey_uuid_doctrine.yaml"
         ]
     },
+    "sensiolabs/security-checker": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.0",
+            "ref": "160c9b600564faa1224e8f387d49ef13ceb8b793"
+        },
+        "files": [
+            "config/packages/security_checker.yaml"
+        ]
+    },
     "stof/doctrine-extensions-bundle": {
         "version": "1.2",
         "recipe": {
@@ -272,6 +287,9 @@
     "symfony/doctrine-bridge": {
         "version": "v4.3.1"
     },
+    "symfony/dom-crawler": {
+        "version": "v4.3.4"
+    },
     "symfony/dotenv": {
         "version": "v4.3.1"
     },
@@ -301,6 +319,9 @@
         "files": [
             ".env"
         ]
+    },
+    "symfony/form": {
+        "version": "v4.3.4"
     },
     "symfony/framework-bundle": {
         "version": "4.2",
@@ -336,6 +357,9 @@
     "symfony/inflector": {
         "version": "v4.3.1"
     },
+    "symfony/intl": {
+        "version": "v4.3.4"
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -365,6 +389,9 @@
     },
     "symfony/options-resolver": {
         "version": "v4.3.1"
+    },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.12.0"
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.11.0"
@@ -497,11 +524,17 @@
     "symfony/yaml": {
         "version": "v4.3.1"
     },
+    "tbbc/money-bundle": {
+        "version": "v3.1.9"
+    },
     "twig/twig": {
         "version": "v2.11.3"
     },
     "webmozart/assert": {
         "version": "1.4.0"
+    },
+    "webonyx/graphql-php": {
+        "version": "v0.13.8"
     },
     "willdurand/negotiation": {
         "version": "v2.3.1"

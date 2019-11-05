@@ -4,4 +4,17 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         google_tag_manager_id: '%env(GOOGLE_TAG_MANAGER_ID)%'
-        hubspot_embed_code: '%env(HUBSPOT_EMBED_CODE)%' 
+        hubspot_embed_code: '%env(HUBSPOT_EMBED_CODE)%'         
+        container_registry_base: '%env(CONTAINER_REGISTRY_BASE)%'        
+        container_project_title: '%env(CONTAINER_PROJECT_TITLE)%'
+        container_project_name: '%env(CONTAINER_PROJECT_NAME)%'
+        container_project_version: '%env(CONTAINER_PROJECT_VERSION)%'
+        app_env: '%env(APP_ENV)%'
+        app_debug: '%env(APP_DEBUG)%'
+        app_demo: '%env(APP_DEMO)%'
+        app_repro: '%env(APP_REPRO)%'
+        app_description: '%env(APP_DESCRIPTION)%'
+        nlx_outway: '%env(NLX_OUTWAY)%'
+        nlx_inway: '%env(NLX_INWAY)%'
+    form_themes:
+        - 'TbbcMoneyBundle:Form:fields.html.twig'
