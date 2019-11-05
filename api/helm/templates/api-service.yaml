@@ -1,10 +1,9 @@
-{{- if .Values.varnish.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "name" . }}-{{ .Values.settings.env }}-varnish
+  name: {{ include "name" . }}-{{ .Values.settings.env }}-api
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-varnish
+    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-api
     app.kubernetes.io/part-of: {{ include "name" . }}-{{ .Values.settings.env }}
     helm.sh/chart: {{ include "chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
@@ -16,6 +15,5 @@ spec:
       targetPort: 80
       protocol: TCP
   selector:
-    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-varnish
+    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-nginx
     app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
-{{- end -}}

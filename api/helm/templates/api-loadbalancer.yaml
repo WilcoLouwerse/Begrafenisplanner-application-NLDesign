@@ -1,0 +1,20 @@
+{{- if .Values.settings.loadbalancerEnabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "name" . }}-{{ .Values.settings.env }}-api-loadbalancer
+spec:
+  selector:
+    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-nginx
+    app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      name: http
+    - protocol: TCP
+      port: 443
+      targetPort: 80
+      name: https
+{{- end }}

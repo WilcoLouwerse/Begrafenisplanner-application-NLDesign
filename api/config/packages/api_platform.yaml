@@ -9,7 +9,11 @@ parameters:
     env(APP_DESCRIPTION): ''
     env(APP_REPRO): ''
     env(APP_DEMO): ''
+    env(APP_ENV): ''
+    env(CONTAINER_REGISTRY_BASE): ''
+    env(CONTAINER_PROJECT_TITLE): ''
     env(CONTAINER_PROJECT_NAME): ''
+    env(CONTAINER_PROJECT_VERSION): ''
 
 api_platform:
     mapping:
@@ -19,10 +23,10 @@ api_platform:
     title: '%env(APP_TITLE)%'
     description: |
         API Details
-        - Component: %env(APP_TITLE)%
-        - Reference: %env(APP_NAME)%
+        - Component: %env(CONTAINER_PROJECT_TITLE)%
+        - Reference: %env(CONTAINER_PROJECT_NAME)%
         - Enviroment: %env(APP_ENV)%
-        - Version: %env(APP_VERSION)%
+        - Version: %env(CONTAINER_PROJECT_VERSION)%
         - Repository: [%env(APP_REPRO)%](%env(APP_REPRO)%) / [zip](%env(APP_REPRO)%/archive/master.zip)
         - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
         
@@ -55,15 +59,15 @@ api_platform:
         html:     ['text/html']
     
     # Varnish integration, remove if unwanted
-    http_cache:
-        invalidation:
-            enabled: true
-            varnish_urls: ['%env(VARNISH_URL)%']
-        max_age: 0
-        shared_max_age: 3600
-        vary: ['Content-Type', 'Authorization']
-        public: true
+    # http_cache:
+    #    invalidation:
+    #        enabled: true
+    #        varnish_urls: ['%env(VARNISH_URL)%']
+    #    max_age: 0
+    #    shared_max_age: 3600
+    #    vary: ['Content-Type', 'Authorization']
+    #    public: true
         
     # Mercure integration, remove if unwanted
-    mercure:
-        hub_url: '%env(MERCURE_SUBSCRIBE_URL)%'
+    # mercure:
+    #    hub_url: '%env(MERCURE_SUBSCRIBE_URL)%'

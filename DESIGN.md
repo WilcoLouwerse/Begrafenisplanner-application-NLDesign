@@ -1,46 +1,51 @@
 #Design Considerations
 
-This component was designed inline with the [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie) and [https://www.noraonline.nl/wiki/Standaarden](NORA).
+This component was designed inline with the [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index), [commonground principles](https://vng.nl/onderwerpenindex/bestuur/samen-organiseren-2019/common-ground) and international standards. 
+
+The spefic goal of this component is to provide a common architecture for common ground components as such the common ground principles are leading in design choices, and within those principles technological invoation and international complyancy is deemd most inportant. WE DO NOT WANT TO MAKE CONSESIONS TO CURRENT INFRASTRUCTURE. As such the component might differ on  [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index) and other standards if they are deemed incompatible or out of line with international standards. 
 
 Domain Build-up and routing
 -------
-By convention the component assumes that you follow common ground domain name build up, meaning {enviroment}.{component}.{rest of domain}. That means that only the first two ulr parts are used for routin. E.g. a propper domain for the production API of the verzoeken registratie component would be api.vrc.zaakonline.nl
+By convention the component assumes that you follow the common ground domain name build up, meaning {enviroment}.{component}.{rest of domain}. That means that only the first two url parts are used for routing. It is also assumed that when no envirment is supplied the production enviroment should be offerd E.g. a propper domain for the production API of the verzoeken registratie component would be prod.vrc.zaakonline.nl but it should also be reachable under vrc.zaakonline.nl. The proper location for the development enviroment shoud always be dev.vrc.zaakonlin.nl
 
-Enviroments
+Enviroments and namespacing
 -------
-By default the component assumes that you want to run several enviroments for development purposes, these are provided by the buildin NLX load balancer. The default API enviroments are
-- api /prod (Production)
+We assume that for that you want to run several enviroments for development purposes. We identify the following namespaces for support.
+- prod (Production)
 - acce (Acceptation)
 - stag (Staging)
 - test (Testing)
 - dev (Development)
 
-Besides the API envormiments the component also ships with
+Becouse we base the commonground infastructure on kubernetes, and we want to keep a hard sepperation between enviroment we also assume that you are using your enviroment as a namespace
+
+Symfony libary managment gives us the optoin to define the libbarys on a per envirmoent base, you can find that definition in the [bundle config](api/config/bundles.php)
+
+Besides the API envormiments the component also ships with aditional tools/enviroments but those are not meant to be deployed
 - client (An react client frontend)
 - admin ( An read admin interface)
 
-If no enviroment is supplied to the load balancer then trafic is routed to the client interface.
+On the local development docker deploy the client enviroment is used as default in stead of the production version of the api.
 
 Loging Headers (NLX Audit trail)
 -------
-We inherit a couple of headers from the transaction logging within the [NLX schema](https://docs.nlx.io/further-reading/transaction-logs/), there does however see to be on ongoing discussion on how headers are supposed to be interpreted. The NLX schema states 
-> The outway appends a globally unique `X-NLX-Request-Id` to make a request traceable through the network. All the headers are logged before the request leaves the outway. Then the fields `X-NLX-Request-User-Id`, `X-NLX-Request-Application-Id`, and `X-NLX-Request-Subject-Identifier` are stripped of and the request is forwarded to the inway*
+@todo update, a reaction about this has been given by the NLX team.
 
-This would sugjest that no `X-NLX-Request-User-Id` should be present on an endpoint (since it would have been stripped before getting there) but a `X-NLX-Request-Id` should be present. If we look at the open case API however exactly the opposite has been implemented. Also a new header `X-Audit-Toelichting` has been implemented that seems to be doing what `X-NLX-Request-Process-Id` is doing in the case of a known process
+We inherit a couple of headers from the transaction logging within the [NLX schema](https://docs.nlx.io/further-reading/transaction-logs/), we strongly discurage the use of the `X-NLX-Request-Data-Subject` header as it might allow private data (such as BSN's) to show up in logging.
 
 __solution__
-All X-NLX headers are implemented for logging right now, and `X-Audit-Toelichting` is implemented as `X-Audit-Clarification`
+The follwoing X-NLX headers have been implemented `X-NLX-Logrecord-ID`,`X-NLX-Request-Process-Id`,`X-NLX-Request-Data-Elements` and `X-NLX-Request-Data-Subject`, these are tied to the internal audit trail (see audit trail for more information), and `X-Audit-Toelichting` (from the ZGW API's) is implemented as `X-Audit-Clarification`
 
 Api versioning
 -------
-As per [landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning) major versions in endpoint minor versions in header, for this the `API-Version` is used (in stead of the api-version header used in haal centraal)
+As per [landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning) major versions in endpoint minor versions in header, for this the `API-Version` is used (instead of the `api-version` header used in haal centraal)
 
 Fields
 -------
 A part of the [haal centraal](https://raw.githubusercontent.com/VNG-Realisatie/Haal-Centraal-BRP-bevragen/master/api-specificatie/Bevraging-Ingeschreven-Persoon/openapi.yaml) the concept of field limitations has been introduced its general purpose being to allow an application to limit the returned fields to prevent the unnecessary transportation of (private) data. In the [NL API Strategie](https://github.com/VNG-Realisatie/Haal-Centraal-BRP-bevragen/blob/master/features/fields.feature) this has been implemented as a parameter consisting of comma separated values. However the normal web standard for optional lists (conform w3c form standards) is an array.
 
 __solution__
-The fields parameter has been implemented as an array
+The fields parameter and functionality has been implemented as an array
 
 Extending
 -------
@@ -52,6 +57,32 @@ The extend parameter has been implemented as an array
 Archivation
 -------
 In line with the extending and fields principle whereby we only want resources that we need it was deemed, nice to make a sub resource of the archivation properties. This also results in a bid cleaner code.  
+
+
+Audittrail
+-------
+@todo this needs to be implemented
+For notifications we use the base mechanism as provided by [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/audit-trail) but we differ on insight into the data that should be returned and feel that the international standard [RFC 3881](https://tools.ietf.org/html/rfc3881) should have been followed here.
+
+__solution__
+In compliance with [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/audit-trail) each individual object should support an /audittrail endpoint. You can look into the [tutorial](TUTORIAL.md) for specifications on how to activate an audit trail for a given object. However, instead of the values mention in the vng.cloud design we follow [RFC 3881](https://tools.ietf.org/html/rfc3881) for the return values. And we give NLX values precedence if provided.
+
+Notifications
+-------
+@todo this needs to be implemented
+For notifications we do not use the current [ZGW standard](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/notificaties) since we deem it insecure to send properties or data objects along with a notification. This is a potential security breach explained [here](https://github.com/VNG-Realisatie/gemma-zaken/issues/1427#issuecomment-549272696).  It also doesn’t follow the [web standard](https://www.w3.org/TR/websub/). Instead we are developing our own subscriber service that is tailored for the NLX / VNG environment and based on current web standards [here]().
+
+__solution__
+In compliance with [w3.org](https://www.w3.org/TR/websub/) each endpoint returns an header containing an subscribtion url. That can be used in acordanse with the application to subscribe to both individual objects as collections. whereby collections serve as 'kanalen'.
+
+Scopes, Authentication and Authorization
+-------
+@todo this needs to be implemented
+We implement user scopes as per [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/autorisatie-scopes) standard. But see problems with how the scopes are defined and named, and consider the general setup to be to focused on ZGW (including Dutch naming, zgw specific fields like maxVertrouwlijkheid and a lack of CRUD thinking). There is a further document concerning [Authentication and Authorization](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/authenticatie-autorisatie) that details how we should authenticate users and give them scopes. We agree with the principles of the document on application based authorization and the use of JWT tokens. But disagree on some key technical aspect. Most important being that the architecture doesn't take into consideration the use of one component by several organizations
+
+__solution__
+No solution as of yet, so there is no implementation of Authorization or Scopes. We might build a new Authorization Component in the long run.
+
 
 Timetravel
 -------
@@ -118,6 +149,13 @@ LIKE pattern matching always covers the entire string. Therefore, if it's desire
 
 To match a literal underscore or percent sign without matching other characters, the respective character in pattern must be preceded by a backlash. 
 
+## Kubernetes
+
+### Loadbalancers
+We no longer provide a load balancer per component, since this would require a ip per component. Draining ip's on mult component kubernetes clusters. In stead we make componentes available as an interner service
+
+### server naming
+A component is (speaking in kubernetes terms) a service that is available at 
 
 ## Data types
 

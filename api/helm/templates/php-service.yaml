@@ -1,17 +1,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "name" . }}-php
+  name: {{ include "name" . }}-{{ .Values.settings.env }}-php
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}-php
-    app.kubernetes.io/part-of: {{ include "name" . }}
+    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-php
+    app.kubernetes.io/part-of: {{ include "name" . }}-{{ .Values.settings.env }}
     helm.sh/chart: {{ include "chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: ClusterIP
   ports:
     - port: 9000
   selector:
-    app.kubernetes.io/name: {{ include "name" . }}-php
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-php
+    app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}

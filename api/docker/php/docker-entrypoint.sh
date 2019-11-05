@@ -17,9 +17,32 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 
+	# Lets setup an jwt certificate if needed
+	# lets skipp build jwt tokens for now
+	#if [ "$APP_ENV" != 'prod' ]; then
+		#jwt_passphrase=$(grep '^JWT_PASSPHRASE=' .env | cut -f 2 -d '=')
+		#if [ ! -f config/jwt/private.pem ] || ! echo "$jwt_passphrase" | openssl pkey -in config/jwt/private.pem -passin stdin -noout > /dev/null 2>&1; then
+			#echo "Generating public / private keys for JWT"
+			#mkdir -p config/jwt
+			#echo "$jwt_passphrase" | openssl genpkey -out config/jwt/private.pem -pass stdin -aes256 -algorithm rsa -pkeyopt rsa_keygen_bits:4096
+			#echo "$jwt_passphrase" | openssl pkey -in config/jwt/private.pem -passin stdin -out config/jwt/public.pem -pubout
+			#setfacl -R -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
+            #setfacl -dR -m u:www-data:rX -m u:"$(whoami)":rwX config/jwt
+		#fi
+	#fi
+	
 	if [ "$APP_ENV" != 'prod' ]; then
 		composer install --prefer-dist --no-progress --no-suggest --no-interaction
 	fi
+	
+	# Lets setup an nlx certificate if needed
+	#if [ "$APP_ENV" != 'prod' ]; then
+		mkdir -p /cert
+		# Lets see if we already have cerificates and if we need to make any
+		#if [ ! -f /cert/org.csr ] || [ ! -f /cert/org.key ] ; then
+		  # openssl req -utf8 -nodes -sha256 -keyout org.key -out org.csr -subj "/C=$COUNTRY_NAME/ST=$STATE/L=$LOCALITY/O=$ORGANIZATION_NAME/OU=$ORGANIZATION_UNIT_NAME/CN=$COMMON_NAME"
+		#fi
+	#fi
 
 	echo "Waiting for db to be ready..."
 	until bin/console doctrine:query:sql "SELECT 1" > /dev/null 2>&1; do
@@ -41,7 +64,11 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		
 		echo "Creating OAS documentation"
 		# Let update the docs to show the latest chages
-		bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3				
+		bin/console api:openapi:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3		
+				
+		echo "Updating Helm charts"
+		# Let update the docs to show the latest chages
+		bin/console app:helm:update --location=/srv/api/helm --spec-version=3			
 	fi
 fi
 

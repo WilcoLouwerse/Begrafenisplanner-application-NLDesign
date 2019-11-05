@@ -7,6 +7,29 @@ This "proto" component provides a plug and play solution for component generatio
 
 For that we use **[Api Platform](https://api-platform.com)**, a next-generation web framework designed to easily create API-first projects, without compromising extensibility and flexibility. 
 
+Getting started
+-------
+Do you want to create your own Commonground component? Take a look at our in depht [tutorial](TUTORIAL.md) on spinning up your own component!
+
+The commonground bundle
+-------
+This repository uses the power of conductions [commonground bundle](https://packagist.org/packages/conduction/commongroundbundle) for symfony to provide common ground specific functionality based on the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). Including  
+
+* Build in support for public API's like BAG (Kadaster), KVK (Kamer van Koophandel)
+* Build in validators for common dutch variables like BSN (Burger service nummer), RSIN(), KVK(), BTW()
+* AVG and VNG proof audit trails
+* And [muchs more](https://packagist.org/packages/conduction/commongroundbundle) .... 
+
+Be sure to read our [design considerations](/design.md) concerning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
+
+
+Requesting features
+-------
+Do you need a feature that is not on this list? don't hesitate to send us a [feature request](https://github.com/ConductionNL/commonground-component/issues/new?assignees=&labels=&template=feature_request.md&title=).  
+
+Staying up to date
+-------
+
 ## Features
 -------
 API Platform embraces open web standards (OpenAPI, JSON-LD, GraphQL, Hydra, HAL, JSONAPI, JWT, OAuth, HTTP...) and the [Linked Data](https://www.w3.org/standards/semanticweb/data) movement. Your API will automatically expose structured data in Schema.org/JSON-LD.
@@ -33,33 +56,6 @@ It means that your commonground application is usable **out of the box** with te
 * enjoy the popular [Doctrine ORM](http://www.doctrine-project.org/projects/orm.html) (used by default, but fully optional:
   you can use the data provider you want, including but not limited to MongoDB and ElasticSearch)
   
-
-The commonground bundle
--------
-This repository uses the power of conductions [commonground bundle](https://packagist.org/packages/conduction/commongroundbundle) for symfony to provide common ground specific functionality based on the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). Including  
-
-* Build in support for public API's like BAG (Kadaster), KVK (Kamer van Koophandel)
-* Build in validators for common dutch variables like BSN (Burger service nummer), RSIN(), KVK(), BTW()
-* AVG and VNG proof audit trails
-* And [muchs more](https://packagist.org/packages/conduction/commongroundbundle) .... 
-
-Be sure to read our [design considerations](/design.md) concerning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
-
-Getting started
--------
-
-* Get your own component by simply forking this repository through [generation](https://github.com/ConductionNL/commonground-component/generate).
-* Pull a local copy of your repository trough your favorite git client (e.g [gitkraken](https://www.gitkraken.com/) or [sourcetree](https://www.sourcetreeapp.com/))
-* Start up you local instance with [docker for desktop](https://hub.docker.com/?overlay=onboarding) and the $ docker-compose up command
-* Open [http://localhost] in your favorite browser and view your component!
-
-
-Requesting features
--------
-Do you need a feature that is not on this list? don't hesitate to send us a [feature request](https://github.com/ConductionNL/commonground-component/issues/new?assignees=&labels=&template=feature_request.md&title=).  
-
-Staying up to date
--------
 
 Credits
 -------

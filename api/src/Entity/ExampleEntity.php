@@ -39,18 +39,6 @@ class ExampleEntity
      */
     private $description;
 
-    /**
-     * @Gedmo\Versioned
-     * @ORM\Column(type="underInvestigation", nullable=true)
-     */
-    private $inOnderzoek;
-
-    /**
-     * @Gedmo\Versioned
-     * @ORM\Column(type="incompleteDate")
-     */
-    private $ingangsDatum;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -80,27 +68,4 @@ class ExampleEntity
         return $this;
     }
 
-    public function getInOnderzoek()
-    {
-        return $this->inOnderzoek;
-    }
-
-    public function setInOnderzoek($inOnderzoek): self
-    {
-        $this->inOnderzoek = $inOnderzoek;
-
-        return $this;
-    }
-
-    public function getIngangsDatum()
-    {
-        return $this->ingangsDatum;
-    }
-
-    public function setIngangsDatum($ingangsDatum): self
-    {
-        $this->ingangsDatum = $ingangsDatum;
-
-        return $this;
-    }
 }
