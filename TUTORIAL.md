@@ -30,7 +30,7 @@ Before we can spin up our component we must first get a local copy from our repo
 
 For this example where going to use GitKraken but you can use any tool you like, feel free to skip this part if you are already familiar with setting up a local clone of your repository.
 
-Open gitkraken press "clone a repro" and fill in the form (select where on your local machine you want the repository to be stored, and fill in the link of your repository on github), press "clone a repro" and you should then see GitKraken downloading your code. After it's done press "open now" (in the box on top) and voilÃ¡ your codebase (you should see an initial commit on a master branche).
+Open gitkraken press "clone a repro" and fill in the form (select where on your local machine you want the repository to be stored, and fill in the link of your repository on github), press "clone a repro" and you should then see GitKraken downloading your code. After it's done press "open now" (in the box on top) and voilÃƒÂ¡ your codebase (you should see an initial commit on a master branche).
 
 You can now navigate to the folder where you just installed your code, it should contain some folders and files and generally look like this. We will get into the files later, lets first spin up our component!
 
@@ -356,13 +356,13 @@ The following bit of the tutorial requires two additional accounts
 - [https://hub.docker.com/](https://hub.docker.com/) (You might already have this for docker for desktop)
 - [https://travis-ci.org](https://travis-ci.org) (You can use you github account)
 
-The proto component ships with a pre-fab continues integration script based on travis. What does this mean you ask? Continues integration (or CI for short) is an optimized and automated way for your code to become part of your projects. In the case of your commonground component that means that we will automatically validate new code commites or pushes and (if everything checks out) build that code and deploy the containers thereof to docker hub. Making is possible to update al the environments that use those components.
+The proto component ships with a pre-fab continues integration script based on travis. What does this mean you ask? Continuous integration (or CI for short) is an optimized and automated way for your code to become part of your projects. In the case of your commonground component that means that we will automatically validate new code commites or pushes and (if everything checks out) build that code and deploy the containers thereof to docker hub. Making is possible to update al the environments that use those components.
 
-Oke that’s nice, but how do we do that? Actually it is verily simple. First of all make sure you have a docker account, log into [docker hub](https://hub.docker.com/) and have a look around. We don’t need to create anything just yet'but it is nice to get a feeling of the place. As you can see docker hub also uses repositories etc. So that recognizable.
+Oke that's nice, but how do we do that? Actually it is very simple. First of all make sure you have a docker account, log into [docker hub](https://hub.docker.com/) and have a look around. We don't need to create anything just yet'but it is nice to get a feeling of the place. As you can see docker hub also uses repositories etc. So that recognizable.
 
-Next we need to prepare our github repository that holds our code. For the travis script to work as intended we need to create a couple of branches(if we don’t have those already) open up yout git interface and create a branch called 'development' and a branch called 'staging'. Don't forget to push the branches so that they are present on github (and not just on your local machine).
+Next we need to prepare our github repository that holds our code. For the travis script to work as intended we need to create a couple of branches(if we don't have those already) open up yout git interface and create a branch called 'development' and a branch called 'staging'. Don't forget to push the branches so that they are present on github (and not just on your local machine).
 
-Oke just one more place to go and that is travis, head over to [https://travis-ci.org](https://travis-ci.org) and login with your gitacount. If everything is alright you should see your repositoriy there. Activate it by pressing 'activate repository' and then go to 'More options' -> 'Settings' and scroll down to enviroment variables. Here we can present travis wit the variables that it need to execute our build script. Lets first set the common variables that we need for all our branches: `DOCKER_PASSWORD` your docker password,`DOCKER_REGISTRY` docker.io/[your username] ,`DOCKER_USERNAME` your docker user name. This will be used by travis to push the completed containers into docker hub. Next we need to specify a couple of variables that are branch specific. Or to be more exact, set the same variable `APP_ENV` with different values for different branches. It needs to be 'staging'->stag,'master'->prod,'development'->dev.
+Oke just one more place to go and that is travis, head over to [https://travis-ci.org](https://travis-ci.org) and login with your gitacount. If everything is alright you should see your repository there. Activate it by pressing 'activate repository' and then go to 'More options' -> 'Settings' and scroll down to enviroment variables. Here we can present travis wit the variables that it need to execute our build script. Lets first set the common variables that we need for all our branches: `DOCKER_PASSWORD` your docker password,`DOCKER_REGISTRY` docker.io/[your username] ,`DOCKER_USERNAME` your docker user name. This will be used by travis to push the completed containers into docker hub. Next we need to specify a couple of variables that are branch specific. Or to be more exact, set the same variable `APP_ENV` with different values for different branches. It needs to be 'staging'->stag,'master'->prod,'development'->dev.
 
 And all done! Head over back to the code on your computer and make a small change. Then commit push that change into github. Travis should automatically pick op your change and start a build.
 
@@ -385,7 +385,7 @@ Audittrail
 -------
 As you might expect the proto-component ships with a neat function for generating audit trails, that basically exist of three parts. 
 
-First we need to activate logging on the entities that we want logged (for obius security reasons we don’t log entity changes by default) to do that by adding the `@Gedmo\Loggable` annotation to our php class, which should then look something like:
+First we need to activate logging on the entities that we want logged (for obius security reasons we donÂ’t log entity changes by default) to do that by adding the `@Gedmo\Loggable` annotation to our php class, which should then look something like:
 
 ```PHP
 //...
