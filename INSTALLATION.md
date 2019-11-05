@@ -65,17 +65,23 @@ $ helm dependency update ./api/helm
 
 If you want to create a new instance
 ```CLI
-$ helm install ./api/helm --name protocomponent --kubeconfig="api/helm/kubeconfig.yaml"
+$ helm install ./api/helm --name protocomponent-dev --kubeconfig="api/helm/kubeconfig.yaml --set settings.env=dev, settings.debug=1"
+$ helm install ./api/helm --name protocomponent-stag --kubeconfig="api/helm/kubeconfig.yaml --set settings.env=stag, settings.debug=0"
+$ helm install ./api/helm --name protocomponent-prod --kubeconfig="api/helm/kubeconfig.yaml --set settings.env=prod, settings.debug=0"
 ```
 
 Or update if you want to update an existing one
 ```CLI
-$ helm upgrade protocomponent  ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" 
+$ helm upgrade protocomponent-dev  ./api/helm --kubeconfig="api/helm/kubeconfig.yaml --set settings.env=dev, settings.debug=1" 
+$ helm upgrade protocomponent-stag  ./api/helm --kubeconfig="api/helm/kubeconfig.yaml -set settings.env=stag, settings.debug=0" 
+$ helm upgrade protocomponent-prod  ./api/helm --kubeconfig="api/helm/kubeconfig.yaml --set settings.env=prod, settings.debug=0" 
 ```
 
 Or del if you want to delete an existing  one
 ```CLI
-$ helm del protocomponent  --purge --kubeconfig="api/helm/kubeconfig.yaml" 
+$ helm del protocomponent-dev  --purge --kubeconfig="api/helm/kubeconfig.yaml" 
+$ helm del protocomponent-stag  --purge --kubeconfig="api/helm/kubeconfig.yaml" 
+$ helm del protocomponent-prod  --purge --kubeconfig="api/helm/kubeconfig.yaml" 
 ```
 
 Note that you can replace commonground with the namespace that you want to use (normally the name of your component).
