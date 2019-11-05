@@ -161,11 +161,6 @@ final class SwaggerDecorator implements NormalizerInterface
 							'format' => 'date-time',
 							'in' => 'query',
 					];
-					$call['parameters'][] = [
-							'name' => 'showLogs',
-							'description' => 'Returns a changes made to an resoure',
-							'type' => 'boolean',
-					];
 				}
 				
 			}

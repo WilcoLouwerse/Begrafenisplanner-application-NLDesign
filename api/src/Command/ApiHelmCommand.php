@@ -57,19 +57,18 @@ class ApiHelmCommand extends Command
 		$values = $this->twig->render('helm/Values.yaml.twig');
 		$chart = $this->twig->render('helm/Chart.yaml.twig');
 		
-		// outputs multiple lines to the console (adding "\n" at the end of each line)
-		$output->writeln([
-				'Helm Chart Creator',
-				'============',
-				'',
-		]);
 		
 		if (!empty($location= $input->getOption('location')) && \is_string($location)) {
 			file_put_contents($location.'/values.yaml', $values);
 			file_put_contents($location.'/Chart.yaml', $chart);
 			$io->success(sprintf('Data written to %s (specification version %s).', $location, $version));
 		} else {
-			$output->writeln($chart);
+			// outputs multiple lines to the console (adding "\n" at the end of each line)
+			$output->writeln([
+					'Helm Chart Creator',
+					'============',
+					$chart,
+			]);
 		}
 	}
 }

@@ -33,13 +33,11 @@ script:
 #  - if [ "$TRAVIS_BRANCH" = "staging" ]; then env: APP_ENV=stag ; fi
 #  - if [ "$TRAVIS_BRANCH" = "testing" ]; then env: APP_ENV=test ; fi
 #  - if [ "$TRAVIS_BRANCH" = "development" ]; then env: APP_ENV=dev ; fi  
-#  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin "$DOCKER_REGISTRY"
 #  - if jq '.extra.symfony.id != null' api/composer.json -e > /dev/null; then echo 'composer.json must not have symfony.id' 1>&2 fi
   - docker-compose pull --ignore-pull-failures
   - docker-compose build --pull --build-arg APP_ENV=$APP_ENV
   - docker-compose up -d
   - sleep 30
-  - docker-compose exec -T php composer req sensiolabs/security-checker
   - docker-compose exec -T php bin/console security:check
 #  - curl -f http://localhost # Client
 #  - curl -f http://admin.localhost # Admin
@@ -62,6 +60,12 @@ deploy:
     skip_cleanup: true
     on:
         branch: master
+  - provider: script
+    script: 
+        - docker-compose push
+    skip_cleanup: true
+    on:
+        branch: development
     #    branch: development
     #    branch: testing
     #    branch: acceptation
