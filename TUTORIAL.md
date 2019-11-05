@@ -271,12 +271,58 @@ into this
 
 and your all done
 
-### trouble shooting
+### Rrouble shooting
 If you have already spunn your component including your new entity your going to run into some trouble becouse doctrine is going to try changing your primary key collum (id) from an integer to string (tables tend not to like that). In that case its best to just drop your database and reinstall it using the following commands:
 
 ```CLI
 $ bin/console doctrine:schema:drop
 $ bin/console doctrine:schema:update --force
+```
+
+## Advanced data sets
+
+Oke lets make it complex, until now we have just added some simple entities to our component, but what if we want to ataches one entity to another? Fortunatly our build in database engine support rather complex senarios called associations. So let [take a look](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/association-mapping.html) at that.  
+
+Bafled? Wel its rather complex. But remember that Make:entity command that we used earlier? That actuelly accepts relations as a data type. Or to but it simply instead of using the default 'string' we could just type "ManyToOne" and it will just fire up some qoustions that will help it determine how you want your relations to be.
+
+
+### Trouble shooting
+A very common error when linking entities togehter is circle refrances, those will break our serializatoin. Furtunaltly we have a need way to prevent that. Even better symfony gives us exact control of how deep we want the circular refereance to go. To do this we need to use the `MaxDepth()` annotation. So lets import that 
+
+```PHP
+//...
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+//...
+```
+
+And tell our serializer to use it.
+
+```PHP
+//...
+/**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ * )
+ * @ORM\Entity(repositoryClass="App\Repository\ExampleEntityRepository")
+ */
+class ExampleEntity
+	{
+//...
+```
+
+We can now prevent circular referances by setting a max depth on the properties cousing the circular refrance.
+
+//...
+    /**
+     * @var ArrayCollection $stuffs Some stuff that is atached to this example object
+     * 
+     * @MaxDepth(1)
+     * @Groups({"read","write"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stuff", inversedBy="examples")
+     */
+    private $stuffs;     
+//...
 ```
 
 ## Datafixtures
