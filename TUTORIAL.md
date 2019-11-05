@@ -30,7 +30,7 @@ Before we can spin up our component we must first get a local copy from our repo
 
 For this example where going to use GitKraken but you can use any tool you like, feel free to skip this part if you are already familiar with setting up a local clone of your repository.
 
-Open gitkraken press "clone a repro" and fill in the form (select where on your local machine you want the repository to be stored, and fill in the link of your repository on github), press "clone a repro" and you should then see GitKraken downloading your code. After it's done press "open now" (in the box on top) and voilÃ¡ your codebase (you should see an initial commit on a master branche).
+Open gitkraken press "clone a repro" and fill in the form (select where on your local machine you want the repository to be stored, and fill in the link of your repository on github), press "clone a repro" and you should then see GitKraken downloading your code. After it's done press "open now" (in the box on top) and voilá your codebase (you should see an initial commit on a master branche).
 
 You can now navigate to the folder where you just installed your code, it should contain some folders and files and generally look like this. We will get into the files later, lets first spin up our component!
 
@@ -385,7 +385,7 @@ Audittrail
 -------
 As you might expect the proto-component ships with a neat function for generating audit trails, that basically exist of three parts. 
 
-First we need to activate logging on the entities that we want logged (for obius security reasons we dont log entity changes by default) to do that by adding the `@Gedmo\Loggable` annotation to our php class, which should then look something like:
+First we need to activate logging on the entities that we want logged (for obvious security reasons we don't log entity changes by default) to do that by adding the `@Gedmo\Loggable` annotation to our php class, which should then look something like:
 
 ```PHP
 //...
