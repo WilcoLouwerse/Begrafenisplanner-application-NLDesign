@@ -1,11 +1,13 @@
 # Tutorial
 
 What do you need for this tutorial?
-* browser
-* github account
-* git client
-* docker account
-* docker for desktop
+* Browser
+* Github account
+* Git client
+* Docker account
+* Docker for desktop
+
+## Bevore you begin
 
 ## Setting up your enviroment
 
@@ -301,9 +303,22 @@ When using Github. To set up a webhook, go to the settings page of your reposito
 Now every time you update your repository the commonground dev page will allerted, rescan your repository and do al the apropriate platform actions. It just as easy as that.
 
 
-Automated Testing
+Automated Testing and Deployment (continues integration)
 -------
-adasd
+The following bit of the tutorial requires two additional accounts
+- [https://hub.docker.com/](https://hub.docker.com/) (You might already have this for docker for desktop)
+- [https://travis-ci.org](https://travis-ci.org) (You can use you github account)
+
+The proto component ships with a pre-fab continues integration script based on travis. What does this mean you ask? Continues integration (or CI for short) is an optimized and automated way for your code to become part of your projects. In the case of your commonground component that means that we will automatically validate new code commites or pushes and (if everything checks out) build that code and deploy the containers thereof to docker hub. Making is possible to update al the environments that use those components.
+
+Oke that’s nice, but how do we do that? Actually it is verily simple. First of all make sure you have a docker account, log into [docker hub](https://hub.docker.com/) and have a look around. We don’t need to create anything just yet'but it is nice to get a feeling of the place. As you can see docker hub also uses repositories etc. So that recognizable.
+
+Next we need to prepare our github repository that holds our code. For the travis script to work as intended we need to create a couple of branches(if we don’t have those already) open up yout git interface and create a branch called 'development' and a branch called 'staging'. Don't forget to push the branches so that they are present on github (and not just on your local machine).
+
+Oke just one more place to go and that is travis, head over to [https://travis-ci.org](https://travis-ci.org) and login with your gitacount. If everything is alright you should see your repositoriy there. Activate it by pressing 'activate repository' and then go to 'More options' -> 'Settings' and scroll down to enviroment variables. Here we can present travis wit the variables that it need to execute our build script. Lets first set the common variables that we need for all our branches: `DOCKER_PASSWORD` your docker password,`DOCKER_REGISTRY` docker.io/[your username] ,`DOCKER_USERNAME` your docker user name. This will be used by travis to push the completed containers into docker hub. Next we need to specify a couple of variables that are branch specific. Or to be more exact, set the same variable `APP_ENV` with different values for different branches. It needs to be 'staging'->stag,'master'->prod,'development'->dev.
+
+And all done! Head over back to the code on your computer and make a small change. Then commit push that change into github. Travis should automatically pick op your change and start a build.
+
 
 ### Unit / Behat
 
@@ -316,7 +331,7 @@ Audittrail
 -------
 as
 
-Setting up continues integration and continues delivery
+Setting up automated deployment (continues delivery)
 -------
 adasd
 
