@@ -1,39 +1,98 @@
 # Installation
-
-## Setting up tiller
+This document dives a litle bit deeper into installing your component on a kubernetes cluster, looking for information on setting up your component on a lookal maschine? Take a look at the [tutorial](TUTORIAL.md) instead. 
 
 ## Setting up helm
 
+
+## Setting up tiller
+Create the tiller serviceaccount:
+
+```CLI
+$ kubectl -n kube-system create serviceaccount tiller --kubeconfig="api/helm/kubeconfig.yaml"
+```
+
+Next, bind the tiller serviceaccount to the cluster-admin role:
+```CLI
+$ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller --kubeconfig="api/helm/kubeconfig.yaml"
+```
+
+Now we can run helm init, which installs Tiller on our cluster, along with some local housekeeping tasks such as downloading the stable repo details:
+```CLI
+$ helm init --service-account tiller --kubeconfig="api/helm/kubeconfig.yaml"
+```
+
+To verify that Tiller is running, list the pods in thekube-system namespace:
+```CLI
+$ kubectl get pods --namespace kube-system --kubeconfig="api/helm/kubeconfig.yaml"
+```
+
+The Tiller pod name begins with the prefix tiller-deploy-.
+
+Now that weíve installed both Helm components, weíre ready to use helm to install our first application.
+
 ## Setting up Kubernetes Dashboard
-Nadat we helm hebben ge√Ønstalleerd, kunnen we helm ook meteen gebruiken om gemakkelijke kubernetes dashboard te downloaden
-helm install stable/kubernetes-dashboard --name dashboard --kubeconfig="kubernetes/kubeconfig.yaml" --namespace="kube-system"
+Afhter we installed helm and tiller we can easyallty use both to install kubernets dashboard
+```CLI
+$ helm install stable/kubernetes-dashboard --name dashboard --kubeconfig="api/helm/kubeconfig.yaml" --namespace="kube-system"
+```
 
-Maar voordat we op het dashboard kunnen inloggen hebben we eerste een token nodig, die kunnen we ophalen via de secrets 
-kubectl -n kube-system get secret  --kubeconfig="kubernetes/kubeconfig.yaml"
+But before we can login to tille we need a token, we can get one of those trough the secrets. Get yourself a secret list by running the following command
+```CLI
+$ kubectl -n kube-system get secret  --kubeconfig="api/helm/kubeconfig.yaml"
+```
 
-Omdat we deployen vanuit helm over tiller is het handig om het dashboard ook als tiller te gebruiken. Kijk naar het tiller secret <tiller-token-XXXXX>, en vraag vervolgens het token daarvoor op met:
+Becouse we just bound tiller to our admin acount and use tiller (trough helm) to manage our code deployment it makes sence to use the tiller token, lets look uo the tilles secret (it should loo something like "tiller-token-XXXXX" and ask for the coresponding token. 
 
-kubectl -n kube-system describe secrets tiller-token-5m4tg  --kubeconfig="kubernetes/kubeconfig.yaml"
+```CLI
+$ kubectl -n kube-system describe secrets tiller-token-5m4tg  --kubeconfig="api/helm/kubeconfig.yaml"
+```
 
-Vanaf hier is het simpel we starten een proxy op
-kubectl proxy --kubeconfig="api/helm/kubeconfig.yaml"
-En kunnen vervolgens het dashboard aanroepen in onze favoriete browser met:
+This should return the token, copy it to somewhere save (just the token not the other returned information) and start up a dashboard connection
+
+```CLI
+$kubectl proxy --kubeconfig="api/helm/kubeconfig.yaml"
+```
+
+This should proxy our dashboard to helm making it available trough our favorite browser and a simple link
+```CLI
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:dashboard-kubernetes-dashboard:https/proxy/#!/login
+```
 
 ## Deploying trough helm
 First we always need to update our dependencys
+```CLI
 $ helm dependency update ./api/helm
 
 If you want to create a new instance
-$ helm install ./api/helm --name protocomponent --kubeconfig="api/helm/kubeconfig.yaml"
+```CLI
+$ helm install --name pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
+$ helm install --name pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
+$ helm install --name pc-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0 
+```
 
 Or update if you want to update an existing one
-$ helm upgrade protocomponent  ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" 
+```CLI
+$ helm upgrade pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml --namespace=dev  --set settings.env=dev, settings.debug=1" 
+$ helm upgrade pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml --namespace=stag --set settings.env=stag, settings.debug=0" 
+$ helm upgrade pc-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml --namespace=prod --set settings.env=prod, settings.debug=0" 
+```
 
 Or del if you want to delete an existing  one
-$ helm del protocomponent  --purge --kubeconfig="api/helm/kubeconfig.yaml" 
+```CLI
+$ helm del pc-dev  --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=dev" 
+$ helm del pc-stag --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=stag" 
+$ helm del pp-prod --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=prod" 
+```
 
 Note that you can replace commonground with the namespace that you want to use (normally the name of your component).
+
+
+## Making your app known on NLX
+The proto component commes with an default NLX setup, if you made your own component however you might want to provide it trough the [NLX](https://www.nlx.io/) service. Furntunatly the proto component commes with an nice setup for NLX integration.
+
+First of all change the nececery lines in the [.env](.env) file, basiccaly everything under the NLX setup tag. Keep in mind that you wil need to have your component available on an (sub)domain name (a simple IP wont sufice).
+
+To force the re-generation of certificates simply delete the org.crt en org.key in the api/nlx-setup folder
 
 
 ## Deploying trough common-ground.dev

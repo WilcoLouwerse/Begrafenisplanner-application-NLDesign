@@ -1,56 +1,5 @@
-
-#lets default to a 404 for load balancer purposes
-server {
-    server_name  _;
-	
-	return 404;
-}
-
 server {
     root /srv/api/public;
-    server_name  dev.*;
-
-    location / {
-        try_files $uri /index.php$is_args$args;
-    }
-
-    location ~ ^/index\.php(/|$) {
-        fastcgi_pass dev-pc-php:9000;
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_param DOCUMENT_ROOT $realpath_root;
-        internal;
-    }
-    location ~ \.php$ {
-      return 404;
-    }
-}
-
-server {
-    root /srv/api/public;
-    server_name  stag.*;
-
-    location / {
-        try_files $uri /index.php$is_args$args;
-    }
-
-    location ~ ^/index\.php(/|$) {
-        fastcgi_pass stag-pc-php:9000;
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_param DOCUMENT_ROOT $realpath_root;
-        internal;
-    }
-    location ~ \.php$ {
-      return 404;
-    }
-}
-
-server {
-    root /srv/api/public;
-    server_name  prod.*;
 
     location / {
         # try to serve file directly, fallback to index.php
@@ -59,9 +8,9 @@ server {
 
     location ~ ^/index\.php(/|$) {
         # Comment the next line and uncomment the next to enable dynamic resolution (incompatible with Kubernetes)
-        fastcgi_pass prod-pc-php:9000;
+        fastcgi_pass $ENV{"NGINX_HOST"}:9000;
         #resolver 127.0.0.11;
-        #set $upstream_host prod-$APP_NAME-php;
+        #set $upstream_host commonground-php;
         #fastcgi_pass $upstream_host:9000;
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
@@ -87,4 +36,6 @@ server {
       return 404;
     }
 }
+
+
 
