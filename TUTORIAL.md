@@ -7,7 +7,8 @@ What do you need for this tutorial?
 * Docker account
 * Docker for desktop
 
-## Bevore you begin
+## Before you begin
+For the steps consirning the generation of entities an example entity a availale, feel free to [take a look](https://github.com/ConductionNL/Proto-component-commonground/blob/master/api/src/Entity/ExampleEntity.php) at it if you have trouble figuring out the code.
 
 ## Setting up your enviroment
 
@@ -327,9 +328,70 @@ adas
 ### Postman
 ad
 
+Documentation and dockblocks
+-------
+asdsa
+
 Audittrail
 -------
-as
+As you might expect the proto-component ships with a neat function for generating audit trails, that basically exist of three parts. 
+
+First we need to activate logging on the entities that we want logged (for obius security reasons we don’t log entity changes by default) to do that by adding the `@Gedmo\Loggable` annotation to our php class, which should then look something like:
+
+```PHP
+//...
+/**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ * )
+ * @ORM\Entity(repositoryClass="App\Repository\ExampleEntityRepository")
+ * @Gedmo\Loggable
+ */
+class ExampleEntity
+	{
+//...
+```
+
+Next we need to tell the specific properties that we want to log that they are loggable (again this is a conscious choice, to prevent us from accidently logging stuff like bsn numbers), we do that by adding the `@Gedmo\Versioned` annotation to those specific properties. That would then look something like this:
+
+```PHP
+//...
+    /**
+	 * @var string $name The name of this example property
+	 * @example My Group
+	 * 
+	 * @Assert\NotNull
+	 * @Assert\Length(
+	 *      max = 255
+	 * )
+     * @Gedmo\Versioned
+	 * @Groups({"read","write"})
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+//...
+```
+
+Okay actually we are now good to go, at least we are logging those things that we want logged. But.... How do we view those logs? In commonground we have a [convention](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/audit-trail) to expose a /audittrail subresource on resources that are logged. So lets add that trough our `@ApiResource` anotation.
+
+```PHP
+//...
+/**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ * )
+ * @ORM\Entity(repositoryClass="App\Repository\ExampleEntityRepository")
+ * @Gedmo\Loggable
+ */
+class ExampleEntity
+	{
+//...
+```
+
+And now we have a fully nl api strategie integrated audit trail!
+
 
 Setting up automated deployment (continues delivery)
 -------
