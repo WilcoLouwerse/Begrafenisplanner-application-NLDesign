@@ -93,7 +93,7 @@ final class SwaggerDecorator implements NormalizerInterface
 						'description' => 'An subject identifier for purpose registration (doelbinding)',
 						'in' => 'header',
 				];
-				*/ 
+				*/  
 				// NLX loging headers
 				$call['parameters'][] = [
 						'name' => 'X-NLX-Logrecord-ID',
@@ -126,39 +126,43 @@ final class SwaggerDecorator implements NormalizerInterface
 				];
 				
 				
-				if($method == "GET"){
+				if($method == "get"){
 					// Lets add the extend functionality
 					$call['parameters'][] = [
 							'name' => 'extend[]',
+							'required' => false,
 							'description' => 'An array of nested objects to include in the return object',
-							'in' => 'header',
+							'in' => 'query',
+							'schema'=>['type'=>'array']
 					];
 					// Lets add the fields functionality
 					$call['parameters'][] = [
 							'name' => 'fields[]',
+							'required' => false,
 							'description' => 'An array of fields to return in output, wil return all fields is not supplied',
-							'in' => 'header',
+							'in' => 'query',
+							'schema'=>['type'=>'array']
 					];
 					// Lets add some time travel
 					$call['parameters'][] = [
 							'name' => 'validOn',
+							'required' => false,
 							'description' => 'Returns object as valid on a given date time',
-							'type' => 'string',
-							'format' => 'date-time',
+							'schema'=>['type'=>'string', 'format' => 'date-time'],
 							'in' => 'query',
 					];
 					$call['parameters'][] = [
 							'name' => 'validFrom',
+							'required' => false,
 							'description' => 'Returns objects valid from a given date time',
-							'type' => 'string',
-							'format' => 'date-time',
+							'schema'=>['type'=>'string', 'format' => 'date-time'],
 							'in' => 'query',
 					];
 					$call['parameters'][] = [
 							'name' => 'validUntil',
+							'required' => false,
 							'description' => 'Returns objects valid until a given date time',
-							'type' => 'string',
-							'format' => 'date-time',
+							'schema'=>['type'=>'string', 'format' => 'date-time'],
 							'in' => 'query',
 					];
 				}

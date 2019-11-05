@@ -30,13 +30,11 @@ On the local development docker deploy the client enviroment is used as default 
 Loging Headers (NLX Audit trail)
 -------
 @todo update, a reaction about this has been given by the NLX team.
-We inherit a couple of headers from the transaction logging within the [NLX schema](https://docs.nlx.io/further-reading/transaction-logs/), there does however see to be on ongoing discussion on how headers are supposed to be interpreted. The NLX schema states 
-> The outway appends a globally unique `X-NLX-Request-Id` to make a request traceable through the network. All the headers are logged before the request leaves the outway. Then the fields `X-NLX-Request-User-Id`, `X-NLX-Request-Application-Id`, and `X-NLX-Request-Subject-Identifier` are stripped of and the request is forwarded to the inway*
 
-This would sugjest that no `X-NLX-Request-User-Id` should be present on an endpoint (since it would have been stripped before getting there) but a `X-NLX-Request-Id` should be present. If we look at the open case API however exactly the opposite has been implemented. Also a new header `X-Audit-Toelichting` has been implemented that seems to be doing what `X-NLX-Request-Process-Id` is doing in the case of a known process
+We inherit a couple of headers from the transaction logging within the [NLX schema](https://docs.nlx.io/further-reading/transaction-logs/), we strongly discurage the use of the `X-NLX-Request-Data-Subject` header as it might allow private data (such as BSN's) to show up in logging.
 
 __solution__
-All X-NLX headers are implemented for logging right now, and `X-Audit-Toelichting` is implemented as `X-Audit-Clarification`
+The follwoing X-NLX headers have been implemented `X-NLX-Logrecord-ID`,`X-NLX-Request-Process-Id`,`X-NLX-Request-Data-Elements` and `X-NLX-Request-Data-Subject`, these are tied to the internal audit trail (see audit trail for more information), and `X-Audit-Toelichting` (from the ZGW API's) is implemented as `X-Audit-Clarification`
 
 Api versioning
 -------
