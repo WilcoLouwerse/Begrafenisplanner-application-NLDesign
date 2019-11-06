@@ -358,7 +358,7 @@ The following bit of the tutorial requires two additional accounts
 
 The proto component ships with a pre-fab continues integration script based on travis. What does this mean you ask? Continues integration (or CI for short) is an optimized and automated way for your code to become part of your projects. In the case of your commonground component that means that we will automatically validate new code commites or pushes and (if everything checks out) build that code and deploy the containers thereof to docker hub. Making is possible to update al the environments that use those components.
 
-Oke that’s nice, but how do we do that? Actually it is verily simple. First of all make sure you have a docker account, log into [docker hub](https://hub.docker.com/) and have a look around. We don’t need to create anything just yet'but it is nice to get a feeling of the place. As you can see docker hub also uses repositories etc. So that recognizable.
+Oke that’s nice, but how do we do that? Actually it is verily simple. First of all make sure you have a docker account, log into [docker hub](https://hub.docker.com/) and have a look around. We don’t need to create anything just yet'but it is nice to get a feeling of the place. As you can see docker hub also uses repositories etc. So that recognizable. But we do need to inform the component that the containers need to be pushed to YOUR docker hub. So take a look at the .env file in your repositor root and find the `CONTAINER_REGISTRY_BASE` that probably now states something like 'docker.io/conduction' change that into 'docker.io/[your docker user name]'.
 
 Next we need to prepare our github repository that holds our code. For the travis script to work as intended we need to create a couple of branches(if we don’t have those already) open up yout git interface and create a branch called 'development' and a branch called 'staging'. Don't forget to push the branches so that they are present on github (and not just on your local machine).
 
@@ -375,8 +375,7 @@ adas
 ad
 
 ### Trouble shooting
-Please make sure that your github repositry is set to public, and keep in mind that a complex travis build (and sertenly one that includes a pushing of containers can take up to 20 minutes)
-
+Please make sure that your github repositry is set to public, and keep in mind that a complex travis build (and sertenly one that includes a pushing of containers can take up to 20 minutes). 
 Documentation and dockblocks
 -------
 asdsa

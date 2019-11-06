@@ -31,6 +31,16 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: php-service
+            - name: NGINX_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: php-service 
+            - name: BACKENDS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: php-service 
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

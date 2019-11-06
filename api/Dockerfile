@@ -147,6 +147,7 @@ RUN apk --no-cache add gettext
 COPY docker/varnish/conf /usr/local/etc/varnish/
 
 RUN envsubst '$PHP_SERVICE' < /usr/local/etc/varnish/default.vcl.template > /usr/local/etc/varnish/default.vcl
+#RUN reload
 
 # Lets parse the toml file
 # RUN envsubst < /usr/local/etc/varnish/default.vcl.template > /usr/local/etc/varnish/default.vcl
