@@ -375,8 +375,7 @@ adas
 ad
 
 ### Trouble shooting
-Please make sure that your github repositry is set to public, and keep in mind that a complex travis build (and sertenly one that includes a pushing of containers can take up to 20 minutes)
-
+Please make sure that your github repositry is set to public, and keep in mind that a complex travis build (and sertenly one that includes a pushing of containers can take up to 20 minutes). 
 Documentation and dockblocks
 -------
 asdsa

@@ -4,6 +4,15 @@ This component was designed inline with the [NL API Strategie](https://docs.geos
 
 The spefic goal of this component is to provide a common architecture for common ground components as such the common ground principles are leading in design choices, and within those principles technological invoation and international complyancy is deemd most inportant. WE DO NOT WANT TO MAKE CONSESIONS TO CURRENT INFRASTRUCTURE. As such the component might differ on  [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index) and other standards if they are deemed incompatible or out of line with international standards. 
 
+The European factor
+-------
+The proto-component isn't just a Dutch Component, it is in easance a dutch translation of european components, nowhere is this more obvius than in the core code. Our component is based on [API Platform](https://api-platform.com/) an API specific version of the symfony framework. This framework is build by the lovely people of []() and is build with support of the Euroean Commision trough the [EU-FOSSA Hackathon](https://ec.europa.eu/info/news/first-eu-fossa-hackathon-it-happened-2019-may-03_en) and Digital Ocean trough [Hacktoberfest].(https://hacktoberfest.digitalocean.com/).
+
+But it dosn't just end there the [varnish container](https://hub.docker.com/r/eeacms/varnish/) that we use to speed up the API responce it build and maintained by [EEA]() (The European Environment Agency) and the development team at conduction itself is attached to the [Odyssey program](https://www.odyssey.org/) and originated from the [startupinresidence](https://startupinresidence.com/) program. 
+
+So you could say that both change and a european perspective is in our blood.
+
+
 Domain Build-up and routing
 -------
 By convention the component assumes that you follow the common ground domain name build up, meaning {enviroment}.{component}.{rest of domain}. That means that only the first two url parts are used for routing. It is also assumed that when no envirment is supplied the production enviroment should be offerd E.g. a propper domain for the production API of the verzoeken registratie component would be prod.vrc.zaakonline.nl but it should also be reachable under vrc.zaakonline.nl. The proper location for the development enviroment shoud always be dev.vrc.zaakonlin.nl
