@@ -79,7 +79,7 @@ services:
     ports:
      - "8081:80"
     environment:
-      - PHP_SERVICE=api 
+     - BACKENDS=php
       
   nlx-outway:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-outway:${APP_ENV}

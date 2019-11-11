@@ -1,26 +1,26 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ include "name" . }}-{{ .Values.settings.env }}-php
+  name: {{ include "name" . }}-php
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-php
-    app.kubernetes.io/part-of: {{ include "name" . }}-{{ .Values.settings.env }}
+    app.kubernetes.io/name: {{ include "name" . }}-php
+    app.kubernetes.io/part-of: {{ include "name" . }}
     helm.sh/chart: {{ include "chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.php.replicaCount }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-php
-        app.kubernetes.io/part-of: {{ include "name" . }}-{{ .Values.settings.env }}
+        app.kubernetes.io/name: {{ include "name" . }}-php
+        app.kubernetes.io/part-of: {{ include "name" . }}
         helm.sh/chart: {{ include "chart" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
       containers:
-        - name: {{ include "name" . }}-{{ .Values.settings.env }}-php
+        - name: {{ include "name" . }}-php
           image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-php:{{ .Values.settings.env }}"
           imagePullPolicy: {{ .Values.settings.pullPolicy }}
           ports:
@@ -63,10 +63,7 @@ spec:
                   name: {{ template "fullname" . }}
                   key: cors-allow-origin
             - name: VARNISH_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: varnish-url
+              value: {{ include "name" . }}-varnish
             - name: APP_SECRET
               valueFrom:
                 secretKeyRef:
