@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "name" . }}-{{ .Values.settings.env }}-varnish
+  name: {{ include "name" . }}-varnish
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-varnish
-    app.kubernetes.io/part-of: {{ include "name" . }}-{{ .Values.settings.env }}
+    app.kubernetes.io/name: {{ include "name" . }}-varnish
+    app.kubernetes.io/part-of: {{ include "name" . }}
     helm.sh/chart: {{ include "chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   type: NodePort
@@ -16,6 +16,6 @@ spec:
       targetPort: 80
       protocol: TCP
   selector:
-    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-varnish
-    app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
+    app.kubernetes.io/name: {{ include "name" . }}-varnish
+    app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}

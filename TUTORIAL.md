@@ -271,12 +271,58 @@ into this
 
 and your all done
 
-### trouble shooting
+### Rrouble shooting
 If you have already spunn your component including your new entity your going to run into some trouble becouse doctrine is going to try changing your primary key collum (id) from an integer to string (tables tend not to like that). In that case its best to just drop your database and reinstall it using the following commands:
 
 ```CLI
 $ bin/console doctrine:schema:drop
 $ bin/console doctrine:schema:update --force
+```
+
+## Advanced data sets
+
+Oke lets make it complex, until now we have just added some simple entities to our component, but what if we want to ataches one entity to another? Fortunatly our build in database engine support rather complex senarios called associations. So let [take a look](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/association-mapping.html) at that.  
+
+Bafled? Wel its rather complex. But remember that Make:entity command that we used earlier? That actuelly accepts relations as a data type. Or to but it simply instead of using the default 'string' we could just type "ManyToOne" and it will just fire up some qoustions that will help it determine how you want your relations to be.
+
+
+### Trouble shooting
+A very common error when linking entities togehter is circle refrances, those will break our serializatoin. Furtunaltly we have a need way to prevent that. Even better symfony gives us exact control of how deep we want the circular refereance to go. To do this we need to use the `MaxDepth()` annotation. So lets import that 
+
+```PHP
+//...
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+//...
+```
+
+And tell our serializer to use it.
+
+```PHP
+//...
+/**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ * )
+ * @ORM\Entity(repositoryClass="App\Repository\ExampleEntityRepository")
+ */
+class ExampleEntity
+	{
+//...
+```
+
+We can now prevent circular referances by setting a max depth on the properties cousing the circular refrance.
+
+//...
+    /**
+     * @var ArrayCollection $stuffs Some stuff that is atached to this example object
+     * 
+     * @MaxDepth(1)
+     * @Groups({"read","write"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Stuff", inversedBy="examples")
+     */
+    private $stuffs;     
+//...
 ```
 
 ## Datafixtures
@@ -310,13 +356,13 @@ The following bit of the tutorial requires two additional accounts
 - [https://hub.docker.com/](https://hub.docker.com/) (You might already have this for docker for desktop)
 - [https://travis-ci.org](https://travis-ci.org) (You can use you github account)
 
-The proto component ships with a pre-fab continues integration script based on travis. What does this mean you ask? Continues integration (or CI for short) is an optimized and automated way for your code to become part of your projects. In the case of your commonground component that means that we will automatically validate new code commites or pushes and (if everything checks out) build that code and deploy the containers thereof to docker hub. Making is possible to update al the environments that use those components.
+The proto component ships with a pre-fab continues integration script based on travis. What does this mean you ask? Continuous integration (or CI for short) is an optimized and automated way for your code to become part of your projects. In the case of your commonground component that means that we will automatically validate new code commites or pushes and (if everything checks out) build that code and deploy the containers thereof to docker hub. Making is possible to update al the environments that use those components.
 
-Oke that’s nice, but how do we do that? Actually it is verily simple. First of all make sure you have a docker account, log into [docker hub](https://hub.docker.com/) and have a look around. We don’t need to create anything just yet'but it is nice to get a feeling of the place. As you can see docker hub also uses repositories etc. So that recognizable.
+Oke that's nice, but how do we do that? Actually it is very simple. First of all make sure you have a docker account, log into [docker hub](https://hub.docker.com/) and have a look around. We don't need to create anything just yet'but it is nice to get a feeling of the place. As you can see docker hub also uses repositories etc. So that recognizable.
 
-Next we need to prepare our github repository that holds our code. For the travis script to work as intended we need to create a couple of branches(if we don’t have those already) open up yout git interface and create a branch called 'development' and a branch called 'staging'. Don't forget to push the branches so that they are present on github (and not just on your local machine).
+Next we need to prepare our github repository that holds our code. For the travis script to work as intended we need to create a couple of branches(if we don't have those already) open up yout git interface and create a branch called 'development' and a branch called 'staging'. Don't forget to push the branches so that they are present on github (and not just on your local machine).
 
-Oke just one more place to go and that is travis, head over to [https://travis-ci.org](https://travis-ci.org) and login with your gitacount. If everything is alright you should see your repositoriy there. Activate it by pressing 'activate repository' and then go to 'More options' -> 'Settings' and scroll down to enviroment variables. Here we can present travis wit the variables that it need to execute our build script. Lets first set the common variables that we need for all our branches: `DOCKER_PASSWORD` your docker password,`DOCKER_REGISTRY` docker.io/[your username] ,`DOCKER_USERNAME` your docker user name. This will be used by travis to push the completed containers into docker hub. Next we need to specify a couple of variables that are branch specific. Or to be more exact, set the same variable `APP_ENV` with different values for different branches. It needs to be 'staging'->stag,'master'->prod,'development'->dev.
+Oke just one more place to go and that is travis, head over to [https://travis-ci.org](https://travis-ci.org) and login with your gitacount. If everything is alright you should see your repository there. Activate it by pressing 'activate repository' and then go to 'More options' -> 'Settings' and scroll down to enviroment variables. Here we can present travis wit the variables that it need to execute our build script. Lets first set the common variables that we need for all our branches: `DOCKER_PASSWORD` your docker password,`DOCKER_REGISTRY` docker.io/[your username] ,`DOCKER_USERNAME` your docker user name. This will be used by travis to push the completed containers into docker hub. Next we need to specify a couple of variables that are branch specific. Or to be more exact, set the same variable `APP_ENV` with different values for different branches. It needs to be 'staging'->stag,'master'->prod,'development'->dev.
 
 And all done! Head over back to the code on your computer and make a small change. Then commit push that change into github. Travis should automatically pick op your change and start a build.
 
@@ -328,6 +374,8 @@ adas
 ### Postman
 ad
 
+### Trouble shooting
+Please make sure that your github repositry is set to public, and keep in mind that a complex travis build (and sertenly one that includes a pushing of containers can take up to 20 minutes). 
 Documentation and dockblocks
 -------
 asdsa
@@ -336,7 +384,7 @@ Audittrail
 -------
 As you might expect the proto-component ships with a neat function for generating audit trails, that basically exist of three parts. 
 
-First we need to activate logging on the entities that we want logged (for obius security reasons we don’t log entity changes by default) to do that by adding the `@Gedmo\Loggable` annotation to our php class, which should then look something like:
+First we need to activate logging on the entities that we want logged (for obvious security reasons we don't log entity changes by default) to do that by adding the `@Gedmo\Loggable` annotation to our php class, which should then look something like:
 
 ```PHP
 //...
