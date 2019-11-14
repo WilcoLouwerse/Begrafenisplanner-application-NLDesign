@@ -4,9 +4,8 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: pc
-  version: dev
-  env: dev
+  projectName: pa
+  env: v
   debug: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
