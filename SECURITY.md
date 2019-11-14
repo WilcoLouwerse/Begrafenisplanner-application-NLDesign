@@ -1,6 +1,6 @@
 # SECURITY
 
-Security of your common ground component henchmen’s on a few factors and is (in fact) for the most part provided by the common ground ecosystem. But there are definitely some steps that you should undertake yourself. We will however first briefly explain the security principles set in place so that you understand how you are being supported and what the limitation of that support is.
+Security of your common ground component henchmens on a few factors and is (in fact) for the most part provided by the common ground ecosystem. But there are definitely some steps that you should undertake yourself. We will however first briefly explain the security principles set in place so that you understand how you are being supported and what the limitation of that support is.
 
 ## Codebase
 First of the code base, if you are extending the common ground-proto-component your code base will exist out of three parts.
