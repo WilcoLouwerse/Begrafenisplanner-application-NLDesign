@@ -84,7 +84,7 @@ $ helm del pc-stag --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=st
 $ helm del pp-prod --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=prod" 
 ```
 
-Note that you can replace commonground with the namespace that you want to use (normally the name of your component).
+Note that you can replace common ground with the namespace that you want to use (normally the name of your component).
 
 
 ## Making your app known on NLX

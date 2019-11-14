@@ -1,49 +1,49 @@
 # Design Considerations
 
-This component was designed inline with the [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index), [commonground principles](https://vng.nl/onderwerpenindex/bestuur/samen-organiseren-2019/common-ground) and international standards. 
+This component was designed in line with the [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index), [commonground principles](https://vng.nl/onderwerpenindex/bestuur/samen-organiseren-2019/common-ground) and international standards. 
 
-The spefic goal of this component is to provide a common architecture for common ground components as such the common ground principles are leading in design choices, and within those principles technological invoation and international complyancy is deemd most inportant. WE DO NOT WANT TO MAKE CONSESIONS TO CURRENT INFRASTRUCTURE. As such the component might differ on  [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index) and other standards if they are deemed incompatible or out of line with international standards. 
+The specific goal of this component is to provide a common architecture for common ground components as such the common ground principles are leading in design choices, and within those principles technological invocation and international compliancy is deemed most important. **We do not want to mace consessions to the current infrastructure.** As such the component might differ on  [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index) and other standards if they are deemed incompatible or out of line with international standards. 
 
 The European factor
 -------
-The proto-component isn't just a Dutch Component, it is in easance a dutch translation of european components, nowhere is this more obvius than in the core code. Our component is based on [API Platform](https://api-platform.com/) an API specific version of the symfony framework. This framework is build by the lovely people of []() and is build with support of the Euroean Commision trough the [EU-FOSSA Hackathon](https://ec.europa.eu/info/news/first-eu-fossa-hackathon-it-happened-2019-may-03_en) and Digital Ocean trough [Hacktoberfest].(https://hacktoberfest.digitalocean.com/).
+The proto-component isn't just a Dutch Component, it is in essence a dutch translation of european components, nowhere is this more obvious than in the core code. Our component is based on [API Platform](https://api-platform.com/) an API specific version of the symfony framework. This framework is build by the lovely people of []() and is build with support of the European Commission trough the [EU-FOSSA Hackathon](https://ec.europa.eu/info/news/first-eu-fossa-hackathon-it-happened-2019-may-03_en) and Digital Ocean trough [Hacktoberfest](https://hacktoberfest.digitalocean.com/).
 
-But it dosn't just end there the [varnish container](https://hub.docker.com/r/eeacms/varnish/) that we use to speed up the API responce it build and maintained by [EEA]() (The European Environment Agency) and the development team at conduction itself is attached to the [Odyssey program](https://www.odyssey.org/) and originated from the [startupinresidence](https://startupinresidence.com/) program. 
+But it doesn't just end there. The [varnish container](https://hub.docker.com/r/eeacms/varnish/) that we use to speed up the API responce it build and maintained by [EEA]() (The European Environment Agency) and the development team at conduction itself is attached to the [Odyssey program](https://www.odyssey.org/) and originated from the [startupinresidence](https://startupinresidence.com/) program. 
 
 So you could say that both change and a european perspective is in our blood.
 
 
 Domain Build-up and routing
 -------
-By convention the component assumes that you follow the common ground domain name build up, meaning {enviroment}.{component}.{rest of domain}. That means that only the first two url parts are used for routing. It is also assumed that when no envirment is supplied the production enviroment should be offerd E.g. a propper domain for the production API of the verzoeken registratie component would be prod.vrc.zaakonline.nl but it should also be reachable under vrc.zaakonline.nl. The proper location for the development enviroment shoud always be dev.vrc.zaakonlin.nl
+By convention the component assumes that you follow the common ground domain name build up, meaning {environment}.{component}.{rest of domain}. That means that only the first two url parts are used for routing. It is also assumed that when no environment is supplied the production environment should be offered E.g. a proper domain for the production API of the verzoeken registratie component would be prod.vrc.zaakonline.nl but it should also be reachable under vrc.zaakonline.nl. The proper location for the development environment should always be dev.vrc.zaakonlin.nl
 
-Enviroments and namespacing
+Environments and namespacing
 -------
-We assume that for that you want to run several enviroments for development purposes. We identify the following namespaces for support.
+We assume that for that you want to run several environments for development purposes. We identify the following namespaces for support.
 - prod (Production)
 - acce (Acceptation)
 - stag (Staging)
 - test (Testing)
 - dev (Development)
 
-Becouse we base the commonground infastructure on kubernetes, and we want to keep a hard sepperation between enviroment we also assume that you are using your enviroment as a namespace
+Because we base the common ground infrastructure on kubernetes, and we want to keep a hard separation between environment we also assume that you are using your environment as a namespace
 
-Symfony libary managment gives us the optoin to define the libbarys on a per envirmoent base, you can find that definition in the [bundle config](api/config/bundles.php)
+Symfony library management gives us the option to define the libraries on a per environment base, you can find that definition in the [bundle config](api/config/bundles.php)
 
-Besides the API envormiments the component also ships with aditional tools/enviroments but those are not meant to be deployed
+Besides the API environments the component also ships with additional tools/environments but those are not meant to be deployed
 - client (An react client frontend)
-- admin ( An read admin interface)
+- admin (An read admin interface)
 
-On the local development docker deploy the client enviroment is used as default in stead of the production version of the api.
+On the local development docker deploy the client environment is used as default instead of the production version of the api.
 
-Loging Headers (NLX Audit trail)
+Logging Headers (NLX Audit trail)
 -------
 @todo update, a reaction about this has been given by the NLX team.
 
-We inherit a couple of headers from the transaction logging within the [NLX schema](https://docs.nlx.io/further-reading/transaction-logs/), we strongly discurage the use of the `X-NLX-Request-Data-Subject` header as it might allow private data (such as BSN's) to show up in logging.
+We inherit a couple of headers from the transaction logging within the [NLX schema](https://docs.nlx.io/further-reading/transaction-logs/), we strongly discourage the use of the `X-NLX-Request-Data-Subject` header as it might allow private data (such as BSNs) to show up in logging.
 
 __solution__
-The follwoing X-NLX headers have been implemented `X-NLX-Logrecord-ID`,`X-NLX-Request-Process-Id`,`X-NLX-Request-Data-Elements` and `X-NLX-Request-Data-Subject`, these are tied to the internal audit trail (see audit trail for more information), and `X-Audit-Toelichting` (from the ZGW API's) is implemented as `X-Audit-Clarification`
+The following X-NLX headers have been implemented `X-NLX-Logrecord-ID`,`X-NLX-Request-Process-Id`,`X-NLX-Request-Data-Elements` and `X-NLX-Request-Data-Subject`, these are tied to the internal audit trail (see audit trail for more information), and `X-Audit-Toelichting` (from the ZGW APIs) is implemented as `X-Audit-Clarification`
 
 Api versioning
 -------
@@ -79,7 +79,7 @@ In compliance with [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/achter
 Notifications
 -------
 @todo this needs to be implemented
-For notifications we do not use the current [ZGW standard](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/notificaties) since we deem it insecure to send properties or data objects along with a notification. This is a potential security breach explained [here](https://github.com/VNG-Realisatie/gemma-zaken/issues/1427#issuecomment-549272696).  It also doesn’t follow the [web standard](https://www.w3.org/TR/websub/). Instead we are developing our own subscriber service that is tailored for the NLX / VNG environment and based on current web standards [here]().
+For notifications we do not use the current [ZGW standard](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/notificaties) since we deem it insecure to send properties or data objects along with a notification. This is a potential security breach explained [here](https://github.com/VNG-Realisatie/gemma-zaken/issues/1427#issuecomment-549272696).  It also doesnï¿½t follow the [web standard](https://www.w3.org/TR/websub/). Instead we are developing our own subscriber service that is tailored for the NLX / VNG environment and based on current web standards [here]().
 
 __solution__
 In compliance with [w3.org](https://www.w3.org/TR/websub/) each endpoint returns an header containing an subscribtion url. That can be used in acordanse with the application to subscribe to both individual objects as collections. whereby collections serve as 'kanalen'.
@@ -122,7 +122,7 @@ Comma Notation versus Bracket Notation on arrays's
 -------
 The NL API standard uses comma notation on array's in http requests. E.g. fields=id,name,description however common browsers(based on chromium e.g. chrome and edge) use bracket notation for query style array's e.g. fields[]=id&fields[]=name,&fields[]=description. The difference of course is obvious since comma notation doesn't allow you to index arrays. [Interestingly enough there isn't actually a rfc spec for this](https://stackoverflow.com/questions/15854017/what-rfc-defines-arrays-transmitted-over-http). 
 
-It is perceivable that in future iterations we would like to use indexed array in situations where the index of the array can't be assumed on basis of url notation, when indexes aren’t numerical, when we don’t want an index to start at 0 or when indexes are purpusly missing (comma notation of id,name,description would always refert to the equivalent of fields: [
+It is perceivable that in future iterations we would like to use indexed array in situations where the index of the array can't be assumed on basis of url notation, when indexes arenï¿½t numerical, when we donï¿½t want an index to start at 0 or when indexes are purpusly missing (comma notation of id,name,description would always refert to the equivalent of fields: [
   0 => id,
   1 => name,
   2 => description
