@@ -3,26 +3,70 @@
 
 namespace App\Swagger;
 
+use ApiPlatform\Core\Swagger\Serializer\DocumentationNormalizer;
+use ApiPlatform\Core\Metadata\Resource\Factory\ResourceMetadataFactoryInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Annotations\AnnotationReader ;
 
 final class SwaggerDecorator implements NormalizerInterface
 {
+	private $metadataFactory;
+	private $documentationNormalizer;
 	private $decorated;
 	private $params;
 	private $cash;
+	private $em;
+	private $annotationReader;
 	
-	public function __construct(NormalizerInterface $decorated, ParameterBagInterface $params, CacheInterface $cache)
+	public function __construct(
+			ResourceMetadataFactoryInterface $metadataFactory, 
+			DocumentationNormalizer $documentationNormalizer, 
+			NormalizerInterface $decorated, 
+			ParameterBagInterface $params, 
+			CacheInterface $cache, 
+			EntityManagerInterface $em,
+			AnnotationReader $annotationReader
+			)
 	{
+		$this->metadataFactory = $metadataFactory;
+		$this->documentationNormalizer = $documentationNormalizer;
 		$this->decorated = $decorated;
 		$this->params = $params;
 		$this->cash = $cache;
+		$this->em = $em;
+		$this->annotationReader = $annotationReader;
 	}
 	
 	public function normalize($object, $format = null, array $context = [])
 	{
 		$docs = $this->decorated->normalize($object, $format, $context);
+		
+		/* The we need to enrich al the entities and add the autoated routes */
+		
+		// Lets get al the entities known to doctrine
+		$entities = $this->em->getConfiguration()->getMetadataDriverImpl()->getAllClassNames(); 
+		
+		// Then we loop trough the entities to find the api platform entities
+		foreach($entities as $entity){			
+			$reflector = new \ReflectionClass($entity);
+			var_dump($this->annotationReader->getClassAnnotations($reflector));
+			
+			// lest break for now
+			break;
+			
+			// If the entity is not a apiplatform entity lets continue
+			//if(){
+			//	continue
+			//}
+		}
+		
+		
+		
+		// This gets a resourceclass bassed on the route name, could
+		//$resourceMetadata = $resourceClass ? $this->metadataFactory->create($resourceClass) : null;
 		
 		// Lest add an host
 		if($this->params->get('common_ground.oas.host')){
@@ -165,13 +209,44 @@ final class SwaggerDecorator implements NormalizerInterface
 							'schema'=>['type'=>'string', 'format' => 'date-time'],
 							'in' => 'query',
 					];
-				}
-				
-			}
-			
-			
+				}				
+			}	
+		}
+		
+		/* @todo dit afbouwen */
+		
+		/*
+		if(config heltchecks is true){
+			$tag=[];
+			$tag['name']='';
+			$tag['description']='';
+			array_unshift($fruits_list, $tag);
 			
 		}
+		
+		if(config audittrail is true){
+			$tag=[];
+			$tag['name']='';
+			$tag['description']='';
+			array_unshift($fruits_list, $tag);
+			
+		}
+		
+		if(config notifications is true){
+			$tag=[];
+			$tag['name']='';
+			$tag['description']='';
+			array_unshift($fruits_list, $tag);
+			
+		}
+		
+		if(config authorization is true){
+			$tag=[];
+			$tag['name']='';
+			$tag['description']='';
+			array_unshift($fruits_list, $tag);
+		}
+		*/
 		return $docs;
 	}
 	
