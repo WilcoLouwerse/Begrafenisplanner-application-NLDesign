@@ -65,16 +65,16 @@ $ helm dependency update ./api/helm
 ```
 If you want to create a new instance
 ```CLI
-$ helm install --name pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
-$ helm install --name pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
-$ helm install --name pc-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0 
+$ helm install --name pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1,settings.loadbalancerEnabled=true
+$ helm install --name pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0,settings.loadbalancerEnabled=true
+$ helm install --name pc-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0,settings.loadbalancerEnabled=true 
 ```
 
 Or update if you want to update an existing one
 ```CLI
-$ helm upgrade pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1 
-$ helm upgrade pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0 
-$ helm upgrade pc-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
+$ helm upgrade pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1,settings.loadbalancerEnabled=true 
+$ helm upgrade pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0,settings.loadbalancerEnabled=true
+$ helm upgrade pc-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0,settings.loadbalancerEnabled=true
 ```
 
 Or del if you want to delete an existing  one

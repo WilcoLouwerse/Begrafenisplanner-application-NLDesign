@@ -41,7 +41,7 @@ api_platform:
     enable_re_doc: true
     
     # In the NL api strategie we use snake case for naming
-    name_converter: 'Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter'
+    # name_converter: 'Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter'
     
     # Lets confirm to JSON-HA: first, as per common ground. But allow other serializers
     formats:

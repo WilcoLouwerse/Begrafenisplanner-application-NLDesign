@@ -89,6 +89,19 @@ class ExampleEntity
      */
     private $description;
 
+    /**
+	 * @var string $camelCase Proof that we camel case our api
+	 * @example Is the best group ever
+	 * 
+	 * @Assert\Length(
+	 *      max = 2555
+	 * )
+     * @Gedmo\Versioned
+	 * @Groups({"read","write"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $camelCase;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -114,6 +127,18 @@ class ExampleEntity
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCamelCase(): ?string
+    {
+        return $this->camelCase;
+    }
+
+    public function setCamelCase(?string $camelCase): self
+    {
+        $this->camelCase = $camelCase;
 
         return $this;
     }
