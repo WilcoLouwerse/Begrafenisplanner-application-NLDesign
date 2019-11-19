@@ -18,10 +18,11 @@ data:
   app-demo: {{ .Values.settings.demo | quote }}
   
   #config
-  app-auth: {{ .Values.settings.demo | quote }}
-  app-audittrail: {{ .Values.settings.app_audittrail | quote }}
-  app-notification: {{ .Values.settings.app_notification | quote }}
-  app-health: {{ .Values.settings.demo | quote }}
+  app-auth: {{ .Values.settings.authorisationEnabled | quote }}
+  app-audittrail: {{ .Values.settings.audittrailEnabled | quote }}
+  app-notification: {{ .Values.settings.notificationEnabled | quote }}
+  app-health: {{ .Values.settings.healthEnabled | quote }}
+  app-archive: {{ .Values.settings.archiveEnabled | quote }}
   
   env: {{ .Values.settings.env | quote }}
   debug: {{ .Values.settings.debug | quote }}

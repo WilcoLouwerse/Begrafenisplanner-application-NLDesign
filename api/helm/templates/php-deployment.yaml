@@ -88,6 +88,11 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-health
+            - name: ARCHIVE_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-archive
             
             # bla bla      
             - name: CORS_ALLOW_ORIGIN
