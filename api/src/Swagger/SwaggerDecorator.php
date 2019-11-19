@@ -286,41 +286,46 @@ final class SwaggerDecorator implements NormalizerInterface
 		
 		
 		// Security tag
-		$tag = [];
-		$tag['name'] = 'Health Checks';
-		$tag['description'] = 'Authorization';
-		$tag['externalDocs'] = [];
-		$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
-		array_unshift($docs['tags'], $tag);
+		if(getenv('HEALTH_ENABLED')){
+			$tag = [];
+			$tag['name'] = 'Health Checks';
+			$tag['description'] = 'Authorization';
+			$tag['externalDocs'] = [];
+			$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
+			array_unshift($docs['tags'], $tag);
+		}
 		
 		// Security tag
-		$tag = [];
-		$tag['name'] = 'Notifications';
-		$tag['description'] = 'Authorization';
-		$tag['externalDocs'] = [];
-		$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
-		array_unshift($docs['tags'], $tag);
+		if(getenv('NOTIFICATION_ENABLED')){
+			$tag = [];
+			$tag['name'] = 'Notifications';
+			$tag['description'] = 'Authorization';
+			$tag['externalDocs'] = [];
+			$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
+			array_unshift($docs['tags'], $tag);
+		}
 		
 		
 		// Security tag
-		$tag = [];
-		$tag['name'] = 'Audit trail';
-		$tag['description'] = 'Authorization';
-		$tag['externalDocs'] = [];
-		$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
-		array_unshift($docs['tags'], $tag);
+		if(getenv('AUDITTRAIL_ENABLED')){
+			$tag = [];
+			$tag['name'] = 'Audit trail';
+			$tag['description'] = 'Authorization';
+			$tag['externalDocs'] = [];
+			$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
+			array_unshift($docs['tags'], $tag);
+		}
 		
 		// Security tag
-		$tag = [];
-		$tag['name'] = 'Authorization';
-		$tag['description'] = 'Authorization';
-		$tag['externalDocs'] = [];
-		$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
-		array_unshift($docs['tags'], $tag);
+		if(getenv('AUTH_ENABLED')){
+			$tag = [];
+			$tag['name'] = 'Authorization';
+			$tag['description'] = 'Authorization';
+			$tag['externalDocs'] = [];
+			$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
+			array_unshift($docs['tags'], $tag);
+		}
 		
-		// Security tag
-		
-		// Security tag
 		
 		//$docs['tags']['name']
 		

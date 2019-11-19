@@ -11,12 +11,23 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 data:
   project_name: {{ .Values.settings.projectName | quote }}
+  app-name: {{ .Values.settings.name | quote }}
+  app-title: {{ .Values.settings.title | quote }}
+  app-version: {{ .Values.settings.version | quote }}
+  app-repro: {{ .Values.settings.repro | quote }}
+  app-demo: {{ .Values.settings.demo | quote }}
+  
+  #config
+  app-auth: {{ .Values.settings.demo | quote }}
+  app-audittrail: {{ .Values.settings.app_audittrail | quote }}
+  app-notification: {{ .Values.settings.app_notification | quote }}
+  app-health: {{ .Values.settings.demo | quote }}
+  
   env: {{ .Values.settings.env | quote }}
   debug: {{ .Values.settings.debug | quote }}
   cors-allow-origin: {{ .Values.settings.corsAllowOrigin | quote }}
   trusted-proxies: {{ join "," .Values.settings.trustedProxies }}
   trusted-hosts: {{ .Values.settings.trustedHosts | quote }}
-  project-name: {{ .Values.settings.projectName | quote }}
   php-service: {{ include "name" . }}-{{ .Values.settings.env }}-php
   
   varnish-url: {{ if .Values.varnish.enabled }}http://varnish{{ else }}{{ .Values.varnish.url | quote }}{{ end }}
