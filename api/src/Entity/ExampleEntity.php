@@ -16,9 +16,21 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 use App\Filter\LikeFilter;
 
 /**
+ * This is an example entity
+ * 
+ * With an adtional description, all in all its pritty nice [url](www.google.nl)
+ * 
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
- *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
+ *     itemOperations={
+ *     		"get","put","delete",
+ *     		"audittrail"={
+ *     			"method"="GET",
+ *     			"name"="Provides an auditrail for this entity",
+ *     			"description"="Provides an auditrail for this entity"
+ *     		}
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\ExampleEntityRepository")
  * @Gedmo\Loggable

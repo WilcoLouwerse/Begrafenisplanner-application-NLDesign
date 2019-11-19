@@ -23,11 +23,12 @@ api_platform:
     title: '%env(APP_TITLE)%'
     description: |
         API Details
-        - Component: %env(CONTAINER_PROJECT_TITLE)%
-        - Reference: %env(CONTAINER_PROJECT_NAME)%
+        - Component: %env(APP_TITLE)%
+        - Reference: %env(APP_NAME)%
         - Enviroment: %env(APP_ENV)%
-        - Version: %env(CONTAINER_PROJECT_VERSION)%
+        - Version: %env(APP_VERSION)%
         - Repository: [%env(APP_REPRO)%](%env(APP_REPRO)%) / [zip](%env(APP_REPRO)%/archive/master.zip)
+        - Docker Image: [%env(APP_REPRO)%](%env(APP_REPRO)%) 
         - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
         
         %env(APP_DESCRIPTION)% 
