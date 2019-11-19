@@ -286,7 +286,7 @@ final class SwaggerDecorator implements NormalizerInterface
 		
 		
 		// Security tag
-		if(getenv('HEALTH_ENABLED')){
+		if(getenv('HEALTH_ENABLED')=="true"){
 			$tag = [];
 			$tag['name'] = 'Health Checks';
 			$tag['description'] = 'Authorization';
@@ -296,7 +296,7 @@ final class SwaggerDecorator implements NormalizerInterface
 		}
 		
 		// Security tag
-		if(getenv('NOTIFICATION_ENABLED')){
+		if(getenv('NOTIFICATION_ENABLED')=="true"){
 			$tag = [];
 			$tag['name'] = 'Notifications';
 			$tag['description'] = 'Authorization';
@@ -307,7 +307,7 @@ final class SwaggerDecorator implements NormalizerInterface
 		
 		
 		// Security tag
-		if(getenv('AUDITTRAIL_ENABLED')){
+		if(getenv('AUDITTRAIL_ENABLED')=="true"){
 			$tag = [];
 			$tag['name'] = 'Audit trail';
 			$tag['description'] = 'Authorization';
@@ -317,7 +317,7 @@ final class SwaggerDecorator implements NormalizerInterface
 		}
 		
 		// Security tag
-		if(getenv('AUTH_ENABLED')){
+		if(getenv('AUTH_ENABLED')=="true"){
 			$tag = [];
 			$tag['name'] = 'Authorization';
 			$tag['description'] = 'Authorization';
@@ -327,9 +327,7 @@ final class SwaggerDecorator implements NormalizerInterface
 		}
 		
 		
-		//$docs['tags']['name']
-		
-		var_dump($docs);
+		//var_dump($docs);
 		return $docs;
 	}
 	
