@@ -17,11 +17,13 @@ data:
   app-repro: {{ .Values.settings.repro | quote }}
   app-demo: {{ .Values.settings.demo | quote }}
   app-description: {{ .Values.settings.description | quote }}
+  
   app-auth: {{ .Values.settings.authorisationEnabled | quote }}
   app-audittrail: {{ .Values.settings.audittrailEnabled | quote }}
   app-notification: {{ .Values.settings.notificationEnabled | quote }}
   app-health: {{ .Values.settings.healthEnabled | quote }}
   app-archive: {{ .Values.settings.archiveEnabled | quote }}
+  
   env: {{ .Values.settings.env | quote }}
   debug: {{ .Values.settings.debug | quote }}
   cors-allow-origin: {{ .Values.settings.corsAllowOrigin | quote }}

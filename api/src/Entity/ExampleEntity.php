@@ -91,7 +91,7 @@ class ExampleEntity
 
     /**
 	 * @var string $camelCase Proof that we camel case our api
-	 * @example Is the best group ever
+	 * @example Best api ever
 	 * 
 	 * @Assert\Length(
 	 *      max = 2555
