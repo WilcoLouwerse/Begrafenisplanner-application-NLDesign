@@ -1,5 +1,7 @@
 <?php
 
+// src/entity/ExampleEntity.php
+
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
