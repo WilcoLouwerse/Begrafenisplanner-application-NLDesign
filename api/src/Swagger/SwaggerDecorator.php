@@ -47,6 +47,9 @@ final class SwaggerDecorator implements NormalizerInterface
 		
 		//var_dump($docs);
 		
+		// Lets make sure that we have definitions
+		if(!array_key_exists ('definitions',$docs)){$docs['definitions']=[];}
+		
 		// Lets make sure that we have tags
 		if(!array_key_exists ('tags',$docs)){$docs['tags']=[];}
 		
@@ -461,7 +464,7 @@ final class SwaggerDecorator implements NormalizerInterface
 				$additionalDocs['properties'][$class."-".$group]["required"] = $required;
 				
 				
-				if(!array_key_exists ($class.".".$group,$additionalDocs['security'])){$additionalDocs['security'][$class.".".$group] = $group.' right to the '.$class.' resource'; }
+				if(!array_key_exists ($group,$additionalDocs['security'])){$additionalDocs['security'][$group] = $group.' right to the '.$class.' resource'; }
 			}	
 			
 		}
