@@ -48,6 +48,13 @@ class ValidOnSubscriber implements EventSubscriberInterface
 		$geldigOp = $event->getRequest()->query->get('geldigOp', false);
 		$validOn = $event->getRequest()->query->get('validOn', $geldigOp);
 		
+		
+		// Only do somthing if fields is query supplied
+		if (!$validOn) {
+			return $result;
+		}
+		
+		
 		// Lets see if this class has a Loggableannotation
 		$loggable = false;
 		$reflClass = new \ReflectionClass($result);
@@ -58,12 +65,6 @@ class ValidOnSubscriber implements EventSubscriberInterface
 				$loggable = true;
 			}
 		}
-		
-		// Only do somthing if fields is query supplied
-		if (!$validOn) {
-			return $result;
-		}		
-		
 		/* @todo propper error handling */
 		if(!$loggable){
 			throw new \Exception('This enity is not loggable therefore no previus versions can be obtained');
