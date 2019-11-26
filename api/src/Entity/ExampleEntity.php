@@ -42,19 +42,8 @@ class ExampleEntity
 {
 	/**
 	 * @var \Ramsey\Uuid\UuidInterface
-	 *
-	 * @ApiProperty(
-	 * 	   identifier=true,
-	 *     attributes={
-	 *         "swagger_context"={
-	 *         	   "description" = "The UUID identifier of this object",
-	 *             "type"="string",
-	 *             "format"="uuid",
-	 *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-	 *         }
-	 *     }
-	 * )
-	 *
+	 * @example e2984465-190a-4562-829e-a8cca81aa35d
+	 * 
 	 * @Assert\Uuid
 	 * @Groups({"read"})
 	 * @ORM\Id
@@ -93,10 +82,10 @@ class ExampleEntity
 
     /**
 	 * @var string $camelCase Proof that we camel case our api
-	 * @example Best api ever
+	 * @example Best api ever	 
 	 * 
 	 * @Assert\Length(
-	 *      max = 2555
+	 *      max = 255
 	 * )
      * @Gedmo\Versioned
 	 * @Groups({"read","write"})

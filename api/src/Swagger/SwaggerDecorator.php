@@ -4,11 +4,12 @@
 namespace App\Swagger;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Annotations\Reader as AnnotationReader;
-use ApiPlatform\Core\PathResolver\OperationPathResolverInterface;
+
 
 final class SwaggerDecorator implements NormalizerInterface
 {
@@ -19,13 +20,15 @@ final class SwaggerDecorator implements NormalizerInterface
 	private $cash;
 	private $em;
 	private $annotationReader;
+	private $camelCaseToSnakeCaseNameConverter;
 	
 	public function __construct(
 			NormalizerInterface $decorated, 
 			ParameterBagInterface $params, 
 			CacheInterface $cache, 
 			EntityManagerInterface $em,
-			AnnotationReader $annotationReader
+			AnnotationReader $annotationReader,
+			CamelCaseToSnakeCaseNameConverter $camelCaseToSnakeCaseNameConverter
 			)
 	{
 		$this->decorated = $decorated;
@@ -33,6 +36,7 @@ final class SwaggerDecorator implements NormalizerInterface
 		$this->cash = $cache;
 		$this->em = $em;
 		$this->annotationReader = $annotationReader;
+		$this->camelCaseToSnakeCaseNameConverter= $camelCaseToSnakeCaseNameConverter;
 	}
 	
 	public function normalize($object, $format = null, array $context = [])
@@ -41,12 +45,34 @@ final class SwaggerDecorator implements NormalizerInterface
 		
 		/* The we need to enrich al the entities and add the autoated routes */
 		
+		//var_dump($docs);
 		
 		// Lets make sure that we have tags
 		if(!array_key_exists ('tags',$docs)){$docs['tags']=[];}
 		
+		// Lets make sure that we have security and JWT-Claims
+		if(!array_key_exists ('securityDefinitions',$docs)){$docs['securityDefinitions']=[];}
+		
+		// Lets add JWT-Oauth
+		$docs['securityDefinitions']['JWT-Oauth'] = [
+				"type"=>"oauth2",
+				"authorizationUrl"=>"http://petstore.swagger.io/api/oauth/dialog",
+				"flow"=>"implicit",
+				"scopes"=>[] #scopes will be filled later autmaticly
+		];
+		
+		$docs['securityDefinitions']['JWT-Token'] = [
+				"type"=>"apiKey",
+				"in"=> "header",       # can be "header", "query" or "cookie"
+				"name"=> "Authorization",  # name of the header, query parameter or cookie
+				"scopes"=>[] #scopes will be filled later autmaticly
+		];
+		
+		
 		// Lets get al the entities known to doctrine
 		$entities = $this->em->getConfiguration()->getMetadataDriverImpl()->getAllClassNames(); 
+		
+		$additionalDocs = [];
 		
 		// Then we loop trough the entities to find the api platform entities
 		foreach($entities as $entity){			
@@ -74,19 +100,33 @@ final class SwaggerDecorator implements NormalizerInterface
 					$tag['name'] = $shortName;
 					$tag['description'] = $description;
 					
-					$docs['tags'][] = $tag;					
+					$docs['tags'][] = $tag;
 					
 					// And lets add the aditional docs
-					$this->getAdditionalEntityDocs($entity);
+					
+					//$additionalEntityDocs = $this->getAdditionalEntityDocs($entity);
+					$entityDocs = $this->getAdditionalEntityDocs($entity);
+					$additionalDocs= array_merge($additionalDocs,$entityDocs['properties']);
+					
+					// Security
+					$docs['securityDefinitions']['JWT-Oauth']['scopes']= array_merge($docs['securityDefinitions']['JWT-Oauth']['scopes'],$entityDocs['security']);
+					$docs['securityDefinitions']['JWT-Token']['scopes']= array_merge($docs['securityDefinitions']['JWT-Token']['scopes'],$entityDocs['security']);
+					
 					break;
 				}
 			}
 		}
-		
-		
-		
-		// This gets a resourceclass bassed on the route name, could
-		//$resourceMetadata = $resourceClass ? $this->metadataFactory->create($resourceClass) : null;
+				
+		// Oke dit is echt but lelijk
+		$schemas = (array) $docs['definitions'];
+		foreach($schemas as $schemaName => $schema){			
+			$additionalDocs[$schemaName] = array_merge( (array) $schema, $additionalDocs[$schemaName]);
+			$properties = (array) $schema['properties'];
+			foreach($properties as $propertyName => $property){								
+				$additionalDocs[$schemaName]['properties'][$propertyName] = array_merge( (array) $property, $additionalDocs[$schemaName]['properties'][$propertyName] );
+			}
+		}
+		$docs['definitions'] = $additionalDocs;
 		
 		// Lest add an host
 		if($this->params->get('common_ground.oas.host')){
@@ -342,37 +382,92 @@ final class SwaggerDecorator implements NormalizerInterface
 		$reflector = $metadata->getReflectionClass();
 		$properties = $metadata->getReflectionProperties();
 		$annotations = $this->annotationReader->getClassAnnotations($reflector);
+		$additionalDocs = ['properties','security'=>[]];
+		$required = [];
 		
 		// Add audittrail
 		// Add healthcheck
 		
-		//var_dump($propertyAnnotation);
+		$class = $reflector->getShortName();
+		$path =  '/'.$this->camelCaseToSnakeCaseNameConverter->normalize($class);		
+		
 		
 		// Lets take a look at the properties an annotions, 
-		foreach($properties as $property){
+		foreach($properties as $property){			
 			
-			// The annotations for this propertu
-			$propertyAnnotations = $this->annotationReader->getPropertyAnnotations($property);
+			// The dockBlocks for thie property			
+			$factory  = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
+			$docblock = $factory->create($property->getDocComment());
+			$tags = $docblock->getTags();
+			$atributes = [];
 			
-			// Check the annotations for symfony vallidations
-			foreach($propertyAnnotations as $propertyAnnotation){
+			foreach($tags as $tag){
+				$name = $tag->getName();
+				$description = $tag->getDescription();
+				//
+				//$description = (string) $description;
 				
-				// Lentgh
-				if(get_class($propertyAnnotation) == "Symfony\Component\Validator\Constraints\NotNull"){
+				switch ($name) {					
+					// Docblocks
+					case "example":						
+						$atributes['example'] = (string)  $description;  
+						break; 
 					
-				}				
-				
-				// Lentgh
-				if(get_class($propertyAnnotation) == "Symfony\Component\Validator\Constraints\Length"){
-					
-				}				
+					// Groups	
+					case "Groups":
+						$propertyAnnotation = $this->annotationReader->getPropertyAnnotation($property, "Symfony\Component\Serializer\Annotation\Groups");
+						$groups = $propertyAnnotation->getGroups();
+						break;
+						
+					// Constrainds (Validation)	
+					case "Assert\Uuid":
+						$atributes['format'] = 'uuid'; 
+						break;
+					case "Assert\Email":
+						$atributes['format'] = 'email';
+						break;
+					case "Assert\Url":
+						$atributes['format'] = 'url';
+						break;
+					case "Assert\Regex":
+						$atributes['format'] = 'regex';
+						break;
+					case "Assert\Ip":
+						$atributes['format'] = 'ip';
+						break;
+					case "Assert\Json":
+						$atributes['format'] = 'json';
+						break; 
+					case "Assert\Choice":
+						//@todo
+						//$atributes['format'] = 'json';
+						break;
+						
+					case "Assert\NotNull":
+						$required[] = $property->name;						
+						break;
+					case "Assert\Length":						
+						$propertyAnnotation = $this->annotationReader->getPropertyAnnotation($property, "Symfony\Component\Validator\Constraints\Length");						
+						if($propertyAnnotation->max){$atributes['maxLength'] = $propertyAnnotation->max;}
+						if($propertyAnnotation->min){$atributes['minLength'] = $propertyAnnotation->min;}
+						break;
+				}
+							
 			}
+			// Lets write everything to the docs
+			foreach($groups as $group){
+				//$additionalDocs["components"]['schemas'][$class."-".$group] = $atributes;
+				$additionalDocs['properties'][$class."-".$group]["properties"][$property->name]= $atributes;
+				$additionalDocs['properties'][$class."-".$group]["required"] = $required;
+				
+				
+				if(!array_key_exists ($class.".".$group,$additionalDocs['security'])){$additionalDocs['security'][$class.".".$group] = $group.' right to the '.$class.' resource'; }
+			}	
 			
 		}
 		
 		
 		
-		$additionalDocs = [];
 		
 		return $additionalDocs;
 	}

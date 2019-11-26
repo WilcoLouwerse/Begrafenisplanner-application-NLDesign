@@ -2,7 +2,7 @@
 
 Welcome, you are currently viewing the design decisions for the proto component. The proto component aims to provide a framework for the quick development of production apis for the commonground project.
 
-*index*
+*Index*
 - [The European factor](#the-european-factor)
 - [On standards and standardisation](#on-standards-and-standardization)
 - [NL API Strategie](#nl-api-strategie)
@@ -31,7 +31,7 @@ Welcome, you are currently viewing the design decisions for the proto component.
 - [Api Versioning](#api-versioning)
 - [Environments and namespacing](#environments-and-namespacing)
 - [Domain Build-up and routing](#domain-build-up-and-routing)
-- Container Setup](#container-setup)
+- [Container Setup](#container-setup)
 
 
 The European factor
