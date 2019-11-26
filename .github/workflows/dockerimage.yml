@@ -52,3 +52,7 @@ jobs:
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push to docker hub
         run: docker-compose push
+      - name: Deploy through helm
+        env:
+            KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: helm install --name pc-dev ./api/helm  --kubeconfig=$KUBECONFIG --namespace=dev  --set settings.env=dev,settings.debug=1
