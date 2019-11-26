@@ -4,25 +4,129 @@
 namespace App\Swagger;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Annotations\Reader as AnnotationReader;
+
 
 final class SwaggerDecorator implements NormalizerInterface
 {
+	private $metadataFactory;
+	private $documentationNormalizer;
 	private $decorated;
 	private $params;
 	private $cash;
+	private $em;
+	private $annotationReader;
+	private $camelCaseToSnakeCaseNameConverter;
 	
-	public function __construct(NormalizerInterface $decorated, ParameterBagInterface $params, CacheInterface $cache)
+	public function __construct(
+			NormalizerInterface $decorated, 
+			ParameterBagInterface $params, 
+			CacheInterface $cache, 
+			EntityManagerInterface $em,
+			AnnotationReader $annotationReader,
+			CamelCaseToSnakeCaseNameConverter $camelCaseToSnakeCaseNameConverter
+			)
 	{
 		$this->decorated = $decorated;
 		$this->params = $params;
 		$this->cash = $cache;
+		$this->em = $em;
+		$this->annotationReader = $annotationReader;
+		$this->camelCaseToSnakeCaseNameConverter= $camelCaseToSnakeCaseNameConverter;
 	}
 	
 	public function normalize($object, $format = null, array $context = [])
 	{
 		$docs = $this->decorated->normalize($object, $format, $context);
+		
+		/* The we need to enrich al the entities and add the autoated routes */
+		
+		//var_dump($docs);
+		
+		// Lets make sure that we have tags
+		if(!array_key_exists ('tags',$docs)){$docs['tags']=[];}
+		
+		// Lets make sure that we have security and JWT-Claims
+		if(!array_key_exists ('securityDefinitions',$docs)){$docs['securityDefinitions']=[];}
+		
+		// Lets add JWT-Oauth
+		$docs['securityDefinitions']['JWT-Oauth'] = [
+				"type"=>"oauth2",
+				"authorizationUrl"=>"http://petstore.swagger.io/api/oauth/dialog",
+				"flow"=>"implicit",
+				"scopes"=>[] #scopes will be filled later autmaticly
+		];
+		
+		$docs['securityDefinitions']['JWT-Token'] = [
+				"type"=>"apiKey",
+				"in"=> "header",       # can be "header", "query" or "cookie"
+				"name"=> "Authorization",  # name of the header, query parameter or cookie
+				"scopes"=>[] #scopes will be filled later autmaticly
+		];
+		
+		
+		// Lets get al the entities known to doctrine
+		$entities = $this->em->getConfiguration()->getMetadataDriverImpl()->getAllClassNames(); 
+		
+		$additionalDocs = [];
+		
+		// Then we loop trough the entities to find the api platform entities
+		foreach($entities as $entity){			
+			//$reflector = new \ReflectionClass($entity); 
+			$metadata =  $this->em->getClassMetadata($entity);			
+			$reflector = $metadata->getReflectionClass();
+						
+			$properties = $metadata->getReflectionProperties();			
+			$annotations = $this->annotationReader->getClassAnnotations($reflector);
+			
+			foreach($annotations as $annotation){
+				$annotationReflector = new \ReflectionClass($annotation);	
+				if($annotationReflector->name == "ApiPlatform\Core\Annotation\ApiResource"){
+					
+					// Lets add the class info to the tag
+					$shortName = $reflector->getShortName ();
+					
+					$factory  = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
+					$docblock = $factory->create($reflector->getDocComment());
+					$summary = $docblock->getSummary();
+					$description = $docblock->getDescription()->render();
+					$description = $summary."\n\n".$description;					
+					
+					$tag = [];
+					$tag['name'] = $shortName;
+					$tag['description'] = $description;
+					
+					$docs['tags'][] = $tag;
+					
+					// And lets add the aditional docs
+					
+					//$additionalEntityDocs = $this->getAdditionalEntityDocs($entity);
+					$entityDocs = $this->getAdditionalEntityDocs($entity);
+					$additionalDocs= array_merge($additionalDocs,$entityDocs['properties']);
+					
+					// Security
+					$docs['securityDefinitions']['JWT-Oauth']['scopes']= array_merge($docs['securityDefinitions']['JWT-Oauth']['scopes'],$entityDocs['security']);
+					$docs['securityDefinitions']['JWT-Token']['scopes']= array_merge($docs['securityDefinitions']['JWT-Token']['scopes'],$entityDocs['security']);
+					
+					break;
+				}
+			}
+		}
+				
+		// Oke dit is echt but lelijk
+		$schemas = (array) $docs['definitions'];
+		foreach($schemas as $schemaName => $schema){			
+			$additionalDocs[$schemaName] = array_merge( (array) $schema, $additionalDocs[$schemaName]);
+			$properties = (array) $schema['properties'];
+			foreach($properties as $propertyName => $property){								
+				$additionalDocs[$schemaName]['properties'][$propertyName] = array_merge( (array) $property, $additionalDocs[$schemaName]['properties'][$propertyName] );
+			}
+		}
+		$docs['definitions'] = $additionalDocs;
 		
 		// Lest add an host
 		if($this->params->get('common_ground.oas.host')){
@@ -120,13 +224,25 @@ final class SwaggerDecorator implements NormalizerInterface
 				]; 
 				// NLX loging headers
 				$call['parameters'][] = [
-						'name' => 'X-Audit-Clarification',
+						'name' => 'X-NLX-Audit-Clarification',
 						'description' => 'A clarification as to why a request has been made  (doelbinding)',
 						'in' => 'header',
 				];
 				
 				
 				if($method == "get"){
+					
+					
+					// Health JSON
+					$call['produces'][] = 'application/health+json';
+					
+					// WEBSUB header
+					$call['parameters'][] = [
+							'name' => 'Link',
+							'description' => 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"',
+							'in' => 'header',
+					];
+					
 					// Lets add the extend functionality
 					$call['parameters'][] = [
 							'name' => 'extend[]',
@@ -164,19 +280,195 @@ final class SwaggerDecorator implements NormalizerInterface
 							'description' => 'Returns objects valid until a given date time',
 							'schema'=>['type'=>'string', 'format' => 'date-time'],
 							'in' => 'query',
-					];
-				}
-				
-			}
-			
-			
+					];				
+				}				
+			}	
+		}
+		
+		/* @todo dit afbouwen */
+		
+		/*
+		if(config heltchecks is true){
+			$tag=[];
+			$tag['name']='';
+			$tag['description']='';
+			array_unshift($fruits_list, $tag);
 			
 		}
+		
+		if(config audittrail is true){
+			$tag=[];
+			$tag['name']='';
+			$tag['description']='';
+			array_unshift($fruits_list, $tag);
+			
+		}
+		
+		if(config notifications is true){
+			$tag=[];
+			$tag['name']='';
+			$tag['description']='';
+			array_unshift($fruits_list, $tag);
+			
+		}
+		
+		if(config authorization is true){
+			$tag=[];
+			$tag['name']='';
+			$tag['description']='';
+			array_unshift($fruits_list, $tag);
+		}
+		*/
+		//var_dump($docs);
+		
+		
+		// Aditional tags
+		
+		
+		// Security tag
+		if(getenv('HEALTH_ENABLED')=="true"){
+			$tag = [];
+			$tag['name'] = 'Health Checks';
+			$tag['description'] = 'Authorization';
+			$tag['externalDocs'] = [];
+			$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
+			array_unshift($docs['tags'], $tag);
+		}
+		
+		// Security tag
+		if(getenv('NOTIFICATION_ENABLED')=="true"){
+			$tag = [];
+			$tag['name'] = 'Notifications';
+			$tag['description'] = 'Authorization';
+			$tag['externalDocs'] = [];
+			$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
+			array_unshift($docs['tags'], $tag);
+		}
+		
+		
+		// Security tag
+		if(getenv('AUDITTRAIL_ENABLED')=="true"){
+			$tag = [];
+			$tag['name'] = 'Audit trail';
+			$tag['description'] = 'Authorization';
+			$tag['externalDocs'] = [];
+			$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
+			array_unshift($docs['tags'], $tag);
+		}
+		
+		// Security tag
+		if(getenv('AUTH_ENABLED')=="true"){
+			$tag = [];
+			$tag['name'] = 'Authorization';
+			$tag['description'] = 'Authorization';
+			$tag['externalDocs'] = [];
+			$tag['externalDocs'][] = ['url'=>'http://docs.my-api.com/pet-operations.htm'];
+			array_unshift($docs['tags'], $tag);
+		}
+		
+		
+		//var_dump($docs);
 		return $docs;
 	}
 	
 	public function supportsNormalization($data, $format = null)
 	{
 		return $this->decorated->supportsNormalization($data, $format);
+	}
+	
+	private function getAdditionalEntityDocs($entity){		
+		
+		$metadata =  $this->em->getClassMetadata($entity);		
+		$reflector = $metadata->getReflectionClass();
+		$properties = $metadata->getReflectionProperties();
+		$annotations = $this->annotationReader->getClassAnnotations($reflector);
+		$additionalDocs = ['properties','security'=>[]];
+		$required = [];
+		
+		// Add audittrail
+		// Add healthcheck
+		
+		$class = $reflector->getShortName();
+		$path =  '/'.$this->camelCaseToSnakeCaseNameConverter->normalize($class);		
+		
+		
+		// Lets take a look at the properties an annotions, 
+		foreach($properties as $property){			
+			
+			// The dockBlocks for thie property			
+			$factory  = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
+			$docblock = $factory->create($property->getDocComment());
+			$tags = $docblock->getTags();
+			$atributes = [];
+			
+			foreach($tags as $tag){
+				$name = $tag->getName();
+				$description = $tag->getDescription();
+				//
+				//$description = (string) $description;
+				
+				switch ($name) {					
+					// Docblocks
+					case "example":						
+						$atributes['example'] = (string)  $description;  
+						break; 
+					
+					// Groups	
+					case "Groups":
+						$propertyAnnotation = $this->annotationReader->getPropertyAnnotation($property, "Symfony\Component\Serializer\Annotation\Groups");
+						$groups = $propertyAnnotation->getGroups();
+						break;
+						
+					// Constrainds (Validation)	
+					case "Assert\Uuid":
+						$atributes['format'] = 'uuid'; 
+						break;
+					case "Assert\Email":
+						$atributes['format'] = 'email';
+						break;
+					case "Assert\Url":
+						$atributes['format'] = 'url';
+						break;
+					case "Assert\Regex":
+						$atributes['format'] = 'regex';
+						break;
+					case "Assert\Ip":
+						$atributes['format'] = 'ip';
+						break;
+					case "Assert\Json":
+						$atributes['format'] = 'json';
+						break; 
+					case "Assert\Choice":
+						//@todo
+						//$atributes['format'] = 'json';
+						break;
+						
+					case "Assert\NotNull":
+						$required[] = $property->name;						
+						break;
+					case "Assert\Length":						
+						$propertyAnnotation = $this->annotationReader->getPropertyAnnotation($property, "Symfony\Component\Validator\Constraints\Length");						
+						if($propertyAnnotation->max){$atributes['maxLength'] = $propertyAnnotation->max;}
+						if($propertyAnnotation->min){$atributes['minLength'] = $propertyAnnotation->min;}
+						break;
+				}
+							
+			}
+			// Lets write everything to the docs
+			foreach($groups as $group){
+				//$additionalDocs["components"]['schemas'][$class."-".$group] = $atributes;
+				$additionalDocs['properties'][$class."-".$group]["properties"][$property->name]= $atributes;
+				$additionalDocs['properties'][$class."-".$group]["required"] = $required;
+				
+				
+				if(!array_key_exists ($class.".".$group,$additionalDocs['security'])){$additionalDocs['security'][$class.".".$group] = $group.' right to the '.$class.' resource'; }
+			}	
+			
+		}
+		
+		
+		
+		
+		return $additionalDocs;
 	}
 }

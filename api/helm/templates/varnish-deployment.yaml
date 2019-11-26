@@ -30,14 +30,6 @@ spec:
           #args: ["-F", "-f", "/usr/local/etc/varnish/default.vcl", "-p", "http_resp_hdr_len=65536", "-p", "http_resp_size=98304"]
           ports:
             - containerPort: 80
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 80
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: 80
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}
