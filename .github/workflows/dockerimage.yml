@@ -25,6 +25,7 @@ jobs:
         env:
          FILE_NAME: "~/kubeconfig.yaml"
          FILE_DATA: "${{ secrets.KUBECONFIG }}"
+      - name: Print kube config
         run: echo "${{ secrets.KUBECONFIG }}"
       - name: Deploy through helm
         if: contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )
