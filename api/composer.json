@@ -10,6 +10,7 @@
 		"doctrine/doctrine-fixtures-bundle": "^3.2",
 		"guzzlehttp/guzzle": "^6.3",
 		"lexik/jwt-authentication-bundle": "^2.6",
+		"phpdocumentor/reflection-docblock": "^4.3",
 		"ramsey/uuid": "^3.8",
 		"ramsey/uuid-doctrine": "^1.5",
 		"sensiolabs/security-checker": "^6.0",
