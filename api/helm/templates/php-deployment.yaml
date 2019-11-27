@@ -46,7 +46,22 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
-                  key: project-name
+                  key: app-name
+            - name: APP_TITLE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-title
+            - name: APP_DESCRIPTION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-description
+            - name: APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-version
             - name: APP_ENV
               valueFrom:
                 configMapKeyRef:
@@ -57,6 +72,44 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: debug
+            - name: APP_DEMO
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-demo
+            - name: APP_REPRO
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-repro
+            # config
+            - name: AUTH_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-auth
+            - name: AUDITTRAIL_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-audittrail
+            - name: NOTIFICATION_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-notification
+            - name: HEALTH_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-health
+            - name: ARCHIVE_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-archive
+            
+            # bla bla      
             - name: CORS_ALLOW_ORIGIN
               valueFrom:
                 configMapKeyRef:

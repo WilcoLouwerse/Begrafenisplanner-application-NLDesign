@@ -1,60 +1,156 @@
-# Design Considerations
+# Design Considerations as Proposal
 
-This component was designed inline with the [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index), [commonground principles](https://vng.nl/onderwerpenindex/bestuur/samen-organiseren-2019/common-ground) and international standards. 
+Welcome, you are currently viewing the design decisions for the proto component. The proto component aims to provide a framework for the quick development of production apis for the commonground project.
 
-The spefic goal of this component is to provide a common architecture for common ground components as such the common ground principles are leading in design choices, and within those principles technological invoation and international complyancy is deemd most inportant. WE DO NOT WANT TO MAKE CONSESIONS TO CURRENT INFRASTRUCTURE. As such the component might differ on  [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index) and other standards if they are deemed incompatible or out of line with international standards. 
+*Index*
+- [The European factor](#the-european-factor)
+- [On standards and standardisation](#on-standards-and-standardization)
+- [NL API Strategie](#nl-api-strategie)
+
+*Design Choices*
+- [NLX](#nlx)
+- [English](#english)
+- [Fields](#fields)
+- [Search](#search)
+- [Queries](#queries)
+- [Extending](#extending)
+- [Timetravel](#timetravel)
+- [Archivation](#archivation)
+- [Audittrail](#audittrail)
+- [Healthchecks](#healthchecks)
+- [Notifications](#notifications)
+- [Authentication](#authentication)
+- [Authorization](#authorization)
+- [Ordering](#ordering)
+- [Translations](#translations)
+- [Errors](#errors)
+- [Arrays](#arrays)
+- [Filtering](#filtering)
+
+*Implementation choices*
+- [Api Versioning](#api-versioning)
+- [Environments and namespacing](#environments-and-namespacing)
+- [Domain Build-up and routing](#domain-build-up-and-routing)
+- [Container Setup](#container-setup)
+
 
 The European factor
 -------
-The proto-component isn't just a Dutch Component, it is in easance a dutch translation of european components, nowhere is this more obvius than in the core code. Our component is based on [API Platform](https://api-platform.com/) an API specific version of the symfony framework. This framework is build by the lovely people of []() and is build with support of the Euroean Commision trough the [EU-FOSSA Hackathon](https://ec.europa.eu/info/news/first-eu-fossa-hackathon-it-happened-2019-may-03_en) and Digital Ocean trough [Hacktoberfest].(https://hacktoberfest.digitalocean.com/).
+The proto-component isn't just a Dutch Component, it is in essence a Dutch translation of European components, nowhere is this more obvious than in the core code. Our component is based on [API Platform](https://api-platform.com/) an API specific version of the symfony framework. This framework is build by the lovely people of []() and is build with support of the European Commission trough the [EU-FOSSA Hackathon](https://ec.europa.eu/info/news/first-eu-fossa-hackathon-it-happened-2019-may-03_en) and Digital Ocean trough [Hacktoberfest](https://hacktoberfest.digitalocean.com/).
 
-But it dosn't just end there the [varnish container](https://hub.docker.com/r/eeacms/varnish/) that we use to speed up the API responce it build and maintained by [EEA]() (The European Environment Agency) and the development team at conduction itself is attached to the [Odyssey program](https://www.odyssey.org/) and originated from the [startupinresidence](https://startupinresidence.com/) program. 
+But it doesn't just end there. The [varnish container](https://hub.docker.com/r/eeacms/varnish/) that we use to speed up the API response is build and maintained by [EEA]() (The European Environment Agency) and the development team at conduction itself is attached to the [Odyssey program](https://www.odyssey.org/) and originated from the [startupinresidence](https://startupinresidence.com/) program. 
 
-So you could say that both change and a european perspective is in our blood.
+So you could say that both change and a European perspective is in our blood.
+
+On standards and standardization
+-------
+The specific goal of the proto component (which this current code base is a version of) is to provide a common architecture for common ground components. As such the common ground principles are leading in design choices, and within those principles international compliancy and technological invocation is deemed most important. **We do not want to make concessions to the current infrastructure.** As such the component might differ on [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index) and or other standards if they are deemed incompatible or out of line with (inter)national standards and or good practices. 
+
+Unfortunatly (inter)national standards standards can be conflicting. We therefore prioritize standards on two grounds
+
+- International standards are put before local standards
+- Standards caried by a standard organisation (like ISO, W3C etc) at put before floating standards (like RFC's) wichs are put before industraty standards, good practices and so on. 
+
+### Commonground specific standards
+
+This component was designed in line with the [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index), [commonground principles](https://vng.nl/onderwerpenindex/bestuur/samen-organiseren-2019/common-ground). 
+
+## NL API Strategie
+
+The [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie) takes a special place in this component, it is designed as a set of guidelines for API's for the dutch landscape. As such we follow it as close as posible. It dos however contains inconsistenies with both international standards and good practices. On those items we do not follow the norm but consider it our duty to try to change the norm. 
+
+** We implement **
+
+api-01, api-02, api-03, api-05, api-06, api-10, api-11, api-12, api-13,api-14, api-16, api-18, api-19, api-20, api-21, api-22, api-23, api-24, api-25, api-26, api-27, api-28, api-29, api-30, api-33, api-34, api-35, api-42
+
+** We want to implement **
+- [api-14](https://docs.geostandaarden.nl/api/API-Strategie/#api-14) Use OAuth 2.0 for authorisation
+
+** We do not implement **
+
+- [api-04](https://docs.geostandaarden.nl/api/API-Strategie/#api-04) Define interfaces in Dutch unless there is an official English glossary (see [english](#english))
+- [api-09](https://docs.geostandaarden.nl/api/API-Strategie/#api-09) Implement custom representation if supported see [fields](#fields))
+- [api-17](https://docs.geostandaarden.nl/api/API-Strategie/#api-17) Publish documentation in Dutch unless there is existing documentation in English or there is an official English glossary (see [english](#english))
+- [api-31](https://docs.geostandaarden.nl/api/API-Strategie/#api-31) Use the query parameter sorteer to sort (see [ordering](#ordering))
+- [api-32](https://docs.geostandaarden.nl/api/API-Strategie/#api-32) Use the query parameter zoek for full-text search (see [search](#search))
+- [api-36](https://docs.geostandaarden.nl/api/API-Strategie/#api-36) Provide a POST endpoint for GEO queries (see [queries](#queries))
+- [api-37](https://docs.geostandaarden.nl/api/API-Strategie/#api-37) Support mixed queries at POST endpoints available (see [queries](#queries))
+*[api-38](https://docs.geostandaarden.nl/api/API-Strategie/#api-38) Put results of a global spatial query in the relevant geometric context (see [queries](#queries))
+-
+
+** We doubt or havn't made a choice yet about**
+
+- [api-15](https://docs.geostandaarden.nl/api/API-Strategie/#api-15) Use PKIoverheid certificates for access-restricted or purpose-limited API authentication
+- [api-39](https://docs.geostandaarden.nl/api/API-Strategie/#api-39) Use ETRS89 as the preferred coordinate reference system (CRS)
+- [api-40](https://docs.geostandaarden.nl/api/API-Strategie/#api-40) Pass the coordinate reference system (CRS) of the request and the response in the headers
+- [api-41](https://docs.geostandaarden.nl/api/API-Strategie/#api-41) Use content negotiation to serve different CRS
+
+NLX 
+-------
+We implement the [NLX system](https://docs.nlx.io/understanding-the-basics/introduction/) as part of the basic commonground infrastructure, as such nlx headers are used in the internal logging.
+The following X-NLX headers have been implemented for that reason `X-NLX-Logrecord-ID`,`X-NLX-Request-Process-Id`,`X-NLX-Request-Data-Elements` and `X-NLX-Request-Data-Subject`, these are tied to the internal audit trail (see audit trail for more information), and `X-Audit-Toelichting` (from the ZGW APIs) is implemented as `X-Audit-Clarification` 
+
+We do not use other NLX headers since they (conform to the [NLX schema](https://docs.nlx.io/further-reading/transaction-logs/))wil not reach the provider. Please note that the use of nlx is optional. The component can be used without NLX. In that case the `X-NLX` header should be set to false, the `X-NLX-Logrecord-ID` should be provided with an log record designd by the client application to be retracable to a unique user and action. Other headers still aplly.
+
+We strongly discourage the use of the `X-NLX-Request-Data-Subject` header as it might allow private data (such as BSNs) to show up in logging.
+
+English
+-------
+The [NL API Standard](https://geonovum.github.io/KP-APIs/#api-04-define-interfaces-in-dutch-unless-there-is-an-official-english-glossary) describes that there is a preference for Dutch in API documentation.
+
+> Define resources and the underlying entities, fields and so on (the information model ad the external interface) in Dutch. English is allowed in case there is an official English glossary.
+
+We view this as a breach with good coding practice and international coding standards, all documentation and code is therefore supplied in English. We do however provide transaltion (or i18n) support. 
+
+Fields
+-------
+A part of the [haal centraal](https://raw.githubusercontent.com/VNG-Realisatie/Haal-Centraal-BRP-bevragen/master/api-specificatie/Bevraging-Ingeschreven-Persoon/openapi.yaml) the concept of field limitations has been introduced its general purpose being to allow an application to limit the returned fields to prevent the unnecessary transportation of (private) data. In the [NL API Strategie](https://github.com/VNG-Realisatie/Haal-Centraal-BRP-bevragen/blob/master/features/fields.feature) this has been implemented as a parameter consisting of comma separated values. However the normal web standard for optional lists (conform w3c form standards) is an array.
+
+Search
+-------
+As part of [api-32](https://docs.geostandaarden.nl/api/API-Strategie/#api-32) a `zoeken` query has been itroduced that can handle wildcards. This breaks best practice, first of allest practice is a `search` query parameter (see also the nodes on [English](#english)). Secondly wildcards are a sql concept, not a webconcept, they are also a rather old concept severly limiting the search options provided. Instead the [regeular expresion standard](https://en.wikipedia.org/wiki/Regular_expression) should be used. 
+
+__solution__
+We implement a `search` query parameter on resource collections, that filters with regex. 
+
+Queries
+-------
+In several examples of the nl apistrategie we see query parameters being atached to post requests. This is unusual in the sence that sending query strings allong with a post is ocnsiderd bad practice (becouse query parameters end up as part of an url and are therfore logged by servers). But is is technically posile folowing RFC 3986. The real pain is that in the NL api-stratgie the POST requests seems to be used to search, ot in other words GET data. This is where compliance with HTTP (1.1) breaks.  
+   
+__solution__
+We do not implement a query endpoint on post requests.
 
 
 Domain Build-up and routing
 -------
-By convention the component assumes that you follow the common ground domain name build up, meaning {enviroment}.{component}.{rest of domain}. That means that only the first two url parts are used for routing. It is also assumed that when no envirment is supplied the production enviroment should be offerd E.g. a propper domain for the production API of the verzoeken registratie component would be prod.vrc.zaakonline.nl but it should also be reachable under vrc.zaakonline.nl. The proper location for the development enviroment shoud always be dev.vrc.zaakonlin.nl
+By convention the component assumes that you follow the common ground domain name build up, meaning {environment}.{component}.{rest of domain}. That means that only the first two url parts are used for routing. It is also assumed that when no environment is supplied the production environment should be offered E.g. a proper domain for the production API of the verzoeken registratie component would be prod.vrc.zaakonline.nl but it should also be reachable under vrc.zaakonline.nl. The proper location for the development environment should always be dev.vrc.zaakonlin.nl
 
-Enviroments and namespacing
+Environments and namespacing
 -------
-We assume that for that you want to run several enviroments for development purposes. We identify the following namespaces for support.
+We assume that for that you want to run several environments for development purposes. We identify the following namespaces for support.
 - prod (Production)
 - acce (Acceptation)
 - stag (Staging)
 - test (Testing)
 - dev (Development)
 
-Becouse we base the commonground infastructure on kubernetes, and we want to keep a hard sepperation between enviroment we also assume that you are using your enviroment as a namespace
+Because we base the common ground infrastructure on kubernetes, and we want to keep a hard separation between environment we also assume that you are using your environment as a namespace
 
-Symfony libary managment gives us the optoin to define the libbarys on a per envirmoent base, you can find that definition in the [bundle config](api/config/bundles.php)
+Symfony library management gives us the option to define the libraries on a per environment base, you can find that definition in the [bundle config](api/config/bundles.php)
 
-Besides the API envormiments the component also ships with aditional tools/enviroments but those are not meant to be deployed
+Besides the API environments the component also ships with additional tools/environments but those are not meant to be deployed
 - client (An react client frontend)
-- admin ( An read admin interface)
+- admin (An read admin interface)
 
-On the local development docker deploy the client enviroment is used as default in stead of the production version of the api.
+On the local development docker deploy the client environment is used as default instead of the production version of the api.
 
-Loging Headers (NLX Audit trail)
--------
-@todo update, a reaction about this has been given by the NLX team.
-
-We inherit a couple of headers from the transaction logging within the [NLX schema](https://docs.nlx.io/further-reading/transaction-logs/), we strongly discurage the use of the `X-NLX-Request-Data-Subject` header as it might allow private data (such as BSN's) to show up in logging.
-
-__solution__
-The follwoing X-NLX headers have been implemented `X-NLX-Logrecord-ID`,`X-NLX-Request-Process-Id`,`X-NLX-Request-Data-Elements` and `X-NLX-Request-Data-Subject`, these are tied to the internal audit trail (see audit trail for more information), and `X-Audit-Toelichting` (from the ZGW API's) is implemented as `X-Audit-Clarification`
-
-Api versioning
+Api Versioning
 -------
 As per [landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning) major versions in endpoint minor versions in header, for this the `API-Version` is used (instead of the `api-version` header used in haal centraal)
 
-Fields
--------
-A part of the [haal centraal](https://raw.githubusercontent.com/VNG-Realisatie/Haal-Centraal-BRP-bevragen/master/api-specificatie/Bevraging-Ingeschreven-Persoon/openapi.yaml) the concept of field limitations has been introduced its general purpose being to allow an application to limit the returned fields to prevent the unnecessary transportation of (private) data. In the [NL API Strategie](https://github.com/VNG-Realisatie/Haal-Centraal-BRP-bevragen/blob/master/features/fields.feature) this has been implemented as a parameter consisting of comma separated values. However the normal web standard for optional lists (conform w3c form standards) is an array.
 
 __solution__
-The fields parameter and functionality has been implemented as an array
+The fields parameter and functionality has been implemented as an array, and should be used that way. We do howver support an comma separted value list.
 
 Extending
 -------
@@ -65,64 +161,90 @@ The extend parameter has been implemented as an array
 
 Archivation
 -------
-In line with the extending and fields principle whereby we only want resources that we need it was deemed, nice to make a sub resource of the archivation properties. This also results in a bid cleaner code.  
+There is a need (by law) for archivation, meaning that we should only keep resources for a fixed amount of time and delete them there afther. In line with the extending and fields principle whereby we only want resource properties that we need when we needid, it is deemded good practice make a sub resource of the archivation properties. For the archivation proterties the [zgw](https://zaken-api.vng.cloud/api/v1/schema/#operation/zaak_list) is followed and translated to englisch. 
+
+
+```json
+{
+	"id": "e2984465-190a-4562-829e-a8cca81aa35d",
+	"nomination": "destroy",
+	"action_date": "2019-11-25T07:26:54Z",
+	"status": "to_be_archived",
+}
+```
+
+This gives us an intresting thought, acording to [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie/#api-10-implement-operations-that-do-not-fit-the-crud-model-as-sub-resources) subresources should have there own endpoint. Therefore we could use a archive sub of a difrend object for archivation rules e.g. /zaken/{uuid}/archivation for a verzoek. This in itself leads credence to the thought that archivation should have its own central crud api.
 
 
 Audittrail
 -------
-@todo this needs to be implemented
-For notifications we use the base mechanism as provided by [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/audit-trail) but we differ on insight into the data that should be returned and feel that the international standard [RFC 3881](https://tools.ietf.org/html/rfc3881) should have been followed here.
+For audittrail we use the base mechanism as provided by [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/audit-trail), we do however diver on some key point,
+- Personal data schould never be part of a log, therefore only the user id with the client should be logged (insted of the name)
+- Besides an endpoint per resource there should be a general enpoint to search all audit trials of a component
+- [Timetravel](#timetravel) in combinaition with objects versioning makes the return of complete objects unnecesary. But an auditrail endpoint should support the [extend](#extending) functionalitiy to provide the option of obtaining complete objects.  
+
 
 __solution__
-In compliance with [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/audit-trail) each individual object should support an /audittrail endpoint. You can look into the [tutorial](TUTORIAL.md) for specifications on how to activate an audit trail for a given object. However, instead of the values mention in the vng.cloud design we follow [RFC 3881](https://tools.ietf.org/html/rfc3881) for the return values. And we give NLX values precedence if provided.
+In compliance with [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/audit-trail) each individual object should support an /audittrail endpoint. You can look into the [tutorial](TUTORIAL.md) for specifications on how to activate an audit trail for a given object. 
+
+Healthchecks
+-------
+From [issue 154](https://github.com/VNG-Realisatie/huwelijksplanner/issues/154)
+
+For healthc
+
+__solution__
+
 
 Notifications
 -------
-@todo this needs to be implemented
-For notifications we do not use the current [ZGW standard](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/notificaties) since we deem it insecure to send properties or data objects along with a notification. This is a potential security breach explained [here](https://github.com/VNG-Realisatie/gemma-zaken/issues/1427#issuecomment-549272696).  It also doesn’t follow the [web standard](https://www.w3.org/TR/websub/). Instead we are developing our own subscriber service that is tailored for the NLX / VNG environment and based on current web standards [here]().
+For notifications we do not YET use the current [ZGW standard](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/notificaties) since there is an [dicusion](https://github.com/VNG-Realisatie/gemma-zaken/issues/1427#issuecomment-549272696) about the posible insecurity of sending properties or data objects along with a notification. It also dosn't follow the [web standard](https://www.w3.org/TR/websub/). We wait for the conclusion of that discusion before making an implementation. 
 
 __solution__
-In compliance with [w3.org](https://www.w3.org/TR/websub/) each endpoint returns an header containing an subscribtion url. That can be used in acordanse with the application to subscribe to both individual objects as collections. whereby collections serve as 'kanalen'.
+In compliance with [w3.org](https://www.w3.org/TR/websub/) each endpoint returns an header containing an subscribtion url. That can be used in acordanse with the application to subscribe to both individual objects as collections. whereby collections serve as 'kanalen'. We aim to implement the ZGW notificatie component, but feel that further features on that component would be required to make to be fully suported. We will suply feature requests per issue to support this effort.
 
-Scopes, Authentication and Authorization
+Authentication 
 -------
-@todo this needs to be implemented
-We implement user scopes as per [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/autorisatie-scopes) standard. But see problems with how the scopes are defined and named, and consider the general setup to be to focused on ZGW (including Dutch naming, zgw specific fields like maxVertrouwlijkheid and a lack of CRUD thinking). There is a further document concerning [Authentication and Authorization](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/authenticatie-autorisatie) that details how we should authenticate users and give them scopes. We agree with the principles of the document on application based authorization and the use of JWT tokens. But disagree on some key technical aspect. Most important being that the architecture doesn't take into consideration the use of one component by several organizations
 
 __solution__
-No solution as of yet, so there is no implementation of Authorization or Scopes. We might build a new Authorization Component in the long run.
+
+Authorization
+-------
+We implement user scopes as per [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/autorisatie-scopes) standard. But see problems with how the scopes are defined and named, and consider the general setup to be to focused on ZGW (including Dutch naming, zgw specific fields like maxVertrouwlijkheid and a lack of CRUD thinking). There is a further document concerning [Authentication and Authorization](https://zaakgerichtwerken.vng.cloud/themas/achtergronddocumentatie/authenticatie-autorisatie) that details how we should authenticate users and give them scopes. We agree with the principles of the document on application based authorization and the use of JWT tokens. But disagree on some key technical aspect. Most important being that the architecture doesn't take into consideration the use of one component by several organizations at once. Or scopese per property.
+
+__solution__
+No solution as of yet, so there is no implementation of Authorization or Scopes. We aim to implement the ZGW authorisatie component, but feel that further features on that component would be required to make to be fully suported. We will suply feature requests per issue to support this effort.
 
 
 Timetravel
 -------
 A part of the [haal centraal](https://raw.githubusercontent.com/VNG-Realisatie/Haal-Centraal-BRP-bevragen/master/api-specificatie/Bevraging-Ingeschreven-Persoon/openapi.yaml) the concept of timetravel has been introduced, as in getting the version of an object as it was on a given date. For this the `geldigop` [see the docs](file:///C:/Users/ruben/Desktop/doc_gba_historie.html#operation/getBewoningen) header is used. In addition the `geldigvan` and `geldigtot` are introduced as collection filters. 
 
-The commonground proto componant natively supports time traveling on all entities that are annotaded with the @Gedmo\Loggable, this is done by adding the ?validOn=[date] query to a request, date can either be a datetime or datedatime string. Any value supported by php's [strtotime()](https://www.php.net/manual/en/function.strtotime.php) is supported. Keep in mind that this returns the entity a as it was valid on that time or better put, the last changed version BEFORE that moment. To get a complete list of all changes on a item the ?showLogs=true quarry can be used.
+The commonground proto componant natively supports time traveling on all entities that are annotaded with the @Gedmo\Loggable, this is done by adding the ?validOn=[date] query to a request, date can either be a datetime or datedatime string. Any value supported by php's [strtotime()](https://www.php.net/manual/en/function.strtotime.php) is supported. Keep in mind that this returns the entity a as it was valid on that time or better put, the last changed version BEFORE that moment. To get a complete list of all changes on a item the /audittrail endpoint can be used.
 
 __solution__
-In compliance with [schema.org](https://schema.org/validFrom) `geldigop`,`geldigvan` and `geldigtot` are implemented as `validOn`,`validFrom` and `validUntil`. And can be used a query parameters on colelction operations.
+In compliance with [schema.org](https://schema.org/validFrom) `geldigop`,`geldigvan` and `geldigtot` are implemented as `validOn`,`validFrom` and `validUntil`. And can be used a query parameters on collection operations/
 
-Additionally `validOn` can be used on a single object get request to get the version of that object on a given date, a 404 is returned if no version of that object can be given for that date 
+Additionally `validOn` can be used on a single object get request to get the version of that object on a given date, a 404 is returned if no version of that object can be given for the given date 
 
-Ordering results
+Ordering
 -------
 In the [zaak-api](https://zaken-api.vng.cloud/api/v1/schema/#operation/zaak_list) ordering is done in a single field parameter, we however prefer to be able to order on multiple fields in combination of ascending and descending orders. We therefore implement an order parameter as array where they key is the property on wish should be ordered and the value the type of ordering e.g. `?order[name]=desc&order[status]=asc`. The order in which the keys are added to the order array determines the order in which they are applied.    
 
-Dutch versus English
+
+Translations
 -------
-The [NL API Standard](https://geonovum.github.io/KP-APIs/#api-04-define-interfaces-in-dutch-unless-there-is-an-official-english-glossary) describes that there is a preference for Dutch in API documentation.
+We support translations trough the `Accept-Language` header (read the [docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)), the fallback langouge for all messages is englisch
 
-> Define resources and the underlying entities, fields and so on (the information model ad the external interface) in Dutch. English is allowed in case there is an official English glossary.
+Errors
+-------
+See [jsonapi](https://jsonapi.org/examples/#error-objects) and the [rfc](https://tools.ietf.org/html/rfc7807). 
 
-We view this as a breach with good coding practice and international coding standards, all documentation is therefore supplied in English
-
-
-
-Comma Notation versus Bracket Notation on arrays's
+Arrays
 -------
 The NL API standard uses comma notation on array's in http requests. E.g. fields=id,name,description however common browsers(based on chromium e.g. chrome and edge) use bracket notation for query style array's e.g. fields[]=id&fields[]=name,&fields[]=description. The difference of course is obvious since comma notation doesn't allow you to index arrays. [Interestingly enough there isn't actually a rfc spec for this](https://stackoverflow.com/questions/15854017/what-rfc-defines-arrays-transmitted-over-http). 
 
-It is perceivable that in future iterations we would like to use indexed array in situations where the index of the array can't be assumed on basis of url notation, when indexes aren’t numerical, when we don’t want an index to start at 0 or when indexes are purpusly missing (comma notation of id,name,description would always refert to the equivalent of fields: [
+It is perceivable that in future iterations we would like to use indexed array in situations where the index of the array can't be assumed on basis of url notation, when indexes arenï¿½t numerical, when we donï¿½t want an index to start at 0 or when indexes are purpusly missing (comma notation of id,name,description would always refert to the equivalent of fields: [
   0 => id,
   1 => name,
   2 => description
@@ -202,3 +324,4 @@ A component is (speaking in kubernetes terms) a service that is available at
 | string  | bsn       |          |        |             |                                                                      |
 | string  | iban      |          |        |             |                                                                      |
 |         |           |          |        |             |                                                                      |
+
