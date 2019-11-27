@@ -18,7 +18,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-        APP_ENV: dev
+        APP_ENV: test
     steps:
       - uses: actions/checkout@v1
       - name: Pulling old images, if any
