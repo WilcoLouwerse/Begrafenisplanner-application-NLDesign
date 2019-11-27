@@ -24,9 +24,9 @@ jobs:
       - name: Pulling old images, if any
         run: docker-compose pull --ignore-pull-failures
       - name: Setting APP_ENV
-        env:
-         APP_ENV: dev
-        run: echo "set APP_ENV to $APP_ENV"
+        run: | 
+          echo ::set-env name=APP_ENV::dev
+          echo "set APP_ENV to $APP_ENV"
       - if: contains( github.ref, 'master' ) || contains( github.base_ref, 'master' )
         env:
          APP_ENV: prod
