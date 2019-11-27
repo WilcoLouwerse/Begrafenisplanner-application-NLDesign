@@ -81,7 +81,7 @@ jobs:
         run: helm upgrade ${{ secrets.APP_NAME }}-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1,settings.loadbalancerEnabled=true
       - name: Install through helm
         if: failure()
-        run: helm install --name ${{ secrets.APP_NAME }}-$APP_ENV ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=APP_ENV,settings.debug=1
-      - name: Rollout new containers
-        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
-        run: kubectl rollout restart --kubeconfig="kubeconfig.yaml"    
+        run: helm install --name ${{ secrets.APP_NAME }}-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=APP_ENV,settings.debug=1
+     # - name: Rollout new containers
+     #   if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
+     #   run: kubectl rollout restart --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV   
