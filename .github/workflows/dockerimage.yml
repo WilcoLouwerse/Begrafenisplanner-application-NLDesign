@@ -72,7 +72,13 @@ jobs:
               echo "##[set-output name=success]true"
             else
               echo "##[set-output name=success]false"
-            fi
+            fi 
+      - name: Set correct helm version
+        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
+        run: |
+            brew unlink kubernetes-helm
+            brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/78d64252f30a12b6f4b3ce29686ab5e262eea812/Formula/kubernetes-helm.rb
+            brew switch kubernetes-helm 2.12.3        
       - name: Deploy through helm
         if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
         run: helm install --name pc-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1,settings.loadbalancerEnabled=true
