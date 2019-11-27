@@ -21,12 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Create kube config
-        uses: finnp/create-file-action@master
-        env:
-         FILE_NAME: "kubeconfig.yaml"
-         FILE_DATA: "${{ secrets.KUBECONFIG }}"
-      - name: Print kube config
-        run: echo "${{ secrets.KUBECONFIG }}"
+        run: printf "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
       - name: Deploy through helm
         if: contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )
         env:
