@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Set correct helm version
-        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
+        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' ))
         run: ./get_helm.sh -v v2.12.3     
       - name: Pulling old images, if any
         run: docker-compose pull --ignore-pull-failures
