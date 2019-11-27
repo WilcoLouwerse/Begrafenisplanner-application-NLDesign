@@ -20,6 +20,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - name: Create kube config
+        uses: finnp/create-file-action@master
+        env:
+         FILE_NAME: "kubeconfig.yaml"
+         FILE_DATA: ${{ secrets.KUBECONFIG }}
+      - name: Deploy through helm
+        if: contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )
+        env:
+            KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: helm install --name pc-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
       - name: Pulling old images, if any
         run: docker-compose pull --ignore-pull-failures
       - name: Setting APP_ENV
@@ -52,8 +62,3 @@ jobs:
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: Push to docker hub
         run: docker-compose push
-      - name: Deploy through helm
-        if: contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )
-        env:
-            KUBECONFIG: ${{ secrets.KUBECONFIG }}
-        run: helm install --name pc-$APP_ENV ./api/helm  --kubeconfig="$KUBECONFIG" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
