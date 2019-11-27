@@ -34,6 +34,7 @@ jobs:
         env:
           APP_ENV: stag
         run: echo "set APP_ENV to $APP_ENV"  
+      - run: echo "APP_ENV is now $APP_ENV"
       - name: Build the Docker image
         run: docker-compose build --pull --build-arg APP_ENV=$APP_ENV
       - name: Run the docker image
