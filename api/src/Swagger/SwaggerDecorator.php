@@ -407,6 +407,7 @@ final class SwaggerDecorator implements NormalizerInterface
             $docblock = $factory->create($property->getDocComment());
             $tags = $docblock->getTags();
             $atributes = [];
+            $groups = [];
 
             foreach ($tags as $tag) {
                 $name = $tag->getName();
