@@ -79,10 +79,10 @@ jobs:
       - name: Deploy through helm
         id: helm-install
         if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
-        run: helm upgrade ${{ secrets.APP_NAME }}-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1,settings.loadbalancerEnabled=true
+        run: helm upgrade ${{ secrets.APP_NAME }}-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
       - name: Install through helm
         if: failure()
         run: helm install --name ${{ secrets.APP_NAME }}-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=APP_ENV,settings.debug=1
-     # - name: Rollout new containers
-     #   if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
-     #   run: kubectl rollout restart --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV   
+      - name: Rollout new containers
+        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
+        run: kubectl rollout restart --kubeconfig="kubeconfig.yaml"   
