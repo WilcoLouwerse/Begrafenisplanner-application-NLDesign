@@ -4,16 +4,21 @@ parameters:
     # environment variables are not available yet.
     # You should not need to change this value.
     env(VARNISH_URL): ''
-    env(APP_VERSION): ''
+    env(APP_VERSION): '
+    env(APP_NAME): '''
     env(APP_TITLE): ''
     env(APP_DESCRIPTION): ''
     env(APP_REPRO): ''
     env(APP_DEMO): ''
     env(APP_ENV): ''
+    env(AUTH_ENABLED): ''
+    env(AUDITTRAIL_ENABLED): ''
+    env(NOTIFICATION_ENABLED): ''
+    env(HEALTH_ENABLED): ''
+    env(ARCHIVE_ENABLED): ''
     env(CONTAINER_REGISTRY_BASE): ''
-    env(CONTAINER_PROJECT_TITLE): ''
     env(CONTAINER_PROJECT_NAME): ''
-    env(CONTAINER_PROJECT_VERSION): ''
+    env(CONTAINER_REPRO): ''
 
 api_platform:
     mapping:
@@ -23,19 +28,15 @@ api_platform:
     title: '%env(APP_TITLE)%'
     description: |
         API Details
-        - Component: %env(CONTAINER_PROJECT_TITLE)%
-        - Reference: %env(CONTAINER_PROJECT_NAME)%
+        - Component: %env(APP_TITLE)%
+        - Reference: %env(APP_NAME)%
         - Enviroment: %env(APP_ENV)%
-        - Version: %env(CONTAINER_PROJECT_VERSION)%
-        - Repository: [%env(APP_REPRO)%](%env(APP_REPRO)%) / [zip](%env(APP_REPRO)%/archive/master.zip)
+        - Version: %env(APP_VERSION)%
+        - Repository: [online](%env(APP_REPRO)%) / [zip](%env(APP_REPRO)%/archive/master.zip)
+        - Docker Image: [online](%env(CONTAINER_REPRO)%) 
         - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
         
-        %env(APP_DESCRIPTION)% 
-                                 
-        Voor het gebruik van deze applicatie is een JWT Token nodig, deze hangt altijd vast aan een applicatie, ofwel user. Geldige JWT Tokens worden aangemaakt bij het registreren van een applicatie en kennen een beperkte houdbaarheid. 
-        JWT Tokens kunnen zowel worden verlengd, als opnieuw worden aangevraagd, dit aan de hand van de applicatie id en sleutel.
-        Let er bij het meegeven van JWT tokens op dat deze moet worden voorafgegaan door een Bearer en een spatie, onder de header Authorization. De volledig naam wordt daarmee: 'Authorization: Bearer [TOKEN]'.
-        
+        %env(APP_DESCRIPTION)%         
     
     version: '%env(APP_VERSION)%'  
     
@@ -45,7 +46,7 @@ api_platform:
     enable_re_doc: true
     
     # In the NL api strategie we use snake case for naming
-    name_converter: 'Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter'
+    # name_converter: 'Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter'
     
     # Lets confirm to JSON-HA: first, as per common ground. But allow other serializers
     formats:
