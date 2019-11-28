@@ -85,4 +85,7 @@ jobs:
         run: helm install --name ${{ secrets.APP_NAME }}-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=APP_ENV,settings.debug=1
       - name: Rollout new containers
         if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
-        run: kubectl rollout restart --kubeconfig="kubeconfig.yaml"   
+        run: |
+            kubectl rollout restart deployment/${{ secrets.APP_NAME }}-php --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+            kubectl rollout restart deployment/${{ secrets.APP_NAME }}-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+            kubectl rollout restart deployment/${{ secrets.APP_NAME }}-varnish --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
