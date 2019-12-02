@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="92089c82-d91e-45b0-a4eb-32fdfd03bfef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/dockerimage.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/dockerimage.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -265,7 +264,21 @@
       <option name="project" value="LOCAL" />
       <updated>1575282997667</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fix on build args">
+      <created>1575283562491</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1575283562491</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Removed APP_NAME from secrets, added continue-on-error">
+      <created>1575283747919</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1575283747919</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -298,6 +311,8 @@
     <MESSAGE value="APP NAME testen" />
     <MESSAGE value="Passing to next?" />
     <MESSAGE value="removing test workflow" />
-    <option name="LAST_COMMIT_MESSAGE" value="removing test workflow" />
+    <MESSAGE value="fix on build args" />
+    <MESSAGE value="Removed APP_NAME from secrets, added continue-on-error" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed APP_NAME from secrets, added continue-on-error" />
   </component>
 </project>
