@@ -278,7 +278,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575283747919</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Issue with APP_NAME">
+      <created>1575283918851</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1575283918851</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,6 +320,7 @@
     <MESSAGE value="removing test workflow" />
     <MESSAGE value="fix on build args" />
     <MESSAGE value="Removed APP_NAME from secrets, added continue-on-error" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed APP_NAME from secrets, added continue-on-error" />
+    <MESSAGE value="Issue with APP_NAME" />
+    <option name="LAST_COMMIT_MESSAGE" value="Issue with APP_NAME" />
   </component>
 </project>

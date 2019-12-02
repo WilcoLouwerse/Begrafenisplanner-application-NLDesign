@@ -25,8 +25,8 @@ jobs:
         run: | 
             export NAME=$(grep APP_NAME= .env | cut -d '=' -f2)
             echo ::set-env name=APP_NAME::$NAME
-            echo "set APP_NAME to $APP_NAME"
-      - run: echo "APP_NAME = $APP_NAME"
+      - name: Print app name
+        run: echo "APP_NAME = $APP_NAME"
       - name: Setting APP_ENV to dev
         run: | 
           echo ::set-env name=APP_ENV::dev
