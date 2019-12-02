@@ -24,16 +24,24 @@ jobs:
       - name: Setting APP_ENV to dev
         run: | 
           echo ::set-env name=APP_ENV::dev
+          echo ::set-env name=APP_BUILD::dev
           echo "set APP_ENV to $APP_ENV"
       - name: Setting APP_ENV to prod
         if: contains( github.ref, 'master' ) || contains( github.base_ref, 'master' )
         run: |
             echo ::set-env name=APP_ENV::prod
             echo "set APP_ENV to $APP_ENV"
+      - name: Set APP_BUILD to APP_VERSION
+        if: contains( github.ref, 'master' )
+        run: |
+          export VERSION=$(grep APP_VERSION= .env | cut -d '=' -f2)
+          echo ::set-env name=APP_BUILD::$VERSION
+          echo "set APP_BUILD to $APP_BUILD"
       - name: Setting APP_ENV to stag
         if: contains( github.ref, 'staging' ) || contains( github.base_ref, 'staging' )
         run: |
             echo ::set-env name=APP_ENV::stag
+            echo ::set-env name=APP_BUILD::stag
             echo "set APP_ENV to $APP_ENV" 
       - name: Print definitive APP_ENV
         run: echo "APP_ENV is now $APP_ENV"
