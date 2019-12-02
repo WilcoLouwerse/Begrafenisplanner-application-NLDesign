@@ -1,0 +1,24 @@
+name: Test
+
+on:
+    pull_request:
+        branches:
+            - dev-robert
+    push:
+        branches:
+            - dev-robert
+
+jobs:
+
+    build:
+
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - run: grep APP_VERSION= .env | cut -d '=' -f2
+            - run: |
+               export VERSION=$(grep APP_VERSION= .env | cut -d '=' -f2)
+               echo ::set-env name=APP_BUILD::$VERSION
+               echo "set APP_BUILD to $APP_BUILD"
+            - run: echo "APP_BUILD is now $APP_BUILD"
+              
