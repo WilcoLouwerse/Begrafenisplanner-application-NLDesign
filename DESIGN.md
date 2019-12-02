@@ -36,7 +36,7 @@ Welcome, you are currently viewing the design decisions for the proto component.
 
 The European factor
 -------
-The proto-component isn't just a Dutch Component, it is in essence a Dutch translation of European components, nowhere is this more obvious than in the core code. Our component is based on [API Platform](https://api-platform.com/) an API specific version of the symfony framework. This framework is build by the lovely people of []() and is build with support of the European Commission trough the [EU-FOSSA Hackathon](https://ec.europa.eu/info/news/first-eu-fossa-hackathon-it-happened-2019-may-03_en) and Digital Ocean trough [Hacktoberfest](https://hacktoberfest.digitalocean.com/).
+The proto-component isn't just a Dutch Component, it is in essence a Dutch translation of European components, nowhere is this more obvious than in the core code. Our component is based on [API Platform](https://api-platform.com/) an API specific version of the symfony framework. This framework is build by the lovely people of [Les Tilleuls](https://les-tilleuls.coop/en) and is build with support of the European Commission trough the [EU-FOSSA Hackathon](https://ec.europa.eu/info/news/first-eu-fossa-hackathon-it-happened-2019-may-03_en) and Digital Ocean trough [Hacktoberfest](https://hacktoberfest.digitalocean.com/).
 
 But it doesn't just end there. The [varnish container](https://hub.docker.com/r/eeacms/varnish/) that we use to speed up the API response is build and maintained by [EEA]() (The European Environment Agency) and the development team at conduction itself is attached to the [Odyssey program](https://www.odyssey.org/) and originated from the [startupinresidence](https://startupinresidence.com/) program. 
 
@@ -46,10 +46,12 @@ On standards and standardization
 -------
 The specific goal of the proto component (which this current code base is a version of) is to provide a common architecture for common ground components. As such the common ground principles are leading in design choices, and within those principles international compliancy and technological invocation is deemed most important. **We do not want to make concessions to the current infrastructure.** As such the component might differ on [NL API Strategie](https://docs.geostandaarden.nl/api/API-Strategie), [NORA](https://www.noraonline.nl/wiki/Standaarden), [vng.cloud](https://zaakgerichtwerken.vng.cloud/themas/index) and or other standards if they are deemed incompatible or out of line with (inter)national standards and or good practices. 
 
-Unfortunatly (inter)national standards standards can be conflicting. We therefore prioritize standards on two grounds
+Unfortunatly (inter)national standards standards can be conflicting. We therefore prioritize standards on sevarl grounds
 
-- International standards are put before local standards
+- International is put before local
 - Standards caried by a standard organisation (like ISO, W3C etc) at put before floating standards (like RFC's) wichs are put before industraty standards, good practices and so on. 
+
+So if for instance a **local** standard is out of line with an **internation** good practice we follow the international good practice.
 
 ### Commonground specific standards
 
