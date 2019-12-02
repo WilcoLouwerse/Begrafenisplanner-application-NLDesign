@@ -25,4 +25,4 @@ jobs:
                   export NAME=$(grep APP_NAME= .env | cut -d '=' -f2)
                   echo ::set-env name=APP_NAME::$NAME
                   echo "set APP_NAME to $APP_NAME"
-              
+            - run: echo "APP_NAME is now $APP_NAME"
