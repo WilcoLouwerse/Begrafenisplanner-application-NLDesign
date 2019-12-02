@@ -224,18 +224,7 @@ with
 //...
 	/**
 	 * @var \Ramsey\Uuid\UuidInterface
-	 *
-	 * @ApiProperty(
-	 * 	   identifier=true,
-	 *     attributes={
-	 *         "openapi_context"={
-	 *         	   "description" = "The UUID identifier of this object",
-	 *             "type"="string",
-	 *             "format"="uuid",
-	 *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-	 *         }
-	 *     }
-	 * )
+	 * @example e2984465-190a-4562-829e-a8cca81aa35d
 	 *
 	 * @Groups({"read"})
 	 * @ORM\Id
