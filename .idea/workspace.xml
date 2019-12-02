@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="92089c82-d91e-45b0-a4eb-32fdfd03bfef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.github/workflows/dockerimage.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/dockerimage.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -202,7 +201,91 @@
       <option name="project" value="LOCAL" />
       <updated>1574770855136</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Testing with setting environment variable from .env">
+      <created>1575279662940</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1575279662940</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix on syntax">
+      <created>1575279748074</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1575279748074</updated>
+    </task>
+    <task id="LOCAL-00007" summary="More testing with GREP">
+      <created>1575280067186</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1575280067186</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Even more testing">
+      <created>1575280181182</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1575280181182</updated>
+    </task>
+    <task id="LOCAL-00009" summary="export to set-env">
+      <created>1575281141670</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1575281141670</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Set APP_BUILD">
+      <created>1575282235015</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1575282235015</updated>
+    </task>
+    <task id="LOCAL-00011" summary="APP NAME testen">
+      <created>1575282356507</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1575282356507</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Passing to next?">
+      <created>1575282386363</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1575282386363</updated>
+    </task>
+    <task id="LOCAL-00013" summary="removing test workflow">
+      <created>1575282997667</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1575282997667</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix on build args">
+      <created>1575283562491</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1575283562491</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Removed APP_NAME from secrets, added continue-on-error">
+      <created>1575283747919</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1575283747919</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Issue with APP_NAME">
+      <created>1575283918851</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1575283918851</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,6 +309,18 @@
     <MESSAGE value="Checked DESIGN.md for language errors" />
     <MESSAGE value="Checked TUTORIAL.md for typos" />
     <MESSAGE value="adding logs for debugging" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding logs for debugging" />
+    <MESSAGE value="Testing with setting environment variable from .env" />
+    <MESSAGE value="Fix on syntax" />
+    <MESSAGE value="More testing with GREP" />
+    <MESSAGE value="Even more testing" />
+    <MESSAGE value="export to set-env" />
+    <MESSAGE value="Set APP_BUILD" />
+    <MESSAGE value="APP NAME testen" />
+    <MESSAGE value="Passing to next?" />
+    <MESSAGE value="removing test workflow" />
+    <MESSAGE value="fix on build args" />
+    <MESSAGE value="Removed APP_NAME from secrets, added continue-on-error" />
+    <MESSAGE value="Issue with APP_NAME" />
+    <option name="LAST_COMMIT_MESSAGE" value="Issue with APP_NAME" />
   </component>
 </project>
