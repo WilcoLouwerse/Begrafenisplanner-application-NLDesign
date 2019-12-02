@@ -21,6 +21,11 @@ jobs:
       - uses: actions/checkout@v1
       - name: Pulling old images, if any
         run: docker-compose pull --ignore-pull-failures
+      - name: Setting APP_NAME
+        run: | 
+            export NAME=$(grep APP_NAME= .env | cut -d '=' -f2)
+            echo ::set-env name=APP_NAME::$NAME
+            echo "set APP_NAME to $APP_NAME"
       - name: Setting APP_ENV to dev
         run: | 
           echo ::set-env name=APP_ENV::dev
