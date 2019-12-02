@@ -17,7 +17,8 @@ jobs:
             - uses: actions/checkout@v1
             - run: grep APP_VERSION= .env | cut -d '=' -f2
             - run: |
-               export APP_BUILD=$(grep APP_VERSION= .env | cut -d '=' -f2)
-               echo echo "set APP_BUILD to $APP_BUILD"
+               export VERSION=$(grep APP_VERSION= .env | cut -d '=' -f2)
+               echo ::set-env name=APP_BUILD::$VERSION
+               echo "set APP_BUILD to $APP_BUILD"
             - run: echo "APP_BUILD is now $APP_BUILD"
               
