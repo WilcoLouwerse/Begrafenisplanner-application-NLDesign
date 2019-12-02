@@ -128,10 +128,10 @@ final class SwaggerDecorator implements NormalizerInterface
         $schemas = (array) $docs['definitions'];
         foreach ($schemas as $schemaName => $schema) {
 
-        	// We can only merge if we actually have content
-        	if(!in_array ($schemaName, $additionalDocs)){
-        		continue;
-        	}
+            // We can only merge if we actually have content
+            if (!in_array($schemaName, $additionalDocs)) {
+                continue;
+            }
 
             $additionalDocs[$schemaName] = array_merge((array) $schema, $additionalDocs[$schemaName]);
 

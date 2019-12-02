@@ -101,9 +101,9 @@ jobs:
       - name: Rollout new containers
         if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
         run: |
-            kubectl rollout restart deployment/${{ secrets.APP_NAME }}-php --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
-            kubectl rollout restart deployment/${{ secrets.APP_NAME }}-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
-            kubectl rollout restart deployment/${{ secrets.APP_NAME }}-varnish --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+            kubectl rollout restart deployment/$APP_NAME-php --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+            kubectl rollout restart deployment/$APP_NAME-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+            kubectl rollout restart deployment/$APP_NAME-varnish --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
       - name: Create Release
         if: contains( github.ref, 'master' )
         id: create_release
