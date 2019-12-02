@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="92089c82-d91e-45b0-a4eb-32fdfd03bfef" name="Default Changelist" comment="">
+    <list default="true" id="92089c82-d91e-45b0-a4eb-32fdfd03bfef" name="Default Changelist" comment="Testing with">
       <change beforePath="$PROJECT_DIR$/.github/workflows/dockerimage.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/dockerimage.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/test.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -202,7 +203,35 @@
       <option name="project" value="LOCAL" />
       <updated>1574770855136</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Testing with setting environment variable from .env">
+      <created>1575279662940</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1575279662940</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fix on syntax">
+      <created>1575279748074</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1575279748074</updated>
+    </task>
+    <task id="LOCAL-00007" summary="More testing with GREP">
+      <created>1575280067186</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1575280067186</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Even more testing">
+      <created>1575280181182</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1575280181182</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,6 +255,10 @@
     <MESSAGE value="Checked DESIGN.md for language errors" />
     <MESSAGE value="Checked TUTORIAL.md for typos" />
     <MESSAGE value="adding logs for debugging" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding logs for debugging" />
+    <MESSAGE value="Testing with setting environment variable from .env" />
+    <MESSAGE value="Fix on syntax" />
+    <MESSAGE value="More testing with GREP" />
+    <MESSAGE value="Even more testing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Even more testing" />
   </component>
 </project>

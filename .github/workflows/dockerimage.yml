@@ -38,7 +38,7 @@ jobs:
       - name: Print definitive APP_ENV
         run: echo "APP_ENV is now $APP_ENV"
       - name: Build the Docker image
-        run: docker-compose build --pull --build-arg APP_ENV=$APP_ENV
+        run: docker-compose build --pull --build-arg APP_ENV=$APP_ENV APP_BUILD=$APP_BUILD
       - name: Run the docker image
         run: docker-compose up -d
       - name: Taking some sleep
