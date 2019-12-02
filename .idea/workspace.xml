@@ -237,7 +237,35 @@
       <option name="project" value="LOCAL" />
       <updated>1575281141670</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Set APP_BUILD">
+      <created>1575282235015</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1575282235015</updated>
+    </task>
+    <task id="LOCAL-00011" summary="APP NAME testen">
+      <created>1575282356507</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1575282356507</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Passing to next?">
+      <created>1575282386363</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1575282386363</updated>
+    </task>
+    <task id="LOCAL-00013" summary="removing test workflow">
+      <created>1575282997667</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1575282997667</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,6 +294,10 @@
     <MESSAGE value="More testing with GREP" />
     <MESSAGE value="Even more testing" />
     <MESSAGE value="export to set-env" />
-    <option name="LAST_COMMIT_MESSAGE" value="export to set-env" />
+    <MESSAGE value="Set APP_BUILD" />
+    <MESSAGE value="APP NAME testen" />
+    <MESSAGE value="Passing to next?" />
+    <MESSAGE value="removing test workflow" />
+    <option name="LAST_COMMIT_MESSAGE" value="removing test workflow" />
   </component>
 </project>
