@@ -71,14 +71,14 @@ api-01, api-02, api-03, api-05, api-06, api-10, api-11, api-12, api-13,api-14, a
 ** We do not implement **
 
 - [api-04](https://docs.geostandaarden.nl/api/API-Strategie/#api-04) Define interfaces in Dutch unless there is an official English glossary (see [english](#english))
-- [api-09](https://docs.geostandaarden.nl/api/API-Strategie/#api-09) Implement custom representation if supported see [fields](#fields))
+- [api-09](https://docs.geostandaarden.nl/api/API-Strategie/#api-09) Implement custom representation if supported (see [fields](#fields))
 - [api-17](https://docs.geostandaarden.nl/api/API-Strategie/#api-17) Publish documentation in Dutch unless there is existing documentation in English or there is an official English glossary (see [english](#english))
 - [api-31](https://docs.geostandaarden.nl/api/API-Strategie/#api-31) Use the query parameter sorteer to sort (see [ordering](#ordering))
 - [api-32](https://docs.geostandaarden.nl/api/API-Strategie/#api-32) Use the query parameter zoek for full-text search (see [search](#search))
 - [api-36](https://docs.geostandaarden.nl/api/API-Strategie/#api-36) Provide a POST endpoint for GEO queries (see [queries](#queries))
 - [api-37](https://docs.geostandaarden.nl/api/API-Strategie/#api-37) Support mixed queries at POST endpoints available (see [queries](#queries))
-*[api-38](https://docs.geostandaarden.nl/api/API-Strategie/#api-38) Put results of a global spatial query in the relevant geometric context (see [queries](#queries))
--
+- [api-38](https://docs.geostandaarden.nl/api/API-Strategie/#api-38) Put results of a global spatial query in the relevant geometric context (see [queries](#queries))
+
 
 ** We doubt or havn't made a choice yet about**
 
@@ -90,11 +90,11 @@ api-01, api-02, api-03, api-05, api-06, api-10, api-11, api-12, api-13,api-14, a
 NLX 
 -------
 We implement the [NLX system](https://docs.nlx.io/understanding-the-basics/introduction/) as part of the basic commonground infrastructure, as such nlx headers are used in the internal logging.
-The following X-NLX headers have been implemented for that reason `X-NLX-Logrecord-ID`,`X-NLX-Request-Process-Id`,`X-NLX-Request-Data-Elements` and `X-NLX-Request-Data-Subject`, these are tied to the internal audit trail (see audit trail for more information), and `X-Audit-Toelichting` (from the ZGW APIs) is implemented as `X-Audit-Clarification` 
-
-We do not use other NLX headers since they (conform to the [NLX schema](https://docs.nlx.io/further-reading/transaction-logs/))wil not reach the provider. Please note that the use of nlx is optional. The component can be used without NLX. In that case the `X-NLX` header should be set to false, the `X-NLX-Logrecord-ID` should be provided with an log record designd by the client application to be retracable to a unique user and action. Other headers still aplly.
+The following X-NLX headers have been implemented for that reason `X-NLX-Logrecord-ID`,`X-NLX-Request-Process-Id`,`X-NLX-Request-Data-Elements` and `X-NLX-Request-Data-Subject`, these are tied to the internal audit trail (see audit trail for more information), and `X-Audit-Toelichting` (from the ZGW APIs) is implemented as `X-Audit-Clarification`. We do not use other NLX headers since they (conform to the [NLX schema](https://docs.nlx.io/reference-information/transaction-log-headers/)) wil not reach the provider. 
 
 We strongly discourage the use of the `X-NLX-Request-Data-Subject` header as it might allow private data (such as BSNs) to show up in logging.
+
+Please note that the use of nlx is optional. The component can be used without NLX. In that case do not provide an `X-NLX-Logrecord-ID` but instead do 
 
 English
 -------
