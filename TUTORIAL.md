@@ -350,36 +350,33 @@ When using Github. To set up a webhook, go to the settings page of your reposito
 Now every time you update your repository the commonground dev page will alerted, rescan your repository and do al the appropriate platform actions. It just as easy as that.
 
 
-Automated Testing and Deployment (continues integration)
+Continues integration
 -------
-The following bit of the tutorial requires two additional accounts
-- [https://hub.docker.com/](https://hub.docker.com/) (You might already have this for docker for desktop)
-- [https://travis-ci.org](https://travis-ci.org) (You can use you github account)
+> The following bit of the tutorial requires an additional accounts
+> - [https://hub.docker.com/](https://hub.docker.com/) (You might already have this for docker for desktop)
 
-The proto component ships with a pre-fab continues integration script based on travis. What does this mean you ask? Continuous integration (or CI for short) is an optimized and automated way for your code to become part of your projects. In the case of your commonground component that means that we will automatically validate new code commits or pushes and (if everything checks out) build that code and deploy the containers thereof to docker hub. Making is possible to update al the environments that use those components.
+The proto component ships with a pre-fab continues integration script based on github action (there is also a travis script in here if you want it). What does this mean you ask? Continuous integration (or CI for short) is an optimized and automated way for your code to become part of your projects. In the case of your commonground component that means that we will automatically validate new code commits or pushes and (if everything checks out) build that code and deploy the containers thereof to docker hub. Making is possible to update al the environments that use those components. Whats even better is that we check your code for known security issues, so whenever a dependency or libary has a security issue you will be notified to take action.
 
-Okay, that's nice, but how do we do that? Actually it is very simple. First of all make sure you have a docker account, log into [docker hub](https://hub.docker.com/) and have a look around. We don't need to create anything just yet, but it is nice to get a feeling of the place. As you can see docker hub also uses repositories etc. So that recognizable.
+Okay, that's nice, but how do we do that? Actually it is very simple. You do nothing. The scripts are already enabled by default. Just go to the actions tab of your github repository to see the results whenever you push code.
 
-Next we need to prepare our github repository that holds our code. For the travis script to work as intended we need to create a couple of branches(if we don't have those already) open up your git interface and create a branch called 'development' and a branch called 'staging'. Don't forget to push the branches so that they are present on github (and not just on your local machine).
+There is however a bit of extra here that you can do and that is to insert your docker hub credentials into the repository. You can do that under the settings->secrets tab of yout repoistory by setting a `DOCKERHUB_USERNAME` and `DOCKERHUB_PASSWORD` secret containing (you might have guesed it) your dockerhub username and secret. And all done! Head over back to the code on your computer and make a small change. Then commit push that change into github. Wait for the action to complete and head over to your docker hub repository page. You should find your build containers ready for you.
 
-Oke just one more place to go and that is travis, head over to [https://travis-ci.org](https://travis-ci.org) and login with your github account. If everything is alright you should see your repository there. Activate it by pressing 'activate repository' and then go to 'More options' -> 'Settings' and scroll down to environment variables. Here we can present travis wit the variables that it need to execute our build script. Lets first set the common variables that we need for all our branches: `DOCKER_PASSWORD` your docker password,`DOCKER_REGISTRY` docker.io/[your username] ,`DOCKER_USERNAME` your docker user name. This will be used by travis to push the completed containers into docker hub. Next we need to specify a couple of variables that are branch specific. Or to be more exact, set the same variable `APP_ENV` with different values for different branches. It needs to be 'staging'->stag,'master'->prod,'development'->dev.
+Continues deployment
+-------
+> The following bit of the tutorial requires an additional accounts
+> - [https://www.digitalocean.com/](https://www.digitalocean.com/) 
 
-And all done! Head over back to the code on your computer and make a small change. Then commit push that change into github. Travis should automatically pick op your change and start a build.
+Actually the repository goes a bit further then just getting your containers ready to deploy, it can acctually deploy them for you! Again all the code is already there. The only thing that you need to do is add a kubeconfig file. You can get a kubeconfig file from a running kubernetes clusters, it provides your repositorie with both the credentials and endpoints it needs to deploy the application. How you get a Kubeconfig file difers a bit from provider to provider. But you can get more inforamtion on that here
 
+- [Digitalocean](https://www.digitalocean.com/docs/kubernetes/how-to/connect-to-cluster/)
+- [Google Cloud](https://cloud.google.com/sdk/gcloud/reference/container/clusters/get-credentials)
+- [Amazone AWS](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
 
-### Unit / Behat
-
-TODO
-
-### Postman
-TODO
-
-### Trouble shooting
-Please make sure that your github repository is set to public, and keep in mind that a complex travis build (and certainly one that includes a pushing of containers can take up to 20 minutes). 
+Afther you have abtained a kuneconfig you need to save it to your repository as a secret (NEVER COMMIT A KUBECONFIG FILE), use the secret `KUBECONFIG` to save your cubeconfig file. Now simply commit and push your code to your repository and presto! You have a working common-ground component online.
 
 Documentation and dockblocks
 -------
-TODO
+You want both your redoc documentation and your code to be readable and reausable to other developers. To this effect we use docblok annotation. You can read more about that [here](https://docs.phpdoc.org/references/phpdoc/basic-syntax.html) but the basic is this, we supply each class and propery with a docblock contained within /\* \* / characters. At the very least we want to describe our properties, the expected results and example data (see the example under [audittrail](#audittrail)
 
 Audittrail
 -------
@@ -440,17 +437,3 @@ class ExampleEntity
 ```
 
 And now we have a fully nl api strategy integrated audit trail!
-
-
-Setting up automated deployment (continues delivery)
--------
-TODO
-
-## Commonground specific data types
-TODO
-
-### incompleteDate
-
-
-### underInvestigation
-
