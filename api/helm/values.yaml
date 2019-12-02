@@ -5,6 +5,12 @@
 settings:
   registryBase: docker.io/conduction
   projectName: pc
+  name: pc
+  title: Proto Component
+  version: V.0.1
+  description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
+  repro: https://github.com/ConductionNL/Proto-component-commonground'
+  demo: pc.zaakonline.nl
   env: dev
   debug: 1
   replicaCount: 1
@@ -20,7 +26,12 @@ settings:
   loadbalancerEnabled: false
   # If you want to enable NLX you are requered to add the appropreate certificates to you nlx-settings folder (located in the /api folder)
   nlxInwayEnabled: false
-  nlxOutwayEnabled: true
+  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer  
+  notificationEnabled: false
+  audittrailEnabled: false
+  authorisationEnabled: false
+  healthEnabled: false
+  archiveEnabled: false
   
 
 php:

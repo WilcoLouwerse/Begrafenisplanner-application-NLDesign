@@ -52,6 +52,11 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-title
+            - name: APP_DESCRIPTION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-description
             - name: APP_VERSION
               valueFrom:
                 configMapKeyRef:
@@ -67,6 +72,16 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: debug
+            - name: APP_DEMO
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-demo
+            - name: APP_REPRO
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-repro
             # config
             - name: AUTH_ENABLED
               valueFrom:

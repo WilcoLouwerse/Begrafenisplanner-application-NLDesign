@@ -16,8 +16,8 @@ data:
   app-version: {{ .Values.settings.version | quote }}
   app-repro: {{ .Values.settings.repro | quote }}
   app-demo: {{ .Values.settings.demo | quote }}
+  app-description: {{ .Values.settings.description | quote }}
   
-  #config
   app-auth: {{ .Values.settings.authorisationEnabled | quote }}
   app-audittrail: {{ .Values.settings.audittrailEnabled | quote }}
   app-notification: {{ .Values.settings.notificationEnabled | quote }}
@@ -29,8 +29,7 @@ data:
   cors-allow-origin: {{ .Values.settings.corsAllowOrigin | quote }}
   trusted-proxies: {{ join "," .Values.settings.trustedProxies }}
   trusted-hosts: {{ .Values.settings.trustedHosts | quote }}
-  php-service: {{ include "name" . }}-{{ .Values.settings.env }}-php
-  
+  php-service: {{ include "name" . }}-{{ .Values.settings.env }}-php  
   varnish-url: {{ if .Values.varnish.enabled }}http://varnish{{ else }}{{ .Values.varnish.url | quote }}{{ end }}
   mercure-publish-url: {{ .Values.mercure.publishUrl | quote }}
   mercure-subscribe-url: {{ .Values.mercure.subscribeUrl | quote }}
