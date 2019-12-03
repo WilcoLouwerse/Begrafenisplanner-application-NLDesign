@@ -43,7 +43,7 @@ This repository uses the power of the [commonground proto component](https://git
 
 ## License
 
-Copyright � Utrecht 2019
+Copyright &copy; [Gemeente Utrecht](https://www.utrecht.nl/)  2019 
 
 Licensed under [EUPL](https://github.com/ConductionNL/betalencomponent/blob/master/LICENSE.md)
 
