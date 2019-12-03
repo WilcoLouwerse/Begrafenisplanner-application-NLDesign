@@ -98,7 +98,7 @@ jobs:
         if: failure()
         run: helm install --name $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1 
       - name: Rollout new containers
-        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true' && steps.helm-install.success == 'true' && success()
+        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true' && success()
         run: |
             kubectl rollout restart deployment/$APP_NAME-php --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
             kubectl rollout restart deployment/$APP_NAME-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
@@ -107,6 +107,7 @@ jobs:
         if: contains( github.ref, 'master' ) && steps.kubeconfig.outputs.success == 'true' && ( success() || failure() )
         id: create_release
         uses: actions/create-release@v1
+        continue-on-error: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
