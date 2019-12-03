@@ -1,26 +1,26 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ include "name" . }}-{{ .Values.settings.env }}-php
+  name: {{ include "name" . }}-php
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-php
-    app.kubernetes.io/part-of: {{ include "name" . }}-{{ .Values.settings.env }}
+    app.kubernetes.io/name: {{ include "name" . }}-php
+    app.kubernetes.io/part-of: {{ include "name" . }}
     helm.sh/chart: {{ include "chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.php.replicaCount }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-php
-        app.kubernetes.io/part-of: {{ include "name" . }}-{{ .Values.settings.env }}
+        app.kubernetes.io/name: {{ include "name" . }}-php
+        app.kubernetes.io/part-of: {{ include "name" . }}
         helm.sh/chart: {{ include "chart" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
       containers:
-        - name: {{ include "name" . }}-{{ .Values.settings.env }}-php
+        - name: {{ include "name" . }}-php
           image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-php:{{ .Values.settings.env }}"
           imagePullPolicy: {{ .Values.settings.pullPolicy }}
           ports:
@@ -46,7 +46,22 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
-                  key: project-name
+                  key: app-name
+            - name: APP_TITLE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-title
+            - name: APP_DESCRIPTION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-description
+            - name: APP_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-version
             - name: APP_ENV
               valueFrom:
                 configMapKeyRef:
@@ -57,16 +72,51 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: debug
+            - name: APP_DEMO
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-demo
+            - name: APP_REPRO
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-repro
+            # config
+            - name: AUTH_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-auth
+            - name: AUDITTRAIL_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-audittrail
+            - name: NOTIFICATION_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-notification
+            - name: HEALTH_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-health
+            - name: ARCHIVE_ENABLED
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-archive
+            
+            # bla bla      
             - name: CORS_ALLOW_ORIGIN
               valueFrom:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: cors-allow-origin
             - name: VARNISH_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: varnish-url
+              value: {{ include "name" . }}-varnish
             - name: APP_SECRET
               valueFrom:
                 secretKeyRef:

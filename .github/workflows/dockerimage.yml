@@ -1,0 +1,116 @@
+name: Docker Image CI
+
+on:
+  pull_request:
+    branches: 
+      - master
+      - staging
+      - development
+  push:
+    branches: 
+      - master
+      - staging
+      - development
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Pulling old images, if any
+        run: docker-compose pull --ignore-pull-failures
+      - name: Setting APP_NAME
+        run: | 
+            export NAME=$(grep APP_NAME= .env | cut -d '=' -f2)
+            echo ::set-env name=APP_NAME::$NAME
+      - name: Print app name
+        run: echo "APP_NAME = $APP_NAME"
+      - name: Setting APP_ENV to dev
+        run: | 
+          echo ::set-env name=APP_ENV::dev
+          echo ::set-env name=APP_BUILD::dev
+          echo "set APP_ENV to $APP_ENV"
+      - name: Setting APP_ENV to prod
+        if: contains( github.ref, 'master' ) || contains( github.base_ref, 'master' )
+        run: |
+            echo ::set-env name=APP_ENV::prod
+            echo "set APP_ENV to $APP_ENV"
+      - name: Set APP_BUILD to APP_VERSION
+        if: contains( github.ref, 'master' )
+        run: |
+          export VERSION=$(grep APP_VERSION= .env | cut -d '=' -f2)
+          echo ::set-env name=APP_BUILD::$VERSION
+          echo "set APP_BUILD to $APP_BUILD"
+      - name: Setting APP_ENV to stag
+        if: contains( github.ref, 'staging' ) || contains( github.base_ref, 'staging' )
+        run: |
+            echo ::set-env name=APP_ENV::stag
+            echo ::set-env name=APP_BUILD::stag
+            echo "set APP_ENV to $APP_ENV" 
+      - name: Print definitive APP_ENV
+        run: echo "APP_ENV is now $APP_ENV"
+      - name: Build the Docker image
+        run: docker-compose build --pull --build-arg APP_ENV=$APP_ENV --build-arg APP_BUILD=$APP_BUILD
+      - name: Run the docker image
+        run: docker-compose up -d
+      - name: Taking some sleep
+        run: sleep 100
+      - name: Check if all containers are running
+        run: docker ps
+      - name: Dumping the logs
+        run: docker-compose logs
+      - name: Security Checks
+        run: docker-compose exec -T php composer req sensiolabs/security-checker
+      - name: Chores
+        run: docker-compose down
+      - name: Login to DockerHub Registry
+        id: dockerhub-login
+        run: |
+            if [ "${{ secrets.DOCKERHUB_PASSWORD }}" != "" ] && [ "${{ secrets.DOCKERHUB_USERNAME }}" != "" ]; then
+              echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+              echo "##[set-output name=success;]true"
+            else
+              echo "##[set-output name=success;]false"
+            fi
+      - if: steps.dockerhub-login.outputs.success == 'true'
+        name: Push to docker hub
+        run: docker-compose push
+      - name: Create kube config
+        id: kubeconfig
+        if: contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )
+        run: |
+            if [ "${{ secrets.KUBECONFIG }}" != "" ]; then
+              printf "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
+              echo "##[set-output name=success]true"
+            else
+              echo "##[set-output name=success]false"
+            fi 
+      - name: Set correct helm version
+        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
+        run: helm init --upgrade --kubeconfig="kubeconfig.yaml"    
+      - name: Deploy through helm
+        id: helm-install
+        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
+        run: helm upgrade $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
+      - name: Install through helm
+        if: failure()
+        run: helm install --name $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1 
+      - name: Rollout new containers
+        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true' && steps.helm-install.success == 'true'
+        run: |
+            kubectl rollout restart deployment/$APP_NAME-php --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+            kubectl rollout restart deployment/$APP_NAME-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+            kubectl rollout restart deployment/$APP_NAME-varnish --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+      - name: Create Release
+        if: contains( github.ref, 'master' )
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: $APP_BUILD
+          release_name: $APP_BUILD
+          draft: false
+          prerelease: false

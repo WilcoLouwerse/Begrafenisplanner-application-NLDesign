@@ -235,12 +235,12 @@ class NLXRequestLog
 
     public function getMethod(): ?string
     {
-    	return $this->method;
+        return $this->method;
     }
 
     public function setMethod(string $method): self
     {
-    	$this->method = $method;
+        $this->method = $method;
 
         return $this;
     }

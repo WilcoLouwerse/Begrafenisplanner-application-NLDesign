@@ -1,29 +1,17 @@
 vcl 4.0;
 
-#import std;
+import std;
 
-#backend default {
-  # .host = "php";
-  # .port = "80";
-  # Health check
-  #.probe = {
-  #  .url = "/";
-  #  .timeout = 5s;
-  #  .interval = 10s;
-  #  .window = 5;
-  #  .threshold = 3;
-  #}
-#}
 
 # Hosts allowed to send BAN requests
-#acl invalidators {
-#  "localhost";
-#  "php";
+acl invalidators {
+  "localhost";
+  "php";
   # local Kubernetes network
-#  "10.0.0.0"/8;
-#  "172.16.0.0"/12;
-#  "192.168.0.0"/16;
-#}
+  "10.0.0.0"/8;
+  "172.16.0.0"/12;
+  "192.168.0.0"/16;
+}
 
 sub vcl_recv {
   if (req.restarts > 0) {
@@ -35,9 +23,9 @@ sub vcl_recv {
 
   # To allow API Platform to ban by cache tags
   if (req.method == "BAN") {
-    #if (client.ip !~ invalidators) {
-    #  return (synth(405, "Not allowed"));
-    #}
+    if (client.ip !~ invalidators) {
+      return (synth(405, "Not allowed"));
+    }
 
     if (req.http.ApiPlatform-Ban-Regex) {
       ban("obj.http.Cache-Tags ~ " + req.http.ApiPlatform-Ban-Regex);
