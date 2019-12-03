@@ -1,7 +1,7 @@
 apiVersion: v1
-appVersion: 0.1.0
-description: A Helm chart for an Common Ground API component
-name: commonground
+appVersion: V.0.1
+description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.
+name: protocomponent
 version: 0.1.0
 home: https://common-ground.dev
 icon: https://common-ground.dev/logo-250x250.png

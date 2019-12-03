@@ -1,12 +1,12 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ template "fullname" . }}-{{ .Values.settings.env }}
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}-ingress
-    app.kubernetes.io/part-of: {{ include "name" . }}
+    app.kubernetes.io/name: {{ include "name" . }}-{{ .Values.settings.env }}-ingress
+    app.kubernetes.io/part-of: {{ include "name" . }}-{{ .Values.settings.env }}
     helm.sh/chart: {{ include "chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-{{ .Values.settings.env }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
   {{- with .Values.ingress.annotations }}
   annotations:
