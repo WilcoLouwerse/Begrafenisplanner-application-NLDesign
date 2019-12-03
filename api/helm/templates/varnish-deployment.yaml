@@ -21,20 +21,15 @@ spec:
     spec:
       containers:
         - name: {{ include "name" . }}-varnish
-          image: "{{ .Values.varnish.repository }}:{{ .Values.varnish.tag }}"
-          imagePullPolicy: {{ .Values.varnish.pullPolicy }}
-          command: ["varnishd"]
-          args: ["-F", "-f", "/usr/local/etc/varnish/default.vcl", "-p", "http_resp_hdr_len=65536", "-p", "http_resp_size=98304"]
+          image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-varnish:{{ .Values.settings.env }}"
+          imagePullPolicy: {{ .Values.settings.pullPolicy }}
+          env:
+            - name: BACKENDS
+              value: {{ include "name" . }}-php
+          #command: ["varnishd"]
+          #args: ["-F", "-f", "/usr/local/etc/varnish/default.vcl", "-p", "http_resp_hdr_len=65536", "-p", "http_resp_size=98304"]
           ports:
             - containerPort: 80
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 80
-          readinessProbe:
-            httpGet:
-              path: /healthz
-              port: 80
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

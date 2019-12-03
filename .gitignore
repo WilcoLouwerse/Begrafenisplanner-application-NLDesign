@@ -2,3 +2,7 @@
 /docker-compose.override.yml
 
 api/helm/kubeconfig.yaml
+
+!/api/public/bundle/*
+
+.idea/
