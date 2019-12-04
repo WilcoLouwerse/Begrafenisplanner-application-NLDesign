@@ -1,16 +1,9 @@
 name: Test
 
 on:
-    pull_request:
-        branches:
-            - master
-            - staging
-            - development
     push:
         branches:
-            - master
-            - staging
-            - development
+            - dev-robert
 
 jobs:
 
