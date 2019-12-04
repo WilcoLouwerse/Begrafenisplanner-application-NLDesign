@@ -1,0 +1,28 @@
+name: Test
+
+on:
+    pull_request:
+        branches:
+            - master
+            - staging
+            - development
+    push:
+        branches:
+            - master
+            - staging
+            - development
+
+jobs:
+
+    build:
+
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Export release code
+                id: export
+                if: (success() || failure())
+                run: |
+                  echo "##[set-output name=releasename]$APP_BUILD-$(git rev-parse --short HEAD)"
+            - run: echo "$RELEASE"
+              with:
+                  RELEASE: ${{ steps.export.outputs.releasename }}
