@@ -12,7 +12,7 @@ For the steps considering the generation of resources (or entities as symfony ca
 
 ## Setting up your enviroment
 
-You can install docker-desktop from [the docker website](). 
+You can install docker-desktop from [the docker website](https://hub.docker.com/editions/community/docker-ce-desktop-windows). 
 
 
 ## Generating your component (repository/codebase)
@@ -26,7 +26,7 @@ After that you should be redirected to your own brand new repository.
 We ran a fork of the base Common Ground component, that means that we copied the code of the original project into a new repository. By doing so we made sure we have all the necessities for our component, including security and compliance with international standards. 
 
 ## Spinning up your component
-Before we can spin up our component we must first get a local copy from our repository, we can either do this through the command line (example here) or use a Git client. 
+Before we can spin up our component we must first get a local copy from our repository, we can either do this through the command line  or use a Git client. 
 
 For this example we're going to use GitKraken but you can use any tool you like, feel free to skip this part if you are already familiar with setting up a local clone of your repository.
 
@@ -35,7 +35,7 @@ Open gitkraken press "clone a repo" and fill in the form (select where on your l
 You can now navigate to the folder where you just installed your code, it should contain some folders and files and generally look like this. We will get into the files later, lets first spin up our component!
 
 Open a command window (example) and browse to the folder where you just stuffed your code, navigating in a command window is done by cd, so for our example we could type 
-cd c:\repos\common-ground\my-component (if you installed your code on a different disk then where the cmd window opens first type <diskname>: for example D: and hit enter to go to that disk, D in this case). We are now in our folder, so let's go! Type docker-compose up and hit enter. From now on whenever we describe a command line command we will document it as follows:
+cd c:\repos\common-ground\my-component (if you installed your code on a different disk then where the cmd window opens first type <diskname>: for example D: and hit enter to go to that disk, D in this case). We are now in our folder, so let's go! Type docker-compose up and hit enter. From now on whenever we describe a command line command we will document it as follows (the $ isn't actually typed but represents your folder structure):
 
 ```CLI
 $ docker-compose up
@@ -45,8 +45,9 @@ Your computer should now start up your local development environment. Don't worr
 
 Open your browser type http://localhost/ as address and hit enter, you should now see your common ground component up and running.
 
-### trouble shooting
+### Trouble shooting
 When spinning up components we make extensive use of the cashing of docker, and use volumes to represent server disks. When running in to unexpected trouble always remember to clear your local docker vm with the -a command (removing image cash)
+
 ```CLI
 $ docker system prune -a
 ```
@@ -62,7 +63,7 @@ You can now access your api at http://localhost:8080/, as you can see it's pre-l
 
 First let's remove the resources currently in the api, we can do that by just removing the resources form our code base, navigate to the folder where you stored your code and open the folder api/src/Entity , you can find the example entities (the symfony name for resources) there. Just delete all the php files in that folder.
 
-Next let's add our own entities, we can do this in two ways, we can do old fashioned coding, but we can also use the build in maker bundle of the proto component, to quickly generate our entities for us (without the fuss of actual coding).
+Next let's add our own resources, we can do this in two ways, we can do old fashioned coding, but we can also use the build in maker bundle of the proto component, to quickly generate our entities for us (without the fuss of actual coding).
  
 Let's open a new command line window and navigate to our root folder, exactly like we did under "spinning up your component". And then lets fire up maker bundle (make sure that your component is still running in your other command window). We can do so by the following command:
 
@@ -170,7 +171,7 @@ class Organisation
 
 Keep in mind that we need to add the assert annotation to our class dependencies under 'use'.  
 
-More inforation on using validation can be found at the [symfony website](https://symfony.com/doc/current/validation.html), but it is als worth nothing that tis component comes pre packed with some typical NL validators like BSN. You can find those [here]().
+More information on using validation can be found at the [symfony website](https://symfony.com/doc/current/validation.html), but it is als worth nothing that tis component comes pre packed with some typical NL validators like BSN. You can find those [here]().
 
 ## Using UUID
 As default doctrine uses auto increment integers as identifiers (1,2, etc). For modern web applications we however prefer the use of UUID's. (e.g. e2984465-190a-4562-829e-a8cca81aa35d). Why? Wel for one it is more secure integer id's are easily guessable and make it possible to "ask" endpoint about resources that you should not know about. But UUID's also have a benefit in future proofing the application. If we in the future want to merge a table with another table (for example because two organisations using a component perform a merger) then we would have to reassign al id's and relations if we where using int based id's (both tables would have a row 1,2 etc) with UUID's however the change of doubles range somewhere in the billions. Meaning that it is likely that we only need to either reidentify only a handful of rows or more likely none at al! Turning our entire migration into a copy paste action.
@@ -199,20 +200,9 @@ with
 
 ```PHP
 //...
-	/**
-	 * @var \Ramsey\Uuid\UuidInterface
-	 *
-	 * @ApiProperty(
-	 * 	   identifier=true,
-	 *     attributes={
-	 *         "openapi_context"={
-	 *         	   "description" = "The UUID identifier of this resource",
-	 *             "type"="string",
-	 *             "format"="uuid",
-	 *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-	 *         }
-	 *     }
-	 * )
+	/** 
+	 * @var \Ramsey\Uuid\UuidInterface The UUID identifier of this resource
+	 * @example e2984465-190a-4562-829e-a8cca81aa35d
 	 *
 	 * @Groups({"read"})
 	 * @ORM\Id
