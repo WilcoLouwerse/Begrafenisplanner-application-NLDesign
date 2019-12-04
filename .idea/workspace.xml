@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="92089c82-d91e-45b0-a4eb-32fdfd03bfef" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/dockerimage.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/dockerimage.yml" afterDir="false" />
+    <list default="true" id="92089c82-d91e-45b0-a4eb-32fdfd03bfef" name="Default Changelist" comment="(semi) definitive fix for rollout issue">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/test.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -172,6 +173,7 @@
       <updated>1573726460744</updated>
       <workItem from="1573726462409" duration="6345000" />
       <workItem from="1574770780191" duration="4500000" />
+      <workItem from="1575443613282" duration="255000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed language errors in Installation.md">
       <created>1573726496674</created>
@@ -285,7 +287,49 @@
       <option name="project" value="LOCAL" />
       <updated>1575283918851</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Free 'Create Release' from install/upgrade lock.">
+      <created>1575379056373</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1575379056373</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Fix issue with rollout">
+      <created>1575383847583</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1575383847583</updated>
+    </task>
+    <task id="LOCAL-00019" summary="(semi) definitive fix for rollout issue">
+      <created>1575386337848</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1575386337849</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Allow create release to fail">
+      <created>1575388288073</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1575388288074</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Test with release name">
+      <created>1575443809720</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1575443809721</updated>
+    </task>
+    <task id="LOCAL-00022" summary="(semi) definitive fix for rollout issue">
+      <created>1575443827717</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1575443827717</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,6 +365,11 @@
     <MESSAGE value="fix on build args" />
     <MESSAGE value="Removed APP_NAME from secrets, added continue-on-error" />
     <MESSAGE value="Issue with APP_NAME" />
-    <option name="LAST_COMMIT_MESSAGE" value="Issue with APP_NAME" />
+    <MESSAGE value="Free 'Create Release' from install/upgrade lock." />
+    <MESSAGE value="Fix issue with rollout" />
+    <MESSAGE value="Allow create release to fail" />
+    <MESSAGE value="Test with release name" />
+    <MESSAGE value="(semi) definitive fix for rollout issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="(semi) definitive fix for rollout issue" />
   </component>
 </project>

@@ -17,5 +17,5 @@ jobs:
                 run: |
                   echo "##[set-output name=releasename]$APP_BUILD-$(git rev-parse --short HEAD)"
             - run: echo "$RELEASE"
-              with:
+              env:
                   RELEASE: ${{ steps.export.outputs.releasename }}
