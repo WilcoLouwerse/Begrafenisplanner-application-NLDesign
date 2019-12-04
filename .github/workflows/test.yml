@@ -15,7 +15,7 @@ jobs:
                 id: export
                 if: (success() || failure())
                 run: |
-                  echo "##[set-output name=releasename]$APP_BUILD-$(git rev-parse --short '$GITHUB_SHA')"
+                  echo "##[set-output name=releasename]$APP_BUILD-$GITHUB_SHA"
             - run: echo "$RELEASE"
               env:
                   RELEASE: ${{ steps.export.outputs.releasename }}
