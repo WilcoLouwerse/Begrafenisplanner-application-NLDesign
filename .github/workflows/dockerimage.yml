@@ -107,7 +107,7 @@ jobs:
         if: (success() || failure())
         id: releasecode
         run: |
-            export RELEASE=$APP_BUILD-$(git rev-parse --short "$GITHUB_SHA")
+            export RELEASE=$APP_BUILD-$(git rev-parse --short $GITHUB_SHA)
             echo "##[set-output name=releasename]$RELEASE"
       - name: Print release name
         if: (success() || failure())
