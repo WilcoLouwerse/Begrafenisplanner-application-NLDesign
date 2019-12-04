@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ include "name" . }}-{{ .Values.settings.env }}-ingress
   labels:
     app.kubernetes.io/name: {{ include "name" . }}-ingress
     app.kubernetes.io/part-of: {{ include "name" . }}
@@ -24,12 +24,10 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-  {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
       http:
         paths:
           - path: /*
             backend:
-              serviceName: {{ .serviceName }}
-              servicePort: {{ .servicePort | default 80 }}
-  {{- end }}
+              serviceName: {{ include "name" . }}-nginx
+              servicePort: 80

@@ -11,11 +11,12 @@ settings:
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   repro: https://github.com/ConductionNL/Proto-component-commonground'
   demo: pc.zaakonline.nl
+  domain: conduction.nl
   env: dev
   debug: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^(.+\.)?common-ground\.dev$|^(.+\.)?zaakonline\.nl$|^(.+\.)?conduction\.nl$|^example\.com$|^(.+\.)?178.128.142.152$|178.128.142.152|localhost'
+  trustedHosts: '^(.+\.)?conduction\.nl$|localhost'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
@@ -94,13 +95,6 @@ ingress:
     # - hosts:
       # - example.com
       # - mercure.example.com
-  hosts:
-    api:
-      host: example.com
-      serviceName: varnish
-    mercure:
-      host: mercure.example.com
-      serviceName: mercure
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
