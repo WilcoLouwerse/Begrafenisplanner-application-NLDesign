@@ -107,7 +107,8 @@ jobs:
         if: (success() || failure())
         id: releasecode
         run: |
-            echo "##[set-output name=releasename]$APP_BUILD-$GITHUB_SHA"
+            export RELEASE=$APP_BUILD-$(git rev-parse --short "$GITHUB_SHA")
+            echo "##[set-output name=releasename]$RELEASE"
 
       - name: Create Release
         if: contains( github.ref, 'master' ) && steps.kubeconfig.outputs.success == 'true' && ( success() || failure() )
