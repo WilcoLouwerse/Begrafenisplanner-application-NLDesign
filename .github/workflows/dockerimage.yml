@@ -25,6 +25,11 @@ jobs:
         run: |
             export RELEASE=$APP_BUILD-$(git rev-parse --short $GITHUB_SHA)
             echo "##[set-output name=releasename]$RELEASE"
+      - name: Print release name
+        if: (success() || failure())
+        run: echo $RELEASENAME
+        env:
+          RELEASENAME: ${{ steps.releasecode.outputs.releasename }}
       - name: Pulling old images, if any
         run: docker-compose pull --ignore-pull-failures
       - name: Setting APP_NAME
@@ -110,11 +115,7 @@ jobs:
             kubectl rollout restart deployment/$APP_NAME-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
             kubectl rollout restart deployment/$APP_NAME-varnish --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
 
-      - name: Print release name
-        if: (success() || failure())
-        run: echo $RELEASENAME
-        env:
-            RELEASENAME: ${{ steps.releasecode.outputs.releasename }}
+
       - name: Create Release
         if: contains( github.ref, 'master' ) && steps.kubeconfig.outputs.success == 'true' && ( success() || failure() )
         id: create_release
