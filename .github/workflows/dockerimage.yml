@@ -103,15 +103,26 @@ jobs:
             kubectl rollout restart deployment/$APP_NAME-php --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
             kubectl rollout restart deployment/$APP_NAME-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
             kubectl rollout restart deployment/$APP_NAME-varnish --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+      - name: Export release code
+        if: (success() || failure())
+        id: releasecode
+        run: |
+            export RELEASE=$APP_BUILD-$(git rev-parse --short $GITHUB_SHA)
+            echo "##[set-output name=releasename]$RELEASE"
+      - name: Print release name
+        if: (success() || failure())
+        run: echo $RELEASENAME
+        env:
+            RELEASENAME: ${{ steps.releasecode.outputs.releasename }}
       - name: Create Release
         if: contains( github.ref, 'master' ) && steps.kubeconfig.outputs.success == 'true' && ( success() || failure() )
         id: create_release
         uses: actions/create-release@v1
         continue-on-error: true
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: $APP_BUILD-${{ secrets.GITHUB_TOKEN }}
-          release_name: $APP_BUILD-${{ secrets.GITHUB_TOKEN }}
-          draft: false
-          prerelease: false
+            tag_name: ${{ steps.releasecode.outputs.releasename }}
+            release_name: ${{ steps.releasecode.outputs.releasename }}
+            draft: false
+            prerelease: false
