@@ -10,12 +10,13 @@ settings:
   version: {{ app_version }}
   description: '{{ app_description }}'
   repro: {{ app_repro }}'
+  domain: {{ app_domain }}
   demo: {{ app_demo }}
   env: {{ app_env }}
   debug: {{ app_debug }}
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^(.+\.)?common-ground\.dev$|^(.+\.)?zaakonline\.nl$|^(.+\.)?conduction\.nl$|^example\.com$|^(.+\.)?178.128.142.152$|178.128.142.152|localhost'
+  trustedHosts: {{ trusted_hosts }}
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:

@@ -8,11 +8,11 @@ What do you need for this tutorial?
 * Docker for desktop
 
 ## Before you begin
-For the steps considering the generation of entities an example entity a availale, feel free to [take a look](https://github.com/ConductionNL/Proto-component-commonground/blob/master/api/src/Entity/ExampleEntity.php) at it if you have trouble figuring out the code.
+For the steps considering the generation of resources (or entities as symfony calls them) an example resource a availale, feel free to [take a look](https://github.com/ConductionNL/Proto-component-commonground/blob/master/api/src/Entity/ExampleEntity.php) at it if you have trouble figuring out the code.
 
 ## Setting up your enviroment
 
-You can install docker-desktop from [the docker website](). 
+You can install docker-desktop from [the docker website](https://hub.docker.com/editions/community/docker-ce-desktop-windows). 
 
 
 ## Generating your component (repository/codebase)
@@ -26,7 +26,7 @@ After that you should be redirected to your own brand new repository.
 We ran a fork of the base Common Ground component, that means that we copied the code of the original project into a new repository. By doing so we made sure we have all the necessities for our component, including security and compliance with international standards. 
 
 ## Spinning up your component
-Before we can spin up our component we must first get a local copy from our repository, we can either do this through the command line (example here) or use a Git client. 
+Before we can spin up our component we must first get a local copy from our repository, we can either do this through the command line  or use a Git client. 
 
 For this example we're going to use GitKraken but you can use any tool you like, feel free to skip this part if you are already familiar with setting up a local clone of your repository.
 
@@ -35,7 +35,7 @@ Open gitkraken press "clone a repo" and fill in the form (select where on your l
 You can now navigate to the folder where you just installed your code, it should contain some folders and files and generally look like this. We will get into the files later, lets first spin up our component!
 
 Open a command window (example) and browse to the folder where you just stuffed your code, navigating in a command window is done by cd, so for our example we could type 
-cd c:\repos\common-ground\my-component (if you installed your code on a different disk then where the cmd window opens first type <diskname>: for example D: and hit enter to go to that disk, D in this case). We are now in our folder, so let's go! Type docker-compose up and hit enter. From now on whenever we describe a command line command we will document it as follows:
+cd c:\repos\common-ground\my-component (if you installed your code on a different disk then where the cmd window opens first type <diskname>: for example D: and hit enter to go to that disk, D in this case). We are now in our folder, so let's go! Type docker-compose up and hit enter. From now on whenever we describe a command line command we will document it as follows (the $ isn't actually typed but represents your folder structure):
 
 ```CLI
 $ docker-compose up
@@ -45,8 +45,9 @@ Your computer should now start up your local development environment. Don't worr
 
 Open your browser type http://localhost/ as address and hit enter, you should now see your common ground component up and running.
 
-### trouble shooting
+### Trouble shooting
 When spinning up components we make extensive use of the cashing of docker, and use volumes to represent server disks. When running in to unexpected trouble always remember to clear your local docker vm with the -a command (removing image cash)
+
 ```CLI
 $ docker system prune -a
 ```
@@ -57,19 +58,19 @@ $ docker volume prune
 **What are we looking at?**
 The Common Ground base component provides a bit more than just a development interface, it also includes an example application and a backend that automatically hooks into your api. For now we're just going to focus on our api, but is good to read up on all the features of the Common Ground base component here.  
 
-## Adding your own objects
-You can now access your api at http://localhost:8080/, as you can see it's pre-loaded with some example objects. Let's replace them with your own objects!
+## Adding your own resources
+You can now access your api at http://localhost:8080/, as you can see it's pre-loaded with some example resources. Let's replace them with your own resources!
 
-First let's remove the objects currently in the api, we can do that by just removing the entities form our code base, navigate to the folder where you stored your code and open the folder api/src/Entity , you can find the example entities (our name for objects) there. Just delete all the php files in that folder.
+First let's remove the resources currently in the api, we can do that by just removing the resources form our code base, navigate to the folder where you stored your code and open the folder api/src/Entity , you can find the example entities (the symfony name for resources) there. Just delete all the php files in that folder.
 
-Next let's add our own entities, we can do this in two ways, we can do old fashioned coding, but we can also use the build in maker bundle of the proto component, to quickly generate our entities for us (without the fuss of actual coding).
+Next let's add our own resources, we can do this in two ways, we can do old fashioned coding, but we can also use the build in maker bundle of the proto component, to quickly generate our entities for us (without the fuss of actual coding).
  
 Let's open a new command line window and navigate to our root folder, exactly like we did under "spinning up your component". And then lets fire up maker bundle (make sure that your component is still running in your other command window). We can do so by the following command:
 
 ```CLI
 $ docker-compose exec php bin/console make:entity
 ```
-We should now see a wizard that allows us to either make new entities, or add parameters to existing entities (by supplying the name of an existing entity). 
+We should now see a wizard that allows us to either make new entities, or add parameters to existing entities (by supplying the name of an existing resource). 
 
 ## Keeping your repository up to date with the Conduction Common Ground component 
 
@@ -107,7 +108,7 @@ git merge upstream --allow-unrelated-histories
 Keep in mind that you wil need to make sure to stay up to date about changes on the Common Ground component repository.
 
 ## Renaming your component
-Right now the name of your component is 'commonground' that's that's fine while running it locally or in its own kubernetes cluster but wil get you in when running it with other components when it without using a name space. So its good practice to name your component distinctly. But besides al of these practical reasons its of course also just cool to name your child before you unleash it on the unsuspecting common ground community.
+Right now the name of your component is `commonground component` and its unique id `cg` that's that's fine while running it locally or in its own kubernetes cluster but wil get you in when running it with other components when it without using a name space. So its good practice to name your component distinctly. But besides al of these practical reasons its of course also just cool to name your child before you unleash it on the unsuspecting common ground community.
 
 Oke, so before we can nae the component we need to come up with a name. There are a couple of conventions here. First of the name should tell us what the component does, or is supposed to do with one or two words. So we would normally call an component about dogs the DogComponent and one about cats te CatComponent. The second convention is that we don't usually actually name our component 'component' but indicate its position in de common ground architecture. For that we have the following options:
 * Catalogus
@@ -116,34 +117,11 @@ Oke, so before we can nae the component we need to come up with a name. There ar
 * Application
 * Tool
 
-The we need to touch te following files
+The actual name change is rather simple doh, just head over to the .env that contains all our config and change the apropriate variables
 * .env
-* dockercompose.yaml
-* api/.env
-* api/helm/values.yaml
-* api/docker/nginx/
 
-## Adding more openapi documantation
-
-```php
-//...
-	/**
-	 * @ApiProperty(
-	 *     attributes={
-	 *         "openapi_context"={
-	 *         	   "description" = "The name of a organisation",
-	 *             "type"="string",
-	 *             "format"="string",
-	 *             "example"="My Organisation"
-	 *         }
-	 *     }
-	 * )	 
-	 */
-	private $name;
-//...	
-```
-
-## Setting up security and access (also helps with serialization)
+## Setting up security and access 
+We want to secure our resources in such a way that only users or applications with propper right can acces and update properties. 
 
 ```PHP
 // src/Entity/Organisation.php
@@ -169,7 +147,7 @@ class Organisation
 ```
 
 ## Using validation
-Right now we are just accepting data and passing them on to the database, and in a mock or poc context this is fine. Most of the calls will end up being get requests anyway. But in case that we actually want our clients to make post to the api it would be wise to add some validation to the fields we are recieving. Luckely for us the component comes pre packed with a valdiation tool that we can configure from our entity through annotion. If we for example want to make a field required we could do so as follows: 
+Right now we are just accepting data and passing them on to the database, and in a mock or poc context this is fine. Most of the calls will end up being get requests anyway. But in case that we actually want our clients to make post to the api it would be wise to add some validation to the fields we are recieving. Luckely for us the component comes pre packed with a valdiation tool that we can configure from our resources through annotion. If we for example want to make a field required we could do so as follows: 
 
 ```PHP
 // src/Entity/Organisation.php
@@ -193,10 +171,10 @@ class Organisation
 
 Keep in mind that we need to add the assert annotation to our class dependencies under 'use'.  
 
-More inforation on using validation can be found at the [symfony website](https://symfony.com/doc/current/validation.html), but it is als worth nothing that tis component comes pre packed with some typical NL validators like BSN. You can find those [here]().
+More information on using validation can be found at the [symfony website](https://symfony.com/doc/current/validation.html), but it is als worth nothing that tis component comes pre packed with some typical NL validators like BSN. You can find those [here]().
 
 ## Using UUID
-As default doctrine uses auto increment integers as identifiers (1,2, etc). For modern web applications we however prefer the use of UUID's. (e.g. e2984465-190a-4562-829e-a8cca81aa35d). Why? Wel for one it is more secure integer id's are easily guessable and make it possible to "ask" endpoint about objects that you should not know about. But UUID's also have a benefit in future proofing the application. If we in the future want to merge a table with another table (for example because two organisations using a component perform a merger) then we would have to reassign al id's and relations if we where using int based id's (both tables would have a row 1,2 etc) with UUID's however the change of doubles range somewhere in the billions. Meaning that it is likely that we only need to either reidentify only a handful of rows or more likely none at al! Turning our entire migration into a copy paste action.
+As default doctrine uses auto increment integers as identifiers (1,2, etc). For modern web applications we however prefer the use of UUID's. (e.g. e2984465-190a-4562-829e-a8cca81aa35d). Why? Wel for one it is more secure integer id's are easily guessable and make it possible to "ask" endpoint about resources that you should not know about. But UUID's also have a benefit in future proofing the application. If we in the future want to merge a table with another table (for example because two organisations using a component perform a merger) then we would have to reassign al id's and relations if we where using int based id's (both tables would have a row 1,2 etc) with UUID's however the change of doubles range somewhere in the billions. Meaning that it is likely that we only need to either reidentify only a handful of rows or more likely none at al! Turning our entire migration into a copy paste action.
 
 The proto component supports Ramsey's uuid objects strategy out of the box, so to use UUID's as identifier simply we need to add the ApiProperty as a dependency
 
@@ -222,20 +200,9 @@ with
 
 ```PHP
 //...
-	/**
-	 * @var \Ramsey\Uuid\UuidInterface
-	 *
-	 * @ApiProperty(
-	 * 	   identifier=true,
-	 *     attributes={
-	 *         "openapi_context"={
-	 *         	   "description" = "The UUID identifier of this object",
-	 *             "type"="string",
-	 *             "format"="uuid",
-	 *             "example"="e2984465-190a-4562-829e-a8cca81aa35d"
-	 *         }
-	 *     }
-	 * )
+	/** 
+	 * @var \Ramsey\Uuid\UuidInterface The UUID identifier of this resource
+	 * @example e2984465-190a-4562-829e-a8cca81aa35d
 	 *
 	 * @Groups({"read"})
 	 * @ORM\Id
@@ -247,7 +214,7 @@ with
 //..	
 ```
 
-and remove the integer on the getter turning this:
+and remove the : ?integer on the getter turning this:
 
 ```PHP
 //...
@@ -272,7 +239,7 @@ into this
 and you're all done
 
 ### Trouble shooting
-If you have already spun your component including your new entity your going to run into some trouble because doctrine is going to try changing your primary key column (id) from an integer to string (tables tend not to like that). In that case its best to just drop your database and reinstall it using the following commands:
+If you have already spun your component including your new resource your going to run into some trouble because doctrine is going to try changing your primary key column (id) from an integer to string (tables tend not to like that). In that case its best to just drop your database and reinstall it using the following commands:
 
 ```CLI
 $ bin/console doctrine:schema:drop
@@ -281,9 +248,9 @@ $ bin/console doctrine:schema:update --force
 
 ## Advanced data sets
 
-Oke lets make it complex, until now we have just added some simple entities to our component, but what if we want to attaches one entity to another? Fortunately our build in database engine support rather complex scenarios called associations. So let [take a look](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/association-mapping.html) at that.  
+Oke lets make it complex, until now we have just added some simple entities to our component, but what if we want to attaches one resource to another? Fortunately our build in database engine support rather complex scenarios called associations. So let [take a look](https://www.doctrine-project.org/projects/doctrine-orm/en/2.6/reference/association-mapping.html) at that.  
 
-Baffled? Wel its rather complex. But remember that Make:entity command that we used earlier? That actually accepts relations as a data type. Or to but it simply instead of using the default 'string' we could just type "ManyToOne" and it will just fire up some questions that will help it determine how you want your relations to be.
+Baffled? Wel its rather complex. But remember that make:entity command that we used earlier? That actually accepts relations as a data type. Or to but it simply instead of using the default 'string' we could just type "ManyToOne" and it will just fire up some questions that will help it determine how you want your relations to be.
 
 
 ### Trouble shooting
@@ -315,7 +282,7 @@ We can now prevent circular references by setting a max depth on the properties 
 ```PHP
 //...
     /**
-     * @var ArrayCollection $stuffs Some stuff that is attached to this example object
+     * @var ArrayCollection $stuffs Some stuff that is attached to this example resource
      * 
      * @MaxDepth(1)
      * @Groups({"read","write"})
@@ -326,7 +293,7 @@ We can now prevent circular references by setting a max depth on the properties 
 ```
 
 ## Data fixtures
-For testing cases it can be useful to use data fixtures a predefined set of data that fills the database of your component at startup. Since we use php classes to describe our objects creating fixtures is easy (you can find an example in your project folder at api/src/DataFixtures). We simply go trough some classes assign values and persist them to the database. Once we have written our fixtures we can use a single command to load them  
+For testing cases it can be useful to use data fixtures a predefined set of data that fills the database of your component at startup. Since we use php classes to describe our resources creating fixtures is easy (you can find an example in your project folder at api/src/DataFixtures). We simply go trough some classes assign values and persist them to the database. Once we have written our fixtures we can use a single command to load them  
 
 ```CLI
 $ bin/console doctrine:fixtures:load --env=dev
@@ -350,42 +317,39 @@ When using Github. To set up a webhook, go to the settings page of your reposito
 Now every time you update your repository the commonground dev page will alerted, rescan your repository and do al the appropriate platform actions. It just as easy as that.
 
 
-Automated Testing and Deployment (continues integration)
+Continues integration
 -------
-The following bit of the tutorial requires two additional accounts
-- [https://hub.docker.com/](https://hub.docker.com/) (You might already have this for docker for desktop)
-- [https://travis-ci.org](https://travis-ci.org) (You can use you github account)
+> The following bit of the tutorial requires an additional account
+> - [https://hub.docker.com/](https://hub.docker.com/) (You might already have this for docker for desktop)
 
-The proto component ships with a pre-fab continues integration script based on travis. What does this mean you ask? Continuous integration (or CI for short) is an optimized and automated way for your code to become part of your projects. In the case of your commonground component that means that we will automatically validate new code commits or pushes and (if everything checks out) build that code and deploy the containers thereof to docker hub. Making is possible to update al the environments that use those components.
+The proto component ships with a pre-fab continues integration script based on github action (there is also a travis script in here if you want it). What does this mean you ask? Continuous integration (or CI for short) is an optimized and automated way for your code to become part of your projects. In the case of your commonground component that means that we will automatically validate new code commits or pushes and (if everything checks out) build that code and deploy the containers thereof to docker hub. Making is possible to update al the environments that use those components. Whats even better is that we check your code for known security issues, so whenever a dependency or libary has a security issue you will be notified to take action.
 
-Okay, that's nice, but how do we do that? Actually it is very simple. First of all make sure you have a docker account, log into [docker hub](https://hub.docker.com/) and have a look around. We don't need to create anything just yet, but it is nice to get a feeling of the place. As you can see docker hub also uses repositories etc. So that recognizable.
+Okay, that's nice, but how do we do that? Actually it is very simple. You do nothing. The scripts are already enabled by default. Just go to the actions tab of your github repository to see the results whenever you push code.
 
-Next we need to prepare our github repository that holds our code. For the travis script to work as intended we need to create a couple of branches(if we don't have those already) open up your git interface and create a branch called 'development' and a branch called 'staging'. Don't forget to push the branches so that they are present on github (and not just on your local machine).
+There is however a bit of extra here that you can do and that is to insert your docker hub credentials into the repository. You can do that under the settings->secrets tab of yout repoistory by setting a `DOCKERHUB_USERNAME` and `DOCKERHUB_PASSWORD` secret containing (you might have guesed it) your dockerhub username and secret. And all done! Head over back to the code on your computer and make a small change. Then commit push that change into github. Wait for the action to complete and head over to your docker hub repository page. You should find your build containers ready for you.
 
-Oke just one more place to go and that is travis, head over to [https://travis-ci.org](https://travis-ci.org) and login with your github account. If everything is alright you should see your repository there. Activate it by pressing 'activate repository' and then go to 'More options' -> 'Settings' and scroll down to environment variables. Here we can present travis wit the variables that it need to execute our build script. Lets first set the common variables that we need for all our branches: `DOCKER_PASSWORD` your docker password,`DOCKER_REGISTRY` docker.io/[your username] ,`DOCKER_USERNAME` your docker user name. This will be used by travis to push the completed containers into docker hub. Next we need to specify a couple of variables that are branch specific. Or to be more exact, set the same variable `APP_ENV` with different values for different branches. It needs to be 'staging'->stag,'master'->prod,'development'->dev.
+Continues deployment
+-------
+> The following bit of the tutorial requires an additional account
+> - [https://www.digitalocean.com/](https://www.digitalocean.com/) 
 
-And all done! Head over back to the code on your computer and make a small change. Then commit push that change into github. Travis should automatically pick op your change and start a build.
+Actually the repository goes a bit further then just getting your containers ready to deploy, it can acctually deploy them for you! Again all the code is already there. The only thing that you need to do is add a kubeconfig file. You can get a kubeconfig file from a running kubernetes clusters, it provides your repository with both the credentials and endpoints it needs to deploy the application. How you get a Kubeconfig file difers a bit from provider to provider. But you can get more information on that here
 
+- [Digitalocean](https://www.digitalocean.com/docs/kubernetes/how-to/connect-to-cluster/)
+- [Google Cloud](https://cloud.google.com/sdk/gcloud/reference/container/clusters/get-credentials)
+- [Amazone AWS](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html)
 
-### Unit / Behat
-
-TODO
-
-### Postman
-TODO
-
-### Trouble shooting
-Please make sure that your github repository is set to public, and keep in mind that a complex travis build (and certainly one that includes a pushing of containers can take up to 20 minutes). 
+Afther you have abtained a kuneconfig you need to save it to your repository as a secret (NEVER COMMIT A KUBECONFIG FILE), use the secret `KUBECONFIG` to save your cubeconfig file. Now simply commit and push your code to your repository and presto! You have a working common-ground component online.
 
 Documentation and dockblocks
 -------
-TODO
+You want both your redoc documentation and your code to be readable and reausable to other developers. To this effect we use docblok annotation. You can read more about that [here](https://docs.phpdoc.org/references/phpdoc/basic-syntax.html) but the basic is this, we supply each class and propery with a docblock contained within /\* \* / characters. At the very least we want to describe our properties, the expected results and example data (see the example under [audittrail](#audittrail)
 
 Audittrail
 -------
 As you might expect the proto-component ships with a neat function for generating audit trails, that basically exist of three parts. 
 
-First we need to activate logging on the entities that we want logged (for obvious security reasons we don't log entity changes by default) to do that by adding the `@Gedmo\Loggable` annotation to our php class, which should then look something like:
+First we need to activate logging on the entities that we want logged (for obvious security reasons we don't log resource changes by default) to do that by adding the `@Gedmo\Loggable` annotation to our php class, which should then look something like:
 
 ```PHP
 //...
@@ -440,17 +404,3 @@ class ExampleEntity
 ```
 
 And now we have a fully nl api strategy integrated audit trail!
-
-
-Setting up automated deployment (continues delivery)
--------
-TODO
-
-## Commonground specific data types
-TODO
-
-### incompleteDate
-
-
-### underInvestigation
-

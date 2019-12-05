@@ -21,24 +21,38 @@ jobs:
       - uses: actions/checkout@v1
       - name: Pulling old images, if any
         run: docker-compose pull --ignore-pull-failures
+      - name: Setting APP_NAME
+        run: | 
+            export NAME=$(grep APP_NAME= .env | cut -d '=' -f2)
+            echo ::set-env name=APP_NAME::$NAME
+      - name: Print app name
+        run: echo "APP_NAME = $APP_NAME"
       - name: Setting APP_ENV to dev
         run: | 
           echo ::set-env name=APP_ENV::dev
+          echo ::set-env name=APP_BUILD::dev
           echo "set APP_ENV to $APP_ENV"
       - name: Setting APP_ENV to prod
         if: contains( github.ref, 'master' ) || contains( github.base_ref, 'master' )
         run: |
             echo ::set-env name=APP_ENV::prod
             echo "set APP_ENV to $APP_ENV"
+      - name: Set APP_BUILD to APP_VERSION
+        if: contains( github.ref, 'master' )
+        run: |
+          export VERSION=$(grep APP_VERSION= .env | cut -d '=' -f2)
+          echo ::set-env name=APP_BUILD::$VERSION
+          echo "set APP_BUILD to $APP_BUILD"
       - name: Setting APP_ENV to stag
         if: contains( github.ref, 'staging' ) || contains( github.base_ref, 'staging' )
         run: |
             echo ::set-env name=APP_ENV::stag
+            echo ::set-env name=APP_BUILD::stag
             echo "set APP_ENV to $APP_ENV" 
       - name: Print definitive APP_ENV
         run: echo "APP_ENV is now $APP_ENV"
       - name: Build the Docker image
-        run: docker-compose build --pull --build-arg APP_ENV=$APP_ENV
+        run: docker-compose build --pull --build-arg APP_ENV=$APP_ENV --build-arg APP_BUILD=$APP_BUILD
       - name: Run the docker image
         run: docker-compose up -d
       - name: Taking some sleep
@@ -79,13 +93,36 @@ jobs:
       - name: Deploy through helm
         id: helm-install
         if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
-        run: helm upgrade ${{ secrets.APP_NAME }}-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
+        run: helm upgrade $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
       - name: Install through helm
         if: failure()
-        run: helm install --name ${{ secrets.APP_NAME }}-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
+        run: helm install --name $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1 
       - name: Rollout new containers
-        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
+        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true' && success()
         run: |
-            kubectl rollout restart deployment/${{ secrets.APP_NAME }}-php --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
-            kubectl rollout restart deployment/${{ secrets.APP_NAME }}-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
-            kubectl rollout restart deployment/${{ secrets.APP_NAME }}-varnish --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+            kubectl rollout restart deployment/$APP_NAME-php --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+            kubectl rollout restart deployment/$APP_NAME-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+            kubectl rollout restart deployment/$APP_NAME-varnish --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+      - name: Export release code
+        if: (success() || failure())
+        id: releasecode
+        run: |
+            export RELEASE=$APP_BUILD-$(git rev-parse --short $GITHUB_SHA)
+            echo "##[set-output name=releasename]$RELEASE"
+      - name: Print release name
+        if: (success() || failure())
+        run: echo $RELEASENAME
+        env:
+            RELEASENAME: ${{ steps.releasecode.outputs.releasename }}
+      - name: Create Release
+        if: contains( github.ref, 'master' ) && steps.kubeconfig.outputs.success == 'true' && ( success() || failure() )
+        id: create_release
+        uses: actions/create-release@v1
+        continue-on-error: true
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+            tag_name: ${{ steps.releasecode.outputs.releasename }}
+            release_name: ${{ steps.releasecode.outputs.releasename }}
+            draft: false
+            prerelease: false

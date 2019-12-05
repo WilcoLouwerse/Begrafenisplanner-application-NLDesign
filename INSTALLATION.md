@@ -4,6 +4,7 @@ This document dives a little bit deeper into installing your component on a kube
 ## Setting up helm
 
 
+
 ## Setting up tiller
 Create the tiller service account:
 
@@ -18,39 +19,45 @@ $ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --service
 
 Now we can run helm init, which installs Tiller on our cluster, along with some local housekeeping tasks such as downloading the stable repo details:
 ```CLI
-$ helm init --service-account tiller --kubeconfig="api/helm/kubeconfig.yaml"
+$ helm init --service-account tiller --kubeconfig="kubeconfig.yaml"
 ```
 
 To verify that Tiller is running, list the pods in the kube-system namespace:
 ```CLI
-$ kubectl get pods --namespace kube-system --kubeconfig="api/helm/kubeconfig.yaml"
+$ kubectl get pods --namespace kube-system --kubeconfig="kubeconfig.yaml"
 ```
 
 The Tiller pod name begins with the prefix tiller-deploy-.
 
 Now that we've installed both Helm components, we're ready to use helm to install our first application.
 
+
+## Setting up ingress
+We need at least one nginx controller per kubernetes kluster, doh optionally we could set on up on a per namebase basis
+
+helm install stable/nginx-ingress --name loadbalancer --kubeconfig="kubeconfig.yaml"
+
 ## Setting up Kubernetes Dashboard
 After we installed helm and tiller we can easily use both to install kubernetes dashboard
 ```CLI
-$ helm install stable/kubernetes-dashboard --name dashboard --kubeconfig="api/helm/kubeconfig.yaml" --namespace="kube-system"
+$ helm install stable/kubernetes-dashboard --name dashboard --kubeconfig="kubeconfig.yaml" --namespace="kube-system"
 ```
 
 But before we can login to tiller we need a token, we can get one of those trough the secrets. Get yourself a secret list by running the following command
 ```CLI
-$ kubectl -n kube-system get secret  --kubeconfig="api/helm/kubeconfig.yaml"
+$ kubectl -n kube-system get secret  --kubeconfig="kubeconfig.yaml"
 ```
 
 Because we just bound tiller to our admin account and use tiller (trough helm) to manage our code deployment it makes sense to use the tiller token, lets look at the tiller secret (it should look something like "tiller-token-XXXXX" and ask for the corresponding token. 
 
 ```CLI
-$ kubectl -n kube-system describe secrets tiller-token-xxxxx  --kubeconfig="api/helm/kubeconfig.yaml"
+$ kubectl -n kube-system describe secrets tiller-token-xxxxx  --kubeconfig="kubeconfig.yaml"
 ```
 
 This should return the token, copy it to somewhere save (just the token not the other returned information) and start up a dashboard connection
 
 ```CLI
-$kubectl proxy --kubeconfig="api/helm/kubeconfig.yaml"
+$kubectl proxy --kubeconfig="kubeconfig.yaml"
 ```
 
 This should proxy our dashboard to helm making it available trough our favorite browser and a simple link
