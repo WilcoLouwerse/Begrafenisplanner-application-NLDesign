@@ -524,7 +524,7 @@ components:
   schemas:
     ExampleEntity-read:
       type: object
-      description: 'This is an example entity'
+      description: 'This is an example entity.'
       properties:
         id:
           readOnly: true
@@ -535,11 +535,14 @@ components:
         description:
           description: 'The description of this example property'
           type: string
+        camelCase:
+          description: 'Proof that we camel case our api'
+          type: string
       required:
         - name
     ExampleEntity-write:
       type: object
-      description: 'This is an example entity'
+      description: 'This is an example entity.'
       required:
         - name
       properties:
@@ -549,13 +552,61 @@ components:
         description:
           description: 'The description of this example property'
           type: string
+        camelCase:
+          description: 'Proof that we camel case our api'
+          type: string
+definitions:
+  ExampleEntity-read:
+    properties:
+      id:
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      name:
+        example: 'My Group'
+        maxLength: 255
+      description:
+        example: 'Is the best group ever'
+        maxLength: 2555
+      camelCase:
+        example: 'Best api ever'
+        maxLength: 255
+    required:
+      - name
+  ExampleEntity-write:
+    properties:
+      name:
+        example: 'My Group'
+        maxLength: 255
+      description:
+        example: 'Is the best group ever'
+        maxLength: 2555
+      camelCase:
+        example: 'Best api ever'
+        maxLength: 255
+    required:
+      - name
 tags:
   -
     name: ExampleEntity
     description: |
-      This is an example entity
+      This is an example entity.
       
       With an adtional description, all in all its pritty nice [url](www.google.nl)
+securityDefinitions:
+  JWT-Oauth:
+    type: oauth2
+    authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
+    flow: implicit
+    scopes:
+      read: 'read right to the ExampleEntity resource'
+      write: 'write right to the ExampleEntity resource'
+  JWT-Token:
+    type: apiKey
+    in: header
+    name: Authorization
+    scopes:
+      read: 'read right to the ExampleEntity resource'
+      write: 'write right to the ExampleEntity resource'
 host: irc.zaakonline.nl
 servers:
   -

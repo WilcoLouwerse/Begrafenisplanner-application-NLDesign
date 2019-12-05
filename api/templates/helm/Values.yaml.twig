@@ -16,7 +16,7 @@ settings:
   debug: {{ app_debug }}
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.nl$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
+  trustedHosts: '{{ trusted_hosts }}'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
