@@ -83,8 +83,19 @@ Best practice is to fetch the Conduction Common Ground component into a local up
 
 __Please make sure the you have committed al your changes to your current codebase and pushed a backup copy to your Git repo before continuing__
 
+
 ```CLI
 git remote add upstream https://github.com/ConductionNL/Proto-component-commonground.git
+```
+
+If you are running the proto application use the following line instead
+
+```CLI
+git remote add upstream https://github.com/ConductionNL/proto-application-commonground.git
+```
+And then we need to fetch this new code
+
+```CLI
 git fetch upstream
 git branch upstream upstream/master
 ```
