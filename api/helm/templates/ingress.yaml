@@ -24,12 +24,44 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-    - #host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
+#    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
+#      http:
+#        paths:
+#          - backend:
+#              serviceName: {{ include "name" . }}
+#              servicePort: 80
+    {{- if .Values.settings.env == 'prod' -}}
+      -   host: {{ .Values.settings.name }}.{{ .Values.settings.domain }}
+          http:
+              paths:
+                      - backend:
+                          serviceName: {{ include "name" . }}
+                          servicePort: 80  
+      -   host: {{ .Values.settings.name }}.huwelijksplanner.online
+          http:
+              paths:
+                      - backend:
+                          serviceName: {{ include "name" . }}
+                          servicePort: 80
+      -   host: {{ .Values.settings.name }}.trouwplanner.online
+          http:
+              paths:
+                      - backend:
+                          serviceName: {{ include "name" . }}
+                          servicePort: 80
+      -   host: {{ .Values.settings.name }}.common-ground.nl
+          http:
+              paths:
+                      - backend:
+                          serviceName: {{ include "name" . }}
+                          servicePort: 80
+      -   host: {{ .Values.settings.name }}.larping.eu
+          http:
+              paths:
+                      - backend:
+                          serviceName: {{ include "name" . }}
+                          servicePort: 80            
+    {{- else -}}      
     - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
       http:
         paths:
@@ -60,3 +92,4 @@ spec:
           - backend:
               serviceName: {{ include "name" . }}
               servicePort: 80
+     {{- end }}
