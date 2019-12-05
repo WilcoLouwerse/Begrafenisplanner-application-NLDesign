@@ -14,6 +14,7 @@ twig:
         app_version: '%env(APP_VERSION)%'
         app_env: '%env(APP_ENV)%'
         app_debug: '%env(APP_DEBUG)%'
+        app_domain: '%env(APP_DOMAIN)%'
         app_demo: '%env(APP_DEMO)%'
         app_repro: '%env(APP_REPRO)%'
         app_description: '%env(APP_DESCRIPTION)%'
@@ -21,7 +22,10 @@ twig:
         app_auth: '%env(AUTH_ENABLED)%'        
         app_audittrail: '%env(AUDITTRAIL_ENABLED)%'        
         app_notification: '%env(NOTIFICATION_ENABLED)%'
-        app_health: '%env(HEALTH_ENABLED)%'
+        app_health: '%env(HEALTH_ENABLED)%'        
+        
+        trusted_hosts: '%env(TRUSTED_HOSTS)%'
+        trusted_proxies: '%env(TRUSTED_PROXIES)%'
         
         nlx_outway: '%env(NLX_OUTWAY)%'
         nlx_inway: '%env(NLX_INWAY)%'
