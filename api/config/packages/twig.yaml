@@ -22,7 +22,10 @@ twig:
         app_auth: '%env(AUTH_ENABLED)%'        
         app_audittrail: '%env(AUDITTRAIL_ENABLED)%'        
         app_notification: '%env(NOTIFICATION_ENABLED)%'
-        app_health: '%env(HEALTH_ENABLED)%'
+        app_health: '%env(HEALTH_ENABLED)%'        
+        
+        trusted_hosts: '%env(TRUSTED_HOSTS)%'
+        trusted_proxies: '%env(TRUSTED_PROXIES)%'
         
         nlx_outway: '%env(NLX_OUTWAY)%'
         nlx_inway: '%env(NLX_INWAY)%'

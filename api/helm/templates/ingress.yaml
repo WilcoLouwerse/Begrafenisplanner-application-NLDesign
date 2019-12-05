@@ -24,10 +24,39 @@ spec:
   {{- end }}
 {{- end }}
   rules:
+    - #host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
     - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
       http:
         paths:
-          - path: /*
-            backend:
-              serviceName: {{ include "name" . }}-nginx
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.huwelijksplanner.online
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.trouwplanner.online
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.common-ground.nl
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.larping.eu
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
               servicePort: 80
