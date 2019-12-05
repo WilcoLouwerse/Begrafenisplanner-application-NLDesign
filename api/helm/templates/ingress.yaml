@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ include "name" . }}-{{ .Values.settings.env }}-ingress
   labels:
     app.kubernetes.io/name: {{ include "name" . }}-ingress
     app.kubernetes.io/part-of: {{ include "name" . }}
@@ -24,12 +24,39 @@ spec:
   {{- end }}
 {{- end }}
   rules:
-  {{- range .Values.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - #host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
       http:
         paths:
-          - path: /*
-            backend:
-              serviceName: {{ .serviceName }}
-              servicePort: {{ .servicePort | default 80 }}
-  {{- end }}
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.huwelijksplanner.online
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.trouwplanner.online
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.common-ground.nl
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.larping.eu
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
