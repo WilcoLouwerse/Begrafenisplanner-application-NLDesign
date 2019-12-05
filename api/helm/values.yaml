@@ -9,16 +9,9 @@ settings:
   title: Proto Component
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
-  repro: https://github.com/ConductionNL/Proto-component-commonground'
-  demo: pc.zaakonline.nl
+  repro: 'https://github.com/ConductionNL/Proto-component-commonground'
   domain: conduction.nl
-  domains: 
-    - conduction.nl
-    - larping.eu
-    - zaakonline.nl
-    - huwelijksplanner.online
-    - trouwplanner.online
-    - common-ground.dev
+  demo: pc.zaakonline.nl
   env: dev
   debug: 1
   replicaCount: 1
@@ -30,17 +23,17 @@ settings:
     - 10.0.0.0/8
     - 172.16.0.0/12
     - 192.168.0.0/16
-  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer  
+  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   loadbalancerEnabled: false
   # If you want to enable NLX you are requered to add the appropreate certificates to you nlx-settings folder (located in the /api folder)
   nlxInwayEnabled: false
-  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer  
+  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   notificationEnabled: false
   audittrailEnabled: false
   authorisationEnabled: false
   healthEnabled: false
   archiveEnabled: false
-  
+
 
 php:
   repository: docker.io/conduction/protocomponent-php
@@ -102,6 +95,13 @@ ingress:
     # - hosts:
       # - example.com
       # - mercure.example.com
+  hosts:
+    api:
+      host: example.com
+      serviceName: varnish
+    mercure:
+      host: mercure.example.com
+      serviceName: mercure
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
