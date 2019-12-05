@@ -30,7 +30,7 @@ spec:
 #          - backend:
 #              serviceName: {{ include "name" . }}
 #              servicePort: 80
-    {{- if .Values.settings.env == 'prod' -}}
+    {{- if eq .Values.settings.env "prod" }}
       -   host: {{ .Values.settings.name }}.{{ .Values.settings.domain }}
           http:
               paths:
@@ -60,8 +60,14 @@ spec:
               paths:
                       - backend:
                           serviceName: {{ include "name" . }}
-                          servicePort: 80            
-    {{- else -}}      
+                          servicePort: 80
+      -   host: {{ .Values.settings.name }}.zaakonline.eu
+          http:
+              paths:
+                      - backend:
+                          serviceName: {{ include "name" . }}
+                          servicePort: 80                   
+    {{- else }}      
     - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
       http:
         paths:
@@ -87,6 +93,12 @@ spec:
               serviceName: {{ include "name" . }}
               servicePort: 80
     - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.larping.eu
+      http:
+        paths:
+          - backend:
+              serviceName: {{ include "name" . }}
+              servicePort: 80
+    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.zaakonline.nl
       http:
         paths:
           - backend:
