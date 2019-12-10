@@ -1,6 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  annotations:
+    # add an annotation indicating the issuer to use.
+    cert-manager.io/acme-challenge-type: http01
+    cert-manager.io/cluster-issuer: {{ include "name" . }}-{{ .Values.settings.env }}-letsencrypt
   name: {{ include "name" . }}-{{ .Values.settings.env }}-ingress
   labels:
     app.kubernetes.io/name: {{ include "name" . }}-ingress
@@ -13,14 +17,10 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  tls:
+  tls: 
   - hosts:
-    {{- if eq .Values.settings.env "prod" }}
     - {{ .Values.settings.domain }}
-    {{- else }}      
-    - {{ .Values.settings.env }}.{{ .Values.settings.domain }}     
-    {{- end }}    
-    secretName: {{ include "name" . }}-certs
+    secretName: {{ include "name" . }}-tls-cert
   rules:
 #    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
 #      http:
@@ -32,134 +32,74 @@ spec:
       -   host: {{ .Values.settings.name }}.{{ .Values.settings.domain }}
           http:
               paths:
-                      - path: /.well-known/*
-                        backend:
-                          serviceName: {{ include "name" . }}-letsencrypt
-                          servicePort: 80
-                      - path: /*
-                        backend:
+                      - backend:
                           serviceName: {{ include "name" . }}
                           servicePort: 80  
       -   host: {{ .Values.settings.name }}.huwelijksplanner.online
           http:
               paths:
-                      - path: /.well-known/*
-                        backend:
-                          serviceName: {{ include "name" . }}-letsencrypt
-                          servicePort: 80
-                      - path: /*
-                        backend:
+                      - backend:
                           serviceName: {{ include "name" . }}
                           servicePort: 80
       -   host: {{ .Values.settings.name }}.trouwplanner.online
           http:
               paths:
-                      - path: /.well-known/*
-                        backend:
-                          serviceName: {{ include "name" . }}-letsencrypt
-                          servicePort: 80
-                      - path: /*
-                        backend:
+                      - backend:
                           serviceName: {{ include "name" . }}
                           servicePort: 80
       -   host: {{ .Values.settings.name }}.common-ground.nl
           http:
               paths:
-                      - path: /.well-known/*
-                        backend:
-                          serviceName: {{ include "name" . }}-letsencrypt
-                          servicePort: 80
-                      - path: /*
-                        backend:
+                      - backend:
                           serviceName: {{ include "name" . }}
                           servicePort: 80
       -   host: {{ .Values.settings.name }}.larping.eu
           http:
               paths:
-                      - path: /.well-known/*
-                        backend:
-                          serviceName: {{ include "name" . }}-letsencrypt
-                          servicePort: 80
-                      - path: /*
-                        backend:
+                      - backend:
                           serviceName: {{ include "name" . }}
                           servicePort: 80
       -   host: {{ .Values.settings.name }}.zaakonline.eu
           http:
               paths:
-                      - path: /.well-known/*
-                        backend:
-                          serviceName: {{ include "name" . }}-letsencrypt
-                          servicePort: 80
-                      - path: /*
-                        backend:
+                      - backend:
                           serviceName: {{ include "name" . }}
                           servicePort: 80                   
     {{- else }}      
     - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
       http:
         paths:
-          - path: /.well-known/*
-            backend:
-              serviceName: {{ include "name" . }}-letsencrypt
-              servicePort: 80
-          - path: /*
-            backend:
+          - backend:
               serviceName: {{ include "name" . }}
               servicePort: 80
     - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.huwelijksplanner.online
       http:
         paths:
-          - path: /.well-known/*
-            backend:
-              serviceName: {{ include "name" . }}-letsencrypt
-              servicePort: 80
-          - path: /*
-            backend:
+          - backend:
               serviceName: {{ include "name" . }}
               servicePort: 80
     - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.trouwplanner.online
       http:
         paths:
-          - path: /.well-known/*
-            backend:
-              serviceName: {{ include "name" . }}-letsencrypt
-              servicePort: 80
-          - path: /*
-            backend:
+          - backend:
               serviceName: {{ include "name" . }}
               servicePort: 80
     - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.common-ground.nl
       http:
         paths:
-          - path: /.well-known/*
-            backend:
-              serviceName: {{ include "name" . }}-letsencrypt
-              servicePort: 80
-          - path: /*
-            backend:
+          - backend:
               serviceName: {{ include "name" . }}
               servicePort: 80
     - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.larping.eu
       http:
         paths:
-          - path: /.well-known/*
-            backend:
-              serviceName: {{ include "name" . }}-letsencrypt
-              servicePort: 80
-          - path: /*
-            backend:
+          - backend:
               serviceName: {{ include "name" . }}
               servicePort: 80
     - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.zaakonline.nl
       http:
         paths:
-          - path: /.well-known/*
-            backend:
-              serviceName: {{ include "name" . }}-letsencrypt
-              servicePort: 80
-          - path: /*
-            backend:
+          - backend:
               serviceName: {{ include "name" . }}
               servicePort: 80
      {{- end }}

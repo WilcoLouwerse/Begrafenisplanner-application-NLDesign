@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: {{ include "name" . }}-{{ .Values.settings.env }}-letsencrypt
+spec:
+  acme:
+    email: {{ .Values.settings.email }}
+    http01: {}
+    privateKeySecretRef:
+      name: letsencrypt-private-key
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - selector: {}
+      http01:
+        ingress:
+          class: nginx
