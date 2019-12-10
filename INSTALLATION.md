@@ -35,10 +35,19 @@ Now that we've installed both Helm components, we're ready to use helm to instal
 ## Setting up ingress
 We need at least one nginx controller per kubernetes kluster, doh optionally we could set on up on a per namebase basis
 
-helm install stable/nginx-ingress --name loadbalancer --kubeconfig="kubeconfig.yaml"
+```CLI
+$ helm install stable/nginx-ingress --name loadbalancer --kubeconfig="kubeconfig.yaml"
+```
+
+We can check that out with 
+
+```CLI
+$ kubectl describe ingress pc-dev-ingress -n=kube-system --kubeconfig="kubeconfig.yaml"
+```
 
 ## Setting up Kubernetes Dashboard
 After we installed helm and tiller we can easily use both to install kubernetes dashboard
+
 ```CLI
 $ helm install stable/kubernetes-dashboard --name dashboard --kubeconfig="kubeconfig.yaml" --namespace="kube-system"
 ```
@@ -57,12 +66,35 @@ $ kubectl -n kube-system describe secrets tiller-token-xxxxx  --kubeconfig="kube
 This should return the token, copy it to somewhere save (just the token not the other returned information) and start up a dashboard connection
 
 ```CLI
-$kubectl proxy --kubeconfig="kubeconfig.yaml"
+$ kubectl proxy --kubeconfig="kubeconfig.yaml"
 ```
 
 This should proxy our dashboard to helm making it available trough our favorite browser and a simple link
 ```CLI
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:dashboard-kubernetes-dashboard:https/proxy/#!/login
+```
+
+
+## Cert Manager
+https://cert-manager.io/docs/installation/kubernetes/
+ 
+```CLI
+$ kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.12/deploy/manifests/00-crds.yaml --kubeconfig="kubeconfig.yaml"
+$ kubectl create namespace cert-manager --kubeconfig="kubeconfig.yaml"
+```
+ 
+ The we need tp deploy the cert manager to our cluster
+ 
+```CLI
+$ helm repo add jetstack https://charts.jetstack.io
+$ helm install --name cert-manager --namespace cert-manager --version v0.12.0 \ jetstack/cert-manager --kubeconfig="kubeconfig.yaml"
+```
+
+lets check if everything is working
+
+```CLI
+$ kubectl get pods --namespace cert-manager --kubeconfig="kubeconfig.yaml"
+$ kubectl describe certificate -n dev --kubeconfig="kubeconfig.yaml"
 ```
 
 ## Deploying trough helm

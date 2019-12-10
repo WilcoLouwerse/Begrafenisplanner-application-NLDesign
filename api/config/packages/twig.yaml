@@ -8,6 +8,13 @@ twig:
         
         container_registry_base: '%env(CONTAINER_REGISTRY_BASE)%'   
         container_project_name: '%env(CONTAINER_PROJECT_NAME)%'
+
+        organization_name: '%env(ORGANIZATION_NAME)%'
+        organization_email: '%env(ORGANIZATION_EMAIL_ADDRESS)%'
+        organization_country: '%env(ORGANIZATION_COUNTRY_NAME)%'
+        organization_state: '%env(ORGANIZATION_STATE)%'
+        organization_locality: '%env(ORGANIZATION_LOCALITY)%'
+        organization_unit: '%env(ORGANIZATION_UNIT_NAME)%'
         
         app_name: '%env(APP_NAME)%'
         app_title: '%env(APP_TITLE)%'
