@@ -13,16 +13,14 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-{{- if .Values.ingress.tls }}
   tls:
-  {{- range .Values.ingress.tls }}
-    - hosts:
-      {{- range .hosts }}
-        - {{ .host | quote }}
-      {{- end }}
-      secretName: {{ .secretName }}
-  {{- end }}
-{{- end }}
+  - hosts:
+    {{- if eq .Values.settings.env "prod" }}
+    - {{ .Values.settings.domain }}
+    {{- else }}      
+    - {{ .Values.settings.env }}.{{ .Values.settings.domain }}     
+    {{- end }}    
+    secretName: {{ include "name" . }}-certs
   rules:
 #    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
 #      http:
@@ -34,14 +32,20 @@ spec:
     - host: {{ .Values.settings.domain }}
       http:
         paths:
-          - backend:
+          - path: /.well-known/*
+            backend:
+              serviceName: {{ include "name" . }}-letsencrypt
+              servicePort: 80
+          - path: /*
+            backend:
               serviceName: {{ include "name" . }}
               servicePort: 80
     {{- else }}      
     - host: {{ .Values.settings.env }}.{{ .Values.settings.domain }}
       http:
         paths:
-          - backend:
+          - path: /*
+            backend:
               serviceName: {{ include "name" . }}
               servicePort: 80
      {{- end }}
