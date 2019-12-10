@@ -35,10 +35,19 @@ Now that we've installed both Helm components, we're ready to use helm to instal
 ## Setting up ingress
 We need at least one nginx controller per kubernetes kluster, doh optionally we could set on up on a per namebase basis
 
-helm install stable/nginx-ingress --name loadbalancer --kubeconfig="kubeconfig.yaml"
+```CLI
+$ helm install stable/nginx-ingress --name loadbalancer --kubeconfig="kubeconfig.yaml"
+```
+
+We can check that out with 
+
+```CLI
+$ kubectl describe ingress pc-dev-ingress -n=kube-system --kubeconfig="kubeconfig.yaml"
+```
 
 ## Setting up Kubernetes Dashboard
 After we installed helm and tiller we can easily use both to install kubernetes dashboard
+
 ```CLI
 $ helm install stable/kubernetes-dashboard --name dashboard --kubeconfig="kubeconfig.yaml" --namespace="kube-system"
 ```
@@ -57,12 +66,35 @@ $ kubectl -n kube-system describe secrets tiller-token-xxxxx  --kubeconfig="kube
 This should return the token, copy it to somewhere save (just the token not the other returned information) and start up a dashboard connection
 
 ```CLI
-$kubectl proxy --kubeconfig="kubeconfig.yaml"
+$ kubectl proxy --kubeconfig="kubeconfig.yaml"
 ```
 
 This should proxy our dashboard to helm making it available trough our favorite browser and a simple link
 ```CLI
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:dashboard-kubernetes-dashboard:https/proxy/#!/login
+```
+
+
+## Cert Manager
+https://cert-manager.io/docs/installation/kubernetes/
+ 
+```CLI
+$ kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.12/deploy/manifests/00-crds.yaml --kubeconfig="kubeconfig.yaml"
+$ kubectl create namespace cert-manager --kubeconfig="kubeconfig.yaml"
+```
+ 
+ The we need tp deploy the cert manager to our cluster
+ 
+```CLI
+$ helm repo add jetstack https://charts.jetstack.io
+$ helm install --name cert-manager --namespace cert-manager --version v0.12.0 \ jetstack/cert-manager --kubeconfig="kubeconfig.yaml"
+```
+
+lets check if everything is working
+
+```CLI
+$ kubectl get pods --namespace cert-manager --kubeconfig="kubeconfig.yaml"
+$ kubectl describe certificate -n dev --kubeconfig="kubeconfig.yaml"
 ```
 
 ## Deploying trough helm
@@ -72,23 +104,23 @@ $ helm dependency update ./api/helm
 ```
 If you want to create a new instance
 ```CLI
-$ helm install --name pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
-$ helm install --name pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
-$ helm install --name pc-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
+$ helm install --name pa-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
+$ helm install --name pa-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
+$ helm install --name pa-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
 ```
 
 Or update if you want to update an existing one
 ```CLI
-$ helm upgrade pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
-$ helm upgrade pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
-$ helm upgrade pc-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
+$ helm upgrade pa-dev ./api/helm  --kubeconfig="api/helm/kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
+$ helm upgrade pa-stag ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
+$ helm upgrade pa-prod ./api/helm --kubeconfig="api/helm/kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
 ```
 
 Or del if you want to delete an existing  one
 ```CLI
-$ helm del pc-dev  --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=dev" 
-$ helm del pc-stag --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=stag" 
-$ helm del pp-prod --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=prod" 
+$ helm del pa-dev  --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=dev" 
+$ helm del pa-stag --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=stag" 
+$ helm del pa-prod --purge --kubeconfig="api/helm/kubeconfig.yaml --namespace=prod" 
 ```
 
 Note that you can replace common ground with the namespace that you want to use (normally the name of your component).
