@@ -13,7 +13,7 @@ settings:
   domain: {{ app_domain }}  
   domains:
 {% for domain in app_domains %}
-    - {{ domain }}
+    - domain: {{ domain }}
 {% endfor %}
   organisationName: {{ organization_name }}
   email: {{ organization_email }}
