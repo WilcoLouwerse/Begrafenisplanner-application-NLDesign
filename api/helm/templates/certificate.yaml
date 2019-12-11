@@ -1,16 +1,11 @@
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
-  name: {{ include "name" . }}-acme-cert
+  name: {{ include "name" . }}-{{ .Values.settings.env }}-cert
 spec:
-  secretName: {{ include "name" . }}-tls-cert
+  secretName: {{ include "name" . }}-{{ .Values.settings.env }}-cert
   duration: 24h
   renewBefore: 12h
-  {{- if eq .Values.settings.env "prod" }}
-  commonName: {{ .Values.settings.name }}.{{ .Values.settings.domain }}    
-  {{- else }}      
-  commonName: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}    
-  {{- end }}
   dnsNames:
   {{- if eq .Values.settings.env "prod" }}
   - {{ .Values.settings.name }}.{{ .Values.settings.domain }}    
