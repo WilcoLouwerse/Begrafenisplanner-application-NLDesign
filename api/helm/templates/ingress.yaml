@@ -21,8 +21,10 @@ spec:
   - hosts:
     #  {{- range .Values.settings.domains }}
     #    - {{ .domain | quote }}
-    #  {{- end }}
-    - {{ .Values.settings.domain }}
+    #  {{- end }}  
+    {{- with .Values.settings.domains }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
     secretName: {{ include "name" . }}-{{ .Values.settings.env }}-cert
   rules:
 #    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
