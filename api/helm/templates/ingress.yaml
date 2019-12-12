@@ -18,13 +18,11 @@ metadata:
   {{- end }}
 spec:
   tls: 
-  - hosts:
-    #  {{- range .Values.settings.domains }}
-    #    - {{ .domain | quote }}
-    #  {{- end }}  
-    {{- with .Values.settings.domains }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
+  - hosts: 
+    #{{- with .Values.settings.domains }}
+    {{- toYaml .Values.settings.domains | nindent 4 }}
+    #{{- end }}  
+    #- {{ .domain | quote }}
     secretName: {{ include "name" . }}-{{ .Values.settings.env }}-cert
   rules:
 #    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
