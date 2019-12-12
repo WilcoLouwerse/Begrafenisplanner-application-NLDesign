@@ -104,6 +104,9 @@ RUN set -eux; \
 	chmod +x bin/console; sync
 VOLUME /srv/api/var
 
+# Now that we have our own composer lets update
+RUN composer update --no-interaction
+
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
