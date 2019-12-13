@@ -29,6 +29,7 @@ RUN set -eux; \
 		$PHPIZE_DEPS \
 		icu-dev \
 		libzip-dev \
+		libpng-dev \
 		postgresql-dev \
 		zlib-dev \
 	; \
@@ -40,6 +41,7 @@ RUN set -eux; \
 		zip \
 		mysqli \ 
 		pdo_mysql \
+		pcntl \ 
 		gd \
 	; \
 	pecl install \
