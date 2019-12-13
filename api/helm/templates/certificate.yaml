@@ -7,13 +7,13 @@ spec:
   duration: 24h
   renewBefore: 12h
   dnsNames:
-  {{- range .Values.settings.domains }}
+{{- range  .Values.settings.domains  }}
   {{- if eq $.Values.settings.env "prod" }}
-  - {{ $.Values.settings.name }}.{{ . }}    
+    - {{ $.Values.settings.name }}.{{ . }}
   {{- else }}      
   - {{ $.Values.settings.name }}.{{ $.Values.settings.env }}.{{ . }}    
   {{- end }}
-  {{- end }}
+{{- end }}
   issuerRef:
     name: {{ include "name" . }}-{{ .Values.settings.env }}-letsencrypt
     kind: ClusterIssuer

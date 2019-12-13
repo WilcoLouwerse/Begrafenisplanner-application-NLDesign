@@ -25,7 +25,7 @@ data:
   app-health: {{ .Values.settings.healthEnabled | quote }}
   app-archive: {{ .Values.settings.archiveEnabled | quote }}
   
-  organization-name: {{ .Values.settings.organisationMame | quote }}
+  organization-name: {{ .Values.settings.organisationName | quote }}
   organization-email: {{ .Values.settings.email | quote }}
   organization-country: {{ .Values.settings.country | quote }}
   organization-state: {{ .Values.settings.state | quote }}

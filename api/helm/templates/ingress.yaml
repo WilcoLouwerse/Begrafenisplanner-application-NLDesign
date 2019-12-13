@@ -12,97 +12,28 @@ metadata:
     helm.sh/chart: {{ include "chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-  {{- with .Values.ingress.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
 spec:
   tls: 
   - hosts: 
-    #{{- with .Values.settings.domains }}
-    {{- toYaml .Values.settings.domains | nindent 4 }}
-    #{{- end }}  
-    #- {{ .domain | quote }}
+  {{- range  .Values.settings.domains  }}
+    - {{ . }}
+  {{- end }}
     secretName: {{ include "name" . }}-{{ .Values.settings.env }}-cert
   rules:
-#    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
-#      http:
-#        paths:
-#          - backend:
-#              serviceName: {{ include "name" . }}
-#              servicePort: 80
-    {{- if eq .Values.settings.env "prod" }}
-      -   host: {{ .Values.settings.name }}.{{ .Values.settings.domain }}
+  {{- range  .Values.settings.domains  }}
+    {{- if eq $.Values.settings.env "prod" }}
+      -   host: {{ $.Values.settings.name }}.{{ . }}
           http:
               paths:
                       - backend:
-                          serviceName: {{ include "name" . }}
-                          servicePort: 80  
-      -   host: {{ .Values.settings.name }}.huwelijksplanner.online
-          http:
-              paths:
-                      - backend:
-                          serviceName: {{ include "name" . }}
-                          servicePort: 80
-      -   host: {{ .Values.settings.name }}.trouwplanner.online
-          http:
-              paths:
-                      - backend:
-                          serviceName: {{ include "name" . }}
-                          servicePort: 80
-      -   host: {{ .Values.settings.name }}.common-ground.nl
-          http:
-              paths:
-                      - backend:
-                          serviceName: {{ include "name" . }}
-                          servicePort: 80
-      -   host: {{ .Values.settings.name }}.larping.eu
-          http:
-              paths:
-                      - backend:
-                          serviceName: {{ include "name" . }}
-                          servicePort: 80
-      -   host: {{ .Values.settings.name }}.zaakonline.eu
-          http:
-              paths:
-                      - backend:
-                          serviceName: {{ include "name" . }}
-                          servicePort: 80                   
+                          serviceName: {{ $.Values.settings.name }}
+                          servicePort: 80            
     {{- else }}      
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
+    - host: {{ $.Values.settings.name }}.{{ $.Values.settings.env }}.{{ . }}
       http:
         paths:
           - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.huwelijksplanner.online
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.trouwplanner.online
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.common-ground.nl
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.larping.eu
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.zaakonline.nl
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
+              serviceName: {{ $.Values.settings.name }}
               servicePort: 80
      {{- end }}
+  {{- end }}
