@@ -18,6 +18,7 @@ spec:
   {{- range  .Values.settings.domains  }}
     - {{ . }}
   {{- end }}
+#    - {{ .Values.settings.domain }}
     secretName: {{ include "name" . }}-{{ .Values.settings.env }}-cert
   rules:
   {{- range  .Values.settings.domains  }}
