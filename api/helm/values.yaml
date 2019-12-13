@@ -12,12 +12,12 @@ settings:
   repro: 'https://github.com/ConductionNL/Proto-component-commonground'
   domain: conduction.nl  
   domains:
-    - domain: conduction.nl
-    - domain: zaakonline.nl
-    - domain: larping.eu
-    - domain: common-ground.dev
-    - domain: trouwplanner.online
-    - domain: huwelijksplanner.online
+    - conduction.nl
+    - zaakonline.nl
+    - larping.eu
+    - common-ground.dev
+    - trouwplanner.online
+    - huwelijksplanner.online
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
