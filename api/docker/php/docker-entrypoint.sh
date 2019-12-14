@@ -31,9 +31,10 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		#fi
 	#fi
 	
-	if [ "$APP_ENV" != 'prod' ]; then
+	#wierd bug fix...
+	#if [ "$APP_ENV" != 'prod' ]; then
 		composer install --prefer-dist --no-progress --no-suggest --no-interaction
-	fi
+	#fi
 	
 	# Lets setup an nlx certificate if needed
 	#if [ "$APP_ENV" != 'prod' ]; then
