@@ -4,8 +4,8 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: pc
-  name: pc
+  projectName: bc
+  name: bc
   title: Proto Component
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
