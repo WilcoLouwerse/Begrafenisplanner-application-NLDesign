@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.php.replicaCount }}
+  replicas: 3
   template:
     metadata:
       labels:
@@ -77,11 +77,42 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-demo
-            - name: APP_REPRO
+            - name: APP_DOMAIN
               valueFrom:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
-                  key: app-repro
+                  key: app-domain
+            # organization
+            - name: ORGANIZATION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: organization-name
+            - name: ORGANIZATION_EMAIL_ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: organization-email
+            - name: ORGANIZATION_COUNTRY_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: organization-country
+            - name: ORGANIZATION_STATE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: organization-state
+            - name: ORGANIZATION_LOCALITY
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: organization-locality
+            - name: ORGANIZATION_UNIT_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: organization-unit
             # config
             - name: AUTH_ENABLED
               valueFrom:

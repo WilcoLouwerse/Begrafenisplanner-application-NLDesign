@@ -113,7 +113,10 @@ final class SwaggerDecorator implements NormalizerInterface
 
                     //$additionalEntityDocs = $this->getAdditionalEntityDocs($entity);
                     $entityDocs = $this->getAdditionalEntityDocs($entity);
-                    $additionalDocs = array_merge($additionalDocs, $entityDocs['properties']);
+                    // Only run if we have aditional docs
+                    if(array_key_exists('properties',$entityDocs)){
+                    	$additionalDocs = array_merge($additionalDocs, $entityDocs['properties']);
+                    }
 
                     // Security
                     $docs['securityDefinitions']['JWT-Oauth']['scopes'] = array_merge($docs['securityDefinitions']['JWT-Oauth']['scopes'], $entityDocs['security']);

@@ -9,30 +9,41 @@ settings:
   title: {{ app_title }}
   version: {{ app_version }}
   description: '{{ app_description }}'
-  repro: {{ app_repro }}'
+  repro: '{{ app_repro }}'
+  domain: {{ app_domain }}  
+  domains:
+{% for domain in app_domains %}
+    - {{ domain }}
+{% endfor %}
+  organisationName: {{ organization_name }}
+  email: {{ organization_email }}
+  country: {{ organization_country }}
+  state: {{ organization_state }}
+  locality: {{ organization_locality }}
+  unit: {{ organization_unit }}  
   demo: {{ app_demo }}
   env: {{ app_env }}
   debug: {{ app_debug }}
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^(.+\.)?common-ground\.dev$|^(.+\.)?zaakonline\.nl$|^(.+\.)?conduction\.nl$|^example\.com$|^(.+\.)?178.128.142.152$|178.128.142.152|localhost'
+  trustedHosts: '{{ trusted_hosts }}'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
     - 10.0.0.0/8
     - 172.16.0.0/12
     - 192.168.0.0/16
-  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer  
+  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   loadbalancerEnabled: false
   # If you want to enable NLX you are requered to add the appropreate certificates to you nlx-settings folder (located in the /api folder)
   nlxInwayEnabled: {{ nlx_inway }}
-  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer  
+  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   notificationEnabled: false
   audittrailEnabled: false
   authorisationEnabled: false
   healthEnabled: false
   archiveEnabled: false
-  
+
 
 php:
   repository: docker.io/conduction/protocomponent-php

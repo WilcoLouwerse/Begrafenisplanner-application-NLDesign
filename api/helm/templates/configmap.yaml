@@ -16,6 +16,7 @@ data:
   app-version: {{ .Values.settings.version | quote }}
   app-repro: {{ .Values.settings.repro | quote }}
   app-demo: {{ .Values.settings.demo | quote }}
+  app-domain: {{ .Values.settings.domain | quote }}
   app-description: {{ .Values.settings.description | quote }}
   
   app-auth: {{ .Values.settings.authorisationEnabled | quote }}
@@ -23,6 +24,13 @@ data:
   app-notification: {{ .Values.settings.notificationEnabled | quote }}
   app-health: {{ .Values.settings.healthEnabled | quote }}
   app-archive: {{ .Values.settings.archiveEnabled | quote }}
+  
+  organization-name: {{ .Values.settings.organisationName | quote }}
+  organization-email: {{ .Values.settings.email | quote }}
+  organization-country: {{ .Values.settings.country | quote }}
+  organization-state: {{ .Values.settings.state | quote }}
+  organization-locality: {{ .Values.settings.locality | quote }}
+  organization-unit: {{ .Values.settings.unit | quote }}
   
   env: {{ .Values.settings.env | quote }}
   debug: {{ .Values.settings.debug | quote }}

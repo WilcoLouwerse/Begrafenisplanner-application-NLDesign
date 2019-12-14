@@ -1,3 +1,13 @@
+parameters:
+    env(APP_DOMAINS): '[]'
+    # Organisation stuff
+    env(ORGANIZATION_NAME): ''
+    env(ORGANIZATION_EMAIL_ADDRESS): ''
+    env(ORGANIZATION_COUNTRY_NAME): ''
+    env(ORGANIZATION_STATE): ''
+    env(ORGANIZATION_LOCALITY): ''
+    env(ORGANIZATION_UNIT_NAME): ''    
+
 twig:
     default_path: '%kernel.project_dir%/templates'
     debug: '%kernel.debug%'
@@ -8,12 +18,21 @@ twig:
         
         container_registry_base: '%env(CONTAINER_REGISTRY_BASE)%'   
         container_project_name: '%env(CONTAINER_PROJECT_NAME)%'
+
+        organization_name: '%env(ORGANIZATION_NAME)%'
+        organization_email: '%env(ORGANIZATION_EMAIL_ADDRESS)%'
+        organization_country: '%env(ORGANIZATION_COUNTRY_NAME)%'
+        organization_state: '%env(ORGANIZATION_STATE)%'
+        organization_locality: '%env(ORGANIZATION_LOCALITY)%'
+        organization_unit: '%env(ORGANIZATION_UNIT_NAME)%'
         
         app_name: '%env(APP_NAME)%'
         app_title: '%env(APP_TITLE)%'
         app_version: '%env(APP_VERSION)%'
         app_env: '%env(APP_ENV)%'
         app_debug: '%env(APP_DEBUG)%'
+        app_domain: '%env(APP_DOMAIN)%'
+        app_domains: '%env(json:APP_DOMAINS)%'
         app_demo: '%env(APP_DEMO)%'
         app_repro: '%env(APP_REPRO)%'
         app_description: '%env(APP_DESCRIPTION)%'
@@ -21,7 +40,10 @@ twig:
         app_auth: '%env(AUTH_ENABLED)%'        
         app_audittrail: '%env(AUDITTRAIL_ENABLED)%'        
         app_notification: '%env(NOTIFICATION_ENABLED)%'
-        app_health: '%env(HEALTH_ENABLED)%'
+        app_health: '%env(HEALTH_ENABLED)%'        
+        
+        trusted_hosts: '%env(TRUSTED_HOSTS)%'
+        trusted_proxies: '%env(TRUSTED_PROXIES)%'
         
         nlx_outway: '%env(NLX_OUTWAY)%'
         nlx_inway: '%env(NLX_INWAY)%'
