@@ -31,7 +31,7 @@ twig:
         app_version: '%env(APP_VERSION)%'
         app_env: '%env(APP_ENV)%'
         app_debug: '%env(APP_DEBUG)%'
-        app_domain: '%env(APP_DOMAIN)%'
+        app_subdomain: '%env(APP_SUBDOMAIN)%'
         app_domains: '%env(json:APP_DOMAINS)%'
         app_demo: '%env(APP_DEMO)%'
         app_repro: '%env(APP_REPRO)%'
