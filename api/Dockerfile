@@ -29,6 +29,7 @@ RUN set -eux; \
 		$PHPIZE_DEPS \
 		icu-dev \
 		libzip-dev \
+		libpng-dev \
 		postgresql-dev \
 		zlib-dev \
 	; \
@@ -40,6 +41,8 @@ RUN set -eux; \
 		zip \
 		mysqli \ 
 		pdo_mysql \
+		pcntl \ 
+		gd \
 	; \
 	pecl install \
 		apcu-${APCU_VERSION} \
@@ -121,9 +124,6 @@ CMD ["php-fpm"]
 #############################
 # depends on the "php" stage above, and with an litle bit of help from https://github.com/shiphp/nginx-env
 FROM shiphp/nginx-env AS api_platform_nginx
-
-# We use our own more secure and limited config
-#ONBUILD ADD docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
 # Due to our config we need a copy of the public folder for serving static content
 COPY docker/nginx/conf.d/default.conf.template /etc/nginx/conf.d/default.conf
