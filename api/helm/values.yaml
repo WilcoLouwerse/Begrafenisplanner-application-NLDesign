@@ -13,12 +13,9 @@ settings:
   subdomain: pc  
   domains:
     - conduction.nl
-  #  - vng.cloud
-  #  - zaakonline.nl
-  #  - larping.eu
-  #  - common-ground.dev
-  #  - trouwplanner.online
+    - zaakonline.nl
     - huwelijksplanner.online
+    - common-ground.dev
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
