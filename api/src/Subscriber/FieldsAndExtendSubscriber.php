@@ -36,9 +36,28 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         $result = $event->getControllerResult();
         $fields = $event->getRequest()->query->get('fields');
         $extends = $event->getRequest()->query->get('extend');
+        $contentType= $event->getRequest()->headers->get('accept');
+        if(!$contentType){
+        	$contentType= $event->getRequest()->headers->get('Accept');
+        }
 
         // This needs to be bassed on the content-type
-        $type = 'jsonhal';
+        
+        // Lets set a return content type
+        switch ($contentType) {
+        	case 'application/json':
+        		$renderType = "json";
+        		break;
+        	case 'application/ld+json':
+        		$renderType= "jsonld";
+        		break;
+        	case 'application/hal+json':
+        		$renderType= "jsonhal";
+        		break;
+        	default:
+        		$contentType = 'application/json';
+        		$renderType = "json";
+        }
         
         // Only do somthing if fields is query supplied
         if (!$fields && $extends) {
@@ -74,7 +93,7 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         // now we need to overide the normal subscriber
         $json = $this->serializer->serialize(
             $result,
-        	$type, 
+        		$renderType, 
         	['enable_max_depth' => true, 
         	'attributes'=> $fields]
         );
@@ -103,7 +122,7 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         $response = new Response(
                 $json,
                 Response::HTTP_OK,
-                ['content-type' => 'application/json+hal']
+        		['content-type' => $contentType]
                 );
 
         $event->setResponse($response);
