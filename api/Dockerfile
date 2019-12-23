@@ -82,7 +82,7 @@ WORKDIR /srv/api
 ARG APP_ENV=prod
 
 # prevent the reinstallation of vendors at every changes in the source code
-COPY composer.json composer.lock symfony.lock ./
+COPY composer.json composer.lock symfony.lock /
 
 RUN set -eux; \
 	composer install --prefer-dist --no-dev --no-scripts --no-progress --no-suggest; \
@@ -108,7 +108,7 @@ RUN set -eux; \
 	chmod +x bin/console; sync
 
 # Now that we have our own composer lets update
-# RUN composer update --no-interaction
+ RUN composer update --no-interaction
 	
 VOLUME /srv/api/var
 
