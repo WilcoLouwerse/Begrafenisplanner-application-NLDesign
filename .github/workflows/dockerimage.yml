@@ -53,7 +53,7 @@ jobs:
         run: docker-compose build --pull --build-arg APP_ENV=$APP_ENV --build-arg APP_BUILD=$APP_BUILD
       - name: Run the docker image
         run: docker-compose up -d
-      - name: Taking some sleep
+      - name: Taking some sleep (for containers to come up)
         run: sleep 200
       - name: Check if all containers are running
         run: docker ps
@@ -61,6 +61,8 @@ jobs:
         run: docker-compose logs
       - name: Database Update
         run: docker-compose exec -T php bin/console doctrine:schema:update --force
+      - name: Taking some more sleep (for database to be updated)
+        run: sleep 20
       - name: Database Check
         run: docker-compose exec -T php bin/console doctrine:schema:validate
       - name: Security Checks
