@@ -118,6 +118,8 @@ CMD ["php-fpm"]
 # Let update the docs to show the latest chages
 # RUN bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
 
+RUN bin/console app:publiccode:update --location=/srv/api/public/schema/ --spec-version=0.2	
+
 #############################
 # 		"nginx" stage 		#
 #############################

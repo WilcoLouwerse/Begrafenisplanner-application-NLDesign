@@ -20,7 +20,7 @@ parameters:
     env(CONTAINER_PROJECT_NAME): ''
     env(CONTAINER_REPRO): ''
 
-api_platform:
+api_platform:            
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
 

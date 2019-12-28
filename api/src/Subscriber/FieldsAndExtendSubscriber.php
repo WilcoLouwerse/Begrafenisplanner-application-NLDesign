@@ -33,6 +33,7 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
 
     public function FilterFields(GetResponseForControllerResultEvent $event)
     {
+    	/* @todo Contains a bug
         $result = $event->getControllerResult();
         $fields = $event->getRequest()->query->get('fields');
         $extends = $event->getRequest()->query->get('extend');
@@ -41,6 +42,12 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         	$contentType= $event->getRequest()->headers->get('Accept');
         }
 
+        
+        // Only do somthing if fields is query supplied
+        if (!$fields && !$extends) {
+            return $result;
+        }
+        
         // This needs to be bassed on the content-type
         
         // Lets set a return content type
@@ -58,11 +65,6 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         		$contentType = 'application/json';
         		$renderType = "json";
         }
-        
-        // Only do somthing if fields is query supplied
-        if (!$fields && $extends) {
-            return $result;
-        }
 
         // let turn fields into an array if it isn't one already
         if (!is_array($fields)) {
@@ -73,7 +75,7 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         }
         
         // Its possible to nest fields for filterins
-        foreach($fields as $key->$value){
+        foreach($fields as $key=>$value){
         	// Lets check if the fields contain one or more .'s
         	if (strpos($value, '.') !== false) {
         		// This is where it gets complicated couse it could go on indevinitly        		
@@ -101,9 +103,10 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         
         $jsonArray = json_decode($json, true);
         
+        
         // The we want to extend properties from the extend query
         foreach($extends as $extend){
-        	/* @todo add security checks */
+        	// @todo add security checks 
         	// Get new object for the extend
         	$extendObject = $this->propertyAccessor->getValue($result, $extend);
         	// turn to json
@@ -117,6 +120,7 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         	$jsonArray[$extend] = json_decode($extendjson, true);
         }
         
+        
         $json = json_encode($jsonArray);
 
         $response = new Response(
@@ -126,5 +130,6 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
                 );
 
         $event->setResponse($response);
+        */
     }
 }
