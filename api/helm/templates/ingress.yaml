@@ -1,6 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  annotations:
+    # add an annotation indicating the issuer to use.
+    cert-manager.io/acme-challenge-type: http01
+    cert-manager.io/cluster-issuer: {{ include "name" . }}-{{ .Values.settings.env }}-letsencrypt
   name: {{ include "name" . }}-{{ .Values.settings.env }}-ingress
   labels:
     app.kubernetes.io/name: {{ include "name" . }}-ingress
@@ -8,55 +12,29 @@ metadata:
     helm.sh/chart: {{ include "chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-  {{- with .Values.ingress.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
 spec:
-{{- if .Values.ingress.tls }}
-  tls:
-  {{- range .Values.ingress.tls }}
-    - hosts:
-      {{- range .hosts }}
-        - {{ .host | quote }}
-      {{- end }}
-      secretName: {{ .secretName }}
+  tls: 
+  - hosts: 
+  {{- range  .Values.settings.domains  }}
+    - {{ . }}
   {{- end }}
-{{- end }}
+#    - {{ .Values.settings.domain }}
+    secretName: {{ include "name" . }}-{{ .Values.settings.env }}-cert
   rules:
-    - #host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
+  {{- range  .Values.settings.domains  }}
+    {{- if eq $.Values.settings.env "prod" }}
+      -   host: {{ $.Values.settings.name }}.{{ . }}
+          http:
+              paths:
+                      - backend:
+                          serviceName: {{ $.Values.settings.name }}
+                          servicePort: 80            
+    {{- else }}      
+    - host: {{ $.Values.settings.name }}.{{ $.Values.settings.env }}.{{ . }}
       http:
         paths:
           - backend:
-              serviceName: {{ include "name" . }}
+              serviceName: {{ $.Values.settings.name }}
               servicePort: 80
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.huwelijksplanner.online
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.trouwplanner.online
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.common-ground.nl
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
-    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.larping.eu
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
+     {{- end }}
+  {{- end }}
