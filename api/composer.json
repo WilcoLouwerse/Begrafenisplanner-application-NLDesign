@@ -29,9 +29,9 @@
 		"webonyx/graphql-php": "^0.13.8"
 	},
 	"require-dev" : {
-		"api-platform/schema-generator" : "^2.1",
-		"symfony/maker-bundle" : "^1.11",
-		"symfony/profiler-pack" : "^1.0"
+		"api-platform/schema-generator": "^2.1",
+		"symfony/maker-bundle": "^1.11",
+		"symfony/profiler-pack": "^1.0"
 	},
 	"config" : {
 		"preferred-install" : {
