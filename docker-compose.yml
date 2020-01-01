@@ -8,7 +8,6 @@ x-cache:
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-admin
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-client
-    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
 
 services:
   php:
@@ -30,17 +29,20 @@ services:
       - CONTAINER_REGISTRY_BASE=${CONTAINER_REGISTRY_BASE}
       - CONTAINER_PROJECT_NAME=${CONTAINER_PROJECT_NAME}
       - CONTAINER_REPRO=${CONTAINER_REPRO}
-      - DATABASE_URL=postgres://api-platform:!ChangeMe!@db/api?serverVersion=10.1
+      #- DATABASE_URL=postgres://api-platform:!ChangeMe!@db/api?serverVersion=10.1
+      - DATABASE_URL=mysql://api-platform:!ChangeMe!@db/api?serverVersion=10.1
       - APP_ENV=${APP_ENV}
       - APP_DEBUG=${APP_DEBUG} 
       - APP_VERSION=${APP_VERSION}    
       - APP_NAME=${APP_NAME} 
       - APP_TITLE=${APP_TITLE}
-      - APP_DOMAIN=${APP_DOMAIN}
+      - APP_SUBDOMAIN=${APP_SUBDOMAIN}
       - APP_DOMAINS=${APP_DOMAINS}
       - APP_DEMO=${APP_DEMO}
       - APP_REPRO=${APP_REPRO}
       - APP_DESCRIPTION=${APP_DESCRIPTION}
+      - APP_LOGO=${APP_LOGO}
+      - APP_HOME=${APP_HOME}
       - ORGANIZATION_NAME=${ORGANIZATION_NAME}
       - ORGANIZATION_EMAIL_ADDRESS=${ORGANIZATION_EMAIL_ADDRESS}
       - ORGANIZATION_COUNTRY_NAME=${ORGANIZATION_COUNTRY_NAME}
@@ -167,15 +169,28 @@ services:
     networks:
       - nlx
     
-  db:
-    image: postgres:10-alpine
-    environment:
-      - POSTGRES_DB=api
-      - POSTGRES_USER=api-platform
+  #db:
+  #  image: postgres:10-alpine
+  #  environment:
+  #    - POSTGRES_DB=api
+  #    - POSTGRES_USER=api-platform
       # You should definitely change the password in production
-      - POSTGRES_PASSWORD=!ChangeMe!
+  #    - POSTGRES_PASSWORD=!ChangeMe!
+  #  volumes:
+  #    - db-data:/var/lib/postgresql/data:rw
+    
+  db:
+    image: mysql:5.6
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=example
+      - MYSQL_DATABASE=api
+      - MYSQL_USER=api-platform
+      - MYSQL_PASSWORD=!ChangeMe!
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
+      - db-mysql:/var/lib/mysql:rw 
+    ports:
+     - "3366:3306"
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks
@@ -250,4 +265,5 @@ networks:
 
 volumes:
   db-data: {}
+  db-mysql: {}
   nlx-data-2: {}
