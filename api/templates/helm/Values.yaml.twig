@@ -15,7 +15,7 @@ settings:
 {% for domain in app_domains %}
     - {{ domain }}
 {% endfor %}
-  domainsJson: {{ app_domains | json_encode() }}
+  domainsJson: {{ app_domains | json_encode()| e }}
   organisationName: {{ organization_name }}
   email: {{ organization_email }}
   country: {{ organization_country }}
