@@ -34,6 +34,7 @@ jobs:
         if: contains( github.ref, 'master' ) || contains( github.base_ref, 'master' )
         run: |
             echo ::set-env name=APP_ENV::prod
+            echo ::set-env name=APP_BUILD::prod
             echo "set APP_ENV to $APP_ENV"
       - name: Set APP_BUILD to APP_VERSION
         if: contains( github.ref, 'master' )

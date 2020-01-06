@@ -16,6 +16,7 @@ settings:
     - zaakonline.nl
     - huwelijksplanner.online
     - common-ground.dev
+  domainsJson: ["conduction.nl","zaakonline.nl","huwelijksplanner.online","common-ground.dev"]
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
