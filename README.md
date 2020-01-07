@@ -8,6 +8,8 @@ Het "betalen" component is ontwikkeld voor de gemeente Utrecht en heeft als doel
 - [contributing](https://github.com/ConductionNL/betalencomponent/blob/master/CONTRIBUTING.md) for tips tricks and general rules concerning contributing to this component.
 - [codebase](https://github.com/ConductionNL/betalencomponent) on github.
 - [codebase](https://github.com/ConductionNL/betalencomponent/archive/master.zip) as a download.
+- [Datamodel of this component](api/public/schema/datamodel.pdf)
+- [Postman tests of this component](api/public/schema/bsc.postman_collection.json)
 
 Getting started
 -------
