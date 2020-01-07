@@ -10,7 +10,7 @@ info:
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
-    - Datamodel: [postman](/schema/pc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+    - Datamodel: [postman](/schema/bc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
@@ -32,9 +32,14 @@ paths:
                   $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/InvoiceItem-read'
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/InvoiceItem:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
             application/vnd.api+json:
               schema:
                 type: array
@@ -73,6 +78,7 @@ paths:
           description: 'The collection page number'
           schema:
             type: integer
+            default: 1
         -
           name: Authorization
           description: 'The JWT of the entity performing the request'
@@ -160,7 +166,7 @@ paths:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
+                $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
@@ -196,7 +202,7 @@ paths:
               $ref: '#/components/schemas/InvoiceItem-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
+              $ref: '#/components/schemas/InvoiceItem:jsonld-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/InvoiceItem-write'
@@ -339,7 +345,7 @@ paths:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
+                $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
@@ -458,7 +464,7 @@ paths:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
+                $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
@@ -488,7 +494,7 @@ paths:
               $ref: '#/components/schemas/InvoiceItem-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
+              $ref: '#/components/schemas/InvoiceItem:jsonld-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/InvoiceItem-write'
@@ -558,7 +564,7 @@ paths:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
+                $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
@@ -583,28 +589,7 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
           application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          text/html:
             schema:
               $ref: '#/components/schemas/InvoiceItem-write'
         description: 'The updated InvoiceItem resource'
@@ -625,9 +610,14 @@ paths:
                   $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Invoice-read'
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Invoice:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
             application/vnd.api+json:
               schema:
                 type: array
@@ -786,7 +776,7 @@ paths:
                 $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Invoice-read'
+                $ref: '#/components/schemas/Invoice:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
@@ -822,7 +812,7 @@ paths:
               $ref: '#/components/schemas/Invoice-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/Invoice-write'
+              $ref: '#/components/schemas/Invoice:jsonld-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Invoice-write'
@@ -965,7 +955,7 @@ paths:
                 $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Invoice-read'
+                $ref: '#/components/schemas/Invoice:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
@@ -1084,7 +1074,7 @@ paths:
                 $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Invoice-read'
+                $ref: '#/components/schemas/Invoice:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
@@ -1114,7 +1104,7 @@ paths:
               $ref: '#/components/schemas/Invoice-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/Invoice-write'
+              $ref: '#/components/schemas/Invoice:jsonld-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Invoice-write'
@@ -1184,7 +1174,7 @@ paths:
                 $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Invoice-read'
+                $ref: '#/components/schemas/Invoice:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
@@ -1209,28 +1199,7 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
           application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          text/html:
             schema:
               $ref: '#/components/schemas/Invoice-write'
         description: 'The updated Invoice resource'
@@ -1251,9 +1220,14 @@ paths:
                   $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Payment-read'
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Payment:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
             application/vnd.api+json:
               schema:
                 type: array
@@ -1292,6 +1266,7 @@ paths:
           description: 'The collection page number'
           schema:
             type: integer
+            default: 1
         -
           name: Authorization
           description: 'The JWT of the entity performing the request'
@@ -1379,7 +1354,7 @@ paths:
                 $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Payment-read'
+                $ref: '#/components/schemas/Payment:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Payment-read'
@@ -1415,7 +1390,7 @@ paths:
               $ref: '#/components/schemas/Payment-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/Payment-write'
+              $ref: '#/components/schemas/Payment:jsonld-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Payment-write'
@@ -1558,7 +1533,7 @@ paths:
                 $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Payment-read'
+                $ref: '#/components/schemas/Payment:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Payment-read'
@@ -1677,7 +1652,7 @@ paths:
                 $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Payment-read'
+                $ref: '#/components/schemas/Payment:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Payment-read'
@@ -1707,7 +1682,7 @@ paths:
               $ref: '#/components/schemas/Payment-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/Payment-write'
+              $ref: '#/components/schemas/Payment:jsonld-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Payment-write'
@@ -1777,7 +1752,7 @@ paths:
                 $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Payment-read'
+                $ref: '#/components/schemas/Payment:jsonld-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Payment-read'
@@ -1802,28 +1777,7 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
           application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          text/html:
             schema:
               $ref: '#/components/schemas/Payment-write'
         description: 'The updated Payment resource'
@@ -1836,6 +1790,8 @@ components:
         id:
           readOnly: true
           description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
           type: string
         name:
           description: 'The name of the invoice'
@@ -1860,6 +1816,8 @@ components:
           type: string
         priceCurrency:
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
           type: string
         tax:
           description: 'The total tax over the invoice'
@@ -1908,6 +1866,8 @@ components:
           type: string
         priceCurrency:
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
           type: string
         tax:
           description: 'The total tax over the invoice'
@@ -1920,12 +1880,129 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Payment-write'
+    'Invoice:jsonld-read':
+      type: object
+      description: 'An entity representing an invoice.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        name:
+          description: 'The name of the invoice'
+          type: string
+        description:
+          description: 'The description of the invoice'
+          type: string
+        reference:
+          readOnly: true
+          description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
+          type: string
+        items:
+          description: 'The items in this invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem:jsonld-read'
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        tax:
+          description: 'The total tax over the invoice'
+          type: string
+        createdAt:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        order:
+          description: 'The order of this invoice'
+          type: string
+        payments:
+          description: 'The payments of this Invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment:jsonld-read'
+      required:
+        - name
+        - targetOrganization
+        - price
+    'Invoice:jsonld-write':
+      type: object
+      description: 'An entity representing an invoice.'
+      required:
+        - name
+        - targetOrganization
+        - price
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        name:
+          description: 'The name of the invoice'
+          type: string
+        description:
+          description: 'The description of the invoice'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
+          type: string
+        items:
+          description: 'The items in this invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem:jsonld-write'
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        tax:
+          description: 'The total tax over the invoice'
+          type: string
+        order:
+          description: 'The order of this invoice'
+          type: string
+        payments:
+          description: 'The payments of this Invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment:jsonld-write'
     InvoiceItem-read:
       type: object
       description: 'An entity representing an item of an invoice.'
       properties:
         id:
           readOnly: true
+          externalDocs:
+            url: 'http://schema.org/identifier'
           type: string
         name:
           description: 'The name of the object'
@@ -1938,6 +2015,8 @@ components:
           $ref: '#/components/schemas/Invoice-read'
         offer:
           description: 'The offer this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
           type: string
         product:
           description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
@@ -1950,6 +2029,8 @@ components:
           type: string
         priceCurrency:
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
           type: string
         taxPercentage:
           description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
@@ -1988,6 +2069,8 @@ components:
           $ref: '#/components/schemas/Invoice-write'
         offer:
           description: 'The offer this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
           type: string
         product:
           description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
@@ -2000,6 +2083,120 @@ components:
           type: string
         priceCurrency:
           description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        taxPercentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+          type: integer
+    'InvoiceItem:jsonld-read':
+      type: object
+      description: 'An entity representing an item of an invoice.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        name:
+          description: 'The name of the object'
+          type: string
+        description:
+          description: 'The description of the InvoiceItem'
+          type: string
+        invoice:
+          description: 'The invoice that contains this item'
+          $ref: '#/components/schemas/Invoice:jsonld-read'
+        offer:
+          description: 'The offer this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        product:
+          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
+          type: string
+        quantity:
+          description: 'The quantity of the items that are ordered'
+          type: integer
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        taxPercentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+          type: integer
+        createdAt:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+      required:
+        - name
+        - invoice
+        - offer
+        - quantity
+        - price
+        - taxPercentage
+    'InvoiceItem:jsonld-write':
+      type: object
+      description: 'An entity representing an item of an invoice.'
+      required:
+        - name
+        - invoice
+        - offer
+        - quantity
+        - price
+        - taxPercentage
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        name:
+          description: 'The name of the object'
+          type: string
+        description:
+          description: 'The description of the InvoiceItem'
+          type: string
+        invoice:
+          description: 'The invoice that contains this item'
+          $ref: '#/components/schemas/Invoice:jsonld-write'
+        offer:
+          description: 'The offer this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        product:
+          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
+          type: string
+        quantity:
+          description: 'The quantity of the items that are ordered'
+          type: integer
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
           type: string
         taxPercentage:
           description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
@@ -2010,6 +2207,8 @@ components:
       properties:
         id:
           readOnly: true
+          externalDocs:
+            url: 'http://schema.org/identifier'
           type: string
         paymentProvider:
           type: string
@@ -2039,6 +2238,61 @@ components:
           type: string
         invoice:
           $ref: '#/components/schemas/Invoice-write'
+    'Payment:jsonld-read':
+      type: object
+      description: 'An entity representing a payment.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        paymentProvider:
+          type: string
+        paymentId:
+          type: string
+        status:
+          type: string
+        invoice:
+          $ref: '#/components/schemas/Invoice:jsonld-read'
+      required:
+        - paymentProvider
+        - paymentId
+        - status
+    'Payment:jsonld-write':
+      type: object
+      description: 'An entity representing a payment.'
+      required:
+        - paymentProvider
+        - paymentId
+        - status
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        paymentProvider:
+          type: string
+        paymentId:
+          type: string
+        status:
+          type: string
+        invoice:
+          $ref: '#/components/schemas/Invoice:jsonld-write'
 definitions:
   Invoice-read:
     properties:
