@@ -5,79 +5,72 @@ info:
   description: |
     API Details
     - Component: Proto Component
-    - Reference: pc
+    - Reference: bc
     - Enviroment: dev
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
-    - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+    - Datamodel: [postman](/schema/bc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
 paths:
-  /example_entities:
+  /invoice_items:
     get:
       tags:
-        - ExampleEntity
-      operationId: getExampleEntityCollection
-      summary: 'Retrieves the collection of ExampleEntity resources.'
+        - InvoiceItem
+      operationId: getInvoiceItemCollection
+      summary: 'Retrieves the collection of InvoiceItem resources.'
       responses:
         200:
-          description: 'ExampleEntity collection response'
+          description: 'InvoiceItem collection response'
           content:
             application/hal+json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity-read'
+                  $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ExampleEntity-read'
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/InvoiceItem:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
             application/vnd.api+json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity-read'
+                  $ref: '#/components/schemas/InvoiceItem-read'
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity-read'
+                  $ref: '#/components/schemas/InvoiceItem-read'
             application/xml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity-read'
+                  $ref: '#/components/schemas/InvoiceItem-read'
             application/x-yaml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity-read'
+                  $ref: '#/components/schemas/InvoiceItem-read'
             text/csv:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity-read'
+                  $ref: '#/components/schemas/InvoiceItem-read'
             text/html:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ExampleEntity-read'
+                  $ref: '#/components/schemas/InvoiceItem-read'
       parameters:
-        -
-          name: like_name
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: like_description
-          in: query
-          required: false
-          schema:
-            type: string
         -
           name: page
           in: query
@@ -85,6 +78,7 @@ paths:
           description: 'The collection page number'
           schema:
             type: integer
+            default: 1
         -
           name: Authorization
           description: 'The JWT of the entity performing the request'
@@ -160,43 +154,43 @@ paths:
         - application/health+json
     post:
       tags:
-        - ExampleEntity
-      operationId: postExampleEntityCollection
-      summary: 'Creates a ExampleEntity resource.'
+        - InvoiceItem
+      operationId: postInvoiceItemCollection
+      summary: 'Creates a InvoiceItem resource.'
       responses:
         201:
-          description: 'ExampleEntity resource created'
+          description: 'InvoiceItem resource created'
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
           links:
-            GetExampleEntityItem:
+            GetInvoiceItemItem:
               parameters:
                 id: '$response.body#/id'
-              operationId: getExampleEntityItem
-              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /example_entities/{id}`.'
+              operationId: getInvoiceItemItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /invoice_items/{id}`.'
         400:
           description: 'Invalid input'
         404:
@@ -205,29 +199,29 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem:jsonld-write'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           application/json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           application/xml:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           text/csv:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           text/html:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
-        description: 'The new ExampleEntity resource'
+              $ref: '#/components/schemas/InvoiceItem-write'
+        description: 'The new InvoiceItem resource'
       parameters:
         -
           name: Authorization
@@ -258,12 +252,12 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-  '/example_entities/{id}':
+  '/invoice_items/{id}':
     get:
       tags:
-        - ExampleEntity
-      operationId: audittrailExampleEntityItem
-      summary: 'Retrieves a ExampleEntity resource.'
+        - InvoiceItem
+      operationId: getInvoiceItemItem
+      summary: 'Retrieves a InvoiceItem resource.'
       parameters:
         -
           name: id
@@ -344,41 +338,87 @@ paths:
           in: query
       responses:
         200:
-          description: 'ExampleEntity resource response'
+          description: 'InvoiceItem resource response'
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
         404:
           description: 'Resource not found'
       produces:
         - application/health+json
+    delete:
+      tags:
+        - InvoiceItem
+      operationId: deleteInvoiceItemItem
+      summary: 'Removes the InvoiceItem resource.'
+      responses:
+        204:
+          description: 'InvoiceItem resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
     put:
       tags:
-        - ExampleEntity
-      operationId: putExampleEntityItem
-      summary: 'Replaces the ExampleEntity resource.'
+        - InvoiceItem
+      operationId: putInvoiceItemItem
+      summary: 'Replaces the InvoiceItem resource.'
       parameters:
         -
           name: id
@@ -417,32 +457,32 @@ paths:
           in: header
       responses:
         200:
-          description: 'ExampleEntity resource updated'
+          description: 'InvoiceItem resource updated'
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/ExampleEntity-read'
+                $ref: '#/components/schemas/InvoiceItem-read'
         400:
           description: 'Invalid input'
         404:
@@ -451,37 +491,501 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem:jsonld-write'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           application/json:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           application/xml:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           text/csv:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
+              $ref: '#/components/schemas/InvoiceItem-write'
           text/html:
             schema:
-              $ref: '#/components/schemas/ExampleEntity-write'
-        description: 'The updated ExampleEntity resource'
+              $ref: '#/components/schemas/InvoiceItem-write'
+        description: 'The updated InvoiceItem resource'
+    patch:
+      tags:
+        - InvoiceItem
+      operationId: patchInvoiceItemItem
+      summary: 'Updates the InvoiceItem resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'InvoiceItem resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+        description: 'The updated InvoiceItem resource'
+  /invoices:
+    get:
+      tags:
+        - Invoice
+      operationId: getInvoiceCollection
+      summary: 'Retrieves the collection of Invoice resources.'
+      responses:
+        200:
+          description: 'Invoice collection response'
+          content:
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Invoice:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
+      parameters:
+        -
+          name: reference
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'reference[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: targetOrganization
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'targetOrganization[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+            default: 1
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+    post:
+      tags:
+        - Invoice
+      operationId: postInvoiceCollection
+      summary: 'Creates a Invoice resource.'
+      responses:
+        201:
+          description: 'Invoice resource created'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+          links:
+            GetInvoiceItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getInvoiceItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /invoices/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Invoice:jsonld-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+        description: 'The new Invoice resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+  '/invoices/{id}':
+    get:
+      tags:
+        - Invoice
+      operationId: getInvoiceItem
+      summary: 'Retrieves a Invoice resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Invoice resource response'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
     delete:
       tags:
-        - ExampleEntity
-      operationId: deleteExampleEntityItem
-      summary: 'Removes the ExampleEntity resource.'
+        - Invoice
+      operationId: deleteInvoiceItem
+      summary: 'Removes the Invoice resource.'
       responses:
         204:
-          description: 'ExampleEntity resource deleted'
+          description: 'Invoice resource deleted'
         404:
           description: 'Resource not found'
       parameters:
@@ -520,93 +1024,1457 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
+    put:
+      tags:
+        - Invoice
+      operationId: putInvoiceItem
+      summary: 'Replaces the Invoice resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Invoice resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Invoice:jsonld-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+        description: 'The updated Invoice resource'
+    patch:
+      tags:
+        - Invoice
+      operationId: patchInvoiceItem
+      summary: 'Updates the Invoice resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Invoice resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+        description: 'The updated Invoice resource'
+  /payments:
+    get:
+      tags:
+        - Payment
+      operationId: getPaymentCollection
+      summary: 'Retrieves the collection of Payment resources.'
+      responses:
+        200:
+          description: 'Payment collection response'
+          content:
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Payment:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
+      parameters:
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+            default: 1
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+    post:
+      tags:
+        - Payment
+      operationId: postPaymentCollection
+      summary: 'Creates a Payment resource.'
+      responses:
+        201:
+          description: 'Payment resource created'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+          links:
+            GetPaymentItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getPaymentItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /payments/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Payment:jsonld-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+        description: 'The new Payment resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+  '/payments/{id}':
+    get:
+      tags:
+        - Payment
+      operationId: getPaymentItem
+      summary: 'Retrieves a Payment resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Payment resource response'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
+    delete:
+      tags:
+        - Payment
+      operationId: deletePaymentItem
+      summary: 'Removes the Payment resource.'
+      responses:
+        204:
+          description: 'Payment resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+    put:
+      tags:
+        - Payment
+      operationId: putPaymentItem
+      summary: 'Replaces the Payment resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Payment resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Payment:jsonld-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+        description: 'The updated Payment resource'
+    patch:
+      tags:
+        - Payment
+      operationId: patchPaymentItem
+      summary: 'Updates the Payment resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Payment resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Payment:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+        description: 'The updated Payment resource'
 components:
   schemas:
-    ExampleEntity-read:
+    Invoice-read:
       type: object
-      description: 'This is an example entity.'
+      description: 'An entity representing an invoice.'
       properties:
         id:
           readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
           type: string
         name:
-          description: 'The name of this example property'
+          description: 'The name of the invoice'
           type: string
         description:
-          description: 'The description of this example property'
+          description: 'The description of the invoice'
           type: string
-        camelCase:
-          description: 'Proof that we camel case our api'
+        reference:
+          readOnly: true
+          description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
           type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
+          type: string
+        items:
+          description: 'The items in this invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem-read'
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        tax:
+          description: 'The total tax over the invoice'
+          type: string
+        createdAt:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        order:
+          description: 'The order of this invoice'
+          type: string
+        payments:
+          description: 'The payments of this Invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment-read'
       required:
         - name
-    ExampleEntity-write:
+        - targetOrganization
+        - price
+    Invoice-write:
       type: object
-      description: 'This is an example entity.'
+      description: 'An entity representing an invoice.'
       required:
         - name
+        - targetOrganization
+        - price
       properties:
         name:
-          description: 'The name of this example property'
+          description: 'The name of the invoice'
           type: string
         description:
-          description: 'The description of this example property'
+          description: 'The description of the invoice'
           type: string
-        camelCase:
-          description: 'Proof that we camel case our api'
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
           type: string
+        items:
+          description: 'The items in this invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem-write'
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        tax:
+          description: 'The total tax over the invoice'
+          type: string
+        order:
+          description: 'The order of this invoice'
+          type: string
+        payments:
+          description: 'The payments of this Invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment-write'
+    'Invoice:jsonld-read':
+      type: object
+      description: 'An entity representing an invoice.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        name:
+          description: 'The name of the invoice'
+          type: string
+        description:
+          description: 'The description of the invoice'
+          type: string
+        reference:
+          readOnly: true
+          description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
+          type: string
+        items:
+          description: 'The items in this invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem:jsonld-read'
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        tax:
+          description: 'The total tax over the invoice'
+          type: string
+        createdAt:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        order:
+          description: 'The order of this invoice'
+          type: string
+        payments:
+          description: 'The payments of this Invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment:jsonld-read'
+      required:
+        - name
+        - targetOrganization
+        - price
+    'Invoice:jsonld-write':
+      type: object
+      description: 'An entity representing an invoice.'
+      required:
+        - name
+        - targetOrganization
+        - price
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        name:
+          description: 'The name of the invoice'
+          type: string
+        description:
+          description: 'The description of the invoice'
+          type: string
+        targetOrganization:
+          description: 'The RSIN of the organization that ownes this proces'
+          type: string
+        items:
+          description: 'The items in this invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceItem:jsonld-write'
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        tax:
+          description: 'The total tax over the invoice'
+          type: string
+        order:
+          description: 'The order of this invoice'
+          type: string
+        payments:
+          description: 'The payments of this Invoice'
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment:jsonld-write'
+    InvoiceItem-read:
+      type: object
+      description: 'An entity representing an item of an invoice.'
+      properties:
+        id:
+          readOnly: true
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        name:
+          description: 'The name of the object'
+          type: string
+        description:
+          description: 'The description of the InvoiceItem'
+          type: string
+        invoice:
+          description: 'The invoice that contains this item'
+          $ref: '#/components/schemas/Invoice-read'
+        offer:
+          description: 'The offer this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        product:
+          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
+          type: string
+        quantity:
+          description: 'The quantity of the items that are ordered'
+          type: integer
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        taxPercentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+          type: integer
+        createdAt:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+      required:
+        - name
+        - invoice
+        - offer
+        - quantity
+        - price
+        - taxPercentage
+    InvoiceItem-write:
+      type: object
+      description: 'An entity representing an item of an invoice.'
+      required:
+        - name
+        - invoice
+        - offer
+        - quantity
+        - price
+        - taxPercentage
+      properties:
+        name:
+          description: 'The name of the object'
+          type: string
+        description:
+          description: 'The description of the InvoiceItem'
+          type: string
+        invoice:
+          description: 'The invoice that contains this item'
+          $ref: '#/components/schemas/Invoice-write'
+        offer:
+          description: 'The offer this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        product:
+          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
+          type: string
+        quantity:
+          description: 'The quantity of the items that are ordered'
+          type: integer
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        taxPercentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+          type: integer
+    'InvoiceItem:jsonld-read':
+      type: object
+      description: 'An entity representing an item of an invoice.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        name:
+          description: 'The name of the object'
+          type: string
+        description:
+          description: 'The description of the InvoiceItem'
+          type: string
+        invoice:
+          description: 'The invoice that contains this item'
+          $ref: '#/components/schemas/Invoice:jsonld-read'
+        offer:
+          description: 'The offer this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        product:
+          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
+          type: string
+        quantity:
+          description: 'The quantity of the items that are ordered'
+          type: integer
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        taxPercentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+          type: integer
+        createdAt:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+      required:
+        - name
+        - invoice
+        - offer
+        - quantity
+        - price
+        - taxPercentage
+    'InvoiceItem:jsonld-write':
+      type: object
+      description: 'An entity representing an item of an invoice.'
+      required:
+        - name
+        - invoice
+        - offer
+        - quantity
+        - price
+        - taxPercentage
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        name:
+          description: 'The name of the object'
+          type: string
+        description:
+          description: 'The description of the InvoiceItem'
+          type: string
+        invoice:
+          description: 'The invoice that contains this item'
+          $ref: '#/components/schemas/Invoice:jsonld-write'
+        offer:
+          description: 'The offer this item represents'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
+        product:
+          description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
+          type: string
+        quantity:
+          description: 'The quantity of the items that are ordered'
+          type: integer
+        price:
+          description: 'The price of this product'
+          type: string
+        priceCurrency:
+          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        taxPercentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+          type: integer
+    Payment-read:
+      type: object
+      description: 'An entity representing a payment.'
+      properties:
+        id:
+          readOnly: true
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        paymentProvider:
+          type: string
+        paymentId:
+          type: string
+        status:
+          type: string
+        invoice:
+          $ref: '#/components/schemas/Invoice-read'
+      required:
+        - paymentProvider
+        - paymentId
+        - status
+    Payment-write:
+      type: object
+      description: 'An entity representing a payment.'
+      required:
+        - paymentProvider
+        - paymentId
+        - status
+      properties:
+        paymentProvider:
+          type: string
+        paymentId:
+          type: string
+        status:
+          type: string
+        invoice:
+          $ref: '#/components/schemas/Invoice-write'
+    'Payment:jsonld-read':
+      type: object
+      description: 'An entity representing a payment.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        paymentProvider:
+          type: string
+        paymentId:
+          type: string
+        status:
+          type: string
+        invoice:
+          $ref: '#/components/schemas/Invoice:jsonld-read'
+      required:
+        - paymentProvider
+        - paymentId
+        - status
+    'Payment:jsonld-write':
+      type: object
+      description: 'An entity representing a payment.'
+      required:
+        - paymentProvider
+        - paymentId
+        - status
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        paymentProvider:
+          type: string
+        paymentId:
+          type: string
+        status:
+          type: string
+        invoice:
+          $ref: '#/components/schemas/Invoice:jsonld-write'
 definitions:
-  ExampleEntity-read:
+  Invoice-read:
     properties:
       id:
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
       name:
-        example: 'My Group'
+        example: 'My Invoice'
         maxLength: 255
       description:
-        example: 'Is the best group ever'
-        maxLength: 2555
-      camelCase:
-        example: 'Best api ever'
+        example: 'This is the best invoice ever'
         maxLength: 255
+      reference:
+        example: 6666-2019-0000000012
+        maxLength: 255
+      targetOrganization:
+        example: '002851234'
+        maxLength: 255
+      price:
+        example: '50.00'
+      priceCurrency:
+        example: EUR
+      tax:
+        example: '21.00'
+      createdAt:
+        example: '20190101'
+      order:
+        example: 'https://www.example.org/order/1'
+        maxLength: 255
+      items: []
+      payments: []
     required:
       - name
-  ExampleEntity-write:
+      - targetOrganization
+      - price
+  Invoice-write:
     properties:
       name:
-        example: 'My Group'
+        example: 'My Invoice'
         maxLength: 255
       description:
-        example: 'Is the best group ever'
-        maxLength: 2555
-      camelCase:
-        example: 'Best api ever'
+        example: 'This is the best invoice ever'
         maxLength: 255
+      targetOrganization:
+        example: '002851234'
+        maxLength: 255
+      price:
+        example: '50.00'
+      priceCurrency:
+        example: EUR
+      tax:
+        example: '21.00'
+      order:
+        example: 'https://www.example.org/order/1'
+        maxLength: 255
+      items: []
+      payments: []
     required:
       - name
+      - targetOrganization
+      - price
+  InvoiceItem-read:
+    properties:
+      id:
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      name:
+        example: 'My InvoiceItem'
+        maxLength: 255
+      description:
+        example: 'This is the best invoice item ever'
+        maxLength: 255
+      offer:
+        example: 'http://example.org/offers/1'
+        format: url
+      product:
+        maxLength: 255
+      quantity:
+        example: '1'
+      price:
+        example: '50.00'
+      priceCurrency:
+        example: EUR
+      taxPercentage:
+        example: '9'
+      createdAt: []
+      invoice: []
+    required:
+      - name
+      - offer
+      - price
+      - invoice
+  InvoiceItem-write:
+    properties:
+      name:
+        example: 'My InvoiceItem'
+        maxLength: 255
+      description:
+        example: 'This is the best invoice item ever'
+        maxLength: 255
+      offer:
+        example: 'http://example.org/offers/1'
+        format: url
+      product:
+        maxLength: 255
+      quantity:
+        example: '1'
+      price:
+        example: '50.00'
+      priceCurrency:
+        example: EUR
+      taxPercentage:
+        example: '9'
+      invoice: []
+    required:
+      - name
+      - offer
+      - price
+      - invoice
+  Payment-read:
+    properties:
+      id:
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      paymentProvider:
+        maxLength: 255
+      paymentId:
+        maxLength: 255
+      status:
+        maxLength: 255
+      invoice: []
+    required:
+      - paymentProvider
+      - paymentId
+      - status
+  Payment-write:
+    properties:
+      paymentProvider:
+        maxLength: 255
+      paymentId:
+        maxLength: 255
+      status:
+        maxLength: 255
+      invoice: []
+    required:
+      - paymentProvider
+      - paymentId
+      - status
 tags:
   -
-    name: ExampleEntity
+    name: Invoice
     description: |
-      This is an example entity.
+      An entity representing an invoice.
       
-      With an adtional description, all in all its pritty nice [url](www.google.nl)
+      This entity represents an invoice for sales
+  -
+    name: InvoiceItem
+    description: |
+      An entity representing an item of an invoice.
+      
+      This entity represents an item that is placed on the invoice
+  -
+    name: Payment
+    description: |
+      An entity representing a payment.
+      
+      This entity represents a payment of an invoice.
 securityDefinitions:
   JWT-Oauth:
     type: oauth2
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the ExampleEntity resource'
-      write: 'write right to the ExampleEntity resource'
+      read: 'read right to the Payment resource'
+      write: 'write right to the Payment resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the ExampleEntity resource'
-      write: 'write right to the ExampleEntity resource'
+      read: 'read right to the Payment resource'
+      write: 'write right to the Payment resource'
 host: irc.zaakonline.nl
 servers:
   -
