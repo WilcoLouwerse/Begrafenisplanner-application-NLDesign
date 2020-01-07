@@ -13,6 +13,7 @@ settings:
   domain: conduction.nl  
   domains:
     - conduction.nl
+    - vng.cloud
     - zaakonline.nl
     - larping.eu
     - common-ground.dev
@@ -29,7 +30,7 @@ settings:
   debug: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.dev$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
+  trustedHosts: '^(.+\.)?conduction\.nl$|^(.+\.)?vng\.cloud$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.dev$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
