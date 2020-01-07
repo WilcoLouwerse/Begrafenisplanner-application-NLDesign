@@ -19,8 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Pulling old images, if any
-        run: docker-compose pull --ignore-pull-failures
       - name: Setting APP_NAME
         run: | 
             export NAME=$(grep APP_NAME= .env | cut -d '=' -f2)
@@ -36,6 +34,7 @@ jobs:
         if: contains( github.ref, 'master' ) || contains( github.base_ref, 'master' )
         run: |
             echo ::set-env name=APP_ENV::prod
+            echo ::set-env name=APP_BUILD::prod
             echo "set APP_ENV to $APP_ENV"
       - name: Set APP_BUILD to APP_VERSION
         if: contains( github.ref, 'master' )
@@ -55,18 +54,21 @@ jobs:
         run: docker-compose build --pull --build-arg APP_ENV=$APP_ENV --build-arg APP_BUILD=$APP_BUILD
       - name: Run the docker image
         run: docker-compose up -d
-      - name: Taking some sleep
-        run: sleep 100
+      - name: Taking some sleep (for containers to come up)
+        run: sleep 200
       - name: Check if all containers are running
         run: docker ps
       - name: Dumping the logs
         run: docker-compose logs
-      - name: Security Checks
-        run: docker-compose exec -T php composer req sensiolabs/security-checker
       - name: Database Update
         run: docker-compose exec -T php bin/console doctrine:schema:update --force
-      - name: Database Check
-        run: docker-compose exec -T php bin/console doctrine:schema:validate
+      #- name: Taking some more sleep (for database to be updated)
+      #  run: sleep 20
+      #- name: Database Check
+      #  run: docker-compose exec -T php bin/console doctrine:schema:validate
+      - name: Security Checks
+        run: docker-compose exec -T php composer req sensiolabs/security-checker
+
       - name: Chores
         run: docker-compose down
       - name: Login to DockerHub Registry

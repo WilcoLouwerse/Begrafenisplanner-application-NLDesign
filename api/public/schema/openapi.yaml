@@ -10,7 +10,7 @@ info:
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
-    - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+    - Datamodel: [postman](/schema/pc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
@@ -698,6 +698,7 @@ paths:
           description: 'The collection page number'
           schema:
             type: integer
+            default: 1
         -
           name: Authorization
           description: 'The JWT of the entity performing the request'
