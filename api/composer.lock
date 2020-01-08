@@ -2303,8 +2303,8 @@
             "authors": [
                 {
                     "name": "Luís Otávio Cobucci Oblonczyk",
-                    "role": "Developer",
-                    "email": "lcobucci@gmail.com"
+                    "email": "lcobucci@gmail.com",
+                    "role": "Developer"
                 }
             ],
             "description": "A simple library to work with JSON Web Token and JSON Web Signature",
@@ -4024,7 +4024,7 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2019-12-16T14:46:54+00:00"
+            "time": "2019-12-16T14:46:54+00:00
         },
         {
             "name": "symfony/dependency-injection",
@@ -6271,7 +6271,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/security-core/zipball/52709ee2aafd13d777253d510d96fbf2ccc5a578",
-                "reference": "52709ee2aafd13d777253d510d96fbf2ccc5a578",
+                "reference": "52709e
                 "shasum": ""
             },
             "require": {
@@ -6457,7 +6457,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/security-http/zipball/8ab510f214fd9c37769378b5036da58d444fe142",
-                "reference": "8ab510f214fd9c37769378b5036da58d444fe142",
+                "reference": "8ab510f
                 "shasum": ""
             },
             "require": {
