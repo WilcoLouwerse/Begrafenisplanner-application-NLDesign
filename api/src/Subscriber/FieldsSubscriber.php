@@ -24,7 +24,7 @@ class FieldsSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-                KernelEvents::VIEW => ['FilterFields', EventPriorities::PRE_SERIALIZE],
+            KernelEvents::VIEW => ['FilterFields', EventPriorities::PRE_SERIALIZE],
         ];
     }
 

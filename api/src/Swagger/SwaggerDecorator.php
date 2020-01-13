@@ -63,17 +63,17 @@ final class SwaggerDecorator implements NormalizerInterface
 
         // Lets add JWT-Oauth
         $docs['securityDefinitions']['JWT-Oauth'] = [
-                'type'            => 'oauth2',
-                'authorizationUrl'=> 'http://petstore.swagger.io/api/oauth/dialog',
-                'flow'            => 'implicit',
-                'scopes'          => [], //scopes will be filled later autmaticly
+            'type'            => 'oauth2',
+            'authorizationUrl'=> 'http://petstore.swagger.io/api/oauth/dialog',
+            'flow'            => 'implicit',
+            'scopes'          => [], //scopes will be filled later autmaticly
         ];
 
         $docs['securityDefinitions']['JWT-Token'] = [
-                'type'  => 'apiKey',
-                'in'    => 'header',       // can be "header", "query" or "cookie"
-                'name'  => 'Authorization',  // name of the header, query parameter or cookie
-                'scopes'=> [], //scopes will be filled later autmaticly
+            'type'  => 'apiKey',
+            'in'    => 'header',       // can be "header", "query" or "cookie"
+            'name'  => 'Authorization',  // name of the header, query parameter or cookie
+            'scopes'=> [], //scopes will be filled later autmaticly
         ];
 
         // Lets get al the entities known to doctrine
@@ -193,16 +193,16 @@ final class SwaggerDecorator implements NormalizerInterface
 
                 // NLX loging headers
                 $call['parameters'][] = [
-                        'name'        => 'Authorization',
-                        'description' => 'The JWT of the entity performing the request',
-                        'in'          => 'header',
+                    'name'        => 'Authorization',
+                    'description' => 'The JWT of the entity performing the request',
+                    'in'          => 'header',
                 ];
                 // NLX loging headers
                 $call['parameters'][] = [
-                        'name'        => 'API-Version',
-                        'description' => 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)',
-                        'example'     => '1.0.1',
-                        'in'          => 'header',
+                    'name'        => 'API-Version',
+                    'description' => 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)',
+                    'example'     => '1.0.1',
+                    'in'          => 'header',
                 ];
                 /*
                 // NLX loging headers
@@ -220,33 +220,33 @@ final class SwaggerDecorator implements NormalizerInterface
                 */
                 // NLX loging headers
                 $call['parameters'][] = [
-                        'name'        => 'X-NLX-Logrecord-ID',
-                        'description' => 'A  globally unique id of the request, which makes a request traceable throughout the network.',
-                        'in'          => 'header',
+                    'name'        => 'X-NLX-Logrecord-ID',
+                    'description' => 'A  globally unique id of the request, which makes a request traceable throughout the network.',
+                    'in'          => 'header',
                 ];
                 // NLX loging headers
                 $call['parameters'][] = [
-                        'name'        => 'X-NLX-Request-Process-Id',
-                        'description' => 'A process id for purpose registration (doelbinding)',
-                        'in'          => 'header',
+                    'name'        => 'X-NLX-Request-Process-Id',
+                    'description' => 'A process id for purpose registration (doelbinding)',
+                    'in'          => 'header',
                 ];
                 // NLX loging headers
                 $call['parameters'][] = [
-                        'name'        => 'X-NLX-Request-Data-Elements',
-                        'description' => 'A list of requested data elements',
-                        'in'          => 'header',
+                    'name'        => 'X-NLX-Request-Data-Elements',
+                    'description' => 'A list of requested data elements',
+                    'in'          => 'header',
                 ];
                 // NLX loging headers
                 $call['parameters'][] = [
-                        'name'        => 'X-NLX-Request-Data-Subject',
-                        'description' => 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`',
-                        'in'          => 'header',
+                    'name'        => 'X-NLX-Request-Data-Subject',
+                    'description' => 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`',
+                    'in'          => 'header',
                 ];
                 // NLX loging headers
                 $call['parameters'][] = [
-                        'name'        => 'X-NLX-Audit-Clarification',
-                        'description' => 'A clarification as to why a request has been made  (doelbinding)',
-                        'in'          => 'header',
+                    'name'        => 'X-NLX-Audit-Clarification',
+                    'description' => 'A clarification as to why a request has been made  (doelbinding)',
+                    'in'          => 'header',
                 ];
 
                 if ($method == 'get') {
@@ -256,48 +256,48 @@ final class SwaggerDecorator implements NormalizerInterface
 
                     // WEBSUB header
                     $call['parameters'][] = [
-                            'name'        => 'Link',
-                            'description' => 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"',
-                            'in'          => 'header',
+                        'name'        => 'Link',
+                        'description' => 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"',
+                        'in'          => 'header',
                     ];
 
                     // Lets add the extend functionality
                     $call['parameters'][] = [
-                            'name'        => 'extend[]',
-                            'required'    => false,
-                            'description' => 'An array of nested objects to include in the return object',
-                            'in'          => 'query',
-                            'schema'      => ['type'=>'array'],
+                        'name'        => 'extend[]',
+                        'required'    => false,
+                        'description' => 'An array of nested objects to include in the return object',
+                        'in'          => 'query',
+                        'schema'      => ['type'=>'array'],
                     ];
                     // Lets add the fields functionality
                     $call['parameters'][] = [
-                            'name'        => 'fields[]',
-                            'required'    => false,
-                            'description' => 'An array of fields to return in output, wil return all fields is not supplied',
-                            'in'          => 'query',
-                            'schema'      => ['type'=>'array'],
+                        'name'        => 'fields[]',
+                        'required'    => false,
+                        'description' => 'An array of fields to return in output, wil return all fields is not supplied',
+                        'in'          => 'query',
+                        'schema'      => ['type'=>'array'],
                     ];
                     // Lets add some time travel
                     $call['parameters'][] = [
-                            'name'        => 'validOn',
-                            'required'    => false,
-                            'description' => 'Returns object as valid on a given date time',
-                            'schema'      => ['type'=>'string', 'format' => 'date-time'],
-                            'in'          => 'query',
+                        'name'        => 'validOn',
+                        'required'    => false,
+                        'description' => 'Returns object as valid on a given date time',
+                        'schema'      => ['type'=>'string', 'format' => 'date-time'],
+                        'in'          => 'query',
                     ];
                     $call['parameters'][] = [
-                            'name'        => 'validFrom',
-                            'required'    => false,
-                            'description' => 'Returns objects valid from a given date time',
-                            'schema'      => ['type'=>'string', 'format' => 'date-time'],
-                            'in'          => 'query',
+                        'name'        => 'validFrom',
+                        'required'    => false,
+                        'description' => 'Returns objects valid from a given date time',
+                        'schema'      => ['type'=>'string', 'format' => 'date-time'],
+                        'in'          => 'query',
                     ];
                     $call['parameters'][] = [
-                            'name'        => 'validUntil',
-                            'required'    => false,
-                            'description' => 'Returns objects valid until a given date time',
-                            'schema'      => ['type'=>'string', 'format' => 'date-time'],
-                            'in'          => 'query',
+                        'name'        => 'validUntil',
+                        'required'    => false,
+                        'description' => 'Returns objects valid until a given date time',
+                        'schema'      => ['type'=>'string', 'format' => 'date-time'],
+                        'in'          => 'query',
                     ];
                 }
             }
