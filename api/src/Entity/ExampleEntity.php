@@ -37,7 +37,7 @@ use Ramsey\Uuid\Uuid;
 class ExampleEntity
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface
+     * @var \Ramsey\Uuid\UuidInterface The id of this entity
      *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
