@@ -29,7 +29,7 @@ class ValidOnSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-                KernelEvents::VIEW => ['validOn', EventPriorities::PRE_SERIALIZE],
+            KernelEvents::VIEW => ['validOn', EventPriorities::PRE_SERIALIZE],
         ];
     }
 
