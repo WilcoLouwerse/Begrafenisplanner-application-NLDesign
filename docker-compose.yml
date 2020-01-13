@@ -180,7 +180,7 @@ services:
   #    - db-data:/var/lib/postgresql/data:rw
     
   db:
-    image: mysql:5.6
+    image: mysql:5.7
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=example
