@@ -1,10 +1,10 @@
 openapi: 3.0.2
 info:
-  title: 'Proto Component'
+  title: 'Betaal Service'
   version: V.0.1
   description: |
     API Details
-    - Component: Proto Component
+    - Component: Betaal Service
     - Reference: bc
     - Enviroment: dev
     - Version: V.0.1
