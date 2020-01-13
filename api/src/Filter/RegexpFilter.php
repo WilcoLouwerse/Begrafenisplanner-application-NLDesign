@@ -36,14 +36,14 @@ final class RegexpFilter extends AbstractContextAwareFilter
         $description = [];
         foreach ($this->properties as $property => $strategy) {
             $description["regexp_$property"] = [
-                    'property' => $property,
-                    'type'     => 'string',
-                    'required' => false,
-                    'swagger'  => [
-                            'description' => 'Filter for an exact match using a [Regular expression](https://en.wikipedia.org/wiki/Regular_expression).',
-                            'name'        => $property,
-                            'type'        => 'string',
-                    ],
+                'property' => $property,
+                'type'     => 'string',
+                'required' => false,
+                'swagger'  => [
+                    'description' => 'Filter for an exact match using a [Regular expression](https://en.wikipedia.org/wiki/Regular_expression).',
+                    'name'        => $property,
+                    'type'        => 'string',
+                ],
             ];
         }
 
