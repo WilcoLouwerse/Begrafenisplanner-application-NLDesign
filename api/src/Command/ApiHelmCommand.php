@@ -65,9 +65,9 @@ class ApiHelmCommand extends Command
         } else {
             // outputs multiple lines to the console (adding "\n" at the end of each line)
             $output->writeln([
-                    'Helm Chart Creator',
-                    '============',
-                    $chart,
+                'Helm Chart Creator',
+                '============',
+                $chart,
             ]);
         }
     }
