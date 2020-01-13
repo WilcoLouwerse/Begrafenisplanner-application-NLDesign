@@ -6,7 +6,6 @@ use App\Entity\NLXRequestLog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
-
 /**
  * @method NLXRequestLog|null find($id, $lockMode = null, $lockVersion = null)
  * @method NLXRequestLog|null findOneBy(array $criteria, array $orderBy = null)
@@ -15,10 +14,10 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class NLXRequestLogRepository extends ServiceEntityRepository
 {
-	public function __construct(ManagerRegistry $registry)
-	{
-		parent::__construct($registry, ExampleEntity::class);
-	}
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, ExampleEntity::class);
+    }
 
     /**
      * @return NLXRequestLog[] Returns an array of NLXRequestLog objects

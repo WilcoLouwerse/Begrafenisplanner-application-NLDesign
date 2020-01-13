@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * This entity represents a payment of an invoice.
  *
  * @author Barry Brands <barry@conduction.nl>
- *
  * @license EUPL <https://github.com/ConductionNL/betaalservice/blob/master/LICENSE.md>
  *
  * @category entity
@@ -32,6 +29,7 @@ class Payment
 {
     /**
      * @var UuidInterface
+     *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      * @Assert\Uuid

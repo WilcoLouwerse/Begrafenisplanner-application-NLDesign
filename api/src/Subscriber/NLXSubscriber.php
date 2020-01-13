@@ -33,8 +33,8 @@ class NLXSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-                KernelEvents::VIEW => ['NLXLog', EventPriorities::PRE_VALIDATE],
-                KernelEvents::VIEW => ['NLXAudit', EventPriorities::PRE_SERIALIZE],
+            KernelEvents::VIEW => ['NLXLog', EventPriorities::PRE_VALIDATE],
+            KernelEvents::VIEW => ['NLXAudit', EventPriorities::PRE_SERIALIZE],
         ];
     }
 
