@@ -44,6 +44,9 @@ class Payment
     private $id;
 
     /**
+     * @var string The provider that handles the payment
+     * @example iDeal
+     *
      * @Assert\NotNull
      * @Assert\Length(
      *     max = 255
@@ -54,6 +57,9 @@ class Payment
     private $paymentProvider;
 
     /**
+     * @var string The payment id of this payment
+     * @example 87782426a21cbd70fc9823cbe1e024fb25804c833743b41529a23ae94b3b1cc2
+     *
      * @Assert\NotNull
      * @Assert\Length(
      *     max = 255
@@ -64,9 +70,22 @@ class Payment
     private $paymentId;
 
     /**
+     * @var string The status of this payment
+     * @example open
+     *
      * @Assert\NotNull
      * @Assert\Length(
      *     max = 255
+     * )
+     * @Assert\Choice(
+     *     {
+     *     "open",
+     *     "pending",
+     *     "authorized",
+     *     "expired",
+     *     "failed",
+     *     "paid"
+     *     }
      * )
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
@@ -74,6 +93,8 @@ class Payment
     private $status;
 
     /**
+     * @var Invoice The invoice this payment relates to
+     *
      * @Groups({"read", "write"})
      * @ORM\ManyToOne(targetEntity="App\Entity\Invoice", inversedBy="payments")
      * @ORM\JoinColumn(nullable=false)
