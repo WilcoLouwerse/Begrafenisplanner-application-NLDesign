@@ -2211,12 +2211,16 @@ components:
             url: 'http://schema.org/identifier'
           type: string
         paymentProvider:
+          description: 'The provider that handles the payment'
           type: string
         paymentId:
+          description: 'The payment id of this payment'
           type: string
         status:
+          description: 'The status of this payment'
           type: string
         invoice:
+          description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice-read'
       required:
         - paymentProvider
@@ -2231,12 +2235,16 @@ components:
         - status
       properties:
         paymentProvider:
+          description: 'The provider that handles the payment'
           type: string
         paymentId:
+          description: 'The payment id of this payment'
           type: string
         status:
+          description: 'The status of this payment'
           type: string
         invoice:
+          description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice-write'
     'Payment:jsonld-read':
       type: object
@@ -2257,12 +2265,16 @@ components:
             url: 'http://schema.org/identifier'
           type: string
         paymentProvider:
+          description: 'The provider that handles the payment'
           type: string
         paymentId:
+          description: 'The payment id of this payment'
           type: string
         status:
+          description: 'The status of this payment'
           type: string
         invoice:
+          description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice:jsonld-read'
       required:
         - paymentProvider
@@ -2286,12 +2298,16 @@ components:
           readOnly: true
           type: string
         paymentProvider:
+          description: 'The provider that handles the payment'
           type: string
         paymentId:
+          description: 'The payment id of this payment'
           type: string
         status:
+          description: 'The status of this payment'
           type: string
         invoice:
+          description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice:jsonld-write'
 definitions:
   Invoice-read:
@@ -2502,12 +2518,23 @@ definitions:
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
       paymentProvider:
+        description: 'The provider that handles the payment'
+        type: string
+        example: iDeal
         maxLength: 255
       paymentId:
+        description: 'The payment id of this payment'
+        type: string
+        example: 87782426a21cbd70fc9823cbe1e024fb25804c833743b41529a23ae94b3b1cc2
         maxLength: 255
       status:
+        description: 'The status of this payment'
+        type: string
+        example: open
         maxLength: 255
-      invoice: []
+      invoice:
+        description: 'The invoice this payment relates to'
+        type: \Invoice
     required:
       - paymentProvider
       - paymentId
@@ -2515,12 +2542,23 @@ definitions:
   Payment-write:
     properties:
       paymentProvider:
+        description: 'The provider that handles the payment'
+        type: string
+        example: iDeal
         maxLength: 255
       paymentId:
+        description: 'The payment id of this payment'
+        type: string
+        example: 87782426a21cbd70fc9823cbe1e024fb25804c833743b41529a23ae94b3b1cc2
         maxLength: 255
       status:
+        description: 'The status of this payment'
+        type: string
+        example: open
         maxLength: 255
-      invoice: []
+      invoice:
+        description: 'The invoice this payment relates to'
+        type: \Invoice
     required:
       - paymentProvider
       - paymentId
