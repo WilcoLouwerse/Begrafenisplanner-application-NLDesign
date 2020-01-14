@@ -57,14 +57,14 @@ class PubliccodeCommand extends Command
         $publiccode = $this->twig->render('publiccode/publiccode.yaml.twig');
 
         if (!empty($location = $input->getOption('location')) && \is_string($location)) {
-        	file_put_contents($location.'/publiccode.yaml', $publiccode);
+            file_put_contents($location.'/publiccode.yaml', $publiccode);
             $io->success(sprintf('Data written to %s/publiccode.yaml (specification version %s).', $location, $version));
         } else {
             // outputs multiple lines to the console (adding "\n" at the end of each line)
             $output->writeln([
-                    'Publiccode Chart',
-                    '============',
-                    $chart,
+                'Publiccode Chart',
+                '============',
+                $chart,
             ]);
         }
     }
