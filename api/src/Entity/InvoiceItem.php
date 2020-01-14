@@ -2,15 +2,14 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
-use Ramsey\Uuid\UuidInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * An entity representing an item of an invoice.
@@ -33,6 +32,7 @@ class InvoiceItem
 {
     /**
      * @var UuidInterface
+     *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      * @Assert\Uuid
@@ -79,6 +79,7 @@ class InvoiceItem
 
     /**
      * @var string The offer this item represents
+     *
      * @example http://example.org/offers/1
      *
      * @ORM\Column(type="string", length=255)
@@ -105,6 +106,7 @@ class InvoiceItem
 
     /**
      * @var int The quantity of the items that are ordered
+     *
      * @example 1
      *
      * @Groups({"read","write"})
@@ -116,6 +118,7 @@ class InvoiceItem
 
     /**
      * @var string The price of this product
+     *
      * @example 50.00
      *
      * @Groups({"read","write"})
@@ -126,6 +129,7 @@ class InvoiceItem
 
     /**
      * @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
+     *
      * @example EUR
      *
      * @Assert\Currency
@@ -136,6 +140,7 @@ class InvoiceItem
 
     /**
      * @var int The tax percentage for this offer as an integer e.g. 9% makes 9
+     *
      * @example 9
      *
      * @Assert\NotBlank

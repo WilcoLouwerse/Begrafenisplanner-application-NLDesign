@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -17,7 +15,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * This entity represents a payment of an invoice.
  *
  * @author Barry Brands <barry@conduction.nl>
- *
  * @license EUPL <https://github.com/ConductionNL/betaalservice/blob/master/LICENSE.md>
  *
  * @category entity
@@ -32,6 +29,7 @@ class Payment
 {
     /**
      * @var UuidInterface
+     *
      * @example e2984465-190a-4562-829e-a8cca81aa35d
      *
      * @Assert\Uuid
@@ -45,6 +43,7 @@ class Payment
 
     /**
      * @var string The provider that handles the payment
+     *
      * @example iDeal
      *
      * @Assert\NotNull
@@ -58,6 +57,7 @@ class Payment
 
     /**
      * @var string The payment id of this payment
+     *
      * @example 87782426a21cbd70fc9823cbe1e024fb25804c833743b41529a23ae94b3b1cc2
      *
      * @Assert\NotNull
@@ -71,6 +71,7 @@ class Payment
 
     /**
      * @var string The status of this payment
+     *
      * @example open
      *
      * @Assert\NotNull
