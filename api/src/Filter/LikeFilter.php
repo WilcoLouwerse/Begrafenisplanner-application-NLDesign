@@ -36,14 +36,14 @@ final class LikeFilter extends AbstractContextAwareFilter
         $description = [];
         foreach ($this->properties as $property => $strategy) {
             $description["like_$property"] = [
-                    'property' => $property,
-                    'type'     => 'string',
-                    'required' => false,
-                    'swagger'  => [
-                            'description' => 'This filter narows your result using the * and _ wildcards, where * is assumed to be one or more characters and _ is assumed to be a single character',
-                            'name'        => $property,
-                            'type'        => 'string',
-                    ],
+                'property' => $property,
+                'type'     => 'string',
+                'required' => false,
+                'swagger'  => [
+                    'description' => 'This filter narows your result using the * and _ wildcards, where * is assumed to be one or more characters and _ is assumed to be a single character',
+                    'name'        => $property,
+                    'type'        => 'string',
+                ],
             ];
         }
 
