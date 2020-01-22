@@ -2211,12 +2211,16 @@ components:
             url: 'http://schema.org/identifier'
           type: string
         paymentProvider:
+          description: 'The provider that handles the payment'
           type: string
         paymentId:
+          description: 'The payment id of this payment'
           type: string
         status:
+          description: 'The status of this payment'
           type: string
         invoice:
+          description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice-read'
       required:
         - paymentProvider
@@ -2231,12 +2235,16 @@ components:
         - status
       properties:
         paymentProvider:
+          description: 'The provider that handles the payment'
           type: string
         paymentId:
+          description: 'The payment id of this payment'
           type: string
         status:
+          description: 'The status of this payment'
           type: string
         invoice:
+          description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice-write'
     'Payment:jsonld-read':
       type: object
@@ -2257,12 +2265,16 @@ components:
             url: 'http://schema.org/identifier'
           type: string
         paymentProvider:
+          description: 'The provider that handles the payment'
           type: string
         paymentId:
+          description: 'The payment id of this payment'
           type: string
         status:
+          description: 'The status of this payment'
           type: string
         invoice:
+          description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice:jsonld-read'
       required:
         - paymentProvider
@@ -2286,44 +2298,72 @@ components:
           readOnly: true
           type: string
         paymentProvider:
+          description: 'The provider that handles the payment'
           type: string
         paymentId:
+          description: 'The payment id of this payment'
           type: string
         status:
+          description: 'The status of this payment'
           type: string
         invoice:
+          description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice:jsonld-write'
 definitions:
   Invoice-read:
     properties:
       id:
+        description: 'The UUID identifier of this object'
+        type: string
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
       name:
+        description: 'The name of the invoice'
+        type: string
         example: 'My Invoice'
         maxLength: 255
       description:
+        description: 'The description of the invoice'
+        type: string
         example: 'This is the best invoice ever'
         maxLength: 255
       reference:
+        description: 'The human readable reference for this request, build as {gemeentecode}-{year}-{referenceId}. Where gemeentecode is a four digit number for gemeenten and a four letter abriviation for other organizations'
+        type: string
         example: 6666-2019-0000000012
         maxLength: 255
       targetOrganization:
+        description: 'The RSIN of the organization that ownes this proces'
+        type: string
         example: '002851234'
         maxLength: 255
       price:
+        description: 'The price of this product'
+        type: string
         example: '50.00'
       priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
         example: EUR
       tax:
+        description: 'The total tax over the invoice'
+        type: string
         example: '21.00'
       createdAt:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
         example: '20190101'
       order:
+        description: 'The order of this invoice'
+        type: string
         example: 'https://www.example.org/order/1'
         maxLength: 255
-      items: []
-      payments: []
+      items:
+        description: 'The items in this invoice'
+        type: \ArrayCollection
+      payments:
+        description: 'The payments of this Invoice'
+        type: \Payment
     required:
       - name
       - targetOrganization
@@ -2331,25 +2371,43 @@ definitions:
   Invoice-write:
     properties:
       name:
+        description: 'The name of the invoice'
+        type: string
         example: 'My Invoice'
         maxLength: 255
       description:
+        description: 'The description of the invoice'
+        type: string
         example: 'This is the best invoice ever'
         maxLength: 255
       targetOrganization:
+        description: 'The RSIN of the organization that ownes this proces'
+        type: string
         example: '002851234'
         maxLength: 255
       price:
+        description: 'The price of this product'
+        type: string
         example: '50.00'
       priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
         example: EUR
       tax:
+        description: 'The total tax over the invoice'
+        type: string
         example: '21.00'
       order:
+        description: 'The order of this invoice'
+        type: string
         example: 'https://www.example.org/order/1'
         maxLength: 255
-      items: []
-      payments: []
+      items:
+        description: 'The items in this invoice'
+        type: \ArrayCollection
+      payments:
+        description: 'The payments of this Invoice'
+        type: \Payment
     required:
       - name
       - targetOrganization
@@ -2357,29 +2415,51 @@ definitions:
   InvoiceItem-read:
     properties:
       id:
+        description: ''
+        type: string
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
       name:
+        description: 'The name of the object'
+        type: string
         example: 'My InvoiceItem'
         maxLength: 255
       description:
+        description: 'The description of the InvoiceItem'
+        type: string
         example: 'This is the best invoice item ever'
         maxLength: 255
       offer:
+        description: 'The offer this item represents'
+        type: string
         example: 'http://example.org/offers/1'
         format: url
       product:
+        description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
+        type: string
         maxLength: 255
       quantity:
+        description: 'The quantity of the items that are ordered'
+        type: int
         example: '1'
       price:
+        description: 'The price of this product'
+        type: string
         example: '50.00'
       priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
         example: EUR
       taxPercentage:
+        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+        type: int
         example: '9'
-      createdAt: []
-      invoice: []
+      createdAt:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      invoice:
+        description: 'The invoice that contains this item'
+        type: \Invoice
     required:
       - name
       - offer
@@ -2388,25 +2468,43 @@ definitions:
   InvoiceItem-write:
     properties:
       name:
+        description: 'The name of the object'
+        type: string
         example: 'My InvoiceItem'
         maxLength: 255
       description:
+        description: 'The description of the InvoiceItem'
+        type: string
         example: 'This is the best invoice item ever'
         maxLength: 255
       offer:
+        description: 'The offer this item represents'
+        type: string
         example: 'http://example.org/offers/1'
         format: url
       product:
+        description: 'The product this item represents. DEPRECATED: REPLACED BY OFFER'
+        type: string
         maxLength: 255
       quantity:
+        description: 'The quantity of the items that are ordered'
+        type: int
         example: '1'
       price:
+        description: 'The price of this product'
+        type: string
         example: '50.00'
       priceCurrency:
+        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
         example: EUR
       taxPercentage:
+        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+        type: int
         example: '9'
-      invoice: []
+      invoice:
+        description: 'The invoice that contains this item'
+        type: \Invoice
     required:
       - name
       - offer
@@ -2415,15 +2513,28 @@ definitions:
   Payment-read:
     properties:
       id:
+        description: ''
+        type: string
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
       paymentProvider:
+        description: 'The provider that handles the payment'
+        type: string
+        example: iDeal
         maxLength: 255
       paymentId:
+        description: 'The payment id of this payment'
+        type: string
+        example: 87782426a21cbd70fc9823cbe1e024fb25804c833743b41529a23ae94b3b1cc2
         maxLength: 255
       status:
+        description: 'The status of this payment'
+        type: string
+        example: open
         maxLength: 255
-      invoice: []
+      invoice:
+        description: 'The invoice this payment relates to'
+        type: \Invoice
     required:
       - paymentProvider
       - paymentId
@@ -2431,12 +2542,23 @@ definitions:
   Payment-write:
     properties:
       paymentProvider:
+        description: 'The provider that handles the payment'
+        type: string
+        example: iDeal
         maxLength: 255
       paymentId:
+        description: 'The payment id of this payment'
+        type: string
+        example: 87782426a21cbd70fc9823cbe1e024fb25804c833743b41529a23ae94b3b1cc2
         maxLength: 255
       status:
+        description: 'The status of this payment'
+        type: string
+        example: open
         maxLength: 255
-      invoice: []
+      invoice:
+        description: 'The invoice this payment relates to'
+        type: \Invoice
     required:
       - paymentProvider
       - paymentId
