@@ -21,7 +21,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
- *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
+ *     collectionOperations={
+ *          "get",
+ *          "post",
+ *          "post_webhook"={
+ *              "method"="POST",
+ *              "path"="payments/mollie_webhook",
+ *              "swagger_context" = {
+ *                  "summary"="Webhook to update payment statuses from Mollie",
+ *                  "description"="Webhook to update payment statuses from Mollie"
+ *              }
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\PaymentRepository")
  */
@@ -103,6 +115,26 @@ class Payment
      */
     private $invoice;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $paymentUrl;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $currency;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $amount;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
     public function getId()
     {
         return $this->id;
@@ -152,6 +184,54 @@ class Payment
     public function setInvoice(?Invoice $invoice): self
     {
         $this->invoice = $invoice;
+
+        return $this;
+    }
+
+    public function getPaymentUrl(): ?string
+    {
+        return $this->paymentUrl;
+    }
+
+    public function setPaymentUrl(?string $paymentUrl): self
+    {
+        $this->paymentUrl = $paymentUrl;
+
+        return $this;
+    }
+
+    public function getCurrency(): ?string
+    {
+        return $this->currency;
+    }
+
+    public function setCurrency(string $currency): self
+    {
+        $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function getAmount(): ?string
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(string $amount): self
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
