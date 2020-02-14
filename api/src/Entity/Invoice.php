@@ -199,6 +199,12 @@ class Invoice
      */
     private $customer;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="invoices")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organization;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -407,6 +413,18 @@ class Invoice
     public function setCustomer(string $customer): self
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getOrganization(): ?Organization
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization(?Organization $organization): self
+    {
+        $this->organization = $organization;
 
         return $this;
     }

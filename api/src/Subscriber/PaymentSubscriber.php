@@ -38,7 +38,7 @@ class PaymentSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['apidoc', EventPriorities::PRE_SERIALIZE],
+            KernelEvents::VIEW => ['payment', EventPriorities::PRE_SERIALIZE],
         ];
     }
     public function payment(ViewEvent $event)
@@ -61,7 +61,7 @@ class PaymentSubscriber implements EventSubscriberInterface
         $this->em->flush();
 
 
-
+        $json = json_encode($payment);
 
         $response = new Response(
             $json,
