@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\Payment;
 use Doctrine\ORM\EntityManagerInterface;
+use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,8 +16,13 @@ class MollieService
 
     public function __construct()
     {
-        $mollie = new MollieApiClient();
-        $mollie->setApiKey('');
+        $this->mollie = new MollieApiClient();
+        try {
+            $this->mollie->setApiKey('');
+        }
+        catch(ApiException $e){
+            echo "<section><h2>Error: could not authenticate with Mollie API</h2><pre>". $e->getMessage()."</pre></section>";
+        }
     }
     public function createPayment(Request $request):Payment{
 
@@ -34,22 +40,31 @@ class MollieService
         $payment->setDescription($description);
         $payment->setPaymentProvider($request["paymentProvider"]);
 
-        $molliePayment = $this->mollie->payments->create([
-           "amount"=>[
-               "currency"=>$currency,
-               "value"=>$amount
-           ],
-            "description"=>$description,
-            "redirectUrl"=>$redirectUrl,
-            "webhookUrl"=>"https://bs.conduction.nl/payments/molliewebhook"
-        ]);
+        try
+        {
+            $molliePayment = $this->mollie->payments->create([
+                "amount" => [
+                    "currency" => $currency,
+                    "value" => $amount
+                ],
+                "description" => $description,
+                "redirectUrl" => $redirectUrl,
+                "webhookUrl" => "https://bs.conduction.nl/payments/molliewebhook"
+            ]);
+            $payment->setPaymentId($molliePayment->id);
+            $payment->setStatus($molliePayment->status);
+            $payment->setPaymentUrl($molliePayment->getCheckoutUrl());
+
+            return $payment;
+        }
+        catch (ApiException $e)
+        {
+            echo "<section><h2>Could not connect to payment provider</h2>".$e->getMessage()."</section>";
+            return $payment->setStatus('failed');
+        }
 
 
-        $payment->setPaymentId($molliePayment->id);
-        $payment->setStatus($molliePayment->status);
-        $payment->setPaymentUrl($molliePayment->getCheckoutUrl);
 
-        return $payment;
     }
 
     public function updatePayment(Request $request, EntityManagerInterface $manager):Payment

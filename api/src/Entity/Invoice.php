@@ -188,6 +188,17 @@ class Invoice
      */
     private $payments;
 
+    /**
+     * @var string The customer that receives this invoice
+     * @example https://example.org/people/1
+     *
+     * @Groups({"read","write"})
+     * @Assert\Url
+     * @Assert\NotNull
+     * @ORM\Column(type="string", length=255)
+     */
+    private $customer;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -384,6 +395,18 @@ class Invoice
                 $payment->setInvoice(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCustomer(): ?string
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(string $customer): self
+    {
+        $this->customer = $customer;
 
         return $this;
     }

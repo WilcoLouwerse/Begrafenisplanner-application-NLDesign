@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e214b7cccc7bd4c5473526d0aa40895a",
+    "content-hash": "d718a4150926abbc4c5f8d54b2d7f024",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -3708,6 +3708,55 @@
                 "tree"
             ],
             "time": "2017-12-24T16:06:50+00:00"
+        },
+        {
+            "name": "sumup/sumup-ecom-php-sdk",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sumup/sumup-ecom-php-sdk.git",
+                "reference": "b294963b9861abaae53adb6db5ca209059fcf845"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sumup/sumup-ecom-php-sdk/zipball/b294963b9861abaae53adb6db5ca209059fcf845",
+                "reference": "b294963b9861abaae53adb6db5ca209059fcf845",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6|^7.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SumUp\\": "src/SumUp/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "SumUp",
+                    "email": "integration@sumup.com",
+                    "homepage": "https://github.com/sumup"
+                }
+            ],
+            "description": "SumUp eCom SDK for PHP",
+            "homepage": "https://developer.sumup.com",
+            "keywords": [
+                "checkout",
+                "ecommerce",
+                "payment",
+                "payment processing",
+                "sdk",
+                "sumup"
+            ],
+            "time": "2019-08-28T14:48:03+00:00"
         },
         {
             "name": "symfony/asset",
