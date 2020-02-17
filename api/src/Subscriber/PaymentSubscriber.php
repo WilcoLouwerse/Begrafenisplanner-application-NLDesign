@@ -6,6 +6,7 @@ namespace App\Subscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Payment;
+use App\Entity\Service;
 use App\Service\MollieService;
 use App\Service\SumUpService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,28 +48,38 @@ class PaymentSubscriber implements EventSubscriberInterface
         $result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
-        $mollieService = new MollieService();
-        $sumupService = new SumUpService();
+
 //        var_dump($route);
         if(!$result instanceof Payment || ($route != 'api_payment_post_webhook_collection' || $route != 'api_payment_post_collection')){
             //var_dump('a');
             return;
         }
         elseif($route=='api_payment_post_webhook_collection'){
-            $payment = $mollieService->updatePayment($event->getRequest(), $this->em);
+            $requestData = json_decode($event->getRequest()->getContent());
+            $paymentProvider = $this->em->getRepository('App\Entity\Service')->find($requestData['paymentProvider']);
+            if($paymentProvider instanceof Service && $paymentProvider->getType() == 'mollie'){
+                $mollieService = new MollieService($requestData['paymentProvider']);
+                $payment = $mollieService->updatePayment($event->getRequest(), $this->em);
+            }
         }else{
             $requestData = json_decode($event->getRequest()->getContent());
-            switch($requestData['paymentProvider']){
-                case 'mollie':
-                    $payment = $mollieService->createPayment($event->getRequest());
-                    break;
-                case 'sumup':
-                    $payment = $sumupService->createPayment($event->getRequest());
-                    break;
-                default:
-                    return;
+            $paymentProvider = $this->em->getRepository('App\Entity\Service')->find($requestData['paymentProvider']);
+            if($paymentProvider instanceof Service) {
+                switch ($paymentProvider->getType()) {
+                    case 'mollie':
+                        $mollieService = new MollieService($paymentProvider);
+                        $payment = $mollieService->createPayment($event->getRequest());
+                        break;
+                    case 'sumup':
+                        $sumupService = new SumUpService($paymentProvider);
+                        $payment = $sumupService->createPayment($event->getRequest());
+                        break;
+                    default:
+                        return;
+                }
             }
-
+            else
+                return;
         }
         $this->em->persist($payment);
         $this->em->flush();

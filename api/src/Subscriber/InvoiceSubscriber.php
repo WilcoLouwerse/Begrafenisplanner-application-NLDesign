@@ -48,39 +48,37 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
         $data = json_decode($this->event->getRequest()->getContent());
-        if (!$result instanceof Invoice || $route != 'api_invoice_post_collection' || $data['order'] != null)
+        if (!$result instanceof Invoice || $route != 'api_invoice_post_order_collection' || $data['order'] != null)
         {
             //var_dump('a');
             return;
         }
         $order = $data["order"];
 
-        $orderData = json_decode($this->client->get($order)->getBody());
-
         $invoice = new Invoice();
 
-        $invoice->setName($orderData['name']);
-        $invoice->setDescription($orderData['description']);
-        $invoice->setReference($orderData['reference']);
-        $invoice->setPrice($orderData['price']);
-        $invoice->setPriceCurrency($orderData['priceCurrency']);
-        $invoice->setTax($orderData['tax']);
+        $invoice->setName($order['name']);
+        $invoice->setDescription($order['description']);
+        $invoice->setReference($order['reference']);
+        $invoice->setPrice($order['price']);
+        $invoice->setPriceCurrency($order['priceCurrency']);
+        $invoice->setTax($order['tax']);
         $invoice->setOrder($order);
-        $invoice->setCustomer($orderData['customer']);
+        $invoice->setCustomer($order['customer']);
 
         $this->em->persist($invoice);
 
-        $organization = $this->em->getRepository('App\Entity\Organization')->findOrCreateByRsin($orderData['organization']['shortCode']);
+        $organization = $this->em->getRepository('App\Entity\Organization')->findOrCreateByRsin($order['organization']['shortCode']);
         if ($organization instanceof Organization)
         {
             if ($organization->getRsin() == $organization->getShortCode())
-                $organization->setShortCode($orderData['organization']['shortCode']);
+                $organization->setShortCode($order['organization']['shortCode']);
         }
         else
         {
             $organization = new Organization();
-            $organization->setRsin($orderData['organization']['rsin']);
-            $organization->setShortCode($orderData['organization']['shortCode']);
+            $organization->setRsin($order['organization']['rsin']);
+            $organization->setShortCode($order['organization']['shortCode']);
         }
         $this->em->persist($organization);
         $invoice->setOrganization($organization);

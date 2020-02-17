@@ -29,7 +29,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
- *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
+ *     collectionOperations={
+ *          "get",
+ *          "post",
+ *          "post_webhook"={
+ *              "method"="POST",
+ *              "path"="invoices/order",
+ *              "swagger_context" = {
+ *                  "summary"="Create an invoice by just providing an order",
+ *                  "description"="Create an invoice by just providing an order"
+ *              }
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
  * @ORM\Table(name="invoices")

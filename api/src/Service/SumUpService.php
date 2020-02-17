@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\Payment;
+use App\Entity\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Mollie\Api\Exceptions\ApiException;
@@ -23,18 +24,14 @@ class SumUpService
     private $customService;
     private $client;
 
-    const CLIENT_ID = '';
-    const CLIENT_SECRET = '';
-    const AUTHORIZATION_CODE = '';
-
-    public function __construct()
+    public function __construct(Service $service)
     {
         $this->client = new Client();
         try{
             $this->sumup = new SumUp([
-                'app_id'        => self::CLIENT_ID,
-                'app_secret'    => self::CLIENT_SECRET,
-                'code'          => self::AUTHORIZATION_CODE
+                'app_id'        => $service->getConfiguration()['app_id'],
+                'app_secret'    => $service->getConfiguration()['app_secret'],
+                'code'          => $service->getAuthorization()
             ]);
             $this->checkoutService = $this->sumup->getCheckoutService();
             $this->customerService = $this->sumup->getCustomerService();

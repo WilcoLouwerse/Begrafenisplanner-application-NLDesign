@@ -54,14 +54,9 @@ class Payment
     private $id;
 
     /**
-     * @var string The provider that handles the payment
-     *
-     * @example iDeal
+     * @var Service The provider that handles the payment
      *
      * @Assert\NotNull
-     * @Assert\Length(
-     *     max = 255
-     * )
      * @Groups({"read", "write"})
      * @ORM\Column(type="string", length=255)
      */
@@ -172,12 +167,12 @@ class Payment
         return $this->id;
     }
 
-    public function getPaymentProvider(): ?string
+    public function getPaymentProvider(): ?Service
     {
         return $this->paymentProvider;
     }
 
-    public function setPaymentProvider(string $paymentProvider): self
+    public function setPaymentProvider(Service $paymentProvider): self
     {
         $this->paymentProvider = $paymentProvider;
 

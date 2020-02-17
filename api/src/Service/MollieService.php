@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use App\Entity\Payment;
+use App\Entity\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
@@ -15,11 +16,11 @@ class MollieService
     private $mollie;
     private $domain;
 
-    public function __construct()
+    public function __construct(Service $service)
     {
         $this->mollie = new MollieApiClient();
         try {
-            $this->mollie->setApiKey('');
+            $this->mollie->setApiKey($service->getAuthorization());
         }
         catch(ApiException $e){
             echo "<section><h2>Error: could not authenticate with Mollie API</h2><pre>". $e->getMessage()."</pre></section>";

@@ -83,9 +83,18 @@ class Organization
      */
     private $dateModified;
 
+    /**
+     * @var ArrayCollection The payment providers configured for this organization
+     *
+     * @Groups({"read","write"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Service", mappedBy="organization")
+     */
+    private $services;
+
     public function __construct()
     {
         $this->invoices = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     public function getId(): ?Uuid
@@ -168,6 +177,37 @@ class Organization
     public function setDateModified(\DateTimeInterface $dateModified): self
     {
         $this->dateModified = $dateModified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Service[]
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): self
+    {
+        if (!$this->services->contains($service)) {
+            $this->services[] = $service;
+            $service->setOrganization($this);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): self
+    {
+        if ($this->services->contains($service)) {
+            $this->services->removeElement($service);
+            // set the owning side to null (unless already changed)
+            if ($service->getOrganization() === $this) {
+                $service->setOrganization(null);
+            }
+        }
 
         return $this;
     }
