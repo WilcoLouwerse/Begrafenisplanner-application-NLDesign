@@ -7,6 +7,7 @@ namespace App\Subscriber;
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Payment;
 use App\Service\MollieService;
+use App\Service\SumUpService;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -47,6 +48,7 @@ class PaymentSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
         $mollieService = new MollieService();
+        $sumupService = new SumUpService();
 //        var_dump($route);
         if(!$result instanceof Payment || ($route != 'api_payment_post_webhook_collection' || $route != 'api_payment_post_collection')){
             //var_dump('a');
@@ -55,11 +57,21 @@ class PaymentSubscriber implements EventSubscriberInterface
         elseif($route=='api_payment_post_webhook_collection'){
             $payment = $mollieService->updatePayment($event->getRequest(), $this->em);
         }else{
-            $payment = $mollieService->createPayment($event->getRequest());
+            $requestData = json_decode($event->getRequest()->getContent());
+            switch($requestData['paymentProvider']){
+                case 'mollie':
+                    $payment = $mollieService->createPayment($event->getRequest());
+                    break;
+                case 'sumup':
+                    $payment = $sumupService->createPayment($event->getRequest());
+                    break;
+                default:
+                    return;
+            }
+
         }
         $this->em->persist($payment);
         $this->em->flush();
-
 
         $json = json_encode($payment);
 
@@ -69,8 +81,5 @@ class PaymentSubscriber implements EventSubscriberInterface
             ['content-type' => 'application/json+hal']
         );
         $event->setResponse($response);
-
-
-
     }
 }

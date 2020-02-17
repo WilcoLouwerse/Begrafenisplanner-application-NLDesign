@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MollieService
 {
     private $mollie;
+    private $domain;
 
     public function __construct()
     {
@@ -31,14 +32,14 @@ class MollieService
         $currency = $request["currency"];
         $amount = $request["amount"];
         $description = $request["description"];
-        //@TODO: make return url configurable
-        $redirectUrl = "https://www.conduction.nl/betaling/".(string)$payment->getId();
+        $redirectUrl = $request["redirectUrl"].'/'.(string)$payment->getId();
 
         $payment->setInvoice($request['invoice']);
         $payment->setCurrency($currency);
         $payment->setAmount($amount);
         $payment->setDescription($description);
         $payment->setPaymentProvider($request["paymentProvider"]);
+        $payment->setReturnUrl($redirectUrl);
 
         try
         {
@@ -49,7 +50,7 @@ class MollieService
                 ],
                 "description" => $description,
                 "redirectUrl" => $redirectUrl,
-                "webhookUrl" => "https://bs.conduction.nl/payments/molliewebhook"
+                "webhookUrl" => "$this->domain/payments/molliewebhook"
             ]);
             $payment->setPaymentId($molliePayment->id);
             $payment->setStatus($molliePayment->status);
@@ -62,9 +63,6 @@ class MollieService
             echo "<section><h2>Could not connect to payment provider</h2>".$e->getMessage()."</section>";
             return $payment->setStatus('failed');
         }
-
-
-
     }
 
     public function updatePayment(Request $request, EntityManagerInterface $manager):Payment
