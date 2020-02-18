@@ -8,9 +8,10 @@ spec:
   renewBefore: 12h
   dnsNames:
   {{- if eq .Values.settings.env "prod" }}
-  - {{ .Values.settings.name }}.{{ .Values.settings.domain }}    
+  - www.{{ .Values.settings.domain }}    
+  - {{ .Values.settings.domain }}    
   {{- else }}      
-  - {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}    
+  - {{ .Values.settings.env }}.{{ .Values.settings.domain }}    
   {{- end }}
   issuerRef:
     name: {{ include "name" . }}-{{ .Values.settings.env }}-letsencrypt
