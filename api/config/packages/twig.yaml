@@ -30,6 +30,9 @@ parameters:
     env(TRUSTED_PROXIES): ''        
     env(NLX_OUTWAY): ''     
     env(NLX_INWAY): '' 
+    env(APP_COMMONGROUND_KEY): '' 
+    env(APP_APPLICATION_KEY): '' 
+    env(APP_USER_KEY): '' 
 
 twig:
     default_path: '%kernel.project_dir%/templates'
@@ -65,7 +68,12 @@ twig:
         app_auth: '%env(AUTH_ENABLED)%'        
         app_audittrail: '%env(AUDITTRAIL_ENABLED)%'        
         app_notification: '%env(NOTIFICATION_ENABLED)%'
-        app_health: '%env(HEALTH_ENABLED)%'        
+        app_health: '%env(HEALTH_ENABLED)%'   
+        
+        app_commonground_id: '%env(APP_COMMONGROUND_ID)%'   
+        app_commonground_key: '%env(APP_COMMONGROUND_KEY)%'   
+        app_application_key: '%env(APP_APPLICATION_KEY)%'   
+        app_user_key: '%env(APP_USER_KEY)%'               
         
         trusted_hosts: '%env(TRUSTED_HOSTS)%'
         trusted_proxies: '%env(TRUSTED_PROXIES)%'

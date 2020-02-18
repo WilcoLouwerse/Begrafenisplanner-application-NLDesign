@@ -6,6 +6,17 @@ parameters:
     env(CONDUCTION_COMMONGROUND_BAG_APIKEY): 'Change me in your .env file'
     env(NLX_OUTWAY): true
     env(NLX_INWAY): false
+        
+    env(APP_COMMONGROUND_id): '' 
+    env(APP_COMMONGROUND_KEY): '' 
+    env(APP_APPLICATION_KEY): '' 
+    env(APP_USER_KEY): '' 
+    
+    app_commonground_id: '%env(APP_COMMONGROUND_ID)%'  
+    app_commonground_key: '%env(APP_COMMONGROUND_KEY)%'   
+    app_application_key: '%env(APP_APPLICATION_KEY)%'   
+    app_user_key: '%env(APP_USER_KEY)%'               
+    
     common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
     common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
     common_ground.oas.type: service
