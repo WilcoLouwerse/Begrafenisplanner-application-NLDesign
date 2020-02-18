@@ -47,7 +47,7 @@ class CommongroundApplication implements UserInterface, EquatableInterface
 	
 	public function isEqualTo(UserInterface $user)
 	{
-		if (!$user instanceof WebserviceUser) {
+		if (!$user instanceof CommongroundApplication) {
 			return false;
 		}
 		

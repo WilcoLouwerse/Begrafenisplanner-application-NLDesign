@@ -47,7 +47,7 @@ class CommongroundUser implements UserInterface, EquatableInterface
 	
 	public function isEqualTo(UserInterface $user)
 	{
-		if (!$user instanceof WebserviceUser) {
+		if (!$user instanceof CommongroundUser) {
 			return false;
 		}
 		

@@ -14,6 +14,7 @@ class CommonGroundService
     private $params;
     private $cache;
     private $session;
+    private $headers;
 
     public function __construct(ParameterBagInterface $params, SessionInterface $session, CacheInterface $cache)
     {
@@ -21,7 +22,24 @@ class CommonGroundService
         $this->session = $session;
         $this->cash = $cache;
         $this->session= $session;
-
+        
+        // To work with NLX we need a couple of default headers
+        $this->headers = [
+        	'Accept'        => 'application/ld+json',
+        	'Content-Type'  => 'application/json',
+        	'Authorization'  => $this->params->get('app_commonground_key'),
+        	'X-NLX-Request-Application-Id' => $this->params->get('app_commonground_id')// the id of the application performing the request
+        ];
+        
+        if($session->get('user') === $user){
+        	$headers['X-NLX-Request-User-Id'] = $user['@id'];
+        }
+        
+        if($session->get('process') === $process){
+        	$headers[] = $process['@id'];
+        }
+        
+        
         // We might want to overwrite the guzle config, so we declare it as a separate array that we can then later adjust, merge or otherwise influence
         $this->guzzleConfig = [
             // Base URI is used with relative requests
@@ -30,16 +48,7 @@ class CommonGroundService
             // You can set any number of default request options.
             'timeout'  => 4000.0,
             // To work with NLX we need a couple of default headers
-            'headers' => [
-                'Accept'        => 'application/ld+json',
-                'Content-Type'  => 'application/json',
-                //'X-NLX-Request-User-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn'				// the id of the user performing the request
-                //'X-NLX-Request-Application-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 		// the id of the application performing the request
-                //'X-NLX-Request-Subject-Identifier' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 	// an subject identifier for purpose registration (doelbinding)
-                //'X-NLX-Request-Process-Id' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 			// a process id for purpose registration (doelbinding)
-                //'X-NLX-Request-Data-Elements' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 		// a list of requested data elements
-                //'X-NLX-Request-Data-Subject' => '64YsjzZkrWWnK8bUflg8fFC1ojqv5lDn' 		// a key-value list of data subjects related to this request. e.g. bsn=12345678,kenteken=ab-12-fg
-            ],
+        	'headers' => $this->headers,
         ];
 
         // Lets start up a default client
@@ -54,18 +63,38 @@ class CommonGroundService
         if (!$url) {
             return false;
         }
-
+        $parsedUrl = $parse_url($url);
+        
+        $elementList = [];
+        foreach($query as $element){
+        	$elementList[] = implode("=",$element);
+        }
+        $elementList = implode(",", $elementList);
+        
+        // To work with NLX we need a couple of default headers
+        $headers = $this->headers;
+        $headers['X-NLX-Request-Data-Elements'] = $elementList;
+        $headers['X-NLX-Request-Data-Subject'] = $elementList;
+        
         $item = $this->cash->getItem('commonground_'.md5($url));
         if ($item->isHit() && !$force) {
             //return $item->get();
         }
 
         $response = $this->client->request('GET', $url, [
-            'query' => $query,
+        	'query' => $query,
+        	'headers' => $headers,
         ]
-                );
+        );
         
         $response = json_decode($response->getBody(), true);
+        
+        /* @todo this should look to al @id keus not just the main root */
+        foreach($response['_embedded'] as $key => $embedded){
+        	if($embedded['@id']){
+        		$response['_embedded'][$key]['@id'] = $parsedUrl["host"].$embedded['@id'];
+	        }
+        }
 
         $item->set($response);
         $item->expiresAt(new \DateTime('tomorrow'));
@@ -79,22 +108,33 @@ class CommonGroundService
      */
     public function getResource($url, $query = [], $force = false)
     {
+    	
         if (!$url) {
             //return false;
         }
-
+        $parsedUrl = $parse_url($url);
+        
+        // To work with NLX we need a couple of default headers
+        $headers = $this->headers;
+        $headers['X-NLX-Request-Subject-Identifier'] = $url;
+        
         $item = $this->cash->getItem('commonground_'.md5($url));
         if ($item->isHit() && !$force) {
             //return $item->get();
         }
 
         $response = $this->client->request('GET', $url, [
-            'query' => $query,
+        	'query' => $query,
+        	'headers' => $headers,
         ]
         );
 
         $response = json_decode($response->getBody(), true);
 
+        if($response['@id']){
+        	$response['@id'] = $parsedUrl["host"].$response['@id'];
+        }
+        
         $item->set($response);
         $item->expiresAt(new \DateTime('tomorrow'));
         $this->cash->save($item);
@@ -110,6 +150,7 @@ class CommonGroundService
         if (!$url) {
             return false;
         }
+        $parsedUrl = $parse_url($url);
         
         unset($resource['@context']);
         unset($resource['@id']);
@@ -131,6 +172,10 @@ class CommonGroundService
         }
 
         $response = json_decode($response->getBody(), true);
+        
+        if($response['@id']){
+        	$response['@id'] = $parsedUrl["host"].$response['@id'];
+        }
 
         // Lets cash this item for speed purposes
         $item = $this->cash->getItem('commonground_'.md5($url));
@@ -149,6 +194,7 @@ class CommonGroundService
         if (!$url) {
             return false;
         }
+        $parsedUrl = $parse_url($url);
 
         $response = $this->client->request('POST', $url, [
             'body' => json_encode($resource),
@@ -165,7 +211,10 @@ class CommonGroundService
         
         
         $response = json_decode($response->getBody(), true);
-
+        
+        if($response['@id']){
+        	$response['@id'] = $parsedUrl["host"].$response['@id'];
+        }
 
         // Lets cash this item for speed purposes
         $item = $this->cash->getItem('commonground_'.md5($url.'/'.$response['id']));
@@ -189,8 +238,8 @@ class CommonGroundService
     public function getComponentList()
     {
         $components = [
-            'cc'  => ['href'=>'http://cc.zaakonline.nl', 'authorization'=>''],
-            'lc'  => ['href'=>'http://lc.zaakonline.nl', 'authorization'=>''],
+            'cc'  => ['href'=>'http://cc.zaakonline.nl',  'authorization'=>''],
+            'lc'  => ['href'=>'http://lc.zaakonline.nl',  'authorization'=>''],
             'ltc' => ['href'=>'http://ltc.zaakonline.nl', 'authorization'=>''],
             'brp' => ['href'=>'http://brp.zaakonline.nl', 'authorization'=>''],
             'irc' => ['href'=>'http://irc.zaakonline.nl', 'authorization'=>''],

@@ -3,7 +3,7 @@
 // src/Security/TokenAuthenticator.php
 namespace App\Security;
 
-use App\Entity\CommongroundUser;
+use App\Security\User\CommongroundUser;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,14 +13,17 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 {
 	private $em;
+	private $params;
 	
-	public function __construct(EntityManagerInterface $em)
+	public function __construct(EntityManagerInterface $em, ParameterBagInterface $params)
 	{
 		$this->em = $em;
+		$this->params = $params;
 	}
 	
 	/**

@@ -31,13 +31,13 @@ class CommongroundApplicationProvider implements UserProviderInterface
 	
 	public function supportsClass($class)
 	{
-		return WebserviceUser::class === $class;
+		return CommongroundApplication::class === $class;
 	}
 	
-	private function fetchUser($username)
+	private function fetchUser($uuid)
 	{
 		// make a call to your webservice here
-		$userData = ...
+		// $userData = ...
 		// pretend it returns an array on success, false if there is no user
 		
 		if ($userData) {
@@ -45,11 +45,11 @@ class CommongroundApplicationProvider implements UserProviderInterface
 			
 			// ...
 			
-			return new WebserviceUser($username, $password, $salt, $roles);
+			return new CommongroundApplication($username, $password, $salt, $roles);
 		}
 		
 		throw new UsernameNotFoundException(
-				sprintf('Username "%s" does not exist.', $username)
+				sprintf('Application "%s" does not exist.', $uuid)
 				);
 	}
 }
