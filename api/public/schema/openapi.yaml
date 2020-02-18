@@ -866,7 +866,7 @@ paths:
     post:
       tags:
         - Invoice
-      operationId: post_webhookInvoiceCollection
+      operationId: post_orderInvoiceCollection
       summary: 'Creates a Invoice resource.'
       responses:
         201:
@@ -3180,7 +3180,12 @@ components:
         tax:
           description: 'The total tax over the invoice'
           type: string
-        createdAt:
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        dateModified:
           readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
@@ -3298,7 +3303,12 @@ components:
         tax:
           description: 'The total tax over the invoice'
           type: string
-        createdAt:
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        dateModified:
           readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
@@ -3612,15 +3622,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Service-read'
+        redirectUrl:
+          description: 'The url payment providers should return to'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
       required:
         - shortCode
         - rsin
+        - redirectUrl
     Organization-write:
       type: object
       description: ''
       required:
         - shortCode
         - rsin
+        - redirectUrl
       properties:
         shortCode:
           type: string
@@ -3631,6 +3648,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Service-write'
+        redirectUrl:
+          description: 'The url payment providers should return to'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
     'Organization:jsonld-read':
       type: object
       description: ''
@@ -3669,15 +3691,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Service:jsonld-read'
+        redirectUrl:
+          description: 'The url payment providers should return to'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
       required:
         - shortCode
         - rsin
+        - redirectUrl
     'Organization:jsonld-write':
       type: object
       description: ''
       required:
         - shortCode
         - rsin
+        - redirectUrl
       properties:
         '@context':
           readOnly: true
@@ -3697,6 +3726,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Service:jsonld-write'
+        redirectUrl:
+          description: 'The url payment providers should return to'
+          externalDocs:
+            url: 'http://schema.org/url'
+          type: string
     Payment-read:
       type: object
       description: 'An entity representing a payment.'
@@ -3708,7 +3742,7 @@ components:
           type: string
         paymentProvider:
           description: 'The provider that handles the payment'
-          type: string
+          $ref: '#/components/schemas/Service-read'
         paymentId:
           description: 'The payment id of this payment'
           type: string
@@ -3718,25 +3752,10 @@ components:
         invoice:
           description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice-read'
-        paymentUrl:
-          description: 'The payment URL for this payment'
-          type: string
-        currency:
-          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-          externalDocs:
-            url: 'http://schema.org/priceCurrency'
-          type: string
-        amount:
-          description: 'The amount that is transferred with this payment'
-          type: string
-        description:
-          description: 'The description of the payment'
-          type: string
       required:
         - paymentProvider
         - paymentId
         - status
-        - amount
     Payment-write:
       type: object
       description: 'An entity representing a payment.'
@@ -3744,11 +3763,10 @@ components:
         - paymentProvider
         - paymentId
         - status
-        - amount
       properties:
         paymentProvider:
           description: 'The provider that handles the payment'
-          type: string
+          $ref: '#/components/schemas/Service-write'
         paymentId:
           description: 'The payment id of this payment'
           type: string
@@ -3758,20 +3776,6 @@ components:
         invoice:
           description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice-write'
-        paymentUrl:
-          description: 'The payment URL for this payment'
-          type: string
-        currency:
-          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-          externalDocs:
-            url: 'http://schema.org/priceCurrency'
-          type: string
-        amount:
-          description: 'The amount that is transferred with this payment'
-          type: string
-        description:
-          description: 'The description of the payment'
-          type: string
     'Payment:jsonld-read':
       type: object
       description: 'An entity representing a payment.'
@@ -3792,7 +3796,7 @@ components:
           type: string
         paymentProvider:
           description: 'The provider that handles the payment'
-          type: string
+          $ref: '#/components/schemas/Service:jsonld-read'
         paymentId:
           description: 'The payment id of this payment'
           type: string
@@ -3802,25 +3806,10 @@ components:
         invoice:
           description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice:jsonld-read'
-        paymentUrl:
-          description: 'The payment URL for this payment'
-          type: string
-        currency:
-          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-          externalDocs:
-            url: 'http://schema.org/priceCurrency'
-          type: string
-        amount:
-          description: 'The amount that is transferred with this payment'
-          type: string
-        description:
-          description: 'The description of the payment'
-          type: string
       required:
         - paymentProvider
         - paymentId
         - status
-        - amount
     'Payment:jsonld-write':
       type: object
       description: 'An entity representing a payment.'
@@ -3828,7 +3817,6 @@ components:
         - paymentProvider
         - paymentId
         - status
-        - amount
       properties:
         '@context':
           readOnly: true
@@ -3841,7 +3829,7 @@ components:
           type: string
         paymentProvider:
           description: 'The provider that handles the payment'
-          type: string
+          $ref: '#/components/schemas/Service:jsonld-write'
         paymentId:
           description: 'The payment id of this payment'
           type: string
@@ -3851,20 +3839,6 @@ components:
         invoice:
           description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice:jsonld-write'
-        paymentUrl:
-          description: 'The payment URL for this payment'
-          type: string
-        currency:
-          description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-          externalDocs:
-            url: 'http://schema.org/priceCurrency'
-          type: string
-        amount:
-          description: 'The amount that is transferred with this payment'
-          type: string
-        description:
-          description: 'The description of the payment'
-          type: string
     Service:
       type: object
       description: ''
@@ -4070,7 +4044,11 @@ definitions:
         description: 'The total tax over the invoice'
         type: string
         example: '21.00'
-      createdAt:
+      dateCreated:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+        example: '20190101'
+      dateModified:
         description: 'The moment this request was created by the submitter'
         type: \DateTime
         example: '20190101'
@@ -4261,12 +4239,17 @@ definitions:
       dateModified:
         description: 'The moment this request last Modified'
         type: \Datetime
+      redirectUrl:
+        description: 'The url payment providers should return to'
+        type: string
+        format: url
       services:
         description: 'The payment providers configured for this organization'
         type: \ArrayCollection
     required:
       - shortCode
       - rsin
+      - redirectUrl
   Organization-write:
     properties:
       shortCode:
@@ -4274,12 +4257,17 @@ definitions:
       rsin:
         maxLength: 16
         minLength: 4
+      redirectUrl:
+        description: 'The url payment providers should return to'
+        type: string
+        format: url
       services:
         description: 'The payment providers configured for this organization'
         type: \ArrayCollection
     required:
       - shortCode
       - rsin
+      - redirectUrl
   Payment-read:
     properties:
       id:
@@ -4287,9 +4275,6 @@ definitions:
         type: string
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
-      paymentProvider:
-        description: 'The provider that handles the payment'
-        type: \Service
       paymentId:
         description: 'The payment id of this payment'
         type: string
@@ -4300,35 +4285,18 @@ definitions:
         type: string
         example: open
         maxLength: 255
-      paymentUrl:
-        description: 'The payment URL for this payment'
-        type: string
-      currency:
-        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      amount:
-        description: 'The amount that is transferred with this payment'
-        type: string
-        example: '50.00'
-      description:
-        description: 'The description of the payment'
-        type: string
-        example: 'This is the best invoice ever'
-        maxLength: 255
+      paymentProvider:
+        description: 'The provider that handles the payment'
+        type: \Service
       invoice:
         description: 'The invoice this payment relates to'
         type: \Invoice
     required:
-      - paymentProvider
       - paymentId
       - status
-      - amount
+      - paymentProvider
   Payment-write:
     properties:
-      paymentProvider:
-        description: 'The provider that handles the payment'
-        type: \Service
       paymentId:
         description: 'The payment id of this payment'
         type: string
@@ -4339,30 +4307,16 @@ definitions:
         type: string
         example: open
         maxLength: 255
-      paymentUrl:
-        description: 'The payment URL for this payment'
-        type: string
-      currency:
-        description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
-        type: string
-        example: EUR
-      amount:
-        description: 'The amount that is transferred with this payment'
-        type: string
-        example: '50.00'
-      description:
-        description: 'The description of the payment'
-        type: string
-        example: 'This is the best invoice ever'
-        maxLength: 255
+      paymentProvider:
+        description: 'The provider that handles the payment'
+        type: \Service
       invoice:
         description: 'The invoice this payment relates to'
         type: \Invoice
     required:
-      - paymentProvider
       - paymentId
       - status
-      - amount
+      - paymentProvider
   Service-read:
     properties:
       id:

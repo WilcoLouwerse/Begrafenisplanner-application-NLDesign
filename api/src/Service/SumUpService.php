@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\Entity\Invoice;
 use App\Entity\Payment;
 use App\Entity\Service;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,29 +44,23 @@ class SumUpService
         }
 
     }
-    public function createPayment(Request $request):Payment{
+    public function createPayment(Invoice $invoice):string{
 
-        $payment = new Payment();
 
-        $currency = $request["currency"];
-        $amount = $request["amount"];
-        $description = $request["description"];
-        $payToEmail = json_decode($this->client->get($request["invoice"]))["customer"]["emails"][0]["email"];
+
+        $currency = $invoice->getPriceCurrency();
+        $amount = $invoice->getPrice();
+        $description = $invoice->getDescription();
+        $payToEmail = json_decode($this->client->get($invoice->getCustomer()), true)["emails"][0]["email"];
         //@TODO: make return url configurable
-        $redirectUrl = "https://www.conduction.nl/betaling/".(string)$payment->getId();
-
-        $payment->setInvoice($request['invoice']);
-        $payment->setCurrency($currency);
-        $payment->setAmount($amount);
-        $payment->setDescription($description);
-        $payment->setPaymentProvider($request["paymentProvider"]);
+        $redirectUrl = $invoice->getRedirectUrl();
 
         try
         {
             $sumUpPayment = $this->checkoutService->create(
                 $amount,
                 $currency,
-                $payment->getId(),
+                $invoice->getReference(),
                 $payToEmail,
                 $description
             );
@@ -85,10 +80,7 @@ class SumUpService
             echo "<section><h2>SumUp SDK Error</h2><pre>".$e->getMessage()."</pre></section>";
             return null;
         }
-        $payment->setPaymentId($sumUpPayment->getBody()->id);
-        $payment->setPaymentUrl('https://api.sumup.com/v0.1/checkouts/'.$sumUpPayment->getBody()->id);
-        $payment->setStatus(strtolower($sumUpPayment->getBody()->sumup));
-        return $payment;
+        return 'https://api.sumup.com/v0.1/checkouts/'.$sumUpPayment->getBody()->id;
     }
 
     public function updatePayment(Request $request, EntityManagerInterface $manager):Payment

@@ -86,10 +86,21 @@ class Organization
     /**
      * @var ArrayCollection The payment providers configured for this organization
      *
+     * @MaxDepth(1)
      * @Groups({"read","write"})
      * @ORM\OneToMany(targetEntity="App\Entity\Service", mappedBy="organization")
      */
     private $services;
+
+    /**
+     * @var string The url payment providers should return to
+     *
+     * @Groups({"read","write"})
+     * @Assert\NotNull
+     * @Assert\Url
+     * @ORM\Column(type="string", length=255)
+     */
+    private $redirectUrl;
 
     public function __construct()
     {
@@ -208,6 +219,18 @@ class Organization
                 $service->setOrganization(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRedirectUrl(): ?string
+    {
+        return $this->redirectUrl;
+    }
+
+    public function setRedirectUrl(string $redirectUrl): self
+    {
+        $this->redirectUrl = $redirectUrl;
 
         return $this;
     }

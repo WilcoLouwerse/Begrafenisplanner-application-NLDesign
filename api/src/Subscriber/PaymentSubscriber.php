@@ -5,6 +5,7 @@ namespace App\Subscriber;
 
 
 use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Entity\Invoice;
 use App\Entity\Payment;
 use App\Entity\Service;
 use App\Service\MollieService;
@@ -40,51 +41,45 @@ class PaymentSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['payment', EventPriorities::PRE_SERIALIZE],
+            KernelEvents::VIEW => ['payment', EventPriorities::PRE_VALIDATE],
         ];
     }
+
     public function payment(ViewEvent $event)
     {
         $result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
 
-//        var_dump($route);
-        if(!$result instanceof Payment || ($route != 'api_payment_post_webhook_collection' || $route != 'api_payment_post_collection')){
-            //var_dump('a');
-            return;
-        }
-        elseif($route=='api_payment_post_webhook_collection'){
-            $requestData = json_decode($event->getRequest()->getContent());
-            $paymentProvider = $this->em->getRepository('App\Entity\Service')->find($requestData['paymentProvider']);
-            if($paymentProvider instanceof Service && $paymentProvider->getType() == 'mollie'){
-                $mollieService = new MollieService($requestData['paymentProvider']);
-                $payment = $mollieService->updatePayment($event->getRequest(), $this->em);
+        //var_dump($route);
+        if($result instanceof Payment && $route=='api_payment_post_webhook_collection'){
+            $providerId = $event->getRequest()->query->get('provider');
+            $provider = $this->em->getRepository('App\Entity\Service')->find($providerId);
+
+            $requestData = json_decode($event->getRequest()->getContent(),true);
+
+
+
+
+            if($provider instanceof Service && $provider->getType() == 'mollie'){
+                $mollieService = new MollieService($provider);
+                $payment = $mollieService->updatePayment($requestData, $this->em);
             }
-        }else{
-            $requestData = json_decode($event->getRequest()->getContent());
-            $paymentProvider = $this->em->getRepository('App\Entity\Service')->find($requestData['paymentProvider']);
-            if($paymentProvider instanceof Service) {
-                switch ($paymentProvider->getType()) {
-                    case 'mollie':
-                        $mollieService = new MollieService($paymentProvider);
-                        $payment = $mollieService->createPayment($event->getRequest());
-                        break;
-                    case 'sumup':
-                        $sumupService = new SumUpService($paymentProvider);
-                        $payment = $sumupService->createPayment($event->getRequest());
-                        break;
-                    default:
-                        return;
-                }
-            }
-            else
+            else{
                 return;
+            }
+        }
+        else{
+            return;
         }
         $this->em->persist($payment);
         $this->em->flush();
 
-        $json = json_encode($payment);
+
+        $json = $this->serializer->serialize(
+            $payment,
+            'jsonhal', ['enable_max_depth'=>true]
+        );
 
         $response = new Response(
             $json,

@@ -58,7 +58,8 @@ class Payment
      *
      * @Assert\NotNull
      * @Groups({"read", "write"})
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Service")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $paymentProvider;
 
@@ -110,58 +111,6 @@ class Payment
      */
     private $invoice;
 
-    /**
-     * @var string The payment URL for this payment
-     *
-     * @Groups({"read","write"})
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $paymentUrl;
-
-    /**
-     * @var string The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format
-     *
-     * @example EUR
-     *
-     * @Assert\Currency
-     * @Groups({"read","write"})
-     * @ORM\Column(type="string")
-     */
-    private $currency;
-
-    /**
-     * @var string The amount that is transferred with this payment
-     *
-     * @example 50.00
-     *
-     * @Groups({"read","write"})
-     * @Assert\NotNull
-     * @ORM\Column(type="decimal", precision=8, scale=2)
-     */
-    private $amount;
-
-    /**
-     * @var string The description of the payment
-     *
-     * @example This is the best invoice ever
-     * @Groups({"read","write"})
-     * @Assert\Length(
-     *     max=255
-     * )
-     * @ORM\Column(type="string", length=2550, nullable=true)
-     */
-    private $description;
-
-    /**
-     * @var string The url the payment provider should return to after completion or cancellation.
-     *
-     * @example https://larping.eu/payment/x
-     *
-     * @ORM\Column(type="string", length=255)
-     */
-    private $returnUrl;
-
     public function getId()
     {
         return $this->id;
@@ -211,66 +160,6 @@ class Payment
     public function setInvoice(?Invoice $invoice): self
     {
         $this->invoice = $invoice;
-
-        return $this;
-    }
-
-    public function getPaymentUrl(): ?string
-    {
-        return $this->paymentUrl;
-    }
-
-    public function setPaymentUrl(?string $paymentUrl): self
-    {
-        $this->paymentUrl = $paymentUrl;
-
-        return $this;
-    }
-
-    public function getCurrency(): ?string
-    {
-        return $this->currency;
-    }
-
-    public function setCurrency(string $currency): self
-    {
-        $this->currency = $currency;
-
-        return $this;
-    }
-
-    public function getAmount(): ?string
-    {
-        return $this->amount;
-    }
-
-    public function setAmount(string $amount): self
-    {
-        $this->amount = $amount;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getReturnUrl(): ?string
-    {
-        return $this->returnUrl;
-    }
-
-    public function setReturnUrl(string $returnUrl): self
-    {
-        $this->returnUrl = $returnUrl;
 
         return $this;
     }

@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     collectionOperations={
  *          "get",
  *          "post",
- *          "post_webhook"={
+ *          "post_order"={
  *              "method"="POST",
  *              "path"="invoices/order",
  *              "swagger_context" = {
@@ -176,7 +176,18 @@ class Invoice
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $createdAt;
+    private $dateCreated;
+
+    /**
+     * @var DateTime The moment this request was created by the submitter
+     *
+     * @example 20190101
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModified;
 
     /**
      * @var string The order of this invoice
@@ -216,6 +227,12 @@ class Invoice
      * @ORM\JoinColumn(nullable=false)
      */
     private $organization;
+
+    /**
+     * @Groups({"read"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $paymentUrl;
 
     public function __construct()
     {
@@ -338,14 +355,25 @@ class Invoice
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getDateCreated(): ?DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->dateCreated;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setDateCreated(DateTimeInterface $dateCreated): self
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+    public function getDateModified(): ?DateTimeInterface
+    {
+        return $this->dateCreated;
+    }
+
+    public function setDateModified(DateTimeInterface $dateCreated): self
+    {
+        $this->dateCreated = $dateCreated;
 
         return $this;
     }
@@ -440,4 +468,18 @@ class Invoice
 
         return $this;
     }
+
+    public function getPaymentUrl(): ?string
+    {
+        return $this->paymentUrl;
+    }
+
+    public function setPaymentUrl(?string $paymentUrl): self
+    {
+        $this->paymentUrl = $paymentUrl;
+
+        return $this;
+    }
+
+
 }
