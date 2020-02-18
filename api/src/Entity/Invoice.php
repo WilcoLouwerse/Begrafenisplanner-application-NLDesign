@@ -29,7 +29,19 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
- *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
+ *     collectionOperations={
+ *          "get",
+ *          "post",
+ *          "post_order"={
+ *              "method"="POST",
+ *              "path"="invoices/order",
+ *              "swagger_context" = {
+ *                  "summary"="Create an invoice by just providing an order",
+ *                  "description"="Create an invoice by just providing an order"
+ *              }
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
  * @ORM\Table(name="invoices")
@@ -164,7 +176,18 @@ class Invoice
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $createdAt;
+    private $dateCreated;
+
+    /**
+     * @var DateTime The moment this request was created by the submitter
+     *
+     * @example 20190101
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModified;
 
     /**
      * @var string The order of this invoice
@@ -187,6 +210,29 @@ class Invoice
      * @MaxDepth(1)
      */
     private $payments;
+
+    /**
+     * @var string The customer that receives this invoice
+     * @example https://example.org/people/1
+     *
+     * @Groups({"read","write"})
+     * @Assert\Url
+     * @Assert\NotNull
+     * @ORM\Column(type="string", length=255)
+     */
+    private $customer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="invoices")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organization;
+
+    /**
+     * @Groups({"read"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $paymentUrl;
 
     public function __construct()
     {
@@ -309,14 +355,25 @@ class Invoice
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeInterface
+    public function getDateCreated(): ?DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->dateCreated;
     }
 
-    public function setCreatedAt(DateTimeInterface $createdAt): self
+    public function setDateCreated(DateTimeInterface $dateCreated): self
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+    public function getDateModified(): ?DateTimeInterface
+    {
+        return $this->dateCreated;
+    }
+
+    public function setDateModified(DateTimeInterface $dateCreated): self
+    {
+        $this->dateCreated = $dateCreated;
 
         return $this;
     }
@@ -387,4 +444,42 @@ class Invoice
 
         return $this;
     }
+
+    public function getCustomer(): ?string
+    {
+        return $this->customer;
+    }
+
+    public function setCustomer(string $customer): self
+    {
+        $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getOrganization(): ?Organization
+    {
+        return $this->organization;
+    }
+
+    public function setOrganization(?Organization $organization): self
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    public function getPaymentUrl(): ?string
+    {
+        return $this->paymentUrl;
+    }
+
+    public function setPaymentUrl(?string $paymentUrl): self
+    {
+        $this->paymentUrl = $paymentUrl;
+
+        return $this;
+    }
+
+
 }
