@@ -168,6 +168,26 @@ spec:
                 secretKeyRef:
                   name: {{ template "fullname" . }}
                   key: mercure-jwt-secret
+            - name: APP_COMMONGROUND_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app_commonground_id
+            - name: APP_COMMONGROUND_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app_commonground_key
+            - name: APP_APPLICATION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app_application_key
+            - name: APP_USER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app_user_key
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

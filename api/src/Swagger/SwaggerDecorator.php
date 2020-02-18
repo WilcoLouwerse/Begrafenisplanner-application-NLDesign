@@ -442,7 +442,7 @@ final class SwaggerDecorator implements NormalizerInterface
                         $groups = $propertyAnnotation->getGroups();
                         break;
 
-                    // Constrainds (Validation)
+                        // Constrainds (Validation)
                     case "Assert\Date":
                         $atributes['type'] = 'string';
                         $atributes['format'] = 'date';
