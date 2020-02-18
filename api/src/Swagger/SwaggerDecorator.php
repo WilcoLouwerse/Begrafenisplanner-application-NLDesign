@@ -113,7 +113,10 @@ final class SwaggerDecorator implements NormalizerInterface
 
                     //$additionalEntityDocs = $this->getAdditionalEntityDocs($entity);
                     $entityDocs = $this->getAdditionalEntityDocs($entity);
-                    $additionalDocs = array_merge($additionalDocs, $entityDocs['properties']);
+                    // Only run if we have aditional docs
+                    if (array_key_exists('properties', $entityDocs)) {
+                        $additionalDocs = array_merge($additionalDocs, $entityDocs['properties']);
+                    }
 
                     // Security
                     $docs['securityDefinitions']['JWT-Oauth']['scopes'] = array_merge($docs['securityDefinitions']['JWT-Oauth']['scopes'], $entityDocs['security']);
@@ -418,10 +421,16 @@ final class SwaggerDecorator implements NormalizerInterface
             foreach ($tags as $tag) {
                 $name = $tag->getName();
                 $description = $tag->getDescription();
-                //
-                //$description = (string) $description;
 
                 switch ($name) {
+
+                    // Description
+                    case 'var':
+                        $atributes['description'] = (string) $description;
+                        $atributes['type'] = (string) $tag->getType();
+
+                        break;
+
                     // Docblocks
                     case 'example':
                         $atributes['example'] = (string) $description;
@@ -433,23 +442,49 @@ final class SwaggerDecorator implements NormalizerInterface
                         $groups = $propertyAnnotation->getGroups();
                         break;
 
-                    // Constrainds (Validation)
+                        // Constrainds (Validation)
+                    case "Assert\Date":
+                        $atributes['type'] = 'string';
+                        $atributes['format'] = 'date';
+                        $atributes['example'] = \date('Y-m-d');
+                        break;
+                    case "Assert\DateTime":
+                        $atributes['type'] = 'string';
+                        $atributes['format'] = 'date-time';
+                        $atributes['example'] = \date('Y-m-d H:i:s');
+                        break;
+                    case "Assert\Time":
+                        $atributes['type'] = 'string';
+                        $atributes['format'] = 'time';
+                        $atributes['example'] = \date('H:i:s');
+                        break;
+                    case "Assert\Timezone":
+                        $atributes['type'] = 'string';
+                        $atributes['format'] = 'timezone';
+                        $atributes['example'] = 'America/New_York';
+                        break;
                     case "Assert\Uuid":
+                        $atributes['type'] = 'string';
                         $atributes['format'] = 'uuid';
                         break;
                     case "Assert\Email":
+                        $atributes['type'] = 'string';
                         $atributes['format'] = 'email';
                         break;
                     case "Assert\Url":
+                        $atributes['type'] = 'string';
                         $atributes['format'] = 'url';
                         break;
                     case "Assert\Regex":
+                        $atributes['type'] = 'string';
                         $atributes['format'] = 'regex';
                         break;
                     case "Assert\Ip":
+                        $atributes['type'] = 'string';
                         $atributes['format'] = 'ip';
                         break;
                     case "Assert\Json":
+                        $atributes['type'] = 'string';
                         $atributes['format'] = 'json';
                         break;
                     case "Assert\Choice":

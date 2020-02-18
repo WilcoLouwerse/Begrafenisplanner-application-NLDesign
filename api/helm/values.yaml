@@ -22,7 +22,7 @@ settings:
   debug: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.nl$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
+  trustedHosts: '^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.dev$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
@@ -39,6 +39,11 @@ settings:
   authorisationEnabled: false
   healthEnabled: false
   archiveEnabled: false
+
+security:
+  commongroundKey: 9329d8d0-1d5e-433c-bb47-6991053c7fcb
+  applicationKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+  userKey: 79d5b14c-70ab-41fb-ac02-917e3288870b
 
 
 php:
