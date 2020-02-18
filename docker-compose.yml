@@ -8,7 +8,6 @@ x-cache:
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-admin
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-client
-    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
 
 services:
   php:
@@ -30,16 +29,24 @@ services:
       - CONTAINER_REGISTRY_BASE=${CONTAINER_REGISTRY_BASE}
       - CONTAINER_PROJECT_NAME=${CONTAINER_PROJECT_NAME}
       - CONTAINER_REPRO=${CONTAINER_REPRO}
-      - DATABASE_URL=postgres://api-platform:!ChangeMe!@db/api?serverVersion=10.1
+      #- DATABASE_URL=postgres://api-platform:!ChangeMe!@db/api?serverVersion=10.1
+      - DATABASE_URL=mysql://api-platform:!ChangeMe!@db/api?serverVersion=10.1
       - APP_ENV=${APP_ENV}
       - APP_DEBUG=${APP_DEBUG} 
       - APP_VERSION=${APP_VERSION}    
       - APP_NAME=${APP_NAME} 
       - APP_TITLE=${APP_TITLE}
-      - APP_DOMAIN=${APP_DOMAIN}
+      - APP_SUBDOMAIN=${APP_SUBDOMAIN}
+      - APP_DOMAINS=${APP_DOMAINS}
       - APP_DEMO=${APP_DEMO}
       - APP_REPRO=${APP_REPRO}
       - APP_DESCRIPTION=${APP_DESCRIPTION}
+      - APP_LOGO=${APP_LOGO}
+      - APP_HOME=${APP_HOME}
+      - APP_COMMONGROUND_ID=${APP_COMMONGROUND_ID}
+      - APP_COMMONGROUND_KEY=${APP_COMMONGROUND_KEY}
+      - APP_APPLICATION_KEY=${APP_APPLICATION_KEY}
+      - APP_USER_KEY=${APP_USER_KEY}
       - ORGANIZATION_NAME=${ORGANIZATION_NAME}
       - ORGANIZATION_EMAIL_ADDRESS=${ORGANIZATION_EMAIL_ADDRESS}
       - ORGANIZATION_COUNTRY_NAME=${ORGANIZATION_COUNTRY_NAME}
@@ -56,7 +63,7 @@ services:
       - NLX_OUTWAY=${NLX_OUTWAY}
       - NLX_INWAY=${NLX_INWAY}
     ports:
-      - "8082:80"
+      - "82:80"
 
   api:
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx:${APP_ENV}
@@ -74,7 +81,7 @@ services:
     volumes:
       - ./api/public:/srv/api/public:ro
     ports:
-      - "8080:80"
+      - "80:80"
     environment:
       - NGINX_HOST=php
 
@@ -93,7 +100,7 @@ services:
     tmpfs:
       - /usr/local/var/varnish:exec
     ports:
-     - "8081:80"
+     - "81:80"
     environment:
      - BACKENDS=php
       
@@ -166,15 +173,28 @@ services:
     networks:
       - nlx
     
-  db:
-    image: postgres:10-alpine
-    environment:
-      - POSTGRES_DB=api
-      - POSTGRES_USER=api-platform
+  #db:
+  #  image: postgres:10-alpine
+  #  environment:
+  #    - POSTGRES_DB=api
+  #    - POSTGRES_USER=api-platform
       # You should definitely change the password in production
-      - POSTGRES_PASSWORD=!ChangeMe!
+  #    - POSTGRES_PASSWORD=!ChangeMe!
+  #  volumes:
+  #    - db-data:/var/lib/postgresql/data:rw
+    
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=example
+      - MYSQL_DATABASE=api
+      - MYSQL_USER=api-platform
+      - MYSQL_PASSWORD=!ChangeMe!
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
+      - db-mysql:/var/lib/mysql:rw 
+    ports:
+     - "3366:3306"
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks
@@ -189,64 +209,11 @@ services:
     ports:
       - "1337:80"
 
-  client:
-    # Use a static website hosting service in production
-    # See https://facebook.github.io/create-react-app/docs/deployment
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-client
-    build:
-      context: ./client
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/client
-    env_file:
-      - ./client/.env
-    volumes:
-      - ./client:/usr/src/client:rw,cached
-      - /usr/src/client/node_modules
-
-  admin:
-    # Use a static website hosting service in production
-    # See https://facebook.github.io/create-react-app/docs/deployment
-    image: ${CONTAINER_REGISTRY_BASE}/admin
-    build:
-      context: ./admin
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-admin
-    volumes:
-      - ./admin:/usr/src/admin:rw,cached
-      - /usr/src/admin/node_modules
-    
-  h2-proxy:
-    # Don't use this proxy in prod
-    build:
-      context: ./h2-proxy
-      cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-h2-proxy
-    depends_on:
-      - db
-      - client
-      - admin
-      - api
-      - cache-proxy
-      - mercure
-      #- stag-pc-cache-proxy
-      #- dev-pc-cache-proxy
-    #volumes:
-    #  - ./conf.d/:/etc/nginx/conf.d/:rw,cached
-    ports:
-      - "80:80" #http port
-      - "443:443" #ssl port
-      - "444:444"
-      - "8443:8443"
-      - "8444:8444" 
-      - "5432:5432" #postgress port
-    environment:
-      - APP_ENV=${APP_ENV}
-      - APP_NAME=${CONTAINER_PROJECT_NAME}
-
 networks:
   nlx:
     name: nlx
 
 volumes:
   db-data: {}
+  db-mysql: {}
   nlx-data-2: {}

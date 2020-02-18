@@ -32,7 +32,7 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: {{ include "name" . }}
+              serviceName: {{ $.Values.settings.name }}
               servicePort: 80
     - host: www.{{ .Values.settings.domain }}
       http:
@@ -48,3 +48,4 @@ spec:
               serviceName: {{ include "name" . }}
               servicePort: 80
      {{- end }}
+  {{- end }}

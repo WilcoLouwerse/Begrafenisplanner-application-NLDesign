@@ -19,8 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Pulling old images, if any
-        run: docker-compose pull --ignore-pull-failures
       - name: Setting APP_NAME
         run: | 
             export NAME=$(grep APP_NAME= .env | cut -d '=' -f2)
@@ -36,6 +34,7 @@ jobs:
         if: contains( github.ref, 'master' ) || contains( github.base_ref, 'master' )
         run: |
             echo ::set-env name=APP_ENV::prod
+            echo ::set-env name=APP_BUILD::prod
             echo "set APP_ENV to $APP_ENV"
       - name: Set APP_BUILD to APP_VERSION
         if: contains( github.ref, 'master' )
@@ -55,18 +54,21 @@ jobs:
         run: docker-compose build --pull --build-arg APP_ENV=$APP_ENV --build-arg APP_BUILD=$APP_BUILD
       - name: Run the docker image
         run: docker-compose up -d
-      - name: Taking some sleep
-        run: sleep 100
+      - name: Taking some sleep (for containers to come up)
+        run: sleep 180
       - name: Check if all containers are running
         run: docker ps
       - name: Dumping the logs
         run: docker-compose logs
-      - name: Security Checks
-        run: docker-compose exec -T php composer req sensiolabs/security-checker
       - name: Database Update
         run: docker-compose exec -T php bin/console doctrine:schema:update --force
-      - name: Database Check
-        run: docker-compose exec -T php bin/console doctrine:schema:validate
+      #- name: Taking some more sleep (for database to be updated)
+      #  run: sleep 20
+      #- name: Database Check
+      #  run: docker-compose exec -T php bin/console doctrine:schema:validate
+      - name: Security Checks
+        run: docker-compose exec -T php composer req sensiolabs/security-checker
+
       - name: Chores
         run: docker-compose down
       - name: Login to DockerHub Registry
@@ -81,38 +83,44 @@ jobs:
       - if: steps.dockerhub-login.outputs.success == 'true'
         name: Push to docker hub
         run: docker-compose push
-      - name: Create kube config
-        id: kubeconfig
-        if: contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )
-        run: |
-            if [ "${{ secrets.KUBECONFIG }}" != "" ]; then
-              printf "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
-              echo "##[set-output name=success]true"
-            else
-              echo "##[set-output name=success]false"
-            fi 
-      - name: Set correct helm version
-        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
-        run: helm init --upgrade --kubeconfig="kubeconfig.yaml"    
-      - name: Deploy through helm
-        id: helm-install
-        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
-        run: helm upgrade $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
-      - name: Install through helm
-        if: failure()
-        run: helm install --name $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1 
-      - name: Rollout new containers
-        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true' && success()
-        run: |
-            kubectl rollout restart deployment/$APP_NAME-php --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
-            kubectl rollout restart deployment/$APP_NAME-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
-            kubectl rollout restart deployment/$APP_NAME-varnish --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+#      - name: Create kube config
+#        id: kubeconfig
+#        if: contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )
+#        run: |
+#            if [ "${{ secrets.KUBECONFIG }}" != "" ]; then
+#              printf "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
+#              echo "##[set-output name=success]true"
+#            else
+#              echo "##[set-output name=success]false"
+#            fi 
+#      - name: Set correct helm version
+#        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
+#        run: helm init --upgrade --kubeconfig="kubeconfig.yaml"    
+#      - name: Deploy through helm
+#        id: helm-install
+#        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
+#        run: helm upgrade $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1
+#      - name: Install through helm
+#        if: failure() && (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
+#        run: helm install --name $APP_NAME-$APP_ENV ./api/helm  --kubeconfig="kubeconfig.yaml" --namespace=$APP_ENV  --set settings.env=$APP_ENV,settings.debug=1 
+#      - name: Rollout new containers
+#        if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true' && success()
+#        run: |
+#            kubectl rollout restart deployment/$APP_NAME-php --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+#            kubectl rollout restart deployment/$APP_NAME-nginx --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
+#            kubectl rollout restart deployment/$APP_NAME-varnish --kubeconfig="kubeconfig.yaml"  --namespace=$APP_ENV
       - name: Export release code
         if: (success() || failure())
         id: releasecode
         run: |
             export RELEASE=$APP_BUILD-$(git rev-parse --short $GITHUB_SHA)
             echo "##[set-output name=releasename]$RELEASE"
+#      - name: Export release code
+#        if: (success() || failure())
+#        id: releasecode #version number in a more comprehensible format: 0.1.YearMonthDayHoursMinutesSeconds in UTC
+#        run: |
+#            export RELEASE=$APP_BUILD.$(date --utc +%Y%m%d%H%M%S)
+#            echo "##[set-output name=releasename]$RELEASE"
       - name: Print release name
         if: (success() || failure())
         run: echo $RELEASENAME

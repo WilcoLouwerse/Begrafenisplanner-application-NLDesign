@@ -10,7 +10,12 @@ settings:
   version: {{ app_version }}
   description: '{{ app_description }}'
   repro: '{{ app_repro }}'
-  domain: {{ app_domain }}  
+  subdomain: {{ app_subdomain }}  
+  domains:
+{% for domain in app_domains %}
+    - {{ domain }}
+{% endfor %}
+  domainsJson: {{ app_domains | json_encode()|raw }}
   organisationName: {{ organization_name }}
   email: {{ organization_email }}
   country: {{ organization_country }}
@@ -39,6 +44,12 @@ settings:
   authorisationEnabled: false
   healthEnabled: false
   archiveEnabled: false
+
+security:
+  commongroundId: {{ app_commonground_id }}
+  commongroundKey: {{ app_commonground_key }}
+  applicationKey: {{  app_application_key }}
+  userKey: {{ app_user_key }}
 
 
 php:

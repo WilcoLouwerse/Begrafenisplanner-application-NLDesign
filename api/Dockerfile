@@ -29,6 +29,7 @@ RUN set -eux; \
 		$PHPIZE_DEPS \
 		icu-dev \
 		libzip-dev \
+		libpng-dev \
 		postgresql-dev \
 		zlib-dev \
 	; \
@@ -40,6 +41,8 @@ RUN set -eux; \
 		zip \
 		mysqli \ 
 		pdo_mysql \
+		pcntl \ 
+		gd \
 	; \
 	pecl install \
 		apcu-${APCU_VERSION} \
@@ -80,6 +83,7 @@ ARG APP_ENV=prod
 
 # prevent the reinstallation of vendors at every changes in the source code
 COPY composer.json composer.lock symfony.lock ./
+
 RUN set -eux; \
 	composer install --prefer-dist --no-dev --no-scripts --no-progress --no-suggest; \
 	composer clear-cache
@@ -102,6 +106,7 @@ RUN set -eux; \
 	composer dump-autoload --classmap-authoritative --no-dev; \
 	composer run-script --no-dev post-install-cmd; \
 	chmod +x bin/console; sync
+	
 VOLUME /srv/api/var
 
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
@@ -112,15 +117,13 @@ CMD ["php-fpm"]
 
 # Let update the docs to show the latest chages
 # RUN bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
+# RUN bin/console app:publiccode:update --location=/srv/api/public/schema/ --spec-version=0.2	
 
 #############################
 # 		"nginx" stage 		#
 #############################
 # depends on the "php" stage above, and with an litle bit of help from https://github.com/shiphp/nginx-env
 FROM shiphp/nginx-env AS api_platform_nginx
-
-# We use our own more secure and limited config
-#ONBUILD ADD docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
 # Due to our config we need a copy of the public folder for serving static content
 COPY docker/nginx/conf.d/default.conf.template /etc/nginx/conf.d/default.conf

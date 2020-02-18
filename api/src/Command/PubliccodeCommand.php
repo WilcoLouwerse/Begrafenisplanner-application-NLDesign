@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Twig\Environment;
 
-class ApiHelmCommand extends Command
+class PubliccodeCommand extends Command
 {
     private $twig;
 
@@ -29,17 +29,16 @@ class ApiHelmCommand extends Command
     protected function configure()
     {
         $this
-        ->setName('app:helm:update')
+        ->setName('app:publiccode:update')
         // the short description shown while running "php bin/console list"
-        ->setDescription('Creates a new helm chart.')
+        ->setDescription('Creates a new public chart.')
 
         // the full command description shown when running the command with
         // the "--help" option
-        ->setHelp('This command allows you to create a new hel chart from the helm template')
-        ->setAliases(['app:helm:export'])
-        ->setDescription('Dump the OpenAPI documentation')
-        ->addOption('location', null, InputOption::VALUE_OPTIONAL, 'Write output to files in the given location', '/srv/api/helm')
-        ->addOption('spec-version', null, InputOption::VALUE_OPTIONAL, 'Helm version to use ("0.1.0")', '0.1.0');
+        ->setHelp('see ehttps://github.com/italia/publiccode.yml')
+        ->setDescription('Publiccode.yml is a metadata standard for repositories containing software developed or acquired by the Public Administration, aimed at making them easily discoverabile and thus reusable by other entities.By including a publiccode.yml file in the root of a repository, and populating it with information about the software, technicians and civil servants can evaluate it. Automatic indexing tools can also be built, since the format is easily readable by both humans and machines.')
+        ->addOption('location', null, InputOption::VALUE_OPTIONAL, 'Write output to files in the given location', '/srv/api/public/schema/')
+        ->addOption('spec-version', null, InputOption::VALUE_OPTIONAL, 'Publiccode version to use ("0.1.0")', '0.1.0');
     }
 
     /**
@@ -55,17 +54,15 @@ class ApiHelmCommand extends Command
         //	throw new InvalidOptionException(sprintf('This tool only supports version 2 and 3 of the OpenAPI specification ("%s" given).', $version));
         //}
 
-        $values = $this->twig->render('helm/Values.yaml.twig');
-        $chart = $this->twig->render('helm/Chart.yaml.twig');
+        $publiccode = $this->twig->render('publiccode/publiccode.yaml.twig');
 
         if (!empty($location = $input->getOption('location')) && \is_string($location)) {
-            file_put_contents($location.'/values.yaml', $values);
-            file_put_contents($location.'/Chart.yaml', $chart);
-            $io->success(sprintf('Data written to %s (specification version %s).', $location, $version));
+            file_put_contents($location.'/publiccode.yaml', $publiccode);
+            $io->success(sprintf('Data written to %s/publiccode.yaml (specification version %s).', $location, $version));
         } else {
             // outputs multiple lines to the console (adding "\n" at the end of each line)
             $output->writeln([
-                'Helm Chart Creator',
+                'Publiccode Chart',
                 '============',
                 $chart,
             ]);
