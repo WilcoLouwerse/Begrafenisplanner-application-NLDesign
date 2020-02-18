@@ -6,6 +6,9 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource()
@@ -51,7 +54,7 @@ class Service
     /**
      * @var Organization The organization this payment provider is linked to
      *
-     * @Groups({"read","write"}}
+     * @Groups({"read","write"})
      * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="services")
      * @ORM\JoinColumn(nullable=false)
      */

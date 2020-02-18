@@ -3607,6 +3607,11 @@ components:
           description: 'The moment this request last Modified'
           type: string
           format: date-time
+        services:
+          description: 'The payment providers configured for this organization'
+          type: array
+          items:
+            $ref: '#/components/schemas/Service-read'
       required:
         - shortCode
         - rsin
@@ -3621,6 +3626,11 @@ components:
           type: string
         rsin:
           type: string
+        services:
+          description: 'The payment providers configured for this organization'
+          type: array
+          items:
+            $ref: '#/components/schemas/Service-write'
     'Organization:jsonld-read':
       type: object
       description: ''
@@ -3654,6 +3664,11 @@ components:
           description: 'The moment this request last Modified'
           type: string
           format: date-time
+        services:
+          description: 'The payment providers configured for this organization'
+          type: array
+          items:
+            $ref: '#/components/schemas/Service:jsonld-read'
       required:
         - shortCode
         - rsin
@@ -3677,6 +3692,11 @@ components:
           type: string
         rsin:
           type: string
+        services:
+          description: 'The payment providers configured for this organization'
+          type: array
+          items:
+            $ref: '#/components/schemas/Service:jsonld-write'
     Payment-read:
       type: object
       description: 'An entity representing a payment.'
@@ -3851,9 +3871,69 @@ components:
       properties:
         id:
           readOnly: true
-          type: integer
-        type:
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
           type: string
+        type:
+          description: 'The status of this payment'
+          type: string
+        organization:
+          description: 'The organization this payment provider is linked to'
+          type: string
+        authorization:
+          description: 'The API key for this payment provider'
+          type: string
+        configuration:
+          description: 'Configuration options for this payment provider'
+          type: array
+          items:
+            type: string
+      required:
+        - type
+    Service-read:
+      type: object
+      description: ''
+      properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        type:
+          description: 'The status of this payment'
+          type: string
+        organization:
+          description: 'The organization this payment provider is linked to'
+          type: string
+        configuration:
+          description: 'Configuration options for this payment provider'
+          type: array
+          items:
+            type: string
+      required:
+        - type
+    Service-write:
+      type: object
+      description: ''
+      required:
+        - type
+      properties:
+        type:
+          description: 'The status of this payment'
+          type: string
+        organization:
+          description: 'The organization this payment provider is linked to'
+          type: string
+        authorization:
+          description: 'The API key for this payment provider'
+          type: string
+        configuration:
+          description: 'Configuration options for this payment provider'
+          type: array
+          items:
+            type: string
     'Service:jsonld':
       type: object
       description: ''
@@ -3869,9 +3949,87 @@ components:
           type: string
         id:
           readOnly: true
-          type: integer
-        type:
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
           type: string
+        type:
+          description: 'The status of this payment'
+          type: string
+        organization:
+          description: 'The organization this payment provider is linked to'
+          type: string
+        authorization:
+          description: 'The API key for this payment provider'
+          type: string
+        configuration:
+          description: 'Configuration options for this payment provider'
+          type: array
+          items:
+            type: string
+      required:
+        - type
+    'Service:jsonld-read':
+      type: object
+      description: ''
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        type:
+          description: 'The status of this payment'
+          type: string
+        organization:
+          description: 'The organization this payment provider is linked to'
+          type: string
+        configuration:
+          description: 'Configuration options for this payment provider'
+          type: array
+          items:
+            type: string
+      required:
+        - type
+    'Service:jsonld-write':
+      type: object
+      description: ''
+      required:
+        - type
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        type:
+          description: 'The status of this payment'
+          type: string
+        organization:
+          description: 'The organization this payment provider is linked to'
+          type: string
+        authorization:
+          description: 'The API key for this payment provider'
+          type: string
+        configuration:
+          description: 'Configuration options for this payment provider'
+          type: array
+          items:
+            type: string
 definitions:
   Invoice-read:
     properties:
@@ -4103,6 +4261,9 @@ definitions:
       dateModified:
         description: 'The moment this request last Modified'
         type: \Datetime
+      services:
+        description: 'The payment providers configured for this organization'
+        type: \ArrayCollection
     required:
       - shortCode
       - rsin
@@ -4113,6 +4274,9 @@ definitions:
       rsin:
         maxLength: 16
         minLength: 4
+      services:
+        description: 'The payment providers configured for this organization'
+        type: \ArrayCollection
     required:
       - shortCode
       - rsin
@@ -4125,9 +4289,7 @@ definitions:
         format: uuid
       paymentProvider:
         description: 'The provider that handles the payment'
-        type: string
-        example: iDeal
-        maxLength: 255
+        type: \Service
       paymentId:
         description: 'The payment id of this payment'
         type: string
@@ -4166,9 +4328,7 @@ definitions:
     properties:
       paymentProvider:
         description: 'The provider that handles the payment'
-        type: string
-        example: iDeal
-        maxLength: 255
+        type: \Service
       paymentId:
         description: 'The payment id of this payment'
         type: string
@@ -4203,6 +4363,44 @@ definitions:
       - paymentId
       - status
       - amount
+  Service-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      type:
+        description: 'The status of this payment'
+        type: string
+        example: open
+        maxLength: 255
+      configuration:
+        description: 'Configuration options for this payment provider'
+        type: array
+      organization:
+        description: 'The organization this payment provider is linked to'
+        type: \Organization
+    required:
+      - type
+  Service-write:
+    properties:
+      type:
+        description: 'The status of this payment'
+        type: string
+        example: open
+        maxLength: 255
+      authorization:
+        description: 'The API key for this payment provider'
+        type: string
+      configuration:
+        description: 'Configuration options for this payment provider'
+        type: array
+      organization:
+        description: 'The organization this payment provider is linked to'
+        type: \Organization
+    required:
+      - type
 tags:
   -
     name: Invoice
@@ -4240,15 +4438,15 @@ securityDefinitions:
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the Payment resource'
-      write: 'write right to the Payment resource'
+      read: 'read right to the Service resource'
+      write: 'write right to the Service resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the Payment resource'
-      write: 'write right to the Payment resource'
+      read: 'read right to the Service resource'
+      write: 'write right to the Service resource'
 host: irc.zaakonline.nl
 servers:
   -
