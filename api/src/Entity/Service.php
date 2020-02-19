@@ -73,7 +73,7 @@ class Service
      * @var array Configuration options for this payment provider
      * @Groups({"read","write"})
      *
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="array", nullable=true, name="auth")
      */
     private $configuration = [];
 
