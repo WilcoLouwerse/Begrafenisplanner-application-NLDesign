@@ -56,6 +56,7 @@ class MollieService
                     "order_id" => $invoice->getReference(),
                 ],
             ]);
+            var_dump($molliePayment);
             return $molliePayment->getCheckoutUrl();
         }
         catch (ApiException $e)
