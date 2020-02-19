@@ -65,7 +65,7 @@ class Service
      * @var string The API key for this payment provider
      *
      * @Groups({"write"})
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, name="auth")
      */
     private $authorization;
 
@@ -73,7 +73,7 @@ class Service
      * @var array Configuration options for this payment provider
      * @Groups({"read","write"})
      *
-     * @ORM\Column(type="array", nullable=true, name="auth")
+     * @ORM\Column(type="array", nullable=true)
      */
     private $configuration = [];
 
