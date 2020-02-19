@@ -52,7 +52,7 @@ class PaymentSubscriber implements EventSubscriberInterface
         $route = $event->getRequest()->attributes->get('_route');
 
         //var_dump($route);
-        if($result instanceof Payment && $route=='api_payment_post_webhook_collection'){
+        if($result instanceof Payment && $route=='api_payments_post_webhook_collection'){
             $providerId = $event->getRequest()->query->get('provider');
             $provider = $this->em->getRepository('App\Entity\Service')->find($providerId);
 
