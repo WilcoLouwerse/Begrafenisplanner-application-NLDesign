@@ -18,7 +18,7 @@ You can install docker-desktop from [the docker website](https://hub.docker.com/
 ## Generating your component (repository/codebase)
 Starting up your first Common Ground component is extremely easy, al you need is a GitHub account and go the link below and fill in the form, press create and press to we have a component!
 
-[https://github.com/ConductionNL/Proto-component-commonground/generate](https://github.com/ConductionNL/Proto-component-commonground/generate) 
+[https://github.com/ConductionNL/proto-application-commonground/generate](https://github.com/ConductionNL/proto-application-commonground/generate) 
 
 After that you should be redirected to your own brand new repository. 
 
@@ -83,8 +83,19 @@ Best practice is to fetch the Conduction Common Ground component into a local up
 
 __Please make sure the you have committed al your changes to your current codebase and pushed a backup copy to your Git repo before continuing__
 
+
 ```CLI
 git remote add upstream https://github.com/ConductionNL/Proto-component-commonground.git
+```
+
+If you are running the proto application use the following line instead
+
+```CLI
+git remote add upstream https://github.com/ConductionNL/proto-application-commonground.git
+```
+And then we need to fetch this new code
+
+```CLI
 git fetch upstream
 git branch upstream upstream/master
 ```

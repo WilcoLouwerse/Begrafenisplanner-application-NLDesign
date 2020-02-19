@@ -1,16 +1,16 @@
 openapi: 3.0.2
 info:
-  title: 'Proto Component'
+  title: 'Proto Applicatie'
   version: V.0.1
   description: |
     API Details
-    - Component: Proto Component
-    - Reference: pc
+    - Component: Proto Applicatie
+    - Reference: pa
     - Enviroment: dev
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
-    - Datamodel: [postman](/schema/pc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pa-php) 
+    - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
@@ -534,6 +534,7 @@ components:
       properties:
         id:
           readOnly: true
+          description: 'The id of this entity'
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
@@ -578,6 +579,7 @@ components:
           type: string
         id:
           readOnly: true
+          description: 'The id of this entity'
           externalDocs:
             url: 'http://schema.org/identifier'
           type: string
@@ -620,15 +622,23 @@ definitions:
   ExampleEntity-read:
     properties:
       id:
+        description: 'The id of this entity'
+        type: string
         example: e2984465-190a-4562-829e-a8cca81aa35d
         format: uuid
       name:
+        description: 'The name of this example property'
+        type: string
         example: 'My Group'
         maxLength: 255
       description:
+        description: 'The description of this example property'
+        type: string
         example: 'Is the best group ever'
         maxLength: 2555
       camelCase:
+        description: 'Proof that we camel case our api'
+        type: string
         example: 'Best api ever'
         maxLength: 255
     required:
@@ -636,12 +646,18 @@ definitions:
   ExampleEntity-write:
     properties:
       name:
+        description: 'The name of this example property'
+        type: string
         example: 'My Group'
         maxLength: 255
       description:
+        description: 'The description of this example property'
+        type: string
         example: 'Is the best group ever'
         maxLength: 2555
       camelCase:
+        description: 'Proof that we camel case our api'
+        type: string
         example: 'Best api ever'
         maxLength: 255
     required:
