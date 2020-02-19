@@ -28,6 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "post_webhook"={
  *              "method"="POST",
  *              "path"="payments/mollie_webhook",
+ *              "input_formats"={"x-www-form-urlencoded"={"application/x-www-form-urlencoded"}},
  *              "swagger_context" = {
  *                  "summary"="Webhook to update payment statuses from Mollie",
  *                  "description"="Webhook to update payment statuses from Mollie"

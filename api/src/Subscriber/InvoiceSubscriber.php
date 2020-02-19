@@ -49,7 +49,7 @@ class InvoiceSubscriber implements EventSubscriberInterface
 //        $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
 
-//        var_dump($route);
+        var_dump($route);
 
         $data = json_decode($event->getRequest()->getContent());
         if ($route != 'api_invoices_post_order_collection' || $data == null)

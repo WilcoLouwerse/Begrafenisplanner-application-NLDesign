@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use PhpParser\Error;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -41,29 +42,29 @@ class PaymentSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['payment', EventPriorities::PRE_VALIDATE],
+            KernelEvents::REQUEST => ['payment', EventPriorities::PRE_DESERIALIZE],
         ];
     }
 
-    public function payment(ViewEvent $event)
+    public function payment(RequestEvent $event)
     {
-        $result = $event->getControllerResult();
+        //$result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
-
         //var_dump($route);
-        if($result instanceof Payment && $route=='api_payments_post_webhook_collection'){
+        if($route=='api_payments_post_webhook_collection'){
+            //var_dump('a');
             $providerId = $event->getRequest()->query->get('provider');
+            //var_dump($providerId);
             $provider = $this->em->getRepository('App\Entity\Service')->find($providerId);
 
-            $requestData = json_decode($event->getRequest()->getContent(),true);
-
-
+            $paymentId = $event->getRequest()->request->get('id');
+            //var_dump($paymentId);
 
 
             if($provider instanceof Service && $provider->getType() == 'mollie'){
                 $mollieService = new MollieService($provider);
-                $payment = $mollieService->updatePayment($requestData, $this->em);
+                $payment = $mollieService->updatePayment($paymentId, $this->em);
             }
             else{
                 return;

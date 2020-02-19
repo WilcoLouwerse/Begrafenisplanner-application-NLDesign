@@ -39,7 +39,7 @@ class MollieService
         $amount = $invoice->getPrice();
         $description = $invoice->getDescription();
         $redirectUrl = $invoice->getOrganization()->getRedirectUrl();
-        $webhookUrl = "$protocol$domain/payments/molliewebhook?provider=$this->serviceId";
+        $webhookUrl = "$protocol$domain/payments/mollie_webhook?provider=$this->serviceId";
 //        var_dump($webhookUrl);
 //        die;
         try
@@ -65,10 +65,10 @@ class MollieService
         }
     }
 
-    public function updatePayment(array $requestData, EntityManagerInterface $manager):Payment
+    public function updatePayment(string $paymentId, EntityManagerInterface $manager):Payment
     {
-        $molliePayment = $this->mollie->payments->get($requestData['id']);
-        $payment = $manager->getRepository('App:Payment')->findOneBy(['paymentId'=> $requestData['id']]);
+        $molliePayment = $this->mollie->payments->get($paymentId);
+        $payment = $manager->getRepository('App:Payment')->findOneBy(['paymentId'=> $paymentId]);
         if($payment instanceof Payment) {
             $payment->setStatus($molliePayment->status);
             //return $payment;
