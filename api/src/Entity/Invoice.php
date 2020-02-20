@@ -234,6 +234,15 @@ class Invoice
      */
     private $paymentUrl;
 
+    /**
+     * @var string Remarks on this invoice
+     *
+     * @Groups({"read","write"})
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $remark;
+
     public function __construct()
     {
         $this->items = new ArrayCollection();
@@ -368,12 +377,12 @@ class Invoice
     }
     public function getDateModified(): ?DateTimeInterface
     {
-        return $this->dateCreated;
+        return $this->dateModified;
     }
 
-    public function setDateModified(DateTimeInterface $dateCreated): self
+    public function setDateModified(DateTimeInterface $dateModified): self
     {
-        $this->dateCreated = $dateCreated;
+        $this->dateModified = $dateModified;
 
         return $this;
     }
@@ -477,6 +486,18 @@ class Invoice
     public function setPaymentUrl(?string $paymentUrl): self
     {
         $this->paymentUrl = $paymentUrl;
+
+        return $this;
+    }
+
+    public function getRemark(): ?string
+    {
+        return $this->remark;
+    }
+
+    public function setRemark(?string $remark): self
+    {
+        $this->remark = $remark;
 
         return $this;
     }

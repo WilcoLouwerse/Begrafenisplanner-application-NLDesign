@@ -69,6 +69,7 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $invoice->setTax($order->tax);
         $invoice->setCustomer($order->customer);
         $invoice->setOrder($order->url);
+        $invoice->setRemark($order->remark);
         $organization = $this->em->getRepository('App:Organization')->findOrCreateByRsin($order->organization->rsin);
         if ($organization instanceof Organization)
         {
