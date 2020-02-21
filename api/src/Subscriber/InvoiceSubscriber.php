@@ -66,6 +66,8 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $invoice->setName($order->name);
         if(isset($order->description))
             $invoice->setDescription($order->description);
+        else
+            $invoice->setDescription("Automated invoice from {$event->getRequest()->getHttpHost()}");
         $invoice->setReference($order->reference);
         $invoice->setPrice($order->price);
         $invoice->setPriceCurrency($order->priceCurrency);
