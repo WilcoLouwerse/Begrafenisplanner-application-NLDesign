@@ -70,11 +70,14 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $invoice->setPriceCurrency($order->priceCurrency);
         $invoice->setTax($order->tax);
         $invoice->setCustomer($order->customer);
+<<<<<<< HEAD
         if(isset($order->{'@id'}))
             $invoice->setOrder($order->{'@id'});
         else{
             return;
         }
+=======
+>>>>>>> master
         $organization = $this->em->getRepository('App:Organization')->findOrCreateByRsin($order->organization->rsin);
         if ($organization instanceof Organization)
         {
