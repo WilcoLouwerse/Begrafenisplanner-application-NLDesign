@@ -6,6 +6,7 @@ namespace App\Subscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Invoice;
+use App\Entity\InvoiceItem;
 use App\Entity\Organization;
 use App\Entity\Payment;
 use App\Service\MollieService;
@@ -70,14 +71,11 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $invoice->setPriceCurrency($order->priceCurrency);
         $invoice->setTax($order->tax);
         $invoice->setCustomer($order->customer);
-<<<<<<< HEAD
         if(isset($order->{'@id'}))
             $invoice->setOrder($order->{'@id'});
         else{
             return;
         }
-=======
->>>>>>> master
         $organization = $this->em->getRepository('App:Organization')->findOrCreateByRsin($order->organization->rsin);
         if ($organization instanceof Organization)
         {
@@ -93,6 +91,21 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $invoice->setOrganization($organization);
         $invoice->setTargetOrganization($organization->getRsin());
         $this->em->persist($invoice);
+        if(isset($order->items))
+        {
+            foreach($order->items as $item){
+                $invoiceItem = new InvoiceItem();
+                $invoiceItem->setName($item->name);
+                $invoiceItem->setPrice($item->price);
+                $invoiceItem->setPriceCurrency($item->priceCurrency);
+                $invoiceItem->setTaxPercentage($item->taxPercentage);
+                $invoiceItem->setDescription($item->description);
+                $invoiceItem->setOffer($item->offer);
+                $invoiceItem->setQuantity($item->quantity);
+                $invoiceItem->setInvoice($invoice);
+                $invoice->addItem($invoiceItem);
+            }
+        }
         $this->em->persist($organization);
         $this->em->flush();
         $paymentService = $invoice->getOrganization()->getServices()[0];
