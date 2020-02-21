@@ -1,7 +1,13 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        chain_provider:
+            chain:
+                providers: [CommongroundApplicationProvider, CommongroundUserProvider]
+        commongroundUserProvider:
+            id: App\Security\User\CommongroundUserProvider
+        commongroundApplicationProvider:
+            id: App\Security\User\CommongroundApplicationProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -12,6 +18,7 @@ security:
             pattern:  ^/$
             methods: [GET]
         main:
+            provider: chain_provider
             guard:
                 authenticators:
                     - App\Security\CommongroundApplicationAuthenticator
