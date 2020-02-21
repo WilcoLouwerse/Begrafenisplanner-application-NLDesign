@@ -102,8 +102,9 @@ class InvoiceSubscriber implements EventSubscriberInterface
                 $invoiceItem->setDescription($item->description);
                 $invoiceItem->setOffer($item->offer);
                 $invoiceItem->setQuantity($item->quantity);
-                $invoiceItem->setInvoice($invoice);
+                $this->em->persist($invoiceItem);
                 $invoice->addItem($invoiceItem);
+                $invoiceItem->setInvoice($invoice);
             }
         }
         $this->em->persist($organization);
