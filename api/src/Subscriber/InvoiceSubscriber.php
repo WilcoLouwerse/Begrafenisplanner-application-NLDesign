@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use PhpParser\Error;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -40,16 +41,16 @@ class InvoiceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['invoice', EventPriorities::PRE_VALIDATE],
+            KernelEvents::REQUEST => ['invoice', EventPriorities::PRE_DESERIALIZE],
         ];
     }
-    public function invoice(ViewEvent $event)
+    public function invoice(RequestEvent $event)
     {
 //        $result = $event->getControllerResult();
 //        $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
 
-        var_dump($route);
+        //var_dump($route);
 
         $data = json_decode($event->getRequest()->getContent());
         if ($route != 'api_invoices_post_order_collection' || $data == null)
@@ -62,14 +63,13 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $invoice = new Invoice();
 //        var_dump($order);
         $invoice->setName($order->name);
-        $invoice->setDescription($order->description);
+        if(isset($order->description))
+            $invoice->setDescription($order->description);
         $invoice->setReference($order->reference);
         $invoice->setPrice($order->price);
         $invoice->setPriceCurrency($order->priceCurrency);
         $invoice->setTax($order->tax);
         $invoice->setCustomer($order->customer);
-        $invoice->setOrder($order->url);
-        $invoice->setRemark($order->remark);
         $organization = $this->em->getRepository('App:Organization')->findOrCreateByRsin($order->organization->rsin);
         if ($organization instanceof Organization)
         {

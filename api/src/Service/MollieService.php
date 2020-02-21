@@ -56,7 +56,7 @@ class MollieService
                     "order_id" => $invoice->getReference(),
                 ],
             ]);
-            var_dump($molliePayment);
+            var_dump($molliePayment->id);
             return $molliePayment->getCheckoutUrl();
         }
         catch (ApiException $e)
@@ -66,24 +66,34 @@ class MollieService
         }
     }
 
-    public function updatePayment(string $paymentId, EntityManagerInterface $manager):Payment
+    public function updatePayment(string $paymentId, Service $service, EntityManagerInterface $manager):?Payment
     {
         $molliePayment = $this->mollie->payments->get($paymentId);
         $payment = $manager->getRepository('App:Payment')->findOneBy(['paymentId'=> $paymentId]);
         if($payment instanceof Payment) {
             $payment->setStatus($molliePayment->status);
-            //return $payment;
+            return $payment;
         }
         else{
-            $invoiceReference = $molliePayment->metadata['order_id'];
+            $invoiceReference = $molliePayment->metadata->order_id;
+            //var_dump($invoiceReference);
             $invoice = $manager->getRepository('App:Invoice')->findBy(['reference'=>$invoiceReference]);
-            $payment = new Payment();
-            $payment->setPaymentId($molliePayment->id);
-            $payment->setStatus($molliePayment->status);
-            $payment->setInvoice();
-            $manager->persist($payment);
-            $manager->flush();
+            //var_dump(count($invoice));
+            if(is_array($invoice))
+                $invoice = end($invoice);
+            if($invoice instanceof Invoice)
+            {
+                $payment = new Payment();
+                $payment->setPaymentId($molliePayment->id);
+                $payment->setPaymentProvider($service);
+                $payment->setStatus($molliePayment->status);
+                $payment->setInvoice($invoice);
+                $manager->persist($payment);
+                $manager->flush();
+
+                return $payment;
+            }
         }
-        return $payment;
+        return null;
     }
 }
