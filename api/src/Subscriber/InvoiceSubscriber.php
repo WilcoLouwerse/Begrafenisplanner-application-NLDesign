@@ -89,6 +89,7 @@ class InvoiceSubscriber implements EventSubscriberInterface
             $organization = new Organization();
             $organization->setRsin($order->organization->rsin);
             $organization->setShortCode($order->organization->shortCode);
+            $this->em->persist($organization);
         }
         $invoice->setOrganization($organization);
         $invoice->setTargetOrganization($organization->getRsin());
@@ -109,7 +110,7 @@ class InvoiceSubscriber implements EventSubscriberInterface
                 $invoiceItem->setInvoice($invoice);
             }
         }
-        $this->em->persist($organization);
+
         $this->em->flush();
         $paymentService = $invoice->getOrganization()->getServices()[0];
         switch ($paymentService->getType()){
