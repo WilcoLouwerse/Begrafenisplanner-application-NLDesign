@@ -66,7 +66,7 @@ class MollieService
         }
     }
 
-    public function updatePayment(string $paymentId, EntityManagerInterface $manager):Payment
+    public function updatePayment(string $paymentId, EntityManagerInterface $manager):?Payment
     {
         $molliePayment = $this->mollie->payments->get($paymentId);
         $payment = $manager->getRepository('App:Payment')->findOneBy(['paymentId'=> $paymentId]);
@@ -75,15 +75,20 @@ class MollieService
             //return $payment;
         }
         else{
-            $invoiceReference = $molliePayment->metadata['order_id'];
+            $invoiceReference = $molliePayment->metadata->order_id;
             $invoice = $manager->getRepository('App:Invoice')->findBy(['reference'=>$invoiceReference]);
-            $payment = new Payment();
-            $payment->setPaymentId($molliePayment->id);
-            $payment->setStatus($molliePayment->status);
-            $payment->setInvoice();
-            $manager->persist($payment);
-            $manager->flush();
+            if($invoice instanceof Invoice)
+            {
+                $payment = new Payment();
+                $payment->setPaymentId($molliePayment->id);
+                $payment->setStatus($molliePayment->status);
+                $payment->setInvoice($invoice);
+                $manager->persist($payment);
+                $manager->flush();
+
+                return $payment;
+            }
         }
-        return $payment;
+        return null;
     }
 }

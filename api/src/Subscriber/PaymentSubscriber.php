@@ -73,14 +73,21 @@ class PaymentSubscriber implements EventSubscriberInterface
         else{
             return;
         }
-        $this->em->persist($payment);
-        $this->em->flush();
 
 
-        $json = $this->serializer->serialize(
-            $payment,
-            'jsonhal', ['enable_max_depth'=>true]
-        );
+        if($payment){
+            $this->em->persist($payment);
+            $this->em->flush();
+            $json = $this->serializer->serialize(
+                $payment,
+                'jsonhal', ['enable_max_depth'=>true]
+            );
+        }else{
+            $json = $this->serializer->serialize(
+                ["Error"=>"The payment is not related to an invoice in our database"], 'jsonhal', ['enable_max_depth'=>true]
+            );
+        }
+
 
         $response = new Response(
             $json,
