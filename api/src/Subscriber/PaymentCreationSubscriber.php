@@ -49,7 +49,7 @@ class PaymentCreationSubscriber implements EventSubscriberInterface
         $result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
-        var_dump($route);
+        //var_dump($route);
 
         if($result instanceof Invoice && $method != 'DELETE')
         {
@@ -83,62 +83,4 @@ class PaymentCreationSubscriber implements EventSubscriberInterface
             return;
         }
     }
-//    public function payment(ViewEvent $event)
-//    {
-//        $result = $event->getControllerResult();
-//        $method = $event->getRequest()->getMethod();
-//        $route = $event->getRequest()->attributes->get('_route');
-//
-//        //var_dump($route);
-//        if(!$result instanceof Payment || ($route != 'api_payments_post_webhook_collection' && $route != 'api_payments_post_collection')){
-//            //var_dump('a');
-//            return;
-//        }
-//        elseif($route=='api_payment_post_webhook_collection'){
-//            $requestData = json_decode($event->getRequest()->getContent(),true);
-//            $paymentProvider = $this->em->getRepository('App\Entity\Service')->find($requestData['serviceId']);
-//            if($paymentProvider instanceof Service && $paymentProvider->getType() == 'mollie'){
-//                $mollieService = new MollieService($requestData['paymentProvider']);
-//                $payment = $mollieService->updatePayment($event->getRequest(), $this->em);
-//            }
-//            else{
-//                return;
-//            }
-//        }else{
-//            $requestData = json_decode($event->getRequest()->getContent(),true);
-//            $paymentProvider = $this->em->getRepository('App\Entity\Service')->find($requestData['serviceId']);
-//
-//            if($paymentProvider instanceof Service) {
-//                switch ($paymentProvider->getType()) {
-//                    case 'mollie':
-//                        $mollieService = new MollieService($paymentProvider);
-//                        $payment = $mollieService->createPayment($event->getRequest());
-//                        break;
-//                    case 'sumup':
-//                        $sumupService = new SumUpService($paymentProvider);
-//                        $payment = $sumupService->createPayment($event->getRequest());
-//                        break;
-//                    default:
-//                        return;
-//                }
-//            }
-//            else
-//                return;
-//        }
-//        $this->em->persist($payment);
-//        $this->em->flush();
-//
-//
-//        $json = $this->serializer->serialize(
-//            $payment,
-//            'jsonhal', ['enable_max_depth'=>true]
-//        );
-//
-//        $response = new Response(
-//            $json,
-//            Response::HTTP_OK,
-//            ['content-type' => 'application/json+hal']
-//        );
-//        $event->setResponse($response);
-//    }
 }

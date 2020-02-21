@@ -55,7 +55,7 @@ class PaymentSubscriber implements EventSubscriberInterface
         if($route=='api_payments_post_webhook_collection'){
             //var_dump('a');
             $providerId = $event->getRequest()->query->get('provider');
-            //var_dump($providerId);
+           //var_dump($providerId);
             $provider = $this->em->getRepository('App\Entity\Service')->find($providerId);
 
             $paymentId = $event->getRequest()->request->get('id');
@@ -64,7 +64,7 @@ class PaymentSubscriber implements EventSubscriberInterface
 
             if($provider instanceof Service && $provider->getType() == 'mollie'){
                 $mollieService = new MollieService($provider);
-                $payment = $mollieService->updatePayment($paymentId, $this->em);
+                $payment = $mollieService->updatePayment($paymentId, $provider, $this->em);
             }
             else{
                 return;

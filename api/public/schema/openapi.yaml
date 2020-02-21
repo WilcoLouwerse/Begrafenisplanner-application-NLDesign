@@ -2237,28 +2237,7 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Payment:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          text/html:
+          application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Payment-write'
         description: 'The new Payment resource'
