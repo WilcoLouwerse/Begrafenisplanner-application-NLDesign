@@ -40,13 +40,13 @@ class CommongroundUserProvider implements UserProviderInterface
 		//$userData = ...
 		// pretend it returns an array on success, false if there is no user
 		
-		if ($userData) {
-			$password = '...';
+		//if ($userData) {
+		//	$password = '...';
 			
 			// ...
 			
-			return new CommongroundUser($username, $password, $salt, $roles);
-		}
+			return new CommongroundUser('Default User', $uuid, null, ['user']);
+		//}
 		
 		throw new UsernameNotFoundException(
 				sprintf('User "%s" does not exist.', $uuid)
