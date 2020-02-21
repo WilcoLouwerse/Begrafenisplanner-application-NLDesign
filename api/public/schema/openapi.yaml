@@ -3305,6 +3305,9 @@ components:
         paymentUrl:
           readOnly: true
           type: string
+        remark:
+          description: 'Remarks on this invoice'
+          type: string
       required:
         - name
         - targetOrganization
@@ -3356,6 +3359,9 @@ components:
           description: 'The customer that receives this invoice'
           externalDocs:
             url: 'http://schema.org/url'
+          type: string
+        remark:
+          description: 'Remarks on this invoice'
           type: string
     'Invoice:jsonld-read':
       type: object
@@ -3431,6 +3437,9 @@ components:
         paymentUrl:
           readOnly: true
           type: string
+        remark:
+          description: 'Remarks on this invoice'
+          type: string
       required:
         - name
         - targetOrganization
@@ -3492,6 +3501,9 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+        remark:
+          description: 'Remarks on this invoice'
+          type: string
     InvoiceItem-read:
       type: object
       description: 'An entity representing an item of an invoice.'
@@ -3532,7 +3544,12 @@ components:
         taxPercentage:
           description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
           type: integer
-        createdAt:
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        dateModified:
           readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
@@ -3635,7 +3652,12 @@ components:
         taxPercentage:
           description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
           type: integer
-        createdAt:
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        dateModified:
           readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
@@ -4109,6 +4131,9 @@ definitions:
         example: 'https://example.org/people/1'
         format: url
       paymentUrl: []
+      remark:
+        description: 'Remarks on this invoice'
+        type: string
       items:
         description: 'The items in this invoice'
         type: \ArrayCollection
@@ -4159,6 +4184,9 @@ definitions:
         type: string
         example: 'https://example.org/people/1'
         format: url
+      remark:
+        description: 'Remarks on this invoice'
+        type: string
       items:
         description: 'The items in this invoice'
         type: \ArrayCollection
@@ -4212,7 +4240,10 @@ definitions:
         description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
         type: int
         example: '9'
-      createdAt:
+      dateCreated:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      dateModified:
         description: 'The moment this request was created by the submitter'
         type: \DateTime
       invoice:

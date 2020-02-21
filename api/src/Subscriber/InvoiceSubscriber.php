@@ -70,8 +70,6 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $invoice->setPriceCurrency($order->priceCurrency);
         $invoice->setTax($order->tax);
         $invoice->setCustomer($order->customer);
-        //@TODO: ORC locatie inregelbaar maken
-        $invoice->setOrder('https://orc.larping.eu'.$order->_links->self->href);
         $organization = $this->em->getRepository('App:Organization')->findOrCreateByRsin($order->organization->rsin);
         if ($organization instanceof Organization)
         {
