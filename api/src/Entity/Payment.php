@@ -21,7 +21,20 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
- *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true},
+ *     collectionOperations={
+ *          "get",
+ *          "post",
+ *          "post_webhook"={
+ *              "method"="POST",
+ *              "path"="payments/mollie_webhook",
+ *              "input_formats"={"x-www-form-urlencoded"={"application/x-www-form-urlencoded"}},
+ *              "swagger_context" = {
+ *                  "summary"="Webhook to update payment statuses from Mollie",
+ *                  "description"="Webhook to update payment statuses from Mollie"
+ *              }
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\PaymentRepository")
  */
@@ -42,16 +55,12 @@ class Payment
     private $id;
 
     /**
-     * @var string The provider that handles the payment
-     *
-     * @example iDeal
+     * @var Service The provider that handles the payment
      *
      * @Assert\NotNull
-     * @Assert\Length(
-     *     max = 255
-     * )
      * @Groups({"read", "write"})
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Service")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $paymentProvider;
 
@@ -108,12 +117,12 @@ class Payment
         return $this->id;
     }
 
-    public function getPaymentProvider(): ?string
+    public function getPaymentProvider(): ?Service
     {
         return $this->paymentProvider;
     }
 
-    public function setPaymentProvider(string $paymentProvider): self
+    public function setPaymentProvider(Service $paymentProvider): self
     {
         $this->paymentProvider = $paymentProvider;
 
