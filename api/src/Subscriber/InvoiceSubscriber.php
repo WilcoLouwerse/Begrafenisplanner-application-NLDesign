@@ -42,29 +42,10 @@ class InvoiceSubscriber implements EventSubscriber
         $this->index($args);
     }
 
-        $order =  json_decode($event->getRequest()->getContent(), true);
-
-        $contentType = $event->getRequest()->headers->get('accept');
-        if (!$contentType) {
-            $contentType = $event->getRequest()->headers->get('Accept');
-        }
-        
-        switch ($contentType) {
-            case 'application/json':
-                $renderType = 'json';
-                break;
-            case 'application/ld+json':
-                $renderType = 'jsonld';
-                break;
-            case 'application/hal+json':
-                $renderType = 'jsonhal';
-                break;
-            default:
-                $contentType = 'application/json';
-                $renderType = 'json';
-        }
-
-        if ($method != 'POST' && ($route != 'api_invoices_post_order_collection' || $order == null))
+    public function index(LifecycleEventArgs $args)
+    {
+        $entity = $args->getObject();
+        if(!($entity  instanceof Invoice))
         {
             //var_dump('a');
             return $entity;
@@ -85,67 +66,6 @@ class InvoiceSubscriber implements EventSubscriber
             $entity->setReference($organisation->getShortCode().'-'.date('Y').'-'.$referenceId);
         }
 
-        if(key_exists('items',$order))
-        {
-        	foreach($order['items'] as $item){
-        		
-                $invoiceItem = new InvoiceItem();
-                $invoiceItem->setName($item['name']);
-                $invoiceItem->setDescription($item['description']);
-                $invoiceItem->setPrice($item['price']);
-                $invoiceItem->setPriceCurrency($item['priceCurrency']);
-                $invoiceItem->setOffer($item['offer']);
-                $invoiceItem->setQuantity($item['quantity']);
-                $invoice->addItem($invoiceItem);
-                
-                foreach($item['taxes'] as $taxPost){                	
-                	$tax = new Tax();
-                	$tax->setName($taxPost['name']);
-                	$tax->setDescription($taxPost['description']);
-                	$tax->setPrice($taxPost['price']);
-                	$tax->setPriceCurrency($taxPost['priceCurrency']);
-                	$tax->setPercentage($taxPost['percentage']);
-                	$invoiceItem->addTax($tax);
-                }
-            }
-        }
-        
-        // Lets throw it in the db
-        $this->em->persist($invoice);
-        $this->em->flush();
-
-        // Only create payment links if a payment service is configured
-        if(count($invoice->getOrganization()->getServices()) >0 )
-        {
-            //var_dump(count($invoice->getOrganization()->getServices()));
-            $paymentService = $invoice->getOrganization()->getServices()[0];
-            switch ($paymentService->getType()) {
-                case 'mollie':
-                    $mollieService = new MollieService($paymentService);
-                    $paymentUrl = $mollieService->createPayment($invoice, $event->getRequest());
-                    $invoice->setPaymentUrl($paymentUrl);
-                    break;
-                case 'sumup':
-                    $sumupService = new SumUpService($paymentService);
-                    $paymentUrl = $sumupService->createPayment($invoice);
-                    $invoice->setPaymentUrl($paymentUrl);
-            }
-        }
-
-        $json = $this->serializer->serialize(
-            $invoice,
-        	$renderType, ['enable_max_depth'=>true]
-        );
-
-		// Creating a response
-        $response = new Response(
-            $json,
-            Response::HTTP_OK,
-            ['content-type' => 'application/json+hal']
-        );
-        $event->setResponse($response);
-
-
-        return $invoice;
+        return $entity;
     }
 }
