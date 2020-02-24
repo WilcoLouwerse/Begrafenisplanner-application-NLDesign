@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "post",
  *          "post_order"={
  *              "method"="POST",
- *              "path"="invoices/order",
+ *              "path"="order",
  *              "swagger_context" = {
  *                  "summary"="Create an invoice by just providing an order",
  *                  "description"="Create an invoice by just providing an order"
@@ -227,7 +227,7 @@ class Invoice
     private $customer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="invoices")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="invoices", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $organization;

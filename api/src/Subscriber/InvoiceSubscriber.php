@@ -48,70 +48,86 @@ class InvoiceSubscriber implements EventSubscriberInterface
     public function invoice(RequestEvent $event)
     {
 //        $result = $event->getControllerResult();
-//        $method = $event->getRequest()->getMethod();
+        $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
 
-        //var_dump($route);
 
-        $data = json_decode($event->getRequest()->getContent());
-        if ($route != 'api_invoices_post_order_collection' || $data == null)
+        // Order liever naar aray forcen dan object (arrays kunnnen mninder dus zijn veiliger ens choner )
+        $order =  json_decode($event->getRequest()->getContent(), true);
+        
+        // Je wilt op method = POST een check
+        if ($route != 'api_invoices_post_order_collection' || $order == null)
         {
-//            var_dump('a');
             return;
         }
-        $order = $data;
-
+                
+        // Gloabaal willen we hier checken of aantal dingen voorkomen of een fout gooien
+        // @id description name customer
+        
         $invoice = new Invoice();
-//        var_dump($order);
-        $invoice->setName($order->name);
-        if(isset($order->description))
-            $invoice->setDescription($order->description);
-        else
-            $invoice->setDescription("Automated invoice from {$event->getRequest()->getHttpHost()}");
-        $invoice->setReference($order->reference);
-        $invoice->setPrice($order->price);
-        $invoice->setPriceCurrency($order->priceCurrency);
-        $invoice->setTax($order->tax);
-        $invoice->setCustomer($order->customer);
-        if(isset($order->{'@id'}))
-            $invoice->setOrder($order->{'@id'});
-        else{
-            return;
-        }
-        $organization = $this->em->getRepository('App:Organization')->findOrCreateByRsin($order->organization->rsin);
+        $invoice->setName($order['name']);
+        $invoice->setCustomer($order['customer']);
+        $invoice->setOrder($order['@id']);
+        $invoice->setDescription($order['description']);                
+        
+        // invoice targetOrganization ip er vanuit gaan dat er een organisation object is meegeleverd
+        $organization = $this->em->getRepository('App:Organization')->findOrCreateByRsin($order['targetOrganization']);
+        
         if ($organization instanceof Organization)
-        {
-            if ($organization->getRsin() == $organization->getShortCode())
-                $organization->setShortCode($order->organization->shortCode);
+        {        	
+        	// bij if graag {} gebruiken voor leesbaarheid, en wat doet dit?
+            //if ($organization->getRsin() == $organization->getShortCode()){
+           // 	$organization->setShortCode($order['organization']['shortCode']);
+            //}    
         }
         else
         {
+        	// invoice targetOrganization ip er vanuit gaan dat er een organisation object is meegeleverd
             $organization = new Organization();
-            $organization->setRsin($order->organization->rsin);
-            $organization->setShortCode($order->organization->shortCode);
-            $this->em->persist($organization);
+            $organization->setRsin($order['targetOrganization']);
+            if($order['organization'] && $order['organization']['shortCode']){ // moet array keycheck worden
+            	$organization->setShortCode($order['organization']['shortCode']);            	
+            }            
         }
+        
         $invoice->setOrganization($organization);
-        $invoice->setTargetOrganization($organization->getRsin());
-        $this->em->persist($invoice);
-        if(isset($order->items))
+        $invoice->setTargetOrganization($order['targetOrganization']);
+        
+        // Waarom hier persisten ?
+        //$this->em->persist($invoice);
+        
+        if(isset($order['items']))// moet array keycheck worden
         {
-            foreach($order->items as $item){
+        	foreach($order['items'] as $item){
+        		
                 $invoiceItem = new InvoiceItem();
-                $invoiceItem->setName($item->name);
-                $invoiceItem->setPrice($item->price);
-                $invoiceItem->setPriceCurrency($item->priceCurrency);
-                $invoiceItem->setTaxPercentage($item->taxPercentage);
-                $invoiceItem->setDescription($item->description);
-                $invoiceItem->setOffer($item->offer);
-                $invoiceItem->setQuantity($item->quantity);
-                $this->em->persist($invoiceItem);
+                $invoiceItem->setName($item['name']);
+                $invoiceItem->setDescription($item['description']);
+                $invoiceItem->setPrice($item['price']);
+                $invoiceItem->setPriceCurrency($item['priceCurrency']);
+                $invoiceItem->setOffer($item['offer']);
+                $invoiceItem->setQuantity($item['quantity']);
+                //$this->em->persist($invoiceItem); // cascade
                 $invoice->addItem($invoiceItem);
-                $invoiceItem->setInvoice($invoice);
+                
+                foreach($item['taxes'] as $taxPost){                	
+                	$tax = new Tax();
+                	$tax->setName($taxPost['name']);
+                	$tax->setDescription($taxPost['description']);
+                	$tax->setPrice($taxPost['price']);
+                	$tax->setPriceCurrency($taxPost['priceCurrency']);
+                	$tax->setPercentage($taxPost['percentage']);
+                	$invoiceItem->addTax($tax);
+                }
             }
         }
-
+        
+        // Lets throw it in the db
+        $this->em->persist($invoice);
         $this->em->flush();
+                
+        // Wat als er geen payment providers zijn
+        /*
         $paymentService = $invoice->getOrganization()->getServices()[0];
         switch ($paymentService->getType()){
             case 'mollie':
@@ -124,11 +140,15 @@ class InvoiceSubscriber implements EventSubscriberInterface
                 $paymentUrl = $sumupService->createPayment($invoice);
                 $invoice->setPaymentUrl($paymentUrl);
         }
+        */
+        
+        // Hier is ergens een keer een beter switch voor gebouwd
         $json = $this->serializer->serialize(
             $invoice,
             'jsonhal', ['enable_max_depth'=>true]
         );
-
+        
+		// Creating a responce
         $response = new Response(
             $json,
             Response::HTTP_OK,
@@ -137,6 +157,6 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $event->setResponse($response);
 
 
-//        return $invoice;
+        return $invoice;
     }
 }
