@@ -21,6 +21,7 @@ use PhpParser\Error;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -75,14 +76,29 @@ class InvoiceSubscriber implements EventSubscriberInterface
                 $renderType = 'json';
         }
 
-        // Je wilt op method = POST een check
         if ($method != 'POST' && ($route != 'api_invoices_post_order_collection' || $order == null))
         {
             return;
         }
 
-        // Gloabaal willen we hier checken of aantal dingen voorkomen of een fout gooien
-        // @id description name customer
+        if(!key_exists('@id',$order) || $order['@id'] == null)
+        {
+            throw new BadRequestHttpException(sprintf('Compulsory property "%s" is not defined', '@id'));
+        }
+        if(!key_exists('name', $order) || $order['name'] == null)
+        {
+            throw new BadRequestHttpException(sprintf('Compulsory property "%s" is not defined', 'name'));
+        }
+        if(!key_exists('description', $order) || $order['description'] == null)
+        {
+            throw new BadRequestHttpException(sprintf('Compulsory property "%s" is not defined', 'description'));
+
+        }
+        if(!key_exists('customer', $order) || $order['customer'] == null)
+        {
+            throw new BadRequestHttpException(sprintf('Compulsory property "%s" is not defined', 'customer'));
+
+        }
 
         $invoice = new Invoice();
         $invoice->setName($order['name']);
@@ -93,19 +109,13 @@ class InvoiceSubscriber implements EventSubscriberInterface
         // invoice targetOrganization ip er vanuit gaan dat er een organisation object is meegeleverd
         $organization = $this->em->getRepository('App:Organization')->findOrCreateByRsin($order['targetOrganization']);
 
-        if ($organization instanceof Organization)
-        {
-        	// bij if graag {} gebruiken voor leesbaarheid, en wat doet dit?
-            //if ($organization->getRsin() == $organization->getShortCode()){
-           // 	$organization->setShortCode($order['organization']['shortCode']);
-            //}
-        }
-        else
+        if (!($organization instanceof Organization))
         {
         	// invoice targetOrganization ip er vanuit gaan dat er een organisation object is meegeleverd
             $organization = new Organization();
             $organization->setRsin($order['targetOrganization']);
-            if($order['organization'] && key_exists('shortCode',$order['organization'])){ // moet array keycheck worden
+            if(key_exists('organization', $order) && key_exists('shortCode',$order['organization']))
+            {
             	$organization->setShortCode($order['organization']['shortCode']);
             }
         }
@@ -113,10 +123,7 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $invoice->setOrganization($organization);
         $invoice->setTargetOrganization($order['targetOrganization']);
 
-        // Waarom hier persisten ?
-        //$this->em->persist($invoice);
-
-        if(isset($order['items']))// moet array keycheck worden
+        if(key_exists('items',$order))
         {
         	foreach($order['items'] as $item){
 
@@ -127,7 +134,6 @@ class InvoiceSubscriber implements EventSubscriberInterface
                 $invoiceItem->setPriceCurrency($item['priceCurrency']);
                 $invoiceItem->setOffer($item['offer']);
                 $invoiceItem->setQuantity($item['quantity']);
-                //$this->em->persist($invoiceItem); // cascade
                 $invoice->addItem($invoiceItem);
 
                 foreach($item['taxes'] as $taxPost){
@@ -146,7 +152,7 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $this->em->persist($invoice);
         $this->em->flush();
 
-        // Wat als er geen payment providers zijn
+        // Only create payment links if a payment service is configured
         if(count($invoice->getOrganization()->getServices()) >0 )
         {
             //var_dump(count($invoice->getOrganization()->getServices()));
@@ -164,13 +170,12 @@ class InvoiceSubscriber implements EventSubscriberInterface
             }
         }
 
-        // Hier is ergens een keer een beter switch voor gebouwd
         $json = $this->serializer->serialize(
             $invoice,
             $renderType, ['enable_max_depth'=>true]
         );
 
-		// Creating a responce
+		// Creating a response
         $response = new Response(
             $json,
             Response::HTTP_OK,
