@@ -54,7 +54,6 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $route = $event->getRequest()->attributes->get('_route');
 
         //var_dump($route);
-        // Order liever naar aray forcen dan object (arrays kunnnen mninder dus zijn veiliger ens choner )
         $order =  json_decode($event->getRequest()->getContent(), true);
 
         $contentType = $event->getRequest()->headers->get('accept');
