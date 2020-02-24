@@ -79,24 +79,18 @@ class InvoiceSubscriber implements EventSubscriberInterface
         {
             return;
         }
+        $needed = array(
+            '@id',
+            'name',
+            'description',
+            'customer'
+        );
 
-        if(!key_exists('@id',$order) || $order['@id'] == null)
-        {
-            throw new BadRequestHttpException(sprintf('Compulsory property "%s" is not defined', '@id'));
-        }
-        if(!key_exists('name', $order) || $order['name'] == null)
-        {
-            throw new BadRequestHttpException(sprintf('Compulsory property "%s" is not defined', 'name'));
-        }
-        if(!key_exists('description', $order) || $order['description'] == null)
-        {
-            throw new BadRequestHttpException(sprintf('Compulsory property "%s" is not defined', 'description'));
-
-        }
-        if(!key_exists('customer', $order) || $order['customer'] == null)
-        {
-            throw new BadRequestHttpException(sprintf('Compulsory property "%s" is not defined', 'customer'));
-
+        foreach($needed as $requirement){
+            if(!key_exists($requirement, $order) || $order[$requirement] == null)
+            {
+                throw new BadRequestHttpException(sprintf('Compulsory property "%s" is not defined', $requirement));
+            }
         }
 
         $invoice = new Invoice();
