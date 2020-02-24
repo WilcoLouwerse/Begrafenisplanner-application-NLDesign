@@ -55,7 +55,7 @@ class MollieService
                         "order_id" => $invoice->getReference(),
                     ],
                 ]);
-                var_dump($molliePayment->id);
+                //var_dump($molliePayment->id);
                 return $molliePayment->getCheckoutUrl();
             } catch (ApiException $e) {
                 return "<section><h2>Could not connect to payment provider</h2>" . $e->getMessage() . "</section>";
