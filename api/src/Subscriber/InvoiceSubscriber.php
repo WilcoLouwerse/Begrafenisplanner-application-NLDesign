@@ -58,6 +58,7 @@ class InvoiceSubscriber implements EventSubscriberInterface
         if (!$contentType) {
             $contentType = $event->getRequest()->headers->get('Accept');
         }
+        
         switch ($contentType) {
             case 'application/json':
                 $renderType = 'json';
@@ -165,7 +166,7 @@ class InvoiceSubscriber implements EventSubscriberInterface
 
         $json = $this->serializer->serialize(
             $invoice,
-            'jsonhal', ['enable_max_depth'=>true]
+        	$renderType, ['enable_max_depth'=>true]
         );
 
 		// Creating a response
