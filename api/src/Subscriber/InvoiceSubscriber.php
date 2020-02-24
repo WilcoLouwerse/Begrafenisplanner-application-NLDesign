@@ -20,6 +20,7 @@ use PhpParser\Error;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -52,9 +53,27 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $route = $event->getRequest()->attributes->get('_route');
 
         $order =  json_decode($event->getRequest()->getContent(), true);
-        
-        // Je wilt op method = POST een check
-        if ($route != 'api_invoices_post_order_collection' || $order == null)
+
+        $contentType = $event->getRequest()->headers->get('accept');
+        if (!$contentType) {
+            $contentType = $event->getRequest()->headers->get('Accept');
+        }
+        switch ($contentType) {
+            case 'application/json':
+                $renderType = 'json';
+                break;
+            case 'application/ld+json':
+                $renderType = 'jsonld';
+                break;
+            case 'application/hal+json':
+                $renderType = 'jsonhal';
+                break;
+            default:
+                $contentType = 'application/json';
+                $renderType = 'json';
+        }
+
+        if ($method != 'POST' && ($route != 'api_invoices_post_order_collection' || $order == null))
         {
             return;
         }
@@ -82,31 +101,22 @@ class InvoiceSubscriber implements EventSubscriberInterface
         
         // invoice targetOrganization ip er vanuit gaan dat er een organisation object is meegeleverd
         $organization = $this->em->getRepository('App:Organization')->findOrCreateByRsin($order['targetOrganization']);
-        
-        if ($organization instanceof Organization)
-        {        	
-        	// bij if graag {} gebruiken voor leesbaarheid, en wat doet dit?
-            //if ($organization->getRsin() == $organization->getShortCode()){
-           // 	$organization->setShortCode($order['organization']['shortCode']);
-            //}    
-        }
-        else
+
+        if (!($organization instanceof Organization))
         {
         	// invoice targetOrganization ip er vanuit gaan dat er een organisation object is meegeleverd
             $organization = new Organization();
             $organization->setRsin($order['targetOrganization']);
-            if($order['organization'] && $order['organization']['shortCode']){ // moet array keycheck worden
-            	$organization->setShortCode($order['organization']['shortCode']);            	
-            }            
+            if(key_exists('organization', $order) && key_exists('shortCode',$order['organization']))
+            {
+            	$organization->setShortCode($order['organization']['shortCode']);
+            }
         }
         
         $invoice->setOrganization($organization);
         $invoice->setTargetOrganization($order['targetOrganization']);
-        
-        // Waarom hier persisten ?
-        //$this->em->persist($invoice);
-        
-        if(isset($order['items']))// moet array keycheck worden
+
+        if(key_exists('items',$order))
         {
         	foreach($order['items'] as $item){
         		
@@ -117,7 +127,6 @@ class InvoiceSubscriber implements EventSubscriberInterface
                 $invoiceItem->setPriceCurrency($item['priceCurrency']);
                 $invoiceItem->setOffer($item['offer']);
                 $invoiceItem->setQuantity($item['quantity']);
-                //$this->em->persist($invoiceItem); // cascade
                 $invoice->addItem($invoiceItem);
                 
                 foreach($item['taxes'] as $taxPost){                	
@@ -135,30 +144,31 @@ class InvoiceSubscriber implements EventSubscriberInterface
         // Lets throw it in the db
         $this->em->persist($invoice);
         $this->em->flush();
-                
-        // Wat als er geen payment providers zijn
-        /*
-        $paymentService = $invoice->getOrganization()->getServices()[0];
-        switch ($paymentService->getType()){
-            case 'mollie':
-                $mollieService = new MollieService($paymentService);
-                $paymentUrl = $mollieService->createPayment($invoice, $event->getRequest());
-                $invoice->setPaymentUrl($paymentUrl);
-                break;
-            case 'sumup':
-                $sumupService = new SumUpService($paymentService);
-                $paymentUrl = $sumupService->createPayment($invoice);
-                $invoice->setPaymentUrl($paymentUrl);
+
+        // Only create payment links if a payment service is configured
+        if(count($invoice->getOrganization()->getServices()) >0 )
+        {
+            //var_dump(count($invoice->getOrganization()->getServices()));
+            $paymentService = $invoice->getOrganization()->getServices()[0];
+            switch ($paymentService->getType()) {
+                case 'mollie':
+                    $mollieService = new MollieService($paymentService);
+                    $paymentUrl = $mollieService->createPayment($invoice, $event->getRequest());
+                    $invoice->setPaymentUrl($paymentUrl);
+                    break;
+                case 'sumup':
+                    $sumupService = new SumUpService($paymentService);
+                    $paymentUrl = $sumupService->createPayment($invoice);
+                    $invoice->setPaymentUrl($paymentUrl);
+            }
         }
-        */
-        
-        // Hier is ergens een keer een beter switch voor gebouwd
+
         $json = $this->serializer->serialize(
             $invoice,
             'jsonhal', ['enable_max_depth'=>true]
         );
-        
-		// Creating a responce
+
+		// Creating a response
         $response = new Response(
             $json,
             Response::HTTP_OK,
