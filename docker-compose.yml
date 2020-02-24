@@ -43,6 +43,10 @@ services:
       - APP_DESCRIPTION=${APP_DESCRIPTION}
       - APP_LOGO=${APP_LOGO}
       - APP_HOME=${APP_HOME}
+      - APP_COMMONGROUND_ID=${APP_COMMONGROUND_ID}
+      - APP_COMMONGROUND_KEY=${APP_COMMONGROUND_KEY}
+      - APP_APPLICATION_KEY=${APP_APPLICATION_KEY}
+      - APP_USER_KEY=${APP_USER_KEY}
       - ORGANIZATION_NAME=${ORGANIZATION_NAME}
       - ORGANIZATION_EMAIL_ADDRESS=${ORGANIZATION_EMAIL_ADDRESS}
       - ORGANIZATION_COUNTRY_NAME=${ORGANIZATION_COUNTRY_NAME}
@@ -96,7 +100,7 @@ services:
     tmpfs:
       - /usr/local/var/varnish:exec
     ports:
-     - "8081:80"
+     - "81:80"
     environment:
      - BACKENDS=php
       
