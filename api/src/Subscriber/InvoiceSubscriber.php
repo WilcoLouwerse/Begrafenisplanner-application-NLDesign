@@ -51,8 +51,6 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
 
-
-        // Order liever naar aray forcen dan object (arrays kunnnen mninder dus zijn veiliger ens choner )
         $order =  json_decode($event->getRequest()->getContent(), true);
         
         // Je wilt op method = POST een check
@@ -60,10 +58,22 @@ class InvoiceSubscriber implements EventSubscriberInterface
         {
             return;
         }
-                
-        // Gloabaal willen we hier checken of aantal dingen voorkomen of een fout gooien
-        // @id description name customer
-        
+
+        $needed = array(
+            '@id',
+            'name',
+            'description',
+            'customer'
+        );
+
+        foreach($needed as $requirement){
+            if(!key_exists($requirement, $order) || $order[$requirement] == null)
+            {
+                throw new BadRequestHttpException(sprintf('Compulsory property "%s" is not defined', $requirement));
+            }
+        }
+
+
         $invoice = new Invoice();
         $invoice->setName($order['name']);
         $invoice->setCustomer($order['customer']);
