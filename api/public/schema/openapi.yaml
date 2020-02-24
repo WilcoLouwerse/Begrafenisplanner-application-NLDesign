@@ -886,107 +886,6 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-  /invoices/order:
-    post:
-      tags:
-        - Invoice
-      operationId: post_orderInvoiceCollection
-      summary: 'Creates a Invoice resource.'
-      responses:
-        201:
-          description: 'Invoice resource created'
-          content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/ld+json:
-              schema:
-                $ref: '#/components/schemas/Invoice:jsonld-read'
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/x-yaml:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            text/html:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-          links:
-            GetInvoiceItem:
-              parameters:
-                id: '$response.body#/id'
-              operationId: getInvoiceItem
-              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /invoices/{id}`.'
-        400:
-          description: 'Invalid input'
-        404:
-          description: 'Resource not found'
-      requestBody:
-        content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Invoice:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-        description: 'The new Invoice resource'
-      parameters:
-        -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
-        -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
   '/invoices/{id}':
     get:
       tags:
@@ -1352,6 +1251,107 @@ paths:
             schema:
               $ref: '#/components/schemas/Invoice-write'
         description: 'The updated Invoice resource'
+  /order:
+    post:
+      tags:
+        - Invoice
+      operationId: post_orderInvoiceCollection
+      summary: 'Creates a Invoice resource.'
+      responses:
+        201:
+          description: 'Invoice resource created'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+          links:
+            GetInvoiceItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getInvoiceItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /invoices/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Invoice:jsonld-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+        description: 'The new Invoice resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
   /organizations:
     get:
       tags:
@@ -4988,10 +4988,6 @@ definitions:
         description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
         type: string
         example: EUR
-      taxPercentage:
-        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
-        type: int
-        example: '9'
       dateCreated:
         description: 'The moment this request was created by the submitter'
         type: \DateTime
@@ -5042,10 +5038,6 @@ definitions:
         description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
         type: string
         example: EUR
-      taxPercentage:
-        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
-        type: int
-        example: '9'
       invoice:
         description: 'The invoice that contains this item'
         type: \Invoice
