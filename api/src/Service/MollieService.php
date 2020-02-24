@@ -36,7 +36,7 @@ class MollieService
         else
             $protocol = "http://";
         $currency = $invoice->getPriceCurrency();
-        $amount = $invoice->getPrice();
+        $amount = "".$invoice->getPrice();
         $description = $invoice->getDescription();
         $redirectUrl = $invoice->getOrganization()->getRedirectUrl();
         $webhookUrl = "$protocol$domain/payments/mollie_webhook?provider=$this->serviceId";
