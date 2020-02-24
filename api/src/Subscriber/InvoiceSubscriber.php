@@ -9,6 +9,7 @@ use App\Entity\Invoice;
 use App\Entity\InvoiceItem;
 use App\Entity\Organization;
 use App\Entity\Payment;
+use App\Entity\Tax;
 use App\Service\MollieService;
 use App\Service\SumUpService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -97,8 +98,8 @@ class InvoiceSubscriber implements EventSubscriberInterface
         $invoice->setName($order['name']);
         $invoice->setCustomer($order['customer']);
         $invoice->setOrder($order['@id']);
-        $invoice->setDescription($order['description']);                
-        
+        $invoice->setDescription($order['description']);
+
         // invoice targetOrganization ip er vanuit gaan dat er een organisation object is meegeleverd
         $organization = $this->em->getRepository('App:Organization')->findOrCreateByRsin($order['targetOrganization']);
 
@@ -112,14 +113,14 @@ class InvoiceSubscriber implements EventSubscriberInterface
             	$organization->setShortCode($order['organization']['shortCode']);
             }
         }
-        
+
         $invoice->setOrganization($organization);
         $invoice->setTargetOrganization($order['targetOrganization']);
 
         if(key_exists('items',$order))
         {
         	foreach($order['items'] as $item){
-        		
+
                 $invoiceItem = new InvoiceItem();
                 $invoiceItem->setName($item['name']);
                 $invoiceItem->setDescription($item['description']);
@@ -128,8 +129,8 @@ class InvoiceSubscriber implements EventSubscriberInterface
                 $invoiceItem->setOffer($item['offer']);
                 $invoiceItem->setQuantity($item['quantity']);
                 $invoice->addItem($invoiceItem);
-                
-                foreach($item['taxes'] as $taxPost){                	
+
+                foreach($item['taxes'] as $taxPost){
                 	$tax = new Tax();
                 	$tax->setName($taxPost['name']);
                 	$tax->setDescription($taxPost['description']);
@@ -140,7 +141,7 @@ class InvoiceSubscriber implements EventSubscriberInterface
                 }
             }
         }
-        
+
         // Lets throw it in the db
         $this->em->persist($invoice);
         $this->em->flush();
@@ -165,14 +166,14 @@ class InvoiceSubscriber implements EventSubscriberInterface
 
         $json = $this->serializer->serialize(
             $invoice,
-            'jsonhal', ['enable_max_depth'=>true]
+            $renderType, ['enable_max_depth'=>true]
         );
 
 		// Creating a response
         $response = new Response(
             $json,
             Response::HTTP_OK,
-            ['content-type' => 'application/json+hal']
+            ['content-type' => $contentType]
         );
         $event->setResponse($response);
 
