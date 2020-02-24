@@ -249,8 +249,8 @@ class Invoice
     
     /**
      *
-     *  @ORM\prePersist
-     *  @ORM\preUpdate
+     *  @ORM\PrePersist
+     *  @ORM\PreUpdate
      *
      *  */
     public function prePersist()
