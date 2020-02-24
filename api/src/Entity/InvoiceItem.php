@@ -148,10 +148,10 @@ class InvoiceItem
      * @Assert\NotBlank
      * @Assert\PositiveOrZero
      * @Groups({"read", "write"})
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $taxPercentage;
-    
+
     /**
      * @var ArrayCollection The taxes that affect this offer
      *
@@ -179,12 +179,12 @@ class InvoiceItem
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateModified;
-    
+
     public function __construct()
     {
     	$this->taxes = new ArrayCollection();
     }
-    
+
     public function getId()
     {
         return $this->id;
@@ -271,7 +271,7 @@ class InvoiceItem
 
         return $this;
     }
-    
+
     /**
      * @return Collection|Tax[]
      */
@@ -279,24 +279,24 @@ class InvoiceItem
     {
     	return $this->taxes;
     }
-    
+
     public function addTax(Tax $tax): self
     {
     	if (!$this->taxes->contains($tax)) {
     		$this->taxes[] = $tax;
     		$tax->addOffer($this);
     	}
-    	
+
     	return $this;
     }
-    
+
     public function removeTax(Tax $tax): self
     {
     	if ($this->taxes->contains($tax)) {
     		$this->taxes->removeElement($tax);
     		$gtax->removeProduct($this);
     	}
-    	
+
     	return $this;
     }
 
