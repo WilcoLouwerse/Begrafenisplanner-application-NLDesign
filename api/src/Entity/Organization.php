@@ -96,8 +96,9 @@ class Organization
      * @var string The url payment providers should return to
      *
      * @Groups({"read","write"})
+     * @Assert\NotNull
      * @Assert\Url
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $redirectUrl;
 
