@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -149,6 +151,16 @@ class InvoiceItem
      * @ORM\Column(type="integer")
      */
     private $taxPercentage;
+    
+    /**
+     * @var ArrayCollection The taxes that affect this offer
+     *
+     *
+     * @MaxDepth(1)
+     * @Groups({"read", "write"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Tax", mappedBy="invoiceItems")
+     */
+    private $taxes;
 
     /**
      * @var DateTime The moment this request was created by the submitter
@@ -167,7 +179,12 @@ class InvoiceItem
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateModified;
-
+    
+    public function __construct()
+    {
+    	$this->taxes = new ArrayCollection();
+    }
+    
     public function getId()
     {
         return $this->id;
@@ -254,17 +271,33 @@ class InvoiceItem
 
         return $this;
     }
-
-    public function getTaxPercentage(): ?int
+    
+    /**
+     * @return Collection|Tax[]
+     */
+    public function getTaxes(): Collection
     {
-        return $this->taxPercentage;
+    	return $this->taxes;
     }
-
-    public function setTaxPercentage(int $taxPercentage): self
+    
+    public function addTax(Tax $tax): self
     {
-        $this->taxPercentage = $taxPercentage;
-
-        return $this;
+    	if (!$this->taxes->contains($tax)) {
+    		$this->taxes[] = $tax;
+    		$tax->addOffer($this);
+    	}
+    	
+    	return $this;
+    }
+    
+    public function removeTax(Tax $tax): self
+    {
+    	if ($this->taxes->contains($tax)) {
+    		$this->taxes->removeElement($tax);
+    		$gtax->removeProduct($this);
+    	}
+    	
+    	return $this;
     }
 
     public function getName(): ?string
