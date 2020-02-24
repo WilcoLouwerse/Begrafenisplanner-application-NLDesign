@@ -148,6 +148,9 @@ class OrderSubscriber implements EventSubscriberInterface
         $this->em->persist($organization);
         $this->em->persist($invoice);
         $this->em->flush();
+        
+        // recalculate all the invoice totals
+        $invoice->calculateTotals();
 
         // Only create payment links if a payment service is configured
         if(count($invoice->getOrganization()->getServices()) >0 )

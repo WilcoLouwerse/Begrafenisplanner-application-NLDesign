@@ -255,12 +255,17 @@ class Invoice
      *  */
     public function prePersist()
     {
+    	$this->calculateTotals();
+    }
+    
+    public function calculateTotals()
+    {    	
     	/*@todo we should support non euro */
     	$price = new Money(0, new Currency('EUR'));
     	$taxes = [];
-
+    	
     	foreach ($this->items as $item){
-
+    		
     		// Calculate Invoice Price
     		//
     		if(is_string ($item->getPrice())){
@@ -268,18 +273,18 @@ class Invoice
     			$float = floatval($item->getPrice());
     			$float = $float*100;
     			$itemPrice = new Money((int) $float, new Currency($item->getPriceCurrency()));
-
+    			
     		}
     		else{
     			// Calculate Invoice Price
     			$itemPrice = new Money($item->getPrice(), new Currency($item->getPriceCurrency()));
-
-
+    			
+    			
     		}
-
+    		
     		$itemPrice = $itemPrice->multiply($item->getQuantity());
     		$price = $price->add($itemPrice);
-
+    		
     		// Calculate Taxes
     		/*@todo we should index index on something else do, there might be diferend taxes on the same percantage. Als not all taxes are a percentage */
     		foreach($item->getTaxes() as $tax){
@@ -291,9 +296,9 @@ class Invoice
     				$tax[$tax->getPercentage()] = $tax[$tax->getPercentage()]->add($taxPrice);
     			}
     		}
-
+    		
     	}
-
+    	
     	$this->taxes = $taxes;
     	$this->price = $price->getAmount()/100;
     	$this->priceCurrency = $price->getCurrency();
