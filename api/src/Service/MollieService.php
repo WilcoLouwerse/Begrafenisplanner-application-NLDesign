@@ -35,33 +35,34 @@ class MollieService
             $protocol = "https://";
         else
             $protocol = "http://";
-        $currency = $invoice->getPriceCurrency();
-        $amount = "".$invoice->getPrice();
-        $description = $invoice->getDescription();
-        $redirectUrl = $invoice->getOrganization()->getRedirectUrl() .'/'. $invoice->getId();
-        $webhookUrl = "$protocol$domain/payments/mollie_webhook?provider=$this->serviceId";
-        try
-        {
-            $molliePayment = $this->mollie->payments->create([
-                "amount" => [
-                    "currency" => $currency,
-                    "value" => $amount
-                ],
-                "description" => $description,
-                "redirectUrl" => $redirectUrl,
-                "webhookUrl" => $webhookUrl,
-                "metadata" => [
-                    "order_id" => $invoice->getReference(),
-                ],
-            ]);
-            var_dump($molliePayment->id);
-            return $molliePayment->getCheckoutUrl();
-        }
-        catch (ApiException $e)
-        {
-            return "<section><h2>Could not connect to payment provider</h2>".$e->getMessage()."</section>";
 
+        if($invoice->getPrice() > 0.00) {
+            $currency = $invoice->getPriceCurrency();
+            $amount = "" . $invoice->getPrice();
+            $description = $invoice->getDescription();
+            $redirectUrl = $invoice->getOrganization()->getRedirectUrl() . '/' . $invoice->getId();
+            $webhookUrl = "$protocol$domain/payments/mollie_webhook?provider=$this->serviceId";
+            try {
+                $molliePayment = $this->mollie->payments->create([
+                    "amount" => [
+                        "currency" => $currency,
+                        "value" => $amount
+                    ],
+                    "description" => $description,
+                    "redirectUrl" => $redirectUrl,
+                    "webhookUrl" => $webhookUrl,
+                    "metadata" => [
+                        "order_id" => $invoice->getReference(),
+                    ],
+                ]);
+                var_dump($molliePayment->id);
+                return $molliePayment->getCheckoutUrl();
+            } catch (ApiException $e) {
+                return "<section><h2>Could not connect to payment provider</h2>" . $e->getMessage() . "</section>";
+
+            }
         }
+        return $invoice->getOrganization()->getRedirectUrl() . '/' . $invoice->getId();
     }
 
     public function updatePayment(string $paymentId, Service $service, EntityManagerInterface $manager):?Payment
