@@ -51,6 +51,24 @@ class PaymentSubscriber implements EventSubscriberInterface
         //$result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
+        $contentType = $event->getRequest()->headers->get('accept');
+        if (!$contentType) {
+            $contentType = $event->getRequest()->headers->get('Accept');
+        }
+        switch ($contentType) {
+            case 'application/json':
+                $renderType = 'json';
+                break;
+            case 'application/ld+json':
+                $renderType = 'jsonld';
+                break;
+            case 'application/hal+json':
+                $renderType = 'jsonhal';
+                break;
+            default:
+                $contentType = 'application/json';
+                $renderType = 'json';
+        }
         //var_dump($route);
         if($route=='api_payments_post_webhook_collection'){
             //var_dump('a');
@@ -80,19 +98,19 @@ class PaymentSubscriber implements EventSubscriberInterface
             $this->em->flush();
             $json = $this->serializer->serialize(
                 $payment,
-                'jsonhal', ['enable_max_depth'=>true]
+                $renderType, ['enable_max_depth'=>true]
             );
         }else{
             $json = $this->serializer->serialize(
-                ["Error"=>"The payment is not related to an invoice in our database"], 'jsonhal', ['enable_max_depth'=>true]
+                ["Error"=>"The payment is not related to an invoice in our database"], $renderType, ['enable_max_depth'=>true]
             );
         }
 
-
+        // Creating a response
         $response = new Response(
             $json,
-            Response::HTTP_OK,
-            ['content-type' => 'application/json+hal']
+            Response::HTTP_CREATED,
+            ['content-type' => $contentType]
         );
         $event->setResponse($response);
     }

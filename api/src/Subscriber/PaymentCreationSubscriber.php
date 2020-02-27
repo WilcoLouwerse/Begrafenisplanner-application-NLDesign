@@ -51,6 +51,35 @@ class PaymentCreationSubscriber implements EventSubscriberInterface
         $route = $event->getRequest()->attributes->get('_route');
         //var_dump($route);
 
+        $contentType = $event->getRequest()->headers->get('accept');
+        if (!$contentType) {
+            $contentType = $event->getRequest()->headers->get('Accept');
+        }
+        switch ($contentType) {
+            case 'application/json':
+                $renderType = 'json';
+                break;
+            case 'application/ld+json':
+                $renderType = 'jsonld';
+                break;
+            case 'application/hal+json':
+                $renderType = 'jsonhal';
+                break;
+            default:
+                $contentType = 'application/json';
+                $renderType = 'json';
+        }
+        switch($method){
+            case 'POST':
+                $statusCode = Response::HTTP_CREATED;
+                break;
+            case 'DELETE':
+                $statusCode = Response::HTTP_NO_CONTENT;
+                break;
+            default:
+                $statusCode = Response::HTTP_OK;
+                break;
+        }
         if($result instanceof Invoice && $method != 'DELETE')
         {
             $paymentService = $result->getOrganization()->getServices()[0];
@@ -67,13 +96,14 @@ class PaymentCreationSubscriber implements EventSubscriberInterface
             }
             $json = $this->serializer->serialize(
                 $result,
-                'jsonhal', ['enable_max_depth'=>true]
+                $renderType, ['enable_max_depth'=>true]
             );
 
+            // Creating a response
             $response = new Response(
                 $json,
-                Response::HTTP_OK,
-                ['content-type' => 'application/json+hal']
+                $statusCode,
+                ['content-type' => $contentType]
             );
             $event->setResponse($response);
 
