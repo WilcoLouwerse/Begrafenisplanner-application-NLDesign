@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\Common\Collections\Criteria;
 use Money\Currency;
 use Money\Money;
 use DateTime;
@@ -248,6 +249,11 @@ class Invoice
     private $remark;
 
     /**
+     * @Groups({"read"})
+     */
+    private $paid = false;
+
+    /**
      *
      *  @ORM\PrePersist
      *  @ORM\PreUpdate
@@ -257,15 +263,15 @@ class Invoice
     {
     	$this->calculateTotals();
     }
-    
+
     public function calculateTotals()
-    {    	
+    {
     	/*@todo we should support non euro */
     	$price = new Money(0, new Currency('EUR'));
     	$taxes = [];
-    	
+
     	foreach ($this->items as $item){
-    		
+
     		// Calculate Invoice Price
     		//
     		if(is_string ($item->getPrice())){
@@ -273,18 +279,18 @@ class Invoice
     			$float = floatval($item->getPrice());
     			$float = $float*100;
     			$itemPrice = new Money((int) $float, new Currency($item->getPriceCurrency()));
-    			
+
     		}
     		else{
     			// Calculate Invoice Price
     			$itemPrice = new Money($item->getPrice(), new Currency($item->getPriceCurrency()));
-    			
-    			
+
+
     		}
-    		
+
     		$itemPrice = $itemPrice->multiply($item->getQuantity());
     		$price = $price->add($itemPrice);
-    		
+
     		// Calculate Taxes
     		/*@todo we should index index on something else do, there might be diferend taxes on the same percantage. Als not all taxes are a percentage */
     		foreach($item->getTaxes() as $tax){
@@ -296,12 +302,18 @@ class Invoice
     				$tax[$tax->getPercentage()] = $tax[$tax->getPercentage()]->add($taxPrice);
     			}
     		}
-    		
+
     	}
-    	
+
     	$this->taxes = $taxes;
     	$this->price = number_format($price->getAmount()/100, 2, '.', "");
     	$this->priceCurrency = $price->getCurrency();
+    }
+
+    public function getAllPaidPayments(){
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('status', 'paid'));
+        return $this->getPayments()->matching($criteria);
     }
 
 
@@ -559,6 +571,16 @@ class Invoice
 
         return $this;
     }
+
+    public function getPaid(): ?bool
+    {
+        if( count($this->getAllPaidPayments()) >= 1 ) {
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 }
