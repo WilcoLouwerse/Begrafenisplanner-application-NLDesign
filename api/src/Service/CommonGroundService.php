@@ -68,7 +68,7 @@ class CommonGroundService
 		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
 		if($this->params->get('app_env') != "prod"){
-			$url = str_replace("https://","https://".$this->params->get('app_env').'.',$url);
+			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
 		}
 		
 		$elementList = [];
@@ -112,7 +112,7 @@ class CommonGroundService
 		/* @todo this should look to al @id keus not just the main root */
 		foreach($response['hydra:member'] as $key => $embedded){
 			if($embedded['@id']){
-				$response['hydra:member'][$key]['@id'] = $parsedUrl["host"].$embedded['@id'];
+				$response['hydra:member'][$key]['@id'] =  $parsedUrl["scheme"]."://".$parsedUrl["host"].$embedded['@id'];
 			}
 		}
 		
@@ -136,7 +136,7 @@ class CommonGroundService
 		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
 		if($this->params->get('app_env') != "prod"){
-			$url = str_replace("https://","https://".$this->params->get('app_env').'.',$url);
+			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
 		}
 		
 		// To work with NLX we need a couple of default headers
@@ -167,7 +167,7 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 		
 		if($response['@id']){
-			$response['@id'] = $parsedUrl["host"].$response['@id'];
+			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
 		$item->set($response);
@@ -189,7 +189,7 @@ class CommonGroundService
 		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
 		if($this->params->get('app_env') != "prod"){
-			$url = str_replace("https://","https://".$this->params->get('app_env').'.',$url);
+			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
 		}
 				
 		// To work with NLX we need a couple of default headers
@@ -232,7 +232,7 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 		
 		if($response['@id']){
-			$response['@id'] = $parsedUrl["host"].$response['@id'];
+			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
 		// Lets cash this item for speed purposes
@@ -260,13 +260,12 @@ class CommonGroundService
 		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
 		if($this->params->get('app_env') != "prod"){
-			$url = str_replace("https://","https://".$this->params->get('app_env').'.',$url);
+			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
 		}
 		
 		if(!$async){
 			$response = $this->client->request('POST', $url, [
 					'body' => json_encode($resource),
-					'query' => $query,
 					'headers' => $headers,
 				]
 			);
@@ -274,7 +273,6 @@ class CommonGroundService
 		else {
 			$response = $this->client->requestAsync('POST', $url, [
 					'body' => json_encode($resource),
-					'query' => $query,
 					'headers' => $headers,
 			]
 			);
@@ -292,7 +290,7 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 		
 		if($response['@id']){
-			$response['@id'] = $parsedUrl["host"].$response['@id'];
+			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
 		// Lets cash this item for speed purposes
