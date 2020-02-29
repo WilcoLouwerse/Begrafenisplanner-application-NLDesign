@@ -3913,6 +3913,9 @@ components:
         remark:
           description: 'Remarks on this invoice'
           type: string
+        paid:
+          readOnly: true
+          type: boolean
       required:
         - name
         - targetOrganization
@@ -4045,6 +4048,9 @@ components:
         remark:
           description: 'Remarks on this invoice'
           type: string
+        paid:
+          readOnly: true
+          type: boolean
       required:
         - name
         - targetOrganization
