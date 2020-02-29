@@ -58,12 +58,18 @@ class CommonGroundService
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function getResourceList($url, $query = [], $force = false)
+	public function getResourceList($url, $query = [], $force = false, $async = false)
 	{
+		// Check on URL
 		if (!$url) {
 			return false;
-		}
+		}		
+		
+		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
+		if($this->params->get('app_env') != "prod"){
+			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
+		}
 		
 		$elementList = [];
 		foreach($query as $element){
@@ -84,18 +90,29 @@ class CommonGroundService
 			//return $item->get();
 		}
 		
-		$response = $this->client->request('GET', $url, [
-				'query' => $query,
-				'headers' => $headers,
-		]
-				);
+		
+		if(!$async){
+			$response = $this->client->request('GET', $url, [
+					'query' => $query,
+					'headers' => $headers,
+			]
+					);
+		}
+		else {
+			
+			$response = $this->client->requestAsync('GET', $url, [
+					'query' => $query,
+					'headers' => $headers,
+			]
+					);
+		}
 		
 		$response = json_decode($response->getBody(), true);
 		
 		/* @todo this should look to al @id keus not just the main root */
 		foreach($response['hydra:member'] as $key => $embedded){
 			if($embedded['@id']){
-				$response['hydra:member'][$key]['@id'] = $parsedUrl["host"].$embedded['@id'];
+				$response['hydra:member'][$key]['@id'] =  $parsedUrl["scheme"]."://".$parsedUrl["host"].$embedded['@id'];
 			}
 		}
 		
@@ -109,13 +126,18 @@ class CommonGroundService
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function getResource($url, $query = [], $force = false)
+	public function getResource($url, $query = [], $force = false, $async = false)
 	{
 		
 		if (!$url) {
 			//return false;
 		}
+		
+		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
+		if($this->params->get('app_env') != "prod"){
+			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
+		}
 		
 		// To work with NLX we need a couple of default headers
 		$headers = $this->headers;
@@ -124,18 +146,28 @@ class CommonGroundService
 		$item = $this->cash->getItem('commonground_'.md5($url));
 		if ($item->isHit() && !$force) {
 			//return $item->get();
-		}
+		}		
 		
-		$response = $this->client->request('GET', $url, [
-				'query' => $query,
-				'headers' => $headers,
-		]
-				);
+		if(!$async){
+			$response = $this->client->request('GET', $url, [
+					'query' => $query,
+					'headers' => $headers,
+			]
+					);
+		}
+		else {
+			
+			$response = $this->client->requestAsync('GET', $url, [
+					'query' => $query,
+					'headers' => $headers,
+			]
+					);
+		}
 		
 		$response = json_decode($response->getBody(), true);
 		
 		if($response['@id']){
-			$response['@id'] = $parsedUrl["host"].$response['@id'];
+			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
 		$item->set($response);
@@ -148,12 +180,21 @@ class CommonGroundService
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function updateResource($resource, $url = null)
+	public function updateResource($resource, $url = null, $query = [], $force = false, $async = false)
 	{
 		if (!$url) {
 			return false;
 		}
+		
+		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
+		if($this->params->get('app_env') != "prod"){
+			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
+		}
+				
+		// To work with NLX we need a couple of default headers
+		$headers = $this->headers;
+		$headers['X-NLX-Request-Subject-Identifier'] = $url;
 		
 		unset($resource['@context']);
 		unset($resource['@id']);
@@ -162,10 +203,24 @@ class CommonGroundService
 		unset($resource['_links']);
 		unset($resource['_embedded']);
 		
-		$response = $this->client->request('PUT', $url, [
-				'body' => json_encode($resource),
-		]
-				);
+		
+		if(!$async){			
+			$response = $this->client->request('PUT', $url, [
+					'body' => json_encode($resource),
+					'query' => $query,
+					'headers' => $headers,
+			]
+			);
+		}
+		else {
+			
+			$response = $this->client->requestAsync('PUT', $url, [
+					'body' => json_encode($resource),
+					'query' => $query,
+					'headers' => $headers,
+			]
+			);
+		}
 		
 		if($response->getStatusCode() != 200){
 			var_dump(json_encode($resource));
@@ -177,7 +232,7 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 		
 		if($response['@id']){
-			$response['@id'] = $parsedUrl["host"].$response['@id'];
+			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
 		// Lets cash this item for speed purposes
@@ -192,17 +247,36 @@ class CommonGroundService
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function createResource($resource, $url = null)
+	public function createResource($resource, $url = null, $query = [], $force = false, $async = false)
 	{
 		if (!$url) {
 			return false;
 		}
-		$parsedUrl = parse_url($url);
+				
+		// To work with NLX we need a couple of default headers
+		$headers = $this->headers;
+		$headers['X-NLX-Request-Subject-Identifier'] = $url;
 		
-		$response = $this->client->request('POST', $url, [
-				'body' => json_encode($resource),
-		]
-				);
+		// Split enviroments, if the env is not dev the we need add the env to the url name
+		$parsedUrl = parse_url($url);
+		if($this->params->get('app_env') != "prod"){
+			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
+		}
+		
+		if(!$async){
+			$response = $this->client->request('POST', $url, [
+					'body' => json_encode($resource),
+					'headers' => $headers,
+				]
+			);
+		}
+		else {
+			$response = $this->client->requestAsync('POST', $url, [
+					'body' => json_encode($resource),
+					'headers' => $headers,
+			]
+			);
+		}
 		
 		
 		if($response->getStatusCode() != 201){
@@ -216,7 +290,7 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 		
 		if($response['@id']){
-			$response['@id'] = $parsedUrl["host"].$response['@id'];
+			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
 		// Lets cash this item for speed purposes
