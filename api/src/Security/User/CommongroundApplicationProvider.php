@@ -40,13 +40,13 @@ class CommongroundApplicationProvider implements UserProviderInterface
 		// $userData = ...
 		// pretend it returns an array on success, false if there is no user
 		
-		if ($userData) {
-			$password = '...';
+		//if ($userData) {
+		//	$password = '...';
 			
 			// ...
 			
-			return new CommongroundApplication($username, $password, $salt, $roles);
-		}
+			return new CommongroundApplication('Default Application', $uuid, null, ['user']);
+		//}
 		
 		throw new UsernameNotFoundException(
 				sprintf('Application "%s" does not exist.', $uuid)

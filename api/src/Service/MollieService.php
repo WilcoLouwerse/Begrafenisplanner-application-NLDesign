@@ -35,54 +35,64 @@ class MollieService
             $protocol = "https://";
         else
             $protocol = "http://";
-        $currency = $invoice->getPriceCurrency();
-        $amount = $invoice->getPrice();
-        $description = $invoice->getDescription();
-        $redirectUrl = $invoice->getOrganization()->getRedirectUrl();
-        $webhookUrl = "$protocol$domain/payments/molliewebhook?provider=$this->serviceId";
-//        var_dump($webhookUrl);
-//        die;
-        try
-        {
-            $molliePayment = $this->mollie->payments->create([
-                "amount" => [
-                    "currency" => $currency,
-                    "value" => $amount
-                ],
-                "description" => $description,
-                "redirectUrl" => $redirectUrl,
-                "webhookUrl" => $webhookUrl,
-                "metadata" => [
-                    "order_id" => $invoice->getReference(),
-                ],
-            ]);
-            return $molliePayment->getCheckoutUrl();
-        }
-        catch (ApiException $e)
-        {
-            return "<section><h2>Could not connect to payment provider</h2>".$e->getMessage()."</section>";
 
+        if($invoice->getPrice() > 0.00) {
+            $currency = $invoice->getPriceCurrency();
+            $amount = "" . $invoice->getPrice();
+            $description = $invoice->getDescription();
+            $redirectUrl = $invoice->getOrganization()->getRedirectUrl() . '/' . $invoice->getId();
+            $webhookUrl = "$protocol$domain/payments/mollie_webhook?provider=$this->serviceId";
+            try {
+                $molliePayment = $this->mollie->payments->create([
+                    "amount" => [
+                        "currency" => $currency,
+                        "value" => $amount
+                    ],
+                    "description" => $description,
+                    "redirectUrl" => $redirectUrl,
+                    "webhookUrl" => $webhookUrl,
+                    "metadata" => [
+                        "order_id" => $invoice->getReference(),
+                    ],
+                ]);
+                //var_dump($molliePayment->id);
+                return $molliePayment->getCheckoutUrl();
+            } catch (ApiException $e) {
+                return "<section><h2>Could not connect to payment provider</h2>" . $e->getMessage() . "</section>";
+
+            }
         }
+        return $invoice->getOrganization()->getRedirectUrl() . '/' . $invoice->getId();
     }
 
-    public function updatePayment(array $requestData, EntityManagerInterface $manager):Payment
+    public function updatePayment(string $paymentId, Service $service, EntityManagerInterface $manager):?Payment
     {
-        $molliePayment = $this->mollie->payments->get($requestData['id']);
-        $payment = $manager->getRepository('App:Payment')->findOneBy(['paymentId'=> $requestData['id']]);
+        $molliePayment = $this->mollie->payments->get($paymentId);
+        $payment = $manager->getRepository('App:Payment')->findOneBy(['paymentId'=> $paymentId]);
         if($payment instanceof Payment) {
             $payment->setStatus($molliePayment->status);
-            //return $payment;
+            return $payment;
         }
         else{
-            $invoiceReference = $molliePayment->metadata['order_id'];
+            $invoiceReference = $molliePayment->metadata->order_id;
+            //var_dump($invoiceReference);
             $invoice = $manager->getRepository('App:Invoice')->findBy(['reference'=>$invoiceReference]);
-            $payment = new Payment();
-            $payment->setPaymentId($molliePayment->id);
-            $payment->setStatus($molliePayment->status);
-            $payment->setInvoice();
-            $manager->persist($payment);
-            $manager->flush();
+            //var_dump(count($invoice));
+            if(is_array($invoice))
+                $invoice = end($invoice);
+            if($invoice instanceof Invoice)
+            {
+                $payment = new Payment();
+                $payment->setPaymentId($molliePayment->id);
+                $payment->setPaymentProvider($service);
+                $payment->setStatus($molliePayment->status);
+                $payment->setInvoice($invoice);
+                $manager->persist($payment);
+                $manager->flush();
+
+                return $payment;
+            }
         }
-        return $payment;
+        return null;
     }
 }

@@ -12,7 +12,10 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
+ *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\ServiceRepository")
  */
 class Service
@@ -65,7 +68,7 @@ class Service
      * @var string The API key for this payment provider
      *
      * @Groups({"write"})
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, name="auth")
      */
     private $authorization;
 

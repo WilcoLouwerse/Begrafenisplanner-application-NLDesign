@@ -589,7 +589,31 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem:jsonld-write'
           application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          text/html:
             schema:
               $ref: '#/components/schemas/InvoiceItem-write'
         description: 'The updated InvoiceItem resource'
@@ -766,107 +790,6 @@ paths:
       tags:
         - Invoice
       operationId: postInvoiceCollection
-      summary: 'Creates a Invoice resource.'
-      responses:
-        201:
-          description: 'Invoice resource created'
-          content:
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/ld+json:
-              schema:
-                $ref: '#/components/schemas/Invoice:jsonld-read'
-            application/vnd.api+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/x-yaml:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            text/csv:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            text/html:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-          links:
-            GetInvoiceItem:
-              parameters:
-                id: '$response.body#/id'
-              operationId: getInvoiceItem
-              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /invoices/{id}`.'
-        400:
-          description: 'Invalid input'
-        404:
-          description: 'Resource not found'
-      requestBody:
-        content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Invoice:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          text/html:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-        description: 'The new Invoice resource'
-      parameters:
-        -
-          name: Authorization
-          description: 'The JWT of the entity performing the request'
-          in: header
-        -
-          name: API-Version
-          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
-          example: 1.0.1
-          in: header
-        -
-          name: X-NLX-Logrecord-ID
-          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
-          in: header
-        -
-          name: X-NLX-Request-Process-Id
-          description: 'A process id for purpose registration (doelbinding)'
-          in: header
-        -
-          name: X-NLX-Request-Data-Elements
-          description: 'A list of requested data elements'
-          in: header
-        -
-          name: X-NLX-Request-Data-Subject
-          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
-          in: header
-        -
-          name: X-NLX-Audit-Clarification
-          description: 'A clarification as to why a request has been made  (doelbinding)'
-          in: header
-  /invoices/order:
-    post:
-      tags:
-        - Invoice
-      operationId: post_orderInvoiceCollection
       summary: 'Creates a Invoice resource.'
       responses:
         201:
@@ -1300,10 +1223,135 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Invoice:jsonld-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Invoice-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
         description: 'The updated Invoice resource'
+  /order:
+    post:
+      tags:
+        - Invoice
+      operationId: post_orderInvoiceCollection
+      summary: 'Creates a Invoice resource.'
+      responses:
+        201:
+          description: 'Invoice resource created'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+          links:
+            GetInvoiceItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getInvoiceItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /invoices/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Invoice:jsonld-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+        description: 'The new Invoice resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
   /organizations:
     get:
       tags:
@@ -1878,7 +1926,31 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Organization:jsonld-write'
           application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          text/html:
             schema:
               $ref: '#/components/schemas/Organization-write'
         description: 'The updated Organization resource'
@@ -2165,28 +2237,7 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/Payment:jsonld-write'
-          application/vnd.api+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/x-yaml:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          text/csv:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          text/html:
+          application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Payment-write'
         description: 'The new Payment resource'
@@ -2557,7 +2608,31 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Payment:jsonld-write'
           application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          text/html:
             schema:
               $ref: '#/components/schemas/Payment-write'
         description: 'The updated Payment resource'
@@ -2575,12 +2650,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Service'
+                  $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
                 type: object
                 properties:
-                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Service:jsonld' } }
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Service:jsonld-read' } }
                   'hydra:totalItems': { type: integer, minimum: 0 }
                   'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
@@ -2590,32 +2665,32 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Service'
+                  $ref: '#/components/schemas/Service-read'
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Service'
+                  $ref: '#/components/schemas/Service-read'
             application/xml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Service'
+                  $ref: '#/components/schemas/Service-read'
             application/x-yaml:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Service'
+                  $ref: '#/components/schemas/Service-read'
             text/csv:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Service'
+                  $ref: '#/components/schemas/Service-read'
             text/html:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Service'
+                  $ref: '#/components/schemas/Service-read'
       parameters:
         -
           name: page
@@ -2709,28 +2784,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Service:jsonld'
+                $ref: '#/components/schemas/Service:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
           links:
             GetServiceItem:
               parameters:
@@ -2745,28 +2820,28 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/Service:jsonld'
+              $ref: '#/components/schemas/Service:jsonld-write'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           application/json:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           text/csv:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           text/html:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
         description: 'The new Service resource'
       parameters:
         -
@@ -2888,28 +2963,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Service:jsonld'
+                $ref: '#/components/schemas/Service:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
         404:
           description: 'Resource not found'
       produces:
@@ -3007,28 +3082,28 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Service:jsonld'
+                $ref: '#/components/schemas/Service:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
         400:
           description: 'Invalid input'
         404:
@@ -3037,28 +3112,28 @@ paths:
         content:
           application/hal+json:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           application/ld+json:
             schema:
-              $ref: '#/components/schemas/Service:jsonld'
+              $ref: '#/components/schemas/Service:jsonld-write'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           application/json:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           application/x-yaml:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           text/csv:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
           text/html:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
         description: 'The updated Service resource'
     patch:
       tags:
@@ -3107,38 +3182,664 @@ paths:
           content:
             application/hal+json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
-                $ref: '#/components/schemas/Service:jsonld'
+                $ref: '#/components/schemas/Service:jsonld-read'
             application/vnd.api+json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/json:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/xml:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             application/x-yaml:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             text/csv:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
             text/html:
               schema:
-                $ref: '#/components/schemas/Service'
+                $ref: '#/components/schemas/Service-read'
         400:
           description: 'Invalid input'
         404:
           description: 'Resource not found'
       requestBody:
         content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Service:jsonld-write'
           application/vnd.api+json:
             schema:
-              $ref: '#/components/schemas/Service'
+              $ref: '#/components/schemas/Service-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Service-write'
         description: 'The updated Service resource'
+  /taxes:
+    get:
+      tags:
+        - Tax
+      operationId: getTaxCollection
+      summary: 'Retrieves the collection of Tax resources.'
+      responses:
+        200:
+          description: 'Tax collection response'
+          content:
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            application/ld+json:
+              schema:
+                type: object
+                properties:
+                  'hydra:member': { type: array, items: { $ref: '#/components/schemas/Tax:jsonld-read' } }
+                  'hydra:totalItems': { type: integer, minimum: 0 }
+                  'hydra:view': { type: object, properties: { '@id': { type: string, format: iri-reference }, '@type': { type: string }, 'hydra:first': { type: string, format: iri-reference }, 'hydra:last': { type: string, format: iri-reference }, 'hydra:next': { type: string, format: iri-reference } } }
+                  'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
+                required:
+                  - 'hydra:member'
+            application/vnd.api+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            application/x-yaml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            text/csv:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+      parameters:
+        -
+          name: page
+          in: query
+          required: false
+          description: 'The collection page number'
+          schema:
+            type: integer
+            default: 1
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      produces:
+        - application/health+json
+    post:
+      tags:
+        - Tax
+      operationId: postTaxCollection
+      summary: 'Creates a Tax resource.'
+      responses:
+        201:
+          description: 'Tax resource created'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Tax:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+          links:
+            GetTaxItem:
+              parameters:
+                id: '$response.body#/id'
+              operationId: getTaxItem
+              description: 'The `id` value returned in the response can be used as the `id` parameter in `GET /taxes/{id}`.'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Tax:jsonld-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+        description: 'The new Tax resource'
+      parameters:
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+  '/taxes/{id}':
+    get:
+      tags:
+        - Tax
+      operationId: getTaxItem
+      summary: 'Retrieves a Tax resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+        -
+          name: Link
+          description: 'A [websub](https://www.w3.org/TR/websub/#discovery) header like <https://hub.example.com/>; rel="hub"'
+          in: header
+        -
+          name: 'extend[]'
+          required: false
+          description: 'An array of nested objects to include in the return object'
+          in: query
+          schema:
+            type: array
+        -
+          name: 'fields[]'
+          required: false
+          description: 'An array of fields to return in output, wil return all fields is not supplied'
+          in: query
+          schema:
+            type: array
+        -
+          name: validOn
+          required: false
+          description: 'Returns object as valid on a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validFrom
+          required: false
+          description: 'Returns objects valid from a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+        -
+          name: validUntil
+          required: false
+          description: 'Returns objects valid until a given date time'
+          schema:
+            type: string
+            format: date-time
+          in: query
+      responses:
+        200:
+          description: 'Tax resource response'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Tax:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+        404:
+          description: 'Resource not found'
+      produces:
+        - application/health+json
+    delete:
+      tags:
+        - Tax
+      operationId: deleteTaxItem
+      summary: 'Removes the Tax resource.'
+      responses:
+        204:
+          description: 'Tax resource deleted'
+        404:
+          description: 'Resource not found'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+    put:
+      tags:
+        - Tax
+      operationId: putTaxItem
+      summary: 'Replaces the Tax resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Tax resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Tax:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Tax:jsonld-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+        description: 'The updated Tax resource'
+    patch:
+      tags:
+        - Tax
+      operationId: patchTaxItem
+      summary: 'Updates the Tax resource.'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        -
+          name: Authorization
+          description: 'The JWT of the entity performing the request'
+          in: header
+        -
+          name: API-Version
+          description: 'The version of the API conform [Landelijke API-strategie.](https://geonovum.github.io/KP-APIs/#versioning)'
+          example: 1.0.1
+          in: header
+        -
+          name: X-NLX-Logrecord-ID
+          description: 'A  globally unique id of the request, which makes a request traceable throughout the network.'
+          in: header
+        -
+          name: X-NLX-Request-Process-Id
+          description: 'A process id for purpose registration (doelbinding)'
+          in: header
+        -
+          name: X-NLX-Request-Data-Elements
+          description: 'A list of requested data elements'
+          in: header
+        -
+          name: X-NLX-Request-Data-Subject
+          description: 'A key-value list of data subjects related to this request. e.g. `bsn=12345678, kenteken=ab-12-fg`'
+          in: header
+        -
+          name: X-NLX-Audit-Clarification
+          description: 'A clarification as to why a request has been made  (doelbinding)'
+          in: header
+      responses:
+        200:
+          description: 'Tax resource updated'
+          content:
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/Tax:jsonld-read'
+            application/vnd.api+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/x-yaml:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            text/csv:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+        400:
+          description: 'Invalid input'
+        404:
+          description: 'Resource not found'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/Tax:jsonld-write'
+          application/vnd.api+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/merge-patch+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          applications/x-yaml:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          text/csv:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          text/html:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+        description: 'The updated Tax resource'
 components:
   schemas:
     Invoice-read:
@@ -3177,9 +3878,12 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
-        tax:
-          description: 'The total tax over the invoice'
-          type: string
+        taxes:
+          readOnly: true
+          description: 'A list of total taxes'
+          type: array
+          items:
+            type: string
         dateCreated:
           readOnly: true
           description: 'The moment this request was created by the submitter'
@@ -3203,6 +3907,15 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+        paymentUrl:
+          readOnly: true
+          type: string
+        remark:
+          description: 'Remarks on this invoice'
+          type: string
+        paid:
+          readOnly: true
+          type: boolean
       required:
         - name
         - targetOrganization
@@ -3239,9 +3952,6 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
-        tax:
-          description: 'The total tax over the invoice'
-          type: string
         order:
           description: 'The order of this invoice'
           type: string
@@ -3254,6 +3964,9 @@ components:
           description: 'The customer that receives this invoice'
           externalDocs:
             url: 'http://schema.org/url'
+          type: string
+        remark:
+          description: 'Remarks on this invoice'
           type: string
     'Invoice:jsonld-read':
       type: object
@@ -3300,9 +4013,12 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
-        tax:
-          description: 'The total tax over the invoice'
-          type: string
+        taxes:
+          readOnly: true
+          description: 'A list of total taxes'
+          type: array
+          items:
+            type: string
         dateCreated:
           readOnly: true
           description: 'The moment this request was created by the submitter'
@@ -3326,6 +4042,15 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+        paymentUrl:
+          readOnly: true
+          type: string
+        remark:
+          description: 'Remarks on this invoice'
+          type: string
+        paid:
+          readOnly: true
+          type: boolean
       required:
         - name
         - targetOrganization
@@ -3371,9 +4096,6 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
-        tax:
-          description: 'The total tax over the invoice'
-          type: string
         order:
           description: 'The order of this invoice'
           type: string
@@ -3386,6 +4108,9 @@ components:
           description: 'The customer that receives this invoice'
           externalDocs:
             url: 'http://schema.org/url'
+          type: string
+        remark:
+          description: 'Remarks on this invoice'
           type: string
     InvoiceItem-read:
       type: object
@@ -3424,10 +4149,17 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
-        taxPercentage:
-          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
-          type: integer
-        createdAt:
+        taxes:
+          description: 'The taxes that affect this offer'
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax-read'
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        dateModified:
           readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
@@ -3438,7 +4170,6 @@ components:
         - offer
         - quantity
         - price
-        - taxPercentage
     InvoiceItem-write:
       type: object
       description: 'An entity representing an item of an invoice.'
@@ -3448,7 +4179,6 @@ components:
         - offer
         - quantity
         - price
-        - taxPercentage
       properties:
         name:
           description: 'The name of the object'
@@ -3478,9 +4208,11 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
-        taxPercentage:
-          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
-          type: integer
+        taxes:
+          description: 'The taxes that affect this offer'
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax-write'
     'InvoiceItem:jsonld-read':
       type: object
       description: 'An entity representing an item of an invoice.'
@@ -3527,10 +4259,17 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
-        taxPercentage:
-          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
-          type: integer
-        createdAt:
+        taxes:
+          description: 'The taxes that affect this offer'
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax:jsonld-read'
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created by the submitter'
+          type: string
+          format: date-time
+        dateModified:
           readOnly: true
           description: 'The moment this request was created by the submitter'
           type: string
@@ -3541,7 +4280,6 @@ components:
         - offer
         - quantity
         - price
-        - taxPercentage
     'InvoiceItem:jsonld-write':
       type: object
       description: 'An entity representing an item of an invoice.'
@@ -3551,7 +4289,6 @@ components:
         - offer
         - quantity
         - price
-        - taxPercentage
       properties:
         '@context':
           readOnly: true
@@ -3590,9 +4327,11 @@ components:
           externalDocs:
             url: 'http://schema.org/priceCurrency'
           type: string
-        taxPercentage:
-          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
-          type: integer
+        taxes:
+          description: 'The taxes that affect this offer'
+          type: array
+          items:
+            $ref: '#/components/schemas/Tax:jsonld-write'
     Organization-read:
       type: object
       description: ''
@@ -3839,32 +4578,6 @@ components:
         invoice:
           description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice:jsonld-write'
-    Service:
-      type: object
-      description: ''
-      properties:
-        id:
-          readOnly: true
-          description: 'The UUID identifier of this object'
-          externalDocs:
-            url: 'http://schema.org/identifier'
-          type: string
-        type:
-          description: 'The status of this payment'
-          type: string
-        organization:
-          description: 'The organization this payment provider is linked to'
-          type: string
-        authorization:
-          description: 'The API key for this payment provider'
-          type: string
-        configuration:
-          description: 'Configuration options for this payment provider'
-          type: array
-          items:
-            type: string
-      required:
-        - type
     Service-read:
       type: object
       description: ''
@@ -3880,7 +4593,7 @@ components:
           type: string
         organization:
           description: 'The organization this payment provider is linked to'
-          type: string
+          $ref: '#/components/schemas/Organization-read'
         configuration:
           description: 'Configuration options for this payment provider'
           type: array
@@ -3899,8 +4612,9 @@ components:
           type: string
         organization:
           description: 'The organization this payment provider is linked to'
-          type: string
+          $ref: '#/components/schemas/Organization-write'
         authorization:
+          writeOnly: true
           description: 'The API key for this payment provider'
           type: string
         configuration:
@@ -3908,41 +4622,6 @@ components:
           type: array
           items:
             type: string
-    'Service:jsonld':
-      type: object
-      description: ''
-      properties:
-        '@context':
-          readOnly: true
-          type: string
-        '@id':
-          readOnly: true
-          type: string
-        '@type':
-          readOnly: true
-          type: string
-        id:
-          readOnly: true
-          description: 'The UUID identifier of this object'
-          externalDocs:
-            url: 'http://schema.org/identifier'
-          type: string
-        type:
-          description: 'The status of this payment'
-          type: string
-        organization:
-          description: 'The organization this payment provider is linked to'
-          type: string
-        authorization:
-          description: 'The API key for this payment provider'
-          type: string
-        configuration:
-          description: 'Configuration options for this payment provider'
-          type: array
-          items:
-            type: string
-      required:
-        - type
     'Service:jsonld-read':
       type: object
       description: ''
@@ -3967,7 +4646,7 @@ components:
           type: string
         organization:
           description: 'The organization this payment provider is linked to'
-          type: string
+          $ref: '#/components/schemas/Organization:jsonld-read'
         configuration:
           description: 'Configuration options for this payment provider'
           type: array
@@ -3995,8 +4674,9 @@ components:
           type: string
         organization:
           description: 'The organization this payment provider is linked to'
-          type: string
+          $ref: '#/components/schemas/Organization:jsonld-write'
         authorization:
+          writeOnly: true
           description: 'The API key for this payment provider'
           type: string
         configuration:
@@ -4004,6 +4684,156 @@ components:
           type: array
           items:
             type: string
+    Tax-read:
+      type: object
+      description: 'An entity representing an tax.'
+      properties:
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        name:
+          description: 'The name of this tax'
+          type: string
+        description:
+          description: 'An short description of this tax'
+          type: string
+        price:
+          description: 'The price of this tax'
+          type: string
+        priceCurrency:
+          description: 'The currency of this tax in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        percentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+          type: integer
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          type: string
+          format: date-time
+      required:
+        - name
+        - price
+        - percentage
+    Tax-write:
+      type: object
+      description: 'An entity representing an tax.'
+      required:
+        - name
+        - price
+        - percentage
+      properties:
+        name:
+          description: 'The name of this tax'
+          type: string
+        description:
+          description: 'An short description of this tax'
+          type: string
+        price:
+          description: 'The price of this tax'
+          type: string
+        priceCurrency:
+          description: 'The currency of this tax in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        percentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+          type: integer
+    'Tax:jsonld-read':
+      type: object
+      description: 'An entity representing an tax.'
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        id:
+          readOnly: true
+          description: 'The UUID identifier of this object'
+          externalDocs:
+            url: 'http://schema.org/identifier'
+          type: string
+        name:
+          description: 'The name of this tax'
+          type: string
+        description:
+          description: 'An short description of this tax'
+          type: string
+        price:
+          description: 'The price of this tax'
+          type: string
+        priceCurrency:
+          description: 'The currency of this tax in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        percentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+          type: integer
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          type: string
+          format: date-time
+      required:
+        - name
+        - price
+        - percentage
+    'Tax:jsonld-write':
+      type: object
+      description: 'An entity representing an tax.'
+      required:
+        - name
+        - price
+        - percentage
+      properties:
+        '@context':
+          readOnly: true
+          type: string
+        '@id':
+          readOnly: true
+          type: string
+        '@type':
+          readOnly: true
+          type: string
+        name:
+          description: 'The name of this tax'
+          type: string
+        description:
+          description: 'An short description of this tax'
+          type: string
+        price:
+          description: 'The price of this tax'
+          type: string
+        priceCurrency:
+          description: 'The currency of this tax in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+          externalDocs:
+            url: 'http://schema.org/priceCurrency'
+          type: string
+        percentage:
+          description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+          type: integer
 definitions:
   Invoice-read:
     properties:
@@ -4040,10 +4870,10 @@ definitions:
         description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
         type: string
         example: EUR
-      tax:
-        description: 'The total tax over the invoice'
-        type: string
-        example: '21.00'
+      taxes:
+        description: 'A list of total taxes'
+        type: array
+        example: EUR
       dateCreated:
         description: 'The moment this request was created by the submitter'
         type: \DateTime
@@ -4062,6 +4892,10 @@ definitions:
         type: string
         example: 'https://example.org/people/1'
         format: url
+      paymentUrl: []
+      remark:
+        description: 'Remarks on this invoice'
+        type: string
       items:
         description: 'The items in this invoice'
         type: \ArrayCollection
@@ -4098,10 +4932,6 @@ definitions:
         description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
         type: string
         example: EUR
-      tax:
-        description: 'The total tax over the invoice'
-        type: string
-        example: '21.00'
       order:
         description: 'The order of this invoice'
         type: string
@@ -4112,6 +4942,9 @@ definitions:
         type: string
         example: 'https://example.org/people/1'
         format: url
+      remark:
+        description: 'Remarks on this invoice'
+        type: string
       items:
         description: 'The items in this invoice'
         type: \ArrayCollection
@@ -4161,16 +4994,18 @@ definitions:
         description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
         type: string
         example: EUR
-      taxPercentage:
-        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
-        type: int
-        example: '9'
-      createdAt:
+      dateCreated:
+        description: 'The moment this request was created by the submitter'
+        type: \DateTime
+      dateModified:
         description: 'The moment this request was created by the submitter'
         type: \DateTime
       invoice:
         description: 'The invoice that contains this item'
         type: \Invoice
+      taxes:
+        description: 'The taxes that affect this offer'
+        type: \ArrayCollection
     required:
       - name
       - offer
@@ -4209,13 +5044,12 @@ definitions:
         description: 'The currency of this product in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
         type: string
         example: EUR
-      taxPercentage:
-        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
-        type: int
-        example: '9'
       invoice:
         description: 'The invoice that contains this item'
         type: \Invoice
+      taxes:
+        description: 'The taxes that affect this offer'
+        type: \ArrayCollection
     required:
       - name
       - offer
@@ -4355,6 +5189,77 @@ definitions:
         type: \Organization
     required:
       - type
+  Tax-read:
+    properties:
+      id:
+        description: 'The UUID identifier of this object'
+        type: string
+        example: e2984465-190a-4562-829e-a8cca81aa35d
+        format: uuid
+      name:
+        description: 'The name of this tax'
+        type: string
+        example: 'my offer'
+        maxLength: 255
+      description:
+        description: 'An short description of this tax'
+        type: string
+        example: 'This is the best product ever'
+        maxLength: 2550
+      price:
+        description: 'The price of this tax'
+        type: string
+        example: '50.00'
+      priceCurrency:
+        description: 'The currency of this tax in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      percentage:
+        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+        type: int
+        example: '9'
+      dateCreated:
+        description: 'The moment this request was created'
+        type: \Datetime
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: \Datetime
+      invoiceItems:
+        description: 'The offers that use this tax'
+        type: \ArrayCollection
+    required:
+      - name
+      - price
+  Tax-write:
+    properties:
+      name:
+        description: 'The name of this tax'
+        type: string
+        example: 'my offer'
+        maxLength: 255
+      description:
+        description: 'An short description of this tax'
+        type: string
+        example: 'This is the best product ever'
+        maxLength: 2550
+      price:
+        description: 'The price of this tax'
+        type: string
+        example: '50.00'
+      priceCurrency:
+        description: 'The currency of this tax in an [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format'
+        type: string
+        example: EUR
+      percentage:
+        description: 'The tax percentage for this offer as an integer e.g. 9% makes 9'
+        type: int
+        example: '9'
+      invoiceItems:
+        description: 'The offers that use this tax'
+        type: \ArrayCollection
+    required:
+      - name
+      - price
 tags:
   -
     name: Invoice
@@ -4386,21 +5291,27 @@ tags:
       
       
       
+  -
+    name: Tax
+    description: |
+      An entity representing an tax.
+      
+      This entity represents an offer that bridges products to the OrderRegistratieComponent to be able to change prices without invalidating past orders.
 securityDefinitions:
   JWT-Oauth:
     type: oauth2
     authorizationUrl: 'http://petstore.swagger.io/api/oauth/dialog'
     flow: implicit
     scopes:
-      read: 'read right to the Service resource'
-      write: 'write right to the Service resource'
+      read: 'read right to the Tax resource'
+      write: 'write right to the Tax resource'
   JWT-Token:
     type: apiKey
     in: header
     name: Authorization
     scopes:
-      read: 'read right to the Service resource'
-      write: 'write right to the Service resource'
+      read: 'read right to the Tax resource'
+      write: 'write right to the Tax resource'
 host: irc.zaakonline.nl
 servers:
   -

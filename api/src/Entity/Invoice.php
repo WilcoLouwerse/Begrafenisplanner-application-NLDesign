@@ -5,6 +5,9 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\Common\Collections\Criteria;
+use Money\Currency;
+use Money\Money;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -35,7 +38,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *          "post",
  *          "post_order"={
  *              "method"="POST",
- *              "path"="invoices/order",
+ *              "path"="order",
  *              "swagger_context" = {
  *                  "summary"="Create an invoice by just providing an order",
  *                  "description"="Create an invoice by just providing an order"
@@ -45,6 +48,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * )
  * @ORM\Entity(repositoryClass="App\Repository\InvoiceRepository")
  * @ORM\Table(name="invoices")
+ * @ORM\HasLifecycleCallbacks
  */
 class Invoice
 {
@@ -94,7 +98,7 @@ class Invoice
      * @example 6666-2019-0000000012
      *
      * @Groups({"read"})
-     * @ORM\Column(type="string", length=255, nullable=true) //, unique=true
+     * @ORM\Column(type="string", length=255, nullable=true, unique=true)
      * @ApiFilter(SearchFilter::class, strategy="exact")
      * @Assert\Length(
      *     max = 255
@@ -131,7 +135,7 @@ class Invoice
      * @var ArrayCollection The items in this invoice
      *
      * @Groups({"read", "write"})
-     * @ORM\OneToMany(targetEntity="App\Entity\InvoiceItem", mappedBy="invoice")
+     * @ORM\OneToMany(targetEntity="App\Entity\InvoiceItem", mappedBy="invoice", cascade={"persist"})
      * @MaxDepth(1)
      */
     private $items;
@@ -157,15 +161,16 @@ class Invoice
      * @ORM\Column(type="string")
      */
     private $priceCurrency;
+
     /**
-     * @var string The total tax over the invoice
+     * @var array A list of total taxes
      *
-     * @example 21.00
+     * @example EUR
      *
-     * @Groups({"read","write"})
-     * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
+     * @ORM\Column(type="array")
      */
-    private $tax;
+    private $taxes = [];
 
     /**
      * @var DateTime The moment this request was created by the submitter
@@ -223,7 +228,7 @@ class Invoice
     private $customer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="invoices")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Organization", inversedBy="invoices", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $organization;
@@ -233,6 +238,84 @@ class Invoice
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $paymentUrl;
+
+    /**
+     * @var string Remarks on this invoice
+     *
+     * @Groups({"read","write"})
+     *
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $remark;
+
+    /**
+     * @Groups({"read"})
+     */
+    private $paid = false;
+
+    /**
+     *
+     *  @ORM\PrePersist
+     *  @ORM\PreUpdate
+     *
+     *  */
+    public function prePersist()
+    {
+    	$this->calculateTotals();
+    }
+
+    public function calculateTotals()
+    {
+    	/*@todo we should support non euro */
+    	$price = new Money(0, new Currency('EUR'));
+    	$taxes = [];
+
+    	foreach ($this->items as $item){
+
+    		// Calculate Invoice Price
+    		//
+    		if(is_string ($item->getPrice())){
+    			//Value is a string, so presumably a float
+    			$float = floatval($item->getPrice());
+    			$float = $float*100;
+    			$itemPrice = new Money((int) $float, new Currency($item->getPriceCurrency()));
+
+    		}
+    		else{
+    			// Calculate Invoice Price
+    			$itemPrice = new Money($item->getPrice(), new Currency($item->getPriceCurrency()));
+
+
+    		}
+
+    		$itemPrice = $itemPrice->multiply($item->getQuantity());
+    		$price = $price->add($itemPrice);
+
+    		// Calculate Taxes
+    		/*@todo we should index index on something else do, there might be diferend taxes on the same percantage. Als not all taxes are a percentage */
+    		foreach($item->getTaxes() as $tax){
+    			if(!array_key_exists($tax->getPercentage(), $taxes)){
+    				$tax[$tax->getPercentage()] = $itemPrice->multiply($tax->getPercentage()/100);
+    			}
+    			else{
+    				$taxPrice = $itemPrice->multiply($tax->getPercentage()/100);
+    				$tax[$tax->getPercentage()] = $tax[$tax->getPercentage()]->add($taxPrice);
+    			}
+    		}
+
+    	}
+
+    	$this->taxes = $taxes;
+    	$this->price = number_format($price->getAmount()/100, 2, '.', "");
+    	$this->priceCurrency = $price->getCurrency();
+    }
+
+    public function getAllPaidPayments(){
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('status', 'paid'));
+        return $this->getPayments()->matching($criteria);
+    }
+
 
     public function __construct()
     {
@@ -368,12 +451,12 @@ class Invoice
     }
     public function getDateModified(): ?DateTimeInterface
     {
-        return $this->dateCreated;
+        return $this->dateModified;
     }
 
-    public function setDateModified(DateTimeInterface $dateCreated): self
+    public function setDateModified(DateTimeInterface $dateModified): self
     {
-        $this->dateCreated = $dateCreated;
+        $this->dateModified = $dateModified;
 
         return $this;
     }
@@ -390,16 +473,12 @@ class Invoice
         return $this;
     }
 
-    public function getTax(): ?string
+    /**
+     * @return Array
+     */
+    public function getTaxes(): Array
     {
-        return $this->tax;
-    }
-
-    public function setTax(string $tax): self
-    {
-        $this->tax = $tax;
-
-        return $this;
+    	return $this->taxes;
     }
 
     public function getOrder(): ?string
@@ -480,6 +559,28 @@ class Invoice
 
         return $this;
     }
+
+    public function getRemark(): ?string
+    {
+        return $this->remark;
+    }
+
+    public function setRemark(?string $remark): self
+    {
+        $this->remark = $remark;
+
+        return $this;
+    }
+
+    public function getPaid(): ?bool
+    {
+        if( count($this->getAllPaidPayments()) >= 1 ) {
+            return true;
+        }
+        return false;
+    }
+
+
 
 
 }

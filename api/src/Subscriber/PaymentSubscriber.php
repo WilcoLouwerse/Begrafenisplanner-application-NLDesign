@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use PhpParser\Error;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -41,29 +42,47 @@ class PaymentSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['payment', EventPriorities::PRE_VALIDATE],
+            KernelEvents::REQUEST => ['payment', EventPriorities::PRE_DESERIALIZE],
         ];
     }
 
-    public function payment(ViewEvent $event)
+    public function payment(RequestEvent $event)
     {
-        $result = $event->getControllerResult();
+        //$result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
         $route = $event->getRequest()->attributes->get('_route');
-
+        $contentType = $event->getRequest()->headers->get('accept');
+        if (!$contentType) {
+            $contentType = $event->getRequest()->headers->get('Accept');
+        }
+        switch ($contentType) {
+            case 'application/json':
+                $renderType = 'json';
+                break;
+            case 'application/ld+json':
+                $renderType = 'jsonld';
+                break;
+            case 'application/hal+json':
+                $renderType = 'jsonhal';
+                break;
+            default:
+                $contentType = 'application/json';
+                $renderType = 'json';
+        }
         //var_dump($route);
-        if($result instanceof Payment && $route=='api_payment_post_webhook_collection'){
+        if($route=='api_payments_post_webhook_collection'){
+            //var_dump('a');
             $providerId = $event->getRequest()->query->get('provider');
+           //var_dump($providerId);
             $provider = $this->em->getRepository('App\Entity\Service')->find($providerId);
 
-            $requestData = json_decode($event->getRequest()->getContent(),true);
-
-
+            $paymentId = $event->getRequest()->request->get('id');
+            //var_dump($paymentId);
 
 
             if($provider instanceof Service && $provider->getType() == 'mollie'){
                 $mollieService = new MollieService($provider);
-                $payment = $mollieService->updatePayment($requestData, $this->em);
+                $payment = $mollieService->updatePayment($paymentId, $provider, $this->em);
             }
             else{
                 return;
@@ -72,19 +91,26 @@ class PaymentSubscriber implements EventSubscriberInterface
         else{
             return;
         }
-        $this->em->persist($payment);
-        $this->em->flush();
 
 
-        $json = $this->serializer->serialize(
-            $payment,
-            'jsonhal', ['enable_max_depth'=>true]
-        );
+        if($payment){
+            $this->em->persist($payment);
+            $this->em->flush();
+            $json = $this->serializer->serialize(
+                $payment,
+                $renderType, ['enable_max_depth'=>true]
+            );
+        }else{
+            $json = $this->serializer->serialize(
+                ["Error"=>"The payment is not related to an invoice in our database"], $renderType, ['enable_max_depth'=>true]
+            );
+        }
 
+        // Creating a response
         $response = new Response(
             $json,
-            Response::HTTP_OK,
-            ['content-type' => 'application/json+hal']
+            Response::HTTP_CREATED,
+            ['content-type' => $contentType]
         );
         $event->setResponse($response);
     }

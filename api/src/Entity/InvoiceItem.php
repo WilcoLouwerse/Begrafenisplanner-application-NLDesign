@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -139,16 +141,14 @@ class InvoiceItem
     private $priceCurrency;
 
     /**
-     * @var int The tax percentage for this offer as an integer e.g. 9% makes 9
+     * @var ArrayCollection The taxes that affect this offer
      *
-     * @example 9
      *
-     * @Assert\NotBlank
-     * @Assert\PositiveOrZero
+     * @MaxDepth(1)
      * @Groups({"read", "write"})
-     * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="App\Entity\Tax", mappedBy="invoiceItems")
      */
-    private $taxPercentage;
+    private $taxes;
 
     /**
      * @var DateTime The moment this request was created by the submitter
@@ -157,7 +157,21 @@ class InvoiceItem
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $createdAt;
+    private $dateCreated;
+
+    /**
+     * @var DateTime The moment this request was created by the submitter
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModified;
+
+    public function __construct()
+    {
+    	$this->taxes = new ArrayCollection();
+    }
 
     public function getId()
     {
@@ -246,16 +260,32 @@ class InvoiceItem
         return $this;
     }
 
-    public function getTaxPercentage(): ?int
+    /**
+     * @return Collection|Tax[]
+     */
+    public function getTaxes(): Collection
     {
-        return $this->taxPercentage;
+    	return $this->taxes;
     }
 
-    public function setTaxPercentage(int $taxPercentage): self
+    public function addTax(Tax $tax): self
     {
-        $this->taxPercentage = $taxPercentage;
+    	if (!$this->taxes->contains($tax)) {
+    		$this->taxes[] = $tax;
+    		$tax->addOffer($this);
+    	}
 
-        return $this;
+    	return $this;
+    }
+
+    public function removeTax(Tax $tax): self
+    {
+    	if ($this->taxes->contains($tax)) {
+    		$this->taxes->removeElement($tax);
+    		$gtax->removeProduct($this);
+    	}
+
+    	return $this;
     }
 
     public function getName(): ?string
@@ -282,14 +312,25 @@ class InvoiceItem
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getDateCreated(): ?\DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->dateCreated;
     }
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    public function setDateCreated(?\DateTimeInterface $dateCreated): self
     {
-        $this->createdAt = $createdAt;
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+    public function getDateModified(): ?\DateTimeInterface
+    {
+        return $this->dateModified;
+    }
+
+    public function setDateModified(?\DateTimeInterface $dateModified): self
+    {
+        $this->dateModified = $dateModified;
 
         return $this;
     }
