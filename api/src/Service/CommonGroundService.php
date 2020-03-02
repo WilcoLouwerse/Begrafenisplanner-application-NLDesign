@@ -55,6 +55,19 @@ class CommonGroundService
 		$this->client = new Client($this->guzzleConfig);
 	}
 	
+	
+	/*
+	 * Get the current application from the wrc
+	 */
+	public function getApplication($force = false, $async = false)
+	{
+		/* @todo this is very very hacky */
+		$applications = $this->getResourceList('https://wrc.larping.eu/applications',[],$force, $async);
+		return $applications['hydra:member'][0];
+		
+	}
+	
+	
 	/*
 	 * Get a single resource from a common ground componant
 	 */
@@ -67,8 +80,17 @@ class CommonGroundService
 		
 		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
+		
+		// We only do this on non-production enviroments
 		if($this->params->get('app_env') != "prod"){
-			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
+			
+			// Lets make sure we dont have doubles 
+			$url = str_replace($this->params->get('app_env').'.','',$url);
+					
+			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
+			$host = explode('.', $parsedUrl['host']);			
+			$subdomain = $host[0];
+			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
 		}
 		
 		$elementList = [];
@@ -96,7 +118,7 @@ class CommonGroundService
 					'query' => $query,
 					'headers' => $headers,
 			]
-					);
+		);
 		}
 		else {
 			
@@ -109,9 +131,11 @@ class CommonGroundService
 		
 		$response = json_decode($response->getBody(), true);
 		
+		//var_dump($response);
+		
 		/* @todo this should look to al @id keus not just the main root */
 		foreach($response['hydra:member'] as $key => $embedded){
-			if($embedded['@id']){
+			if(in_array('@id', $embedded) && $embedded['@id']){
 				$response['hydra:member'][$key]['@id'] =  $parsedUrl["scheme"]."://".$parsedUrl["host"].$embedded['@id'];
 			}
 		}
@@ -135,8 +159,17 @@ class CommonGroundService
 		
 		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
+		
+		// We only do this on non-production enviroments
 		if($this->params->get('app_env') != "prod"){
-			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
+			
+			// Lets make sure we dont have doubles
+			$url = str_replace($this->params->get('app_env').'.','',$url);
+			
+			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
+			$host = explode('.', $parsedUrl['host']);
+			$subdomain = $host[0];
+			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
 		}
 		
 		// To work with NLX we need a couple of default headers
@@ -166,7 +199,7 @@ class CommonGroundService
 		
 		$response = json_decode($response->getBody(), true);
 		
-		if($response['@id']){
+		if(in_array('@id', $response) && $response['@id']){
 			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
@@ -188,8 +221,17 @@ class CommonGroundService
 		
 		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
+		
+		// We only do this on non-production enviroments
 		if($this->params->get('app_env') != "prod"){
-			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
+			
+			// Lets make sure we dont have doubles
+			$url = str_replace($this->params->get('app_env').'.','',$url);
+			
+			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
+			$host = explode('.', $parsedUrl['host']);
+			$subdomain = $host[0];
+			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
 		}
 				
 		// To work with NLX we need a couple of default headers
@@ -231,7 +273,7 @@ class CommonGroundService
 		
 		$response = json_decode($response->getBody(), true);
 		
-		if($response['@id']){
+		if(in_array('@id', $response) && $response['@id']){
 			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
@@ -259,8 +301,17 @@ class CommonGroundService
 		
 		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
+		
+		// We only do this on non-production enviroments
 		if($this->params->get('app_env') != "prod"){
-			$url = str_replace("https://","https://".$this->params->get('app_env'),$url);
+			
+			// Lets make sure we dont have doubles
+			$url = str_replace($this->params->get('app_env').'.','',$url);
+			
+			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
+			$host = explode('.', $parsedUrl['host']);
+			$subdomain = $host[0];
+			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
 		}
 		
 		if(!$async){
@@ -289,7 +340,7 @@ class CommonGroundService
 		
 		$response = json_decode($response->getBody(), true);
 		
-		if($response['@id']){
+		if(in_array('@id', $response) && $response['@id']){
 			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
