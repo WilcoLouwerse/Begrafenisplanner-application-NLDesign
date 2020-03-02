@@ -10,14 +10,19 @@ settings:
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   repro: 'https://github.com/ConductionNL/Proto-component-commonground'
-  domain: test.conduction.nl
-  demo: test.conduction.nl
-  unit: Common-Ground  
-  locality: Amsterdam
-  state: Noord-Holland
+  domains:
+    - conduction.nl
+    - zaakonline.nl
+    - huwelijksplanner.online
+    - common-ground.dev
+  domainsJson: ["conduction.nl","zaakonline.nl","huwelijksplanner.online","common-ground.dev"]
+  organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
-  organisationName: Conduction
+  state: Noord-Holland
+  locality: Amsterdam
+  unit: Common-Ground  
+  demo: test.conduction.nl
   env: dev
   debug: 1
   replicaCount: 1
@@ -36,11 +41,13 @@ settings:
   # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   notificationEnabled: false
   audittrailEnabled: false
-  authorisationEnabled: false
+  authorisationProviderUser: https://uc.larping.eu
+  authorisationProviderApplication: https://ac.larping.eu
   healthEnabled: false
   archiveEnabled: false
 
 security:
+  commongroundId: 9329d8d0-1d5e-433c-bb47-6991053c7fcb
   commongroundKey: 9329d8d0-1d5e-433c-bb47-6991053c7fcb
   applicationKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
   userKey: 79d5b14c-70ab-41fb-ac02-917e3288870b

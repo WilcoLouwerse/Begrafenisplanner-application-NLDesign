@@ -10,7 +10,7 @@ info:
     - Version: V.0.1
     - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pa-php) 
-    - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+    - Datamodel: [postman](/schema/pa.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
@@ -624,8 +624,9 @@ definitions:
       id:
         description: 'The id of this entity'
         type: string
-        example: e2984465-190a-4562-829e-a8cca81aa35d
+        eaxample: '#/components/schemas/RamseyUuidUuidInterface-read'
         format: uuid
+        example: 9b9eea1a-ef04-427d-b8bd-7f5c24801874
       name:
         description: 'The name of this example property'
         type: string

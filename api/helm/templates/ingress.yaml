@@ -14,38 +14,27 @@ metadata:
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   tls: 
-  - hosts:
-    #  {{- range .Values.settings.domains }}
-    #    - {{ .domain | quote }}
-    #  {{- end }}
-    - {{ .Values.settings.domain }}
+  - hosts: 
+  {{- range  .Values.settings.domains  }}
+    - {{ . }}
+  {{- end }}
+#    - {{ .Values.settings.domain }}
     secretName: {{ include "name" . }}-{{ .Values.settings.env }}-cert
   rules:
-#    - host: {{ .Values.settings.name }}.{{ .Values.settings.env }}.{{ .Values.settings.domain }}
-#      http:
-#        paths:
-#          - backend:
-#              serviceName: {{ include "name" . }}
-#              servicePort: 80
-    {{- if eq .Values.settings.env "prod" }}
-    - host: {{ .Values.settings.domain }}
+  {{- range  .Values.settings.domains  }}
+    {{- if eq $.Values.settings.env "prod" }}
+      -   host: {{ $.Values.settings.name }}.{{ . }}
+          http:
+              paths:
+                      - backend:
+                          serviceName: {{ $.Values.settings.name }}
+                          servicePort: 80            
+    {{- else }}      
+    - host: {{ $.Values.settings.name }}.{{ $.Values.settings.env }}.{{ . }}
       http:
         paths:
           - backend:
               serviceName: {{ $.Values.settings.name }}
-              servicePort: 80
-    - host: www.{{ .Values.settings.domain }}
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
-              servicePort: 80
-    {{- else }}      
-    - host: {{ .Values.settings.env }}.{{ .Values.settings.domain }}
-      http:
-        paths:
-          - backend:
-              serviceName: {{ include "name" . }}
               servicePort: 80
      {{- end }}
   {{- end }}
