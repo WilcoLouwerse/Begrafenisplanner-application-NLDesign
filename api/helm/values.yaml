@@ -10,6 +10,7 @@ settings:
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   repro: 'https://github.com/ConductionNL/Proto-component-commonground'
+  domain: zaakonline.nl
   domains:
     - conduction.nl
     - zaakonline.nl

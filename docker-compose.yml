@@ -36,6 +36,7 @@ services:
       - APP_VERSION=${APP_VERSION}    
       - APP_NAME=${APP_NAME} 
       - APP_TITLE=${APP_TITLE}
+      - APP_DOMAIN=${APP_DOMAIN}
       - APP_DOMAINS=${APP_DOMAINS}
       - APP_DEMO=${APP_DEMO}
       - APP_REPRO=${APP_REPRO}

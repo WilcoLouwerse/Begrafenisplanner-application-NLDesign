@@ -93,10 +93,11 @@ class CommonGroundService
 			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
 		}
 		
+		
 		$elementList = [];
 		foreach($query as $element){
 			if(!is_array($element)){
-				return;
+				break; 
 			}
 			$elementList[] = implode("=",$element);
 		}
@@ -106,13 +107,12 @@ class CommonGroundService
 		$headers = $this->headers;
 		$headers['X-NLX-Request-Data-Elements'] = $elementList;
 		$headers['X-NLX-Request-Data-Subject'] = $elementList;
-		
+				
 		$item = $this->cash->getItem('commonground_'.md5($url));
 		if ($item->isHit() && !$force) {
 			//return $item->get();
 		}
-		
-		
+				
 		if(!$async){
 			$response = $this->client->request('GET', $url, [
 					'query' => $query,
@@ -120,22 +120,34 @@ class CommonGroundService
 			]
 		);
 		}
-		else {
-			
+		else {			
 			$response = $this->client->requestAsync('GET', $url, [
 					'query' => $query,
 					'headers' => $headers,
 			]
-					);
+			);		
 		}
 		
+		
+		if($response->getStatusCode() != 200){
+			var_dump('GET returned:'.$response->getStatusCode());
+			var_dump(json_encode($query));
+			var_dump(json_encode($headers));
+			var_dump(json_encode($url));
+			var_dump($response->getBody());
+			die;
+		}
+		
+		
 		$response = json_decode($response->getBody(), true);
+		
+		
 		
 		//var_dump($response);
 		
 		/* @todo this should look to al @id keus not just the main root */
 		foreach($response['hydra:member'] as $key => $embedded){
-			if(in_array('@id', $embedded) && $embedded['@id']){
+			if(array_key_exists('@id', $embedded) && $embedded['@id']){
 				$response['hydra:member'][$key]['@id'] =  $parsedUrl["scheme"]."://".$parsedUrl["host"].$embedded['@id'];
 			}
 		}
@@ -197,9 +209,18 @@ class CommonGroundService
 					);
 		}
 		
+		if($response->getStatusCode() != 200){
+			var_dump('GET returned:'.$response->getStatusCode());
+			var_dump(json_encode($query));
+			var_dump(json_encode($headers));
+			var_dump(json_encode($url));
+			var_dump($response->getBody());
+			die;
+		}
+		
 		$response = json_decode($response->getBody(), true);
 		
-		if(in_array('@id', $response) && $response['@id']){
+		if(array_key_exists('@id', $response) && $response['@id']){
 			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
@@ -265,6 +286,7 @@ class CommonGroundService
 		}
 		
 		if($response->getStatusCode() != 200){
+			var_dump('PUT returned:'.$response->getStatusCode());
 			var_dump(json_encode($resource));
 			var_dump(json_encode($url));
 			var_dump(json_encode($response->getBody()));
@@ -273,7 +295,7 @@ class CommonGroundService
 		
 		$response = json_decode($response->getBody(), true);
 		
-		if(in_array('@id', $response) && $response['@id']){
+		if(array_key_exists('@id', $response) && $response['@id']){
 			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		
@@ -330,7 +352,8 @@ class CommonGroundService
 		}
 		
 		
-		if($response->getStatusCode() != 201){
+		if($response->getStatusCode() != 201 && $response->getStatusCode() != 200){
+			var_dump('POST returned:'.$response->getStatusCode());
 			var_dump(json_encode($resource));
 			var_dump(json_encode($url));
 			var_dump($response->getBody());
@@ -340,7 +363,7 @@ class CommonGroundService
 		
 		$response = json_decode($response->getBody(), true);
 		
-		if(in_array('@id', $response) && $response['@id']){
+		if(array_key_exists('@id', $response) && $response['@id']){
 			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
 		}
 		

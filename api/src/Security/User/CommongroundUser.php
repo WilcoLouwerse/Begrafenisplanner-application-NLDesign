@@ -12,13 +12,18 @@ class CommongroundUser implements UserInterface, EquatableInterface
 	private $password;
 	private $salt;
 	private $roles;
+	private $person;
+	private $organization;
 	
-	public function __construct(string $username = '', string $password = '', string $salt = null, array $roles = [])
+	public function __construct(string $username = '', string $password = '', string $salt = null, array $roles = [], $person  = null, $organization  = null)
 	{
 		$this->username = $username;
 		$this->password = $password;
 		$this->salt = $salt;
 		$this->roles = $roles;
+		$this->person = $person;
+		$this->organization= $organization;
+		$this->isActive= true;
 	}
 	
 	public function getRoles()
@@ -41,28 +46,46 @@ class CommongroundUser implements UserInterface, EquatableInterface
 		return $this->username;
 	}
 	
+	public function getPerson()
+	{
+		return $this->person;
+	}
+	
+	public function getOrganization()
+	{
+		return $this->organization;
+	}
+	
+	public function __toString()
+	{
+		return $this->getUsername();
+	}
+	
+	public function isEnabled()
+	{
+		return $this->isActive;
+	}
+	
 	public function eraseCredentials()
 	{
 	}
 	
+	// serialize and unserialize must be updated - see below
+	public function serialize()
+	{
+		return serialize(array(
+				$this->isActive
+		));
+	}
+	public function unserialize($serialized)
+	{
+		list (
+				$this->isActive
+				) = unserialize($serialized);
+	}
+	
 	public function isEqualTo(UserInterface $user)
 	{
-		if (!$user instanceof CommongroundUser) {
-			return false;
-		}
-		
-		if ($this->password !== $user->getPassword()) {
-			return false;
-		}
-		
-		if ($this->salt !== $user->getSalt()) {
-			return false;
-		}
-		
-		if ($this->username !== $user->getUsername()) {
-			return false;
-		}
-		
 		return true;
 	}
 }

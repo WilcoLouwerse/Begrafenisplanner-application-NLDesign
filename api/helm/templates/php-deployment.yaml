@@ -77,6 +77,11 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-demo
+            - name: APP_DOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-domain
             - name: APP_DOMAINS
               valueFrom:
                 configMapKeyRef:
