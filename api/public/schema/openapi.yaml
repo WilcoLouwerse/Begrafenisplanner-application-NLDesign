@@ -1,16 +1,16 @@
 openapi: 3.0.2
 info:
-  title: 'Proto Applicatie'
+  title: Instemmingservice
   version: V.0.1
   description: |
     API Details
-    - Component: Proto Applicatie
-    - Reference: pa
+    - Component: Instemmingservice
+    - Reference: irc
     - Enviroment: dev
     - Version: V.0.1
-    - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pa-php) 
-    - Datamodel: [postman](/schema/pa.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+    - Repository: [online](https://github.com/ConductionNL/instemmingservice) / [zip](https://github.com/ConductionNL/instemmingservice/archive/master.zip)
+    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/irc-php) 
+    - Datamodel: [postman](/schema/irc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     

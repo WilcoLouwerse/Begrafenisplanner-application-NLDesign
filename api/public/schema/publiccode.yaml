@@ -1,12 +1,12 @@
 publiccodeYmlVersion: "0.2"
 
-name: pa
+name: irc
 applicationSuite: commonground
-url: "https://github.com/ConductionNL/Proto-component-commonground"
+url: "https://github.com/ConductionNL/instemmingservice"
 landingURL: "test.conduction.nl" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V.0.1"
-releaseDate: "2020-02-03"
+releaseDate: "2020-03-03"
 logo: pc.zaakonline.nl 
 monochromeLogo: img/logo-mono.svg
 
@@ -37,7 +37,7 @@ usedBy:
   - Gemeente Hoorn
   
 
-roadmap: "https://github.com/ConductionNL/Proto-component-commonground/blob/master/ROADMAP.md"
+roadmap: "https://github.com/ConductionNL/instemmingservice/blob/master/ROADMAP.md"
 
 developmentStatus: development
 
@@ -66,7 +66,7 @@ description:
 #          on multiple rows. You should note what the software
 #          is and why one should need it.
 
-    documentation: "https://github.com/ConductionNL/Proto-component-commonground/blob/master/README.md"
+    documentation: "https://github.com/ConductionNL/instemmingservice/blob/master/README.md"
     apiDocumentation: "test.conduction.nl"
 #
 #    features:
