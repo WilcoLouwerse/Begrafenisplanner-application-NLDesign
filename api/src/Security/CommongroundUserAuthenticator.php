@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -19,6 +20,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use App\Service\CommonGroundService;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 {
@@ -27,14 +29,16 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 	private $commonGroundService;
 	private $csrfTokenManager;
 	private $router;
+	private $urlGenerator;
 	
-	public function __construct(EntityManagerInterface $em, ParameterBagInterface $params, CommonGroundService $commonGroundService, CsrfTokenManagerInterface $csrfTokenManager, RouterInterface $router)
+	public function __construct(EntityManagerInterface $em, ParameterBagInterface $params, CommonGroundService $commonGroundService, CsrfTokenManagerInterface $csrfTokenManager, RouterInterface $router, UrlGeneratorInterface $urlGenerator)
 	{
 		$this->em = $em;
 		$this->params = $params;
 		$this->commonGroundService = $commonGroundService;
 		$this->csrfTokenManager = $csrfTokenManager;
 		$this->router = $router;
+		$this->urlGenerator= $urlGenerator;
 	}
 	
 	/**
@@ -70,23 +74,22 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 	
 	public function getUser($credentials, UserProviderInterface $userProvider)
 	{
-		/*
+		
 		$token = new CsrfToken('authenticate', $credentials['csrf_token']);
 		if (!$this->csrfTokenManager->isTokenValid($token)) {
 			throw new InvalidCsrfTokenException();
-		}
-		*/
-		
-		$users = $this->commonGroundService->getResourceList($this->params->get('auth_provider_user').'/users',["username"->$credentials["username"]]);
+		}		
+				
+		$users = $this->commonGroundService->getResourceList($this->params->get('auth_provider_user').'/users',["username"=> $credentials['username']], true);
 		$users = $users["hydra:member"];
-		
-		if(count($users) < 1){
+				
+		if(!$users ||count($users) < 1){
 			return;			
 		}
 		
 		$user = $users[0];
-		
-		return new CommongroundUser($user['username'], $credentials["password"], null, ['user'] );
+				
+		return new CommongroundUser($user['username'], $user['id'], null, ['user'],$user['person'],$user['organization']);
 	}
 	
 	public function checkCredentials($credentials, UserInterface $user)
@@ -96,29 +99,24 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 		if(!$user){
 			return false;			
 		}
+		
 		// no adtional credential check is needed in this case so return true to cause authentication success
 		return true;
 	}
 	
 	public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
 	{
-		if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-			return new RedirectResponse($targetPath);
-		}
+		//if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+		//	return new RedirectResponse($targetPath);
+		//}
 		
-		return new RedirectResponse($this->urlGenerator->generate('app_default_index'));
+		return new RedirectResponse($this->urlGenerator->generate('app_user_settings'));
 	}
 	
 	public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
 	{
-		$data = [
-				'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
-				
-				// or to translate this message
-				// $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
-		];
 		
-		return new JsonResponse($data, Response::HTTP_FORBIDDEN);
+		return new RedirectResponse($this->urlGenerator->generate('app_user_login'));
 	}
 	
 	/**

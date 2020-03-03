@@ -41,6 +41,11 @@ class CommongroundApplication implements UserInterface, EquatableInterface
 		return $this->username;
 	}
 	
+	public function __toString()
+	{
+		return $this->getUsername();
+	}
+	
 	public function eraseCredentials()
 	{
 	}
