@@ -103,12 +103,6 @@ final class SwaggerDecorator implements NormalizerInterface
                     $description = $docblock->getDescription()->render();
                     $description = $summary."\n\n".$description;
 
-                    /*
-                    if(){
-                    	
-                    }
-                    */
-                    
                     $tag = [];
                     $tag['name'] = $shortName;
                     $tag['description'] = $description;
@@ -119,7 +113,6 @@ final class SwaggerDecorator implements NormalizerInterface
 
                     //$additionalEntityDocs = $this->getAdditionalEntityDocs($entity);
                     $entityDocs = $this->getAdditionalEntityDocs($entity);
-                    
                     // Only run if we have aditional docs
                     if (array_key_exists('properties', $entityDocs)) {
                         $additionalDocs = array_merge($additionalDocs, $entityDocs['properties']);
@@ -134,7 +127,7 @@ final class SwaggerDecorator implements NormalizerInterface
             }
         }
 
-        // Ruben: Oke dit is echt but lelijk
+        // Oke dit is echt but lelijk
         $schemas = (array) $docs['definitions'];
         foreach ($schemas as $schemaName => $schema) {
 
@@ -435,21 +428,9 @@ final class SwaggerDecorator implements NormalizerInterface
                     case 'var':
                         $atributes['description'] = (string) $description;
                         $atributes['type'] = (string) $tag->getType();
-                        
-                        // Lets check on objects                        
-                        $chr = mb_substr ($atributes['type'], 0, 1, "UTF-8");
-                        $skip = ['UuidInterface','Datetime'];
-                        $strip = ['\\','[',']'];
-                        $clean = str_replace($strip,'', $atributes['type']);
-                        if("\\" == $chr && !in_array($clean,$skip)){      
-                        	// We have an object
-                        	$atributes['eaxample'] = '#/components/schemas/'.$clean.'-read'; 
-                        	$atributes['type'] = 'object';
-                        	$atributes['format'] = $clean;
-                        }
-                        
+
                         break;
-                        
+
                     // Docblocks
                     case 'example':
                         $atributes['example'] = (string) $description;
@@ -470,7 +451,7 @@ final class SwaggerDecorator implements NormalizerInterface
                     case "Assert\DateTime":
                         $atributes['type'] = 'string';
                         $atributes['format'] = 'date-time';
-                        $atributes['example'] = \date('Y-m-d').'T'.\date('H:i:s').'+00:00';
+                        $atributes['example'] = \date('Y-m-d H:i:s');
                         break;
                     case "Assert\Time":
                         $atributes['type'] = 'string';
@@ -483,9 +464,8 @@ final class SwaggerDecorator implements NormalizerInterface
                         $atributes['example'] = 'America/New_York';
                         break;
                     case "Assert\Uuid":
-                    	$atributes['type'] = 'string'; 
-                    	$atributes['format'] = 'uuid';
-                    	$atributes['example'] = '9b9eea1a-ef04-427d-b8bd-7f5c24801874';
+                        $atributes['type'] = 'string';
+                        $atributes['format'] = 'uuid';
                         break;
                     case "Assert\Email":
                         $atributes['type'] = 'string';
@@ -510,7 +490,7 @@ final class SwaggerDecorator implements NormalizerInterface
                     case "Assert\Choice":
                         //@todo
                         //$atributes['format'] = 'json';
-                        break;                      
+                        break;
 
                     case "Assert\NotNull":
                         $required[] = $property->name;
@@ -524,10 +504,6 @@ final class SwaggerDecorator implements NormalizerInterface
                             $atributes['minLength'] = $propertyAnnotation->min;
                         }
                         break;
-                    case "Assert\Valid":
-                    	//@todo
-                    	// this means tha we haven an object on our hands;
-                    	break;
                 }
             }
             // Lets write everything to the docs

@@ -8,20 +8,9 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use App\Service\CommonGroundService;
 
 class CommongroundUserProvider implements UserProviderInterface
-{	
-	private $params;
-	private $commonGroundService;
-	
-	public function __construct( ParameterBagInterface $params, CommonGroundService $commonGroundService)
-	{
-		$this->params = $params;
-		$this->commonGroundService = $commonGroundService;
-	}
-	
+{
 	public function loadUserByUsername($username)
 	{
 		return $this->fetchUser($username);
@@ -45,20 +34,22 @@ class CommongroundUserProvider implements UserProviderInterface
 		return CommongroundUser::class === $class;
 	}
 	
-	private function fetchUser($username)
+	private function fetchUser($uuid)
 	{
-		$users = $this->commonGroundService->getResourceList($this->params->get('auth_provider_user').'/users',["username"=> $username]);
-		$users = $users["hydra:member"];
+		// make a call to your webservice here
+		//$userData = ...
+		// pretend it returns an array on success, false if there is no user
 		
-		if(!$users ||count($users) < 1){
+		if ($userData) {
+			$password = '...';
 			
-			throw new UsernameNotFoundException(
-					sprintf('User "%s" does not exist.', $uuid)
-					);
+			// ...
+			
+			return new CommongroundUser($username, $password, $salt, $roles);
 		}
 		
-		$user = $users[0];
-		
-		return new CommongroundUser($user['username'], $user['id'], null, ['user'],$user['person'],$user['organization']);
+		throw new UsernameNotFoundException(
+				sprintf('User "%s" does not exist.', $uuid)
+				);
 	}
 }
