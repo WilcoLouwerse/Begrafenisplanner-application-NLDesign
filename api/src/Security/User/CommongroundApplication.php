@@ -13,7 +13,7 @@ class CommongroundApplication implements UserInterface, EquatableInterface
 	private $salt;
 	private $roles;
 	
-	public function __construct($username, $password, $salt, array $roles)
+	public function __construct(string $username = '', string $password = '', string $salt = null, array $roles = [])
 	{
 		$this->username = $username;
 		$this->password = $password;
@@ -39,6 +39,11 @@ class CommongroundApplication implements UserInterface, EquatableInterface
 	public function getUsername()
 	{
 		return $this->username;
+	}
+	
+	public function __toString()
+	{
+		return $this->getUsername();
 	}
 	
 	public function eraseCredentials()
