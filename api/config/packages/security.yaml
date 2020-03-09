@@ -19,11 +19,12 @@ security:
             methods: [GET]
         main:
             provider: chain_provider
-            logout:
-                path:   app_user_login            
-            form_login:
-                login_path: app_user_login
-                check_path: app_user_login   
+            # comment this function out on crud enviroments
+            #logout:
+            #    path:   app_user_login            
+            #form_login:
+            #    login_path: app_user_login
+            #    check_path: app_user_login   
             guard:
                 authenticators:
                     - App\Security\CommongroundApplicationAuthenticator

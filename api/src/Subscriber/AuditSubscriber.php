@@ -4,6 +4,7 @@ namespace App\Subscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Paginator;
+use ApiPlatform\Core\Api\Entrypoint;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -66,7 +67,7 @@ class AuditSubscriber implements EventSubscriberInterface
         $log->setSession($session->getId());
 
         // 
-        if(!$result instanceof Paginator) {
+        if(!$result instanceof Paginator && !$result instanceof Entrypoint) {
         	$log->setResource($result->getid());
         	$log->setResourceType($this->em->getMetadataFactory()->getMetadataFor(get_class($result))->getName());
         }
