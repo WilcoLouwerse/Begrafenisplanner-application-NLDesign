@@ -55,49 +55,20 @@ class CommonGroundService
 		$this->client = new Client($this->guzzleConfig);
 	}
 	
-	
-	/*
-	 * Get the current application from the wrc
-	 */
-	public function getApplication($force = false, $async = false)
-	{
-		/* @todo this is very very hacky */
-		$applications = $this->getResourceList('https://wrc.larping.eu/applications',[],$force, $async);
-		return $applications['hydra:member'][0];
-		
-	}
-	
-	
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function getResourceList($url, $query = [], $force = false, $async = false)
+	public function getResourceList($url, $query = [], $force = false)
 	{
-		// Check on URL
 		if (!$url) {
 			return false;
-		}		
-		
-		// Split enviroments, if the env is not dev the we need add the env to the url name
-		$parsedUrl = parse_url($url);
-		
-		// We only do this on non-production enviroments
-		if($this->params->get('app_env') != "prod"){
-			
-			// Lets make sure we dont have doubles 
-			$url = str_replace($this->params->get('app_env').'.','',$url);
-					
-			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
-			$host = explode('.', $parsedUrl['host']);			
-			$subdomain = $host[0];
-			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
 		}
-		
+		$parsedUrl = parse_url($url);
 		
 		$elementList = [];
 		foreach($query as $element){
 			if(!is_array($element)){
-				break; 
+				return;
 			}
 			$elementList[] = implode("=",$element);
 		}
@@ -107,43 +78,19 @@ class CommonGroundService
 		$headers = $this->headers;
 		$headers['X-NLX-Request-Data-Elements'] = $elementList;
 		$headers['X-NLX-Request-Data-Subject'] = $elementList;
-				
+		
 		$item = $this->cash->getItem('commonground_'.md5($url));
 		if ($item->isHit() && !$force) {
 			//return $item->get();
 		}
-				
-		if(!$async){
-			$response = $this->client->request('GET', $url, [
-					'query' => $query,
-					'headers' => $headers,
-			]
-		);
-		}
-		else {			
-			$response = $this->client->requestAsync('GET', $url, [
-					'query' => $query,
-					'headers' => $headers,
-			]
-			);		
-		}
 		
-		
-		if($response->getStatusCode() != 200){
-			var_dump('GET returned:'.$response->getStatusCode());
-			var_dump(json_encode($query));
-			var_dump(json_encode($headers));
-			var_dump(json_encode($url));
-			var_dump($response->getBody());
-			die;
-		}
-		
+		$response = $this->client->request('GET', $url, [
+				'query' => $query,
+				'headers' => $headers,
+		]
+				);
 		
 		$response = json_decode($response->getBody(), true);
-		
-		
-		
-		//var_dump($response);
 		
 		/* @todo this should look to al @id keus not just the main root */
 		if(array_key_exists('hydra:member', $response) && $response['hydra:member']){
@@ -164,27 +111,13 @@ class CommonGroundService
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function getResource($url, $query = [], $force = false, $async = false)
+	public function getResource($url, $query = [], $force = false)
 	{
 		
 		if (!$url) {
 			//return false;
 		}
-		
-		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
-		
-		// We only do this on non-production enviroments
-		if($this->params->get('app_env') != "prod"){
-			
-			// Lets make sure we dont have doubles
-			$url = str_replace($this->params->get('app_env').'.','',$url);
-			
-			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
-			$host = explode('.', $parsedUrl['host']);
-			$subdomain = $host[0];
-			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
-		}
 		
 		// To work with NLX we need a couple of default headers
 		$headers = $this->headers;
@@ -193,37 +126,18 @@ class CommonGroundService
 		$item = $this->cash->getItem('commonground_'.md5($url));
 		if ($item->isHit() && !$force) {
 			//return $item->get();
-		}		
-		
-		if(!$async){
-			$response = $this->client->request('GET', $url, [
-					'query' => $query,
-					'headers' => $headers,
-			]
-					);
-		}
-		else {
-			
-			$response = $this->client->requestAsync('GET', $url, [
-					'query' => $query,
-					'headers' => $headers,
-			]
-					);
 		}
 		
-		if($response->getStatusCode() != 200){
-			var_dump('GET returned:'.$response->getStatusCode());
-			var_dump(json_encode($query));
-			var_dump(json_encode($headers));
-			var_dump(json_encode($url));
-			var_dump($response->getBody());
-			die;
-		}
+		$response = $this->client->request('GET', $url, [
+				'query' => $query,
+				'headers' => $headers,
+		]
+				);
 		
 		$response = json_decode($response->getBody(), true);
 		
-		if(array_key_exists('@id', $response) && $response['@id']){
-			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
+		if($response['@id']){
+			$response['@id'] = $parsedUrl["host"].$response['@id'];
 		}
 		
 		$item->set($response);
@@ -236,30 +150,12 @@ class CommonGroundService
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function updateResource($resource, $url = null, $query = [], $force = false, $async = false)
+	public function updateResource($resource, $url = null)
 	{
 		if (!$url && array_key_exists('@id', $resource)) {
 			$url = $resource['@id'];
 		}
-		
-		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
-		
-		// We only do this on non-production enviroments
-		if($this->params->get('app_env') != "prod"){
-			
-			// Lets make sure we dont have doubles
-			$url = str_replace($this->params->get('app_env').'.','',$url);
-			
-			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
-			$host = explode('.', $parsedUrl['host']);
-			$subdomain = $host[0];
-			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
-		}
-				
-		// To work with NLX we need a couple of default headers
-		$headers = $this->headers;
-		$headers['X-NLX-Request-Subject-Identifier'] = $url;
 		
 		unset($resource['@context']);
 		unset($resource['@id']);
@@ -268,27 +164,12 @@ class CommonGroundService
 		unset($resource['_links']);
 		unset($resource['_embedded']);
 		
-		
-		if(!$async){			
-			$response = $this->client->request('PUT', $url, [
-					'body' => json_encode($resource),
-					'query' => $query,
-					'headers' => $headers,
-			]
-			);
-		}
-		else {
-			
-			$response = $this->client->requestAsync('PUT', $url, [
-					'body' => json_encode($resource),
-					'query' => $query,
-					'headers' => $headers,
-			]
-			);
-		}
+		$response = $this->client->request('PUT', $url, [
+				'body' => json_encode($resource),
+		]
+				);
 		
 		if($response->getStatusCode() != 200){
-			var_dump('PUT returned:'.$response->getStatusCode());
 			var_dump(json_encode($resource));
 			var_dump(json_encode($url));
 			var_dump(json_encode($response->getBody()));
@@ -297,8 +178,8 @@ class CommonGroundService
 		
 		$response = json_decode($response->getBody(), true);
 		
-		if(array_key_exists('@id', $response) && $response['@id']){
-			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
+		if($response['@id']){
+			$response['@id'] = $parsedUrl["host"].$response['@id'];
 		}
 		
 		// Lets cash this item for speed purposes
@@ -313,49 +194,20 @@ class CommonGroundService
 	/*
 	 * Get a single resource from a common ground componant
 	 */
-	public function createResource($resource, $url = null, $query = [], $force = false, $async = false)
+	public function createResource($resource, $url = null)
 	{
 		if (!$url && array_key_exists('@id', $resource)) {
 			$url = $resource['@id'];
 		}
-				
-		// To work with NLX we need a couple of default headers
-		$headers = $this->headers;
-		$headers['X-NLX-Request-Subject-Identifier'] = $url;
-		
-		// Split enviroments, if the env is not dev the we need add the env to the url name
 		$parsedUrl = parse_url($url);
 		
-		// We only do this on non-production enviroments
-		if($this->params->get('app_env') != "prod"){
-			
-			// Lets make sure we dont have doubles
-			$url = str_replace($this->params->get('app_env').'.','',$url);
-			
-			// e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
-			$host = explode('.', $parsedUrl['host']);
-			$subdomain = $host[0];
-			$url = str_replace($subdomain,$subdomain.'.'.$this->params->get('app_env'),$url);
-		}
-		
-		if(!$async){
-			$response = $this->client->request('POST', $url, [
-					'body' => json_encode($resource),
-					'headers' => $headers,
-				]
-			);
-		}
-		else {
-			$response = $this->client->requestAsync('POST', $url, [
-					'body' => json_encode($resource),
-					'headers' => $headers,
-			]
-			);
-		}
+		$response = $this->client->request('POST', $url, [
+				'body' => json_encode($resource),
+		]
+				);
 		
 		
-		if($response->getStatusCode() != 201 && $response->getStatusCode() != 200){
-			var_dump('POST returned:'.$response->getStatusCode());
+		if($response->getStatusCode() != 201){
 			var_dump(json_encode($resource));
 			var_dump(json_encode($url));
 			var_dump($response->getBody());
@@ -365,8 +217,8 @@ class CommonGroundService
 		
 		$response = json_decode($response->getBody(), true);
 		
-		if(array_key_exists('@id', $response) && $response['@id']){
-			$response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
+		if($response['@id']){
+			$response['@id'] = $parsedUrl["host"].$response['@id'];
 		}
 		
 		// Lets cash this item for speed purposes

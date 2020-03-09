@@ -17,11 +17,6 @@ security:
             anonymous: true
             pattern:  ^/$
             methods: [GET]
-        # The mollie webhook does not have our API key
-        webhook:
-            anonymous: true
-            pattern: ^/payments/mollie_webhook
-            methods: [POST]
         main:
             provider: chain_provider
             logout:
