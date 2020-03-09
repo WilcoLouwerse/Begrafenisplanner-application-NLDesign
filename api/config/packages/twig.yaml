@@ -23,6 +23,8 @@ parameters:
     env(APP_REPRO): ''           
     env(APP_DESCRIPTION): ''           
     env(AUTH_ENABLED): ''    
+    env(AUTH_PROVIDER_USER): ''        
+    env(AUTH_PROVIDER_APPLICATION): ''    
     env(AUDITTRAIL_ENABLED): ''    
     env(NOTIFICATION_ENABLED): ''    
     env(HEALTH_ENABLED): ''       
@@ -67,6 +69,8 @@ twig:
         app_description: '%env(APP_DESCRIPTION)%'
         
         app_auth: '%env(AUTH_ENABLED)%'        
+        auth_provider_user: '%env(AUTH_PROVIDER_USER)%'        
+        auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'        
         app_audittrail: '%env(AUDITTRAIL_ENABLED)%'        
         app_notification: '%env(NOTIFICATION_ENABLED)%'
         app_health: '%env(HEALTH_ENABLED)%'   
