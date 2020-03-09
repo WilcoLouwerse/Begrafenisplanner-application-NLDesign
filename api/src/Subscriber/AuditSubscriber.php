@@ -3,9 +3,10 @@
 namespace App\Subscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
-use App\Entity\NLXRequestLog;
-use App\Service\NLXLogService;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Paginator;
+use ApiPlatform\Core\Api\Entrypoint;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +16,10 @@ use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class NLXSubscriber implements EventSubscriberInterface
+use App\Entity\AuditTrail;
+use App\Service\NLXLogService;
+
+class AuditSubscriber implements EventSubscriberInterface
 {
     private $params;
     private $em;
@@ -33,66 +37,41 @@ class NLXSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['NLXLog', EventPriorities::PRE_VALIDATE],
-            KernelEvents::VIEW => ['NLXAudit', EventPriorities::PRE_SERIALIZE],
+        		KernelEvents::VIEW => ['LogRequest', EventPriorities::PRE_SERIALIZE],
         ];
     }
 
-    public function NLXAudit(GetResponseForControllerResultEvent $event)
-    {
-        $result = $event->getControllerResult();
-        $auditTrail = $event->getRequest()->query->get('auditTrail');
-
-        // Only do somthing if we are on te log route and the entity is logable
-        /* @todo we should trhow errors here foruser feedback */
-        if (!$auditTrail) {
-            return $result;
-        }
-
-        $repo = $this->em->getRepository('App\Entity\NLXRequestLog');
-        $logs = $repo->getLogEntries($result);
-
-        // now we need to overide the normal subscriber
-        $json = $this->serializer->serialize(
-                $logs,
-                'jsonhal', ['enable_max_depth' => true]
-                );
-
-        $response = new Response(
-                $json,
-                Response::HTTP_OK,
-                ['content-type' => 'application/json+hal']
-                );
-
-        $event->setResponse($response);
-    }
-
-    public function NLXLog(GetResponseForControllerResultEvent $event)
+    public function LogRequest(GetResponseForControllerResultEvent $event)
     {
         $result = $event->getControllerResult();
 
         $session = new Session();
-        $session->start();
+        //$session->start();
         // See: https://docs.nlx.io/further-reading/transaction-logs/
 
-        $log = new NLXRequestLog();
-        $log->setApplicationId($event->getRequest()->headers->get('X-NLX-Application-Id'));
-        $log->setRequestId($event->getRequest()->headers->get('X-NLX-Request-Id'));
-        $log->setUserId($event->getRequest()->headers->get('X-NLX-Request-User-Id'));
-        $log->setSubjectId($event->getRequest()->headers->get('X-NLX-Request-Subject-Identifier'));
-        $log->setProcessId($event->getRequest()->headers->get('X-NLX-Request-Process-Id'));
+        $log = new AuditTrail();
+        $log->setApplication($event->getRequest()->headers->get('X-NLX-Application-Id'));
+        $log->setRequest($event->getRequest()->headers->get('X-NLX-Request-Id'));
+        $log->setUser($event->getRequest()->headers->get('X-NLX-Request-User-Id'));
+        $log->setSubject($event->getRequest()->headers->get('X-NLX-Request-Subject-Identifier'));
+        $log->setProcess($event->getRequest()->headers->get('X-NLX-Request-Process-Id'));
         $log->setDataElements($event->getRequest()->headers->get('X-NLX-Request-Data-Elements'));
         $log->setDataSubjects($event->getRequest()->headers->get('X-NLX-Request-Data-Subject'));
-        $log->setObjectId($result->getid());
-        $log->setObjectClass($this->em->getMetadataFactory()->getMetadataFor(get_class($result))->getName());
         $log->setRoute($event->getRequest()->attributes->get('_route'));
         $log->setEndpoint($event->getRequest()->getPathInfo());
         $log->setMethod($event->getRequest()->getMethod());
+        $log->setAccept($event->getRequest()->headers->get('Accept'));
         $log->setContentType($event->getRequest()->headers->get('Content-Type'));
         $log->setContent($event->getRequest()->getContent());
+        $log->setIp($event->getRequest()->getClientIp());
         $log->setSession($session->getId());
-        $log->setLoggedAt(new \DateTime());
 
+        // 
+        if(!$result instanceof Paginator && !$result instanceof Entrypoint) {
+        	$log->setResource($result->getid());
+        	$log->setResourceType($this->em->getMetadataFactory()->getMetadataFor(get_class($result))->getName());
+        }
+        
         $this->em->persist($log);
         $this->em->flush($log);
 
@@ -105,6 +84,23 @@ class NLXSubscriber implements EventSubscriberInterface
 
         // In the current common ground we dont bother with authorization (every one may do anything as long as we know who it is)
 
-        return $result;
+        //return $result;
+    }
+    
+    /**
+     * @param EntityManager $em
+     * @param string|object $class
+     *
+     * @return boolean
+     */
+    function isEntity(EntityManager $em, $class)
+    {
+    	if (is_object($class)) {
+    		$class = ($class instanceof Proxy)
+    		? get_parent_class($class)
+    		: get_class($class);
+    	}
+    	
+    	return ! $em->getMetadataFactory()->isTransient($class);
     }
 }
