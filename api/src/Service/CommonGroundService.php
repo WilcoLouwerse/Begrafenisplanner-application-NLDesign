@@ -146,9 +146,11 @@ class CommonGroundService
 		//var_dump($response);
 		
 		/* @todo this should look to al @id keus not just the main root */
-		foreach($response['hydra:member'] as $key => $embedded){
-			if(array_key_exists('@id', $embedded) && $embedded['@id']){
-				$response['hydra:member'][$key]['@id'] =  $parsedUrl["scheme"]."://".$parsedUrl["host"].$embedded['@id'];
+		if(array_key_exists('hydra:member', $response) && $response['hydra:member']){
+			foreach($response['hydra:member'] as $key => $embedded){
+				if(array_key_exists('@id', $embedded) && $embedded['@id']){
+					$response['hydra:member'][$key]['@id'] =  $parsedUrl["scheme"]."://".$parsedUrl["host"].$embedded['@id'];
+				}
 			}
 		}
 		
@@ -236,8 +238,8 @@ class CommonGroundService
 	 */
 	public function updateResource($resource, $url = null, $query = [], $force = false, $async = false)
 	{
-		if (!$url) {
-			return false;
+		if (!$url && array_key_exists('@id', $resource)) {
+			$url = $resource['@id'];
 		}
 		
 		// Split enviroments, if the env is not dev the we need add the env to the url name
@@ -313,8 +315,8 @@ class CommonGroundService
 	 */
 	public function createResource($resource, $url = null, $query = [], $force = false, $async = false)
 	{
-		if (!$url) {
-			return false;
+		if (!$url && array_key_exists('@id', $resource)) {
+			$url = $resource['@id'];
 		}
 				
 		// To work with NLX we need a couple of default headers

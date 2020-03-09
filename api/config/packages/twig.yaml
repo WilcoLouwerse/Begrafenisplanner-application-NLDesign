@@ -32,6 +32,7 @@ parameters:
     env(TRUSTED_PROXIES): ''        
     env(NLX_OUTWAY): ''     
     env(NLX_INWAY): '' 
+    env(APP_COMMONGROUND_ID): '' 
     env(APP_COMMONGROUND_KEY): '' 
     env(APP_APPLICATION_KEY): '' 
     env(APP_USER_KEY): '' 

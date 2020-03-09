@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\NLXRequestLog;
+use App\Entity\AuditTrail;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method NLXRequestLog|null find($id, $lockMode = null, $lockVersion = null)
- * @method NLXRequestLog|null findOneBy(array $criteria, array $orderBy = null)
- * @method NLXRequestLog[]    findAll()
- * @method NLXRequestLog[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method AuditTrail|null find($id, $lockMode = null, $lockVersion = null)
+ * @method AuditTrail|null findOneBy(array $criteria, array $orderBy = null)
+ * @method AuditTrail[]    findAll()
+ * @method AuditTrail[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class NLXRequestLogRepository extends ServiceEntityRepository
+class AuditTrailRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, ExampleEntity::class);
+    	parent::__construct($registry, AuditTrail::class);
     }
 
     /**

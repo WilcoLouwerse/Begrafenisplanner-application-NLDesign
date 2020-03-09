@@ -50,9 +50,10 @@ api_platform:
     
     # Lets confirm to JSON-HA: first, as per common ground. But allow other serializers
     formats:
-        jsonhal:  ['application/hal+json']
-        jsonld:   ['application/ld+json']
-        jsonapi:  ['application/vnd.api+json']
+        jsonhealth:  ['application/health+json','application/json+health']
+        jsonhal:  ['application/hal+json','application/json+hal']
+        jsonld:   ['application/ld+json','application/json+ld']
+        jsonapi:  ['application/vnd.api+json','application/json+vnd.api']
         json:     ['application/json']
         xml:      ['application/xml']
         yaml:     ['application/x-yaml']
