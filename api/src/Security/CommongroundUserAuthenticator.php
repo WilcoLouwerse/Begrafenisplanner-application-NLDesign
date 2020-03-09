@@ -81,14 +81,7 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 	
 	public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
 	{
-		$data = [
-				'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
-				
-				// or to translate this message
-				// $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())
-		];
-		
-		return new JsonResponse($data, Response::HTTP_FORBIDDEN);
+		return new RedirectResponse($this->urlGenerator->generate('app_user_login'));
 	}
 	
 	/**
@@ -96,12 +89,7 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 	 */
 	public function start(Request $request, AuthenticationException $authException = null)
 	{
-		$data = [
-				// you might translate this message
-				'message' => 'Authentication Required'
-		];
-		
-		return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
+		//return new RedirectResponse($this->urlGenerator->generate('app_user_login'));
 	}
 	
 	public function supportsRememberMe()

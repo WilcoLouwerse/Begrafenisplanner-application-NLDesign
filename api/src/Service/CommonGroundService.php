@@ -93,9 +93,11 @@ class CommonGroundService
 		$response = json_decode($response->getBody(), true);
 		
 		/* @todo this should look to al @id keus not just the main root */
-		foreach($response['hydra:member'] as $key => $embedded){
-			if($embedded['@id']){
-				$response['hydra:member'][$key]['@id'] = $parsedUrl["host"].$embedded['@id'];
+		if(array_key_exists('hydra:member', $response) && $response['hydra:member']){
+			foreach($response['hydra:member'] as $key => $embedded){
+				if(array_key_exists('@id', $embedded) && $embedded['@id']){
+					$response['hydra:member'][$key]['@id'] =  $parsedUrl["scheme"]."://".$parsedUrl["host"].$embedded['@id'];
+				}
 			}
 		}
 		
@@ -150,8 +152,8 @@ class CommonGroundService
 	 */
 	public function updateResource($resource, $url = null)
 	{
-		if (!$url) {
-			return false;
+		if (!$url && array_key_exists('@id', $resource)) {
+			$url = $resource['@id'];
 		}
 		$parsedUrl = parse_url($url);
 		
@@ -194,8 +196,8 @@ class CommonGroundService
 	 */
 	public function createResource($resource, $url = null)
 	{
-		if (!$url) {
-			return false;
+		if (!$url && array_key_exists('@id', $resource)) {
+			$url = $resource['@id'];
 		}
 		$parsedUrl = parse_url($url);
 		
