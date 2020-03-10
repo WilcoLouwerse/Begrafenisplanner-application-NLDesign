@@ -74,7 +74,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="invoices")
  * @ORM\HasLifecycleCallbacks
  * 
- * @ApiFilter(BooleanFilter::class)
  * @ApiFilter(OrderFilter::class)
  * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
  * @ApiFilter(SearchFilter::class)
