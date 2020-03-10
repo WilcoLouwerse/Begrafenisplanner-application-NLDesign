@@ -56,6 +56,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TaxRepository")
+ * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
  * 
  * @ApiFilter(OrderFilter::class)
  * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
@@ -82,6 +83,7 @@ class Tax
      *
      * @example my offer
      *
+     * @Gedmo\Versioned
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull
      * @Assert\Length(
@@ -96,6 +98,7 @@ class Tax
      *
      * @example This is the best product ever
      *
+     * @Gedmo\Versioned
      * @Assert\Length(
      *      max = 2550
      * )
@@ -109,6 +112,7 @@ class Tax
      *
      * @example 50.00
      *
+     * @Gedmo\Versioned
      * @Groups({"read","write"})
      * @Assert\NotNull
      * @Groups({"read","write"})
@@ -121,6 +125,7 @@ class Tax
      *
      * @example EUR
      *
+     * @Gedmo\Versioned
      * @Assert\Currency
      * @Groups({"read","write"})
      * @ORM\Column(type="string")
@@ -132,6 +137,7 @@ class Tax
      *
      * @example 9
      *
+     * @Gedmo\Versioned
      * @Assert\NotBlank
      * @Assert\PositiveOrZero
      * @Groups({"read", "write"})

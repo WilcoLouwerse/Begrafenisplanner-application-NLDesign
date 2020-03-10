@@ -45,6 +45,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\OrganizationRepository")
+ * @Gedmo\Loggable(logEntryClass="App\Entity\ChangeLog")
  * 
  * @ApiFilter(OrderFilter::class)
  * @ApiFilter(DateFilter::class, strategy=DateFilter::EXCLUDE_NULL)
@@ -68,6 +69,7 @@ class Organization
     private $id;
 
     /**
+     * @Gedmo\Versioned
      * @Groups({"read", "write"})
      * @Assert\NotNull
      * @Assert\Length(
@@ -79,6 +81,7 @@ class Organization
 
     /**
      *
+     * @Gedmo\Versioned
      * @Groups({"read", "write"})
      * @Assert\NotNull
      * @Assert\Length(
@@ -94,24 +97,6 @@ class Organization
      * @ORM\OneToMany(targetEntity="App\Entity\Invoice", mappedBy="organization")
      */
     private $invoices;
-
-    /**
-     * @var Datetime $dateCreated The moment this request was created
-     *
-     * @Groups({"read"})
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateCreated;
-
-    /**
-     * @var Datetime $dateModified  The moment this request last Modified
-     *
-     * @Groups({"read"})
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateModified;
 
     /**
      * @var ArrayCollection The payment providers configured for this organization
@@ -131,6 +116,24 @@ class Organization
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $redirectUrl;
+    
+    /**
+     * @var Datetime $dateCreated The moment this request was created
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateCreated;
+    
+    /**
+     * @var Datetime $dateModified  The moment this request last Modified
+     *
+     * @Groups({"read"})
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModified;
 
     public function __construct()
     {
@@ -198,30 +201,6 @@ class Organization
         return $this;
     }
 
-    public function getDateCreated(): ?\DateTimeInterface
-    {
-        return $this->dateCreated;
-    }
-
-    public function setDateCreated(\DateTimeInterface $dateCreated): self
-    {
-        $this->dateCreated = $dateCreated;
-
-        return $this;
-    }
-
-    public function getDateModified(): ?\DateTimeInterface
-    {
-        return $this->dateModified;
-    }
-
-    public function setDateModified(\DateTimeInterface $dateModified): self
-    {
-        $this->dateModified = $dateModified;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Service[]
      */
@@ -263,5 +242,29 @@ class Organization
         $this->redirectUrl = $redirectUrl;
 
         return $this;
+    }
+    
+    public function getDateCreated(): ?\DateTimeInterface
+    {
+    	return $this->dateCreated;
+    }
+    
+    public function setDateCreated(\DateTimeInterface $dateCreated): self
+    {
+    	$this->dateCreated = $dateCreated;
+    	
+    	return $this;
+    }
+    
+    public function getDateModified(): ?\DateTimeInterface
+    {
+    	return $this->dateModified;
+    }
+    
+    public function setDateModified(\DateTimeInterface $dateModified): self
+    {
+    	$this->dateModified = $dateModified;
+    	
+    	return $this;
     }
 }
