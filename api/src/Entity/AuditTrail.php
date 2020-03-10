@@ -124,7 +124,7 @@ class AuditTrail
      *      max = 255
      * )
 	 * @Groups({"read"})
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true, name="username")
      */
     private $user;
 
