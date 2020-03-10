@@ -25,26 +25,6 @@ paths:
         200:
           description: 'AuditTrail collection response'
           content:
-            application/health+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AuditTrail-read'
-            application/json+health:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AuditTrail-read'
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AuditTrail-read'
-            application/json+hal:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/AuditTrail-read'
             application/ld+json:
               schema:
                 type: object
@@ -65,6 +45,16 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
             application/vnd.api+json:
               schema:
                 type: array
@@ -76,6 +66,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/AuditTrail-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AuditTrail-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -481,24 +481,18 @@ paths:
         201:
           description: 'AuditTrail resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/AuditTrail:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
@@ -506,6 +500,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
             application/xml:
@@ -532,24 +532,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/AuditTrail:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/AuditTrail:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/AuditTrail-write'
@@ -557,6 +551,12 @@ paths:
             schema:
               $ref: '#/components/schemas/AuditTrail-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/AuditTrail-write'
           application/xml:
@@ -690,24 +690,18 @@ paths:
         200:
           description: 'AuditTrail resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/AuditTrail:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
@@ -715,6 +709,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
             application/xml:
@@ -824,24 +824,18 @@ paths:
         200:
           description: 'AuditTrail resource updated'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/AuditTrail:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
@@ -849,6 +843,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
             application/xml:
@@ -869,24 +869,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/AuditTrail-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/AuditTrail:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/AuditTrail:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/AuditTrail-write'
@@ -894,6 +888,12 @@ paths:
             schema:
               $ref: '#/components/schemas/AuditTrail-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/AuditTrail-write'
           application/xml:
@@ -954,24 +954,18 @@ paths:
         200:
           description: 'AuditTrail resource updated'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/AuditTrail-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/AuditTrail:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/AuditTrail:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
@@ -979,6 +973,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/AuditTrail-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/AuditTrail-read'
             application/xml:
@@ -999,15 +999,15 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/AuditTrail:jsonld-write'
           application/json:
             schema:
               $ref: '#/components/schemas/AuditTrail-write'
           application/hal+json:
             schema:
               $ref: '#/components/schemas/AuditTrail-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/AuditTrail:jsonld-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/AuditTrail-write'
@@ -1037,26 +1037,6 @@ paths:
         200:
           description: 'ChangeLog collection response'
           content:
-            application/health+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ChangeLog-read'
-            application/json+health:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ChangeLog-read'
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ChangeLog-read'
-            application/json+hal:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ChangeLog-read'
             application/ld+json:
               schema:
                 type: object
@@ -1077,6 +1057,16 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
             application/vnd.api+json:
               schema:
                 type: array
@@ -1088,6 +1078,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/ChangeLog-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeLog-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -1378,24 +1378,18 @@ paths:
         201:
           description: 'ChangeLog resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/ChangeLog:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
@@ -1403,6 +1397,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
             application/xml:
@@ -1429,24 +1429,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/ChangeLog:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/ChangeLog:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
@@ -1454,6 +1448,12 @@ paths:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
           application/xml:
@@ -1587,24 +1587,18 @@ paths:
         200:
           description: 'ChangeLog resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/ChangeLog:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
@@ -1612,6 +1606,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
             application/xml:
@@ -1721,24 +1721,18 @@ paths:
         200:
           description: 'ChangeLog resource updated'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/ChangeLog:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
@@ -1746,6 +1740,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
             application/xml:
@@ -1766,24 +1766,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/ChangeLog-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/ChangeLog:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/ChangeLog:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
@@ -1791,6 +1785,12 @@ paths:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
           application/xml:
@@ -1851,24 +1851,18 @@ paths:
         200:
           description: 'ChangeLog resource updated'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/ChangeLog-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/ChangeLog:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/ChangeLog:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
@@ -1876,6 +1870,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/ChangeLog-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/ChangeLog-read'
             application/xml:
@@ -1896,15 +1896,15 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
+          application/ld+json:
+            schema:
+              $ref: '#/components/schemas/ChangeLog:jsonld-write'
           application/json:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
           application/hal+json:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
-          application/ld+json:
-            schema:
-              $ref: '#/components/schemas/ChangeLog:jsonld-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/ChangeLog-write'
@@ -1934,26 +1934,6 @@ paths:
         200:
           description: 'InvoiceItem collection response'
           content:
-            application/health+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+health:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/InvoiceItem-read'
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+hal:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
                 type: object
@@ -1974,6 +1954,16 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceItem-read'
             application/vnd.api+json:
               schema:
                 type: array
@@ -1985,6 +1975,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/InvoiceItem-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceItem-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -2390,24 +2390,18 @@ paths:
         201:
           description: 'InvoiceItem resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/InvoiceItem:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
@@ -2415,6 +2409,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/xml:
@@ -2441,24 +2441,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/InvoiceItem:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/InvoiceItem:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/InvoiceItem-write'
@@ -2466,6 +2460,12 @@ paths:
             schema:
               $ref: '#/components/schemas/InvoiceItem-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/InvoiceItem-write'
           application/xml:
@@ -2599,24 +2599,18 @@ paths:
         200:
           description: 'InvoiceItem resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/InvoiceItem:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
@@ -2624,6 +2618,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/xml:
@@ -2687,24 +2687,18 @@ paths:
         200:
           description: 'InvoiceItem resource updated'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/InvoiceItem:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
@@ -2712,6 +2706,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/xml:
@@ -2732,24 +2732,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/InvoiceItem-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/InvoiceItem:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/InvoiceItem:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/InvoiceItem-write'
@@ -2757,6 +2751,12 @@ paths:
             schema:
               $ref: '#/components/schemas/InvoiceItem-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/InvoiceItem-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/InvoiceItem-write'
           application/xml:
@@ -2818,7 +2818,7 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-  '/invoice_items/{id}/audit_trial':
+  '/invoice_items/{id}/audit_trail':
     get:
       tags:
         - InvoiceItem
@@ -2906,24 +2906,18 @@ paths:
         200:
           description: 'InvoiceItem resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/InvoiceItem:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
@@ -2931,6 +2925,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/xml:
@@ -3037,24 +3037,18 @@ paths:
         200:
           description: 'InvoiceItem resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/InvoiceItem-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/InvoiceItem:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
@@ -3062,6 +3056,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/InvoiceItem-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/InvoiceItem-read'
             application/xml:
@@ -3090,26 +3090,6 @@ paths:
         200:
           description: 'Invoice collection response'
           content:
-            application/health+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Invoice-read'
-            application/json+health:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Invoice-read'
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Invoice-read'
-            application/json+hal:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
                 type: object
@@ -3130,6 +3110,16 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
             application/vnd.api+json:
               schema:
                 type: array
@@ -3141,6 +3131,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/Invoice-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Invoice-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -3471,24 +3471,18 @@ paths:
         201:
           description: 'Invoice resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
@@ -3496,6 +3490,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/xml:
@@ -3522,24 +3522,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Invoice:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Invoice:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Invoice-write'
@@ -3547,6 +3541,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Invoice-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Invoice-write'
           application/xml:
@@ -3680,24 +3680,18 @@ paths:
         200:
           description: 'Invoice resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
@@ -3705,6 +3699,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/xml:
@@ -3768,24 +3768,18 @@ paths:
         200:
           description: 'Invoice resource updated'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
@@ -3793,6 +3787,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/xml:
@@ -3813,24 +3813,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Invoice:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Invoice:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Invoice-write'
@@ -3838,6 +3832,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Invoice-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Invoice-write'
           application/xml:
@@ -3899,7 +3899,7 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-  '/invoices/{id}/audit_trial':
+  '/invoices/{id}/audit_trail':
     get:
       tags:
         - Invoice
@@ -3987,24 +3987,18 @@ paths:
         200:
           description: 'Invoice resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
@@ -4012,6 +4006,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/xml:
@@ -4118,24 +4118,18 @@ paths:
         200:
           description: 'Invoice resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
@@ -4143,6 +4137,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/xml:
@@ -4171,24 +4171,18 @@ paths:
         201:
           description: 'Invoice resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Invoice-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Invoice:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
@@ -4196,6 +4190,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Invoice-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Invoice-read'
             application/xml:
@@ -4222,24 +4222,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Invoice-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Invoice:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Invoice:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Invoice-write'
@@ -4247,6 +4241,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Invoice-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Invoice-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Invoice-write'
           application/xml:
@@ -4302,26 +4302,6 @@ paths:
         200:
           description: 'Organization collection response'
           content:
-            application/health+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Organization-read'
-            application/json+health:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Organization-read'
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Organization-read'
-            application/json+hal:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Organization-read'
             application/ld+json:
               schema:
                 type: object
@@ -4342,6 +4322,16 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization-read'
             application/vnd.api+json:
               schema:
                 type: array
@@ -4353,6 +4343,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/Organization-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Organization-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -4406,6 +4406,15 @@ paths:
               - asc
               - desc
         -
+          name: 'order[redirectUrl]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
           name: 'order[dateCreated]'
           in: query
           required: false
@@ -4416,15 +4425,6 @@ paths:
               - desc
         -
           name: 'order[dateModified]'
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - asc
-              - desc
-        -
-          name: 'order[redirectUrl]'
           in: query
           required: false
           schema:
@@ -4529,6 +4529,22 @@ paths:
           style: form
           explode: true
         -
+          name: redirectUrl
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'redirectUrl[]'
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+        -
           name: dateCreated
           in: query
           required: false
@@ -4552,22 +4568,6 @@ paths:
           required: false
           schema:
             type: string
-        -
-          name: redirectUrl
-          in: query
-          required: false
-          schema:
-            type: string
-        -
-          name: 'redirectUrl[]'
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-          style: form
-          explode: true
         -
           name: page
           in: query
@@ -4658,24 +4658,18 @@ paths:
         201:
           description: 'Organization resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Organization-read'
@@ -4683,6 +4677,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/xml:
@@ -4709,24 +4709,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Organization:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Organization:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Organization-write'
@@ -4734,6 +4728,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Organization-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Organization-write'
           application/xml:
@@ -4867,24 +4867,18 @@ paths:
         200:
           description: 'Organization resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Organization-read'
@@ -4892,6 +4886,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/xml:
@@ -4955,24 +4955,18 @@ paths:
         200:
           description: 'Organization resource updated'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Organization-read'
@@ -4980,6 +4974,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/xml:
@@ -5000,24 +5000,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Organization-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Organization:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Organization:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Organization-write'
@@ -5025,6 +5019,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Organization-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Organization-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Organization-write'
           application/xml:
@@ -5086,7 +5086,7 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-  '/organizations/{id}/audit_trial':
+  '/organizations/{id}/audit_trail':
     get:
       tags:
         - Organization
@@ -5174,24 +5174,18 @@ paths:
         200:
           description: 'Organization resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Organization-read'
@@ -5199,6 +5193,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/xml:
@@ -5305,24 +5305,18 @@ paths:
         200:
           description: 'Organization resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Organization-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Organization:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Organization-read'
@@ -5330,6 +5324,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Organization-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Organization-read'
             application/xml:
@@ -5358,26 +5358,6 @@ paths:
         200:
           description: 'Payment collection response'
           content:
-            application/health+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Payment-read'
-            application/json+health:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Payment-read'
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Payment-read'
-            application/json+hal:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
                 type: object
@@ -5398,6 +5378,16 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
             application/vnd.api+json:
               schema:
                 type: array
@@ -5409,6 +5399,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/Payment-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -5462,6 +5462,72 @@ paths:
               - asc
               - desc
         -
+          name: 'order[dateCreated]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateModified]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'dateCreated[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
           name: id
           in: query
           required: false
@@ -5509,6 +5575,30 @@ paths:
               type: string
           style: form
           explode: true
+        -
+          name: dateCreated
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: dateModified
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[]'
+          in: query
+          required: false
+          schema:
+            type: string
         -
           name: page
           in: query
@@ -5599,24 +5689,18 @@ paths:
         201:
           description: 'Payment resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Payment-read'
@@ -5624,6 +5708,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/xml:
@@ -5650,24 +5740,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Payment:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Payment:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Payment-write'
@@ -5675,6 +5759,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Payment-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Payment-write'
           application/xml:
@@ -5730,24 +5820,18 @@ paths:
         201:
           description: 'Payment resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Payment-read'
@@ -5755,6 +5839,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/xml:
@@ -5903,24 +5993,18 @@ paths:
         200:
           description: 'Payment resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Payment-read'
@@ -5928,6 +6012,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/xml:
@@ -5991,24 +6081,18 @@ paths:
         200:
           description: 'Payment resource updated'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Payment-read'
@@ -6016,6 +6100,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/xml:
@@ -6036,24 +6126,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Payment-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Payment:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Payment:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Payment-write'
@@ -6061,6 +6145,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Payment-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Payment-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Payment-write'
           application/xml:
@@ -6122,7 +6212,7 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-  '/payments/{id}/audit_trial':
+  '/payments/{id}/audit_trail':
     get:
       tags:
         - Payment
@@ -6210,24 +6300,18 @@ paths:
         200:
           description: 'Payment resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Payment-read'
@@ -6235,6 +6319,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/xml:
@@ -6341,24 +6431,18 @@ paths:
         200:
           description: 'Payment resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Payment-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Payment:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Payment-read'
@@ -6366,6 +6450,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Payment-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Payment-read'
             application/xml:
@@ -6394,26 +6484,6 @@ paths:
         200:
           description: 'Service collection response'
           content:
-            application/health+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Service-read'
-            application/json+health:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Service-read'
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Service-read'
-            application/json+hal:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
                 type: object
@@ -6434,6 +6504,16 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service-read'
             application/vnd.api+json:
               schema:
                 type: array
@@ -6445,6 +6525,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/Service-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Service-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -6506,6 +6596,72 @@ paths:
             enum:
               - asc
               - desc
+        -
+          name: 'order[dateCreated]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'order[dateModified]'
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        -
+          name: 'dateCreated[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_before]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[after]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[strictly_after]'
+          in: query
+          required: false
+          schema:
+            type: string
         -
           name: id
           in: query
@@ -6570,6 +6726,30 @@ paths:
               type: string
           style: deepObject
           explode: true
+        -
+          name: dateCreated
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateCreated[]'
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: dateModified
+          in: query
+          required: false
+          schema:
+            type: string
+        -
+          name: 'dateModified[]'
+          in: query
+          required: false
+          schema:
+            type: string
         -
           name: page
           in: query
@@ -6660,24 +6840,18 @@ paths:
         201:
           description: 'Service resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Service:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Service:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Service-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Service-read'
@@ -6685,6 +6859,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Service-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Service-read'
             application/xml:
@@ -6711,24 +6891,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Service-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Service-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Service-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Service-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Service:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Service:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Service-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Service-write'
@@ -6736,6 +6910,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Service-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Service-write'
           application/xml:
@@ -6869,24 +7049,18 @@ paths:
         200:
           description: 'Service resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Service:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Service:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Service-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Service-read'
@@ -6894,6 +7068,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Service-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Service-read'
             application/xml:
@@ -6957,24 +7137,18 @@ paths:
         200:
           description: 'Service resource updated'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Service:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Service:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Service-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Service-read'
@@ -6982,6 +7156,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Service-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Service-read'
             application/xml:
@@ -7002,24 +7182,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Service-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Service-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Service-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Service-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Service:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Service:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Service-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Service-write'
@@ -7027,6 +7201,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Service-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Service-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Service-write'
           application/xml:
@@ -7088,7 +7268,7 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-  '/services/{id}/audit_trial':
+  '/services/{id}/audit_trail':
     get:
       tags:
         - Service
@@ -7176,24 +7356,18 @@ paths:
         200:
           description: 'Service resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Service:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Service:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Service-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Service-read'
@@ -7201,6 +7375,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Service-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Service-read'
             application/xml:
@@ -7307,24 +7487,18 @@ paths:
         200:
           description: 'Service resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Service-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Service-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Service:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Service:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Service-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Service-read'
@@ -7332,6 +7506,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Service-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Service-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Service-read'
             application/xml:
@@ -7360,26 +7540,6 @@ paths:
         200:
           description: 'Tax collection response'
           content:
-            application/health+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Tax-read'
-            application/json+health:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Tax-read'
-            application/hal+json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Tax-read'
-            application/json+hal:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 type: object
@@ -7400,6 +7560,16 @@ paths:
                   'hydra:search': { type: object, properties: { '@type': { type: string }, 'hydra:template': { type: string }, 'hydra:variableRepresentation': { type: string }, 'hydra:mapping': { type: array, items: { type: object, properties: { '@type': { type: string }, variable: { type: string }, property: { type: string }, required: { type: boolean } } } } } }
                 required:
                   - 'hydra:member'
+            application/hal+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 type: array
@@ -7411,6 +7581,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 type: array
                 items:
@@ -7766,24 +7946,18 @@ paths:
         201:
           description: 'Tax resource created'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Tax-read'
@@ -7791,6 +7965,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/xml:
@@ -7817,24 +7997,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Tax:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Tax:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Tax-write'
@@ -7842,6 +8016,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Tax-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Tax-write'
           application/xml:
@@ -7975,24 +8155,18 @@ paths:
         200:
           description: 'Tax resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Tax-read'
@@ -8000,6 +8174,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/xml:
@@ -8063,24 +8243,18 @@ paths:
         200:
           description: 'Tax resource updated'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Tax-read'
@@ -8088,6 +8262,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/xml:
@@ -8108,24 +8288,18 @@ paths:
           description: 'Resource not found'
       requestBody:
         content:
-          application/health+json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/json+health:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/hal+json:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
-          application/json+hal:
-            schema:
-              $ref: '#/components/schemas/Tax-write'
           application/ld+json:
             schema:
               $ref: '#/components/schemas/Tax:jsonld-write'
           application/json+ld:
             schema:
               $ref: '#/components/schemas/Tax:jsonld-write'
+          application/hal+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json+hal:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
           application/vnd.api+json:
             schema:
               $ref: '#/components/schemas/Tax-write'
@@ -8133,6 +8307,12 @@ paths:
             schema:
               $ref: '#/components/schemas/Tax-write'
           application/json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/health+json:
+            schema:
+              $ref: '#/components/schemas/Tax-write'
+          application/json+health:
             schema:
               $ref: '#/components/schemas/Tax-write'
           application/xml:
@@ -8194,7 +8374,7 @@ paths:
           name: X-NLX-Audit-Clarification
           description: 'A clarification as to why a request has been made  (doelbinding)'
           in: header
-  '/taxes/{id}/audit_trial':
+  '/taxes/{id}/audit_trail':
     get:
       tags:
         - Tax
@@ -8282,24 +8462,18 @@ paths:
         200:
           description: 'Tax resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Tax-read'
@@ -8307,6 +8481,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/xml:
@@ -8413,24 +8593,18 @@ paths:
         200:
           description: 'Tax resource response'
           content:
-            application/health+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/json+health:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/hal+json:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
-            application/json+hal:
-              schema:
-                $ref: '#/components/schemas/Tax-read'
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
             application/json+ld:
               schema:
                 $ref: '#/components/schemas/Tax:jsonld-read'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+hal:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
             application/vnd.api+json:
               schema:
                 $ref: '#/components/schemas/Tax-read'
@@ -8438,6 +8612,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/health+json:
+              schema:
+                $ref: '#/components/schemas/Tax-read'
+            application/json+health:
               schema:
                 $ref: '#/components/schemas/Tax-read'
             application/xml:
@@ -9300,16 +9480,6 @@ components:
           type: string
         rsin:
           type: string
-        dateCreated:
-          readOnly: true
-          description: 'The moment this request was created'
-          type: string
-          format: date-time
-        dateModified:
-          readOnly: true
-          description: 'The moment this request last Modified'
-          type: string
-          format: date-time
         services:
           description: 'The payment providers configured for this organization'
           type: array
@@ -9320,6 +9490,16 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          type: string
+          format: date-time
       required:
         - shortCode
         - rsin
@@ -9369,16 +9549,6 @@ components:
           type: string
         rsin:
           type: string
-        dateCreated:
-          readOnly: true
-          description: 'The moment this request was created'
-          type: string
-          format: date-time
-        dateModified:
-          readOnly: true
-          description: 'The moment this request last Modified'
-          type: string
-          format: date-time
         services:
           description: 'The payment providers configured for this organization'
           type: array
@@ -9389,6 +9559,16 @@ components:
           externalDocs:
             url: 'http://schema.org/url'
           type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          type: string
+          format: date-time
       required:
         - shortCode
         - rsin
@@ -9445,6 +9625,16 @@ components:
         invoice:
           description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice-read'
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          type: string
+          format: date-time
       required:
         - paymentProvider
         - paymentId
@@ -9499,6 +9689,16 @@ components:
         invoice:
           description: 'The invoice this payment relates to'
           $ref: '#/components/schemas/Invoice:jsonld-read'
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          type: string
+          format: date-time
       required:
         - paymentProvider
         - paymentId
@@ -9553,6 +9753,16 @@ components:
           type: array
           items:
             type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          type: string
+          format: date-time
       required:
         - type
     Service-write:
@@ -9606,6 +9816,16 @@ components:
           type: array
           items:
             type: string
+        dateCreated:
+          readOnly: true
+          description: 'The moment this request was created'
+          type: string
+          format: date-time
+        dateModified:
+          readOnly: true
+          description: 'The moment this request last Modified'
+          type: string
+          format: date-time
       required:
         - type
     'Service:jsonld-write':
@@ -9874,12 +10094,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-03-10 09:07:15'
+        example: '2020-03-10 13:39:47'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-03-10 09:07:15'
+        example: '2020-03-10 13:39:47'
     required: []
   AuditTrail-write:
     properties:
@@ -9927,12 +10147,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-03-10 09:07:15'
+        example: '2020-03-10 13:39:47'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-03-10 09:07:15'
+        example: '2020-03-10 13:39:47'
     required: []
   ChangeLog-write:
     properties:
@@ -10174,16 +10394,16 @@ definitions:
       rsin:
         maxLength: 16
         minLength: 4
+      redirectUrl:
+        description: 'The url payment providers should return to'
+        type: string
+        format: url
       dateCreated:
         description: 'The moment this request was created'
         type: \Datetime
       dateModified:
         description: 'The moment this request last Modified'
         type: \Datetime
-      redirectUrl:
-        description: 'The url payment providers should return to'
-        type: string
-        format: url
       services:
         description: 'The payment providers configured for this organization'
         type: \ArrayCollection
@@ -10226,6 +10446,12 @@ definitions:
         type: string
         example: open
         maxLength: 255
+      dateCreated:
+        description: 'The moment this request was created'
+        type: \Datetime
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: \Datetime
       paymentProvider:
         description: 'The provider that handles the payment'
         type: \Service
@@ -10273,6 +10499,12 @@ definitions:
       configuration:
         description: 'Configuration options for this payment provider'
         type: array
+      dateCreated:
+        description: 'The moment this request was created'
+        type: \Datetime
+      dateModified:
+        description: 'The moment this request last Modified'
+        type: \Datetime
       organization:
         description: 'The organization this payment provider is linked to'
         type: \Organization
