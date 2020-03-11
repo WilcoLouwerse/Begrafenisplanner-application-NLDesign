@@ -8,8 +8,8 @@ info:
     - Reference: bc
     - Enviroment: dev
     - Version: V.0.1
-    - Repository: [online](https://github.com/ConductionNL/Proto-component-commonground) / [zip](https://github.com/ConductionNL/Proto-component-commonground/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
+    - Repository: [online](https://github.com/ConductionNL/betaalservice) / [zip](https://github.com/ConductionNL/betaalservice/archive/master.zip)
+    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/bc-php) 
     - Datamodel: [postman](/schema/bc.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
@@ -8720,6 +8720,28 @@ components:
           readOnly: true
           description: 'The moment this request was created'
           type: string
+        headers:
+          readOnly: true
+          description: 'The headers supplied by client'
+          type: array
+          items:
+            type: string
+        statusCode:
+          readOnly: true
+          description: 'The status code returned to client'
+          type: integer
+        notFound:
+          readOnly: true
+          description: 'Whether or not the reqousted endpoint was found'
+          type: boolean
+        forbidden:
+          readOnly: true
+          description: 'Whether or not the client was allowed to the reqousted endpoint'
+          type: boolean
+        ok:
+          readOnly: true
+          description: 'Whether or not there where any problems'
+          type: boolean
         dateCreated:
           readOnly: true
           description: 'The moment this request was created'
@@ -8828,6 +8850,28 @@ components:
           readOnly: true
           description: 'The moment this request was created'
           type: string
+        headers:
+          readOnly: true
+          description: 'The headers supplied by client'
+          type: array
+          items:
+            type: string
+        statusCode:
+          readOnly: true
+          description: 'The status code returned to client'
+          type: integer
+        notFound:
+          readOnly: true
+          description: 'Whether or not the reqousted endpoint was found'
+          type: boolean
+        forbidden:
+          readOnly: true
+          description: 'Whether or not the client was allowed to the reqousted endpoint'
+          type: boolean
+        ok:
+          readOnly: true
+          description: 'Whether or not there where any problems'
+          type: boolean
         dateCreated:
           readOnly: true
           description: 'The moment this request was created'
@@ -10019,7 +10063,7 @@ definitions:
       note:
         description: 'A note conserning this log lin'
         type: string
-        example: 'This log line is suspicius'
+        example: 'This log line looks suspicius'
         maxLength: 2555
       application:
         description: 'The application that made the request'
@@ -10088,25 +10132,44 @@ definitions:
         maxLength: 255
       session:
         description: 'The moment this request was created'
-        type: \sting
+        type: string
         maxLength: 255
+      headers:
+        description: 'The headers supplied by client'
+        type: array
+      statusCode:
+        description: 'The status code returned to client'
+        type: int
+        example: '200'
+      notFound:
+        description: 'Whether or not the reqousted endpoint was found'
+        type: bool
+        example: 'false'
+      forbidden:
+        description: 'Whether or not the client was allowed to the reqousted endpoint'
+        type: bool
+        example: 'false'
+      ok:
+        description: 'Whether or not there where any problems'
+        type: bool
+        example: 'true'
       dateCreated:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-03-10 13:39:47'
+        example: '2020-03-11 08:08:29'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-03-10 13:39:47'
+        example: '2020-03-11 08:08:29'
     required: []
   AuditTrail-write:
     properties:
       note:
         description: 'A note conserning this log lin'
         type: string
-        example: 'This log line is suspicius'
+        example: 'This log line looks suspicius'
         maxLength: 2555
     required: []
   ChangeLog-read:
@@ -10147,12 +10210,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-03-10 13:39:47'
+        example: '2020-03-11 08:08:29'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-03-10 13:39:47'
+        example: '2020-03-11 08:08:29'
     required: []
   ChangeLog-write:
     properties:

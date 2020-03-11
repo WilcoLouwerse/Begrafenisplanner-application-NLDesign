@@ -9,10 +9,10 @@ settings:
   title: Betaal Service
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
-  demo: pc.zaakonline.nl
-  repro: https://github.com/ConductionNL/Proto-component-commonground
-  container: https://hub.docker.com/repository/docker/conduction/pc-php
-  subdomain: pc  
+  repro: https://github.com/ConductionNL/betaalservice
+  demo: bc.zaakonline.nl
+  container: https://hub.docker.com/repository/docker/conduction/bc-php
+  subdomain: bc  
   domains:
     - conduction.nl
     - zaakonline.nl
