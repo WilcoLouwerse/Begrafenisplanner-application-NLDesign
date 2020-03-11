@@ -81,8 +81,8 @@ class AuditTrail
 	
 	/**
 	 * @var string A note conserning this log lin
-	 *
-	 * @example This log line is suspicius
+	 * 
+	 * @example This log line looks suspicius
 	 *
 	 * @Assert\Length(
 	 *      max = 2555
@@ -266,7 +266,7 @@ class AuditTrail
     private $ip;
 
     /**
-     * @var sting $session The moment this request was created
+     * @var string $session The moment this request was created
      * 
      * @Assert\Length(
      *      max = 255
@@ -274,7 +274,55 @@ class AuditTrail
 	 * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
-    private $session;
+    private $session;    
+    
+    /**
+     * @var array $headers The headers supplied by client
+     * 
+	 * @Groups({"read"})
+     * @ORM\Column(type="array")
+     */
+    private $headers = [];
+    
+    /**
+     * @var integer $statusCode The status code returned to client
+     * 
+	 * @example 200
+	 * 
+	 * @Groups({"read"})
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $statusCode;
+    
+    /**
+     * @var boolean $notFound Whether or not the reqousted endpoint was found
+     * 
+	 * @example false
+	 * 
+	 * @Groups({"read"})
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $notFound = false;
+    
+    /**
+     * @var boolean $forbidden Whether or not the client was allowed to the reqousted endpoint
+     * 
+	 * @example false
+	 * 
+	 * @Groups({"read"})
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $forbidden = false;
+    
+    /**
+     * @var boolean $ok Whether or not there where any problems
+     * 
+	 * @example true
+	 * 
+	 * @Groups({"read"})
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $ok = true;
     
     /**
      * @var Datetime $dateCreated The moment this request was created
@@ -505,6 +553,66 @@ class AuditTrail
         $this->session = $session;
 
         return $this;
+    }
+    
+    public function getHeaders(): ?array
+    {
+    	return $this->headers;
+    }
+    
+    public function setHeaders(array $headers): self
+    {
+    	$this->headers = $headers;
+    	
+    	return $this;
+    }
+    
+    public function getStatusCode(): ?int
+    {
+    	return $this->statusCode;
+    }
+    
+    public function setStatusCode(int $statusCode): self
+    {
+    	$this->statusCode = $statusCode;
+    	
+    	return $this;
+    }
+    
+    public function getNotFound(): ?bool
+    {
+    	return $this->notFound;
+    }
+    
+    public function setNotFound(?bool $notFound): self
+    {
+    	$this->notFound = $notFound;
+    	
+    	return $this;
+    }
+    
+    public function getForbidden(): ?bool
+    {
+    	return $this->forbidden;
+    }
+    
+    public function setForbidden(?bool $forbidden): self
+    {
+    	$this->forbidden = $forbidden;
+    	
+    	return $this;
+    }
+    
+    public function getOk(): ?bool
+    {
+    	return $this->ok;
+    }
+    
+    public function setOk(?bool $ok): self
+    {
+    	$this->ok = $ok;
+    	
+    	return $this;
     }
     
     public function getDateCreated(): ?\DateTimeInterface
