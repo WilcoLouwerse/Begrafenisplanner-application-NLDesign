@@ -33,7 +33,7 @@ api_platform:
         - Enviroment: %env(APP_ENV)%
         - Version: %env(APP_VERSION)%
         - Repository: [online](%env(APP_REPRO)%) / [zip](%env(APP_REPRO)%/archive/master.zip)
-        - Docker Image: [online](%env(CONTAINER_REPRO)%) 
+        - Docker Image: [online](%env(APP_CONTAINER)%) 
         - Datamodel: [postman](/schema/%env(APP_NAME)%.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
         
         %env(APP_DESCRIPTION)%         

@@ -81,8 +81,8 @@ class AuditTrail
 	
 	/**
 	 * @var string A note conserning this log lin
-	 *
-	 * @example This log line is suspicius
+	 * 
+	 * @example This log line looks suspicius
 	 *
 	 * @Assert\Length(
 	 *      max = 2555
@@ -287,6 +287,8 @@ class AuditTrail
     /**
      * @var integer $statusCode The status code returned to client
      * 
+	 * @example 200
+	 * 
 	 * @Groups({"read"})
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -295,6 +297,8 @@ class AuditTrail
     /**
      * @var boolean $notFound Whether or not the reqousted endpoint was found
      * 
+	 * @example false
+	 * 
 	 * @Groups({"read"})
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -303,6 +307,8 @@ class AuditTrail
     /**
      * @var boolean $forbidden Whether or not the client was allowed to the reqousted endpoint
      * 
+	 * @example false
+	 * 
 	 * @Groups({"read"})
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -311,6 +317,8 @@ class AuditTrail
     /**
      * @var boolean $ok Whether or not there where any problems
      * 
+	 * @example true
+	 * 
 	 * @Groups({"read"})
      * @ORM\Column(type="boolean", nullable=true)
      */
