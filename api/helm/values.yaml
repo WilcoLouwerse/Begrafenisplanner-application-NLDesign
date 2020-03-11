@@ -52,7 +52,7 @@ security:
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "79d5b14c-70ab-41fb-ac02-917e3288870b"
   authorisationProviderUser: https://uc.larping.eu
-  authorisationProviderApplication: https://uc.larping.eu
+  authorisationProviderApplication: https://ac.larping.eu
 
 
 php:
