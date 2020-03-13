@@ -4,15 +4,15 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: bc
-  name: bc
+  projectName: pc
+  name: pc
   title: Betaal Service
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
-  repro: https://github.com/ConductionNL/betaalservice
-  demo: bc.zaakonline.nl
-  container: https://hub.docker.com/repository/docker/conduction/bc-php
-  subdomain: bc  
+  repro: https://github.com/ConductionNL/proto-component
+  demo: pc.zaakonline.nl
+  container: https://hub.docker.com/repository/docker/conduction/pc-php
+  subdomain: pc  
   domains:
     - conduction.nl
     - zaakonline.nl
