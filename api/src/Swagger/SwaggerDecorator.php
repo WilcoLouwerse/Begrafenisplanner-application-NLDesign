@@ -23,13 +23,13 @@ final class SwaggerDecorator implements NormalizerInterface
     private $camelCaseToSnakeCaseNameConverter;
 
     public function __construct(
-            NormalizerInterface $decorated,
-            ParameterBagInterface $params,
-            CacheInterface $cache,
-            EntityManagerInterface $em,
-            AnnotationReader $annotationReader,
-            CamelCaseToSnakeCaseNameConverter $camelCaseToSnakeCaseNameConverter
-            ) {
+        NormalizerInterface $decorated,
+        ParameterBagInterface $params,
+        CacheInterface $cache,
+        EntityManagerInterface $em,
+        AnnotationReader $annotationReader,
+        CamelCaseToSnakeCaseNameConverter $camelCaseToSnakeCaseNameConverter
+    ) {
         $this->decorated = $decorated;
         $this->params = $params;
         $this->cash = $cache;

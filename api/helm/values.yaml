@@ -4,21 +4,23 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: pc
-  name: pc
-  title: Proto Component
+  projectName: bc
+  name: bc
+  title: Betaal Service
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
-  demo: pc.zaakonline.nl
-  repro: https://github.com/ConductionNL/Proto-component-commonground
-  container: https://hub.docker.com/repository/docker/conduction/pc-php
-  subdomain: pc  
+  repro: https://github.com/ConductionNL/betaalservice
+  demo: bc.zaakonline.nl
+  container: https://hub.docker.com/repository/docker/conduction/bc-php
+  subdomain: bc  
   domains:
     - conduction.nl
     - zaakonline.nl
-    - huwelijksplanner.online
+    - larping.eu
     - common-ground.dev
-  domainsJson: ["conduction.nl","zaakonline.nl","huwelijksplanner.online","common-ground.dev"]
+    - trouwplanner.online
+    - huwelijksplanner.online
+  domainsJson: ["conduction.nl","zaakonline.nl","larping.eu","common-ground.dev","trouwplanner.online","huwelijksplanner.online"]
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands

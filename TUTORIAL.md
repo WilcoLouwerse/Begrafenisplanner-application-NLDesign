@@ -43,7 +43,7 @@ $ docker-compose up
 
 Your computer should now start up your local development environment. Don't worry about al the code coming by, let's just wait until it finishes. You're free to watch along and see what exactly docker is doing, you will know when it's finished when it tells you that it is ready to handle connections. 
 
-Open your browser type http://localhost/ as address and hit enter, you should now see your common ground component up and running.
+Open your browser type <http://localhost/> as address and hit enter, you should now see your common ground component up and running.
 
 ### Trouble shooting
 When spinning up components we make extensive use of the cashing of docker, and use volumes to represent server disks. When running in to unexpected trouble always remember to clear your local docker vm with the -a command (removing image cash)
@@ -74,7 +74,8 @@ We should now see a wizard that allows us to either make new entities, or add pa
 
 ## Keeping your repository up to date with the Conduction Common Ground component 
 
-There are basically three reasons why you should want to keep your repository up to date with the Conduction proto component
+There are basically three reasons why you should want to keep your repository up to date with the Conduction proto component:
+
 * Security, Conduction performs regular security updates on 
 * Functionality we strive to make regular 
 * Compliance, as discussions in the broader Common Ground community progress API standards might advance or change. Conduction will regularly update the Common Ground component with those changes. 
