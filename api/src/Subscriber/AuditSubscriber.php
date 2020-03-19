@@ -47,7 +47,7 @@ class AuditSubscriber implements EventSubscriberInterface
         $request = $event->getRequest();
         $responce = $event->getResponse();
         $session = new Session();
-        
+
         //$session->start();
         // See: https://docs.nlx.io/further-reading/transaction-logs/
 
@@ -56,7 +56,7 @@ class AuditSubscriber implements EventSubscriberInterface
         $log->setRequest($request->headers->get('X-NLX-Request-Id'));
         $log->setUser($request->headers->get('X-NLX-Request-User-Id'));
         $log->setSubject($request->headers->get('X-NLX-Request-Subject-Identifier'));
-        $log->setProcess($request->headers->get('X-NLX-Request-Process-Id'));   
+        $log->setProcess($request->headers->get('X-NLX-Request-Process-Id'));
         $log->setRoute($request->attributes->get('_route'));
         $log->setEndpoint($request->getPathInfo());
         $log->setMethod($request->getMethod());
@@ -66,29 +66,29 @@ class AuditSubscriber implements EventSubscriberInterface
         $log->setIp($request->getClientIp());
         $log->setSession($session->getId());
         $log->setHeaders($request->headers->all());
-        
-        if($event->getRequest()->headers->get('X-NLX-Request-Data-Elements')){        	
-        	$log->setDataElements(explode(',',$event->getRequest()->headers->get('X-NLX-Request-Data-Elements')));   
+
+        if($event->getRequest()->headers->get('X-NLX-Request-Data-Elements')){
+        	$log->setDataElements(explode(',',$event->getRequest()->headers->get('X-NLX-Request-Data-Elements')));
         }
         if($event->getRequest()->headers->get('X-NLX-Request-Data-Subject')){
         	$log->setDataSubjects(explode(',',$event->getRequest()->headers->get('X-NLX-Request-Data-Subject')));
         }
 
-        // 
-        if(!$result instanceof Paginator && !$result instanceof Entrypoint) {
+        //
+        if($result != null && !$result instanceof Paginator && !$result instanceof Entrypoint) {
         	$log->setResource($result->getid());
         	$log->setResourceType($this->em->getMetadataFactory()->getMetadataFor(get_class($result))->getName());
         }
-        
+
         // Responce loging
         //$log->setStatusCode($responce->getStatusCode());
         //$log->setNotFound($responce->isNotFound());
         //$log->setForbidden($responce->isForbidden());
         //$log->setOk($responce->isOk());
-        
-        
-        
-        
+
+
+
+
         $this->em->persist($log);
         $this->em->flush($log);
 
@@ -103,7 +103,7 @@ class AuditSubscriber implements EventSubscriberInterface
 
         //return $result;
     }
-    
+
     /**
      * @param EntityManager $em
      * @param string|object $class
@@ -117,7 +117,7 @@ class AuditSubscriber implements EventSubscriberInterface
     		? get_parent_class($class)
     		: get_class($class);
     	}
-    	
+
     	return ! $em->getMetadataFactory()->isTransient($class);
     }
 }
