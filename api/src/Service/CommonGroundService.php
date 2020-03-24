@@ -8,6 +8,9 @@ use GuzzleHttp\Client;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class CommonGroundService
 {
@@ -15,13 +18,19 @@ class CommonGroundService
     private $cache;
     private $session;
     private $headers;
+    private $requestStack;
+    private $flash;
+    private $translator;
 
-    public function __construct(ParameterBagInterface $params, SessionInterface $session, CacheInterface $cache)
+    public function __construct(ParameterBagInterface $params, SessionInterface $session, CacheInterface $cache, RequestStack $requestStack, FlashBagInterface $flash, TranslatorInterface $translator)
     {
         $this->params = $params;
         $this->session = $session;
         $this->cash = $cache;
         $this->session= $session;
+        $this->requestStack = $requestStack;
+        $this->flash = $flash;
+        $this->translator = $translator;
 
         // To work with NLX we need a couple of default headers
         $this->headers = [
@@ -55,91 +64,62 @@ class CommonGroundService
         $this->client = new Client($this->guzzleConfig);
     }
 
-    private function convertAtId(array $object, array $parsedUrl){
-        if(key_exists('@id', $object)){
-            $object['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$object['@id'];
-        }
-        foreach($object as $key=>$subObject){
-            if(is_array($subObject)){
-                $object[$key] = $this->convertAtId($subObject, $parsedUrl);
-            }
-        }
-        return $object;
-    }
-
     /*
      * Get a single resource from a common ground componant
      */
     public function getResourceList($url, $query = [], $force = false, $async = false)
     {
-        if (!$url) {
-            return false;
-        }
+        $url = $this->cleanUrl($url);
 
-        // Split enviroments, if the env is not dev the we need add the env to the url name
-        $parsedUrl = parse_url($url);
-
-        // We only do this on non-production enviroments
-        if($this->params->get('app_env') != "prod"){
-
-            // Lets make sure we dont have doubles
-            $url = str_replace($this->params->get('app_env').'.','',$url);
-
-            // e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
-            $host = explode('.', $parsedUrl['host']);
-            $subdomain = $host[0];
-            $url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
-        }
-
-        // To work with NLX we need a couple of default headers
-        $headers = $this->headers;
-
-        $elementList = [];
-        foreach($query as $element){
-            if(!is_array($element)){
-                break;
-            }
-            $elementList[] = implode("=",$element);
-        }
-        $elementList = implode(",", $elementList);
+        /* This is broken
+         $elementList = [];
+         foreach($query as $element){
+         if(!is_array($element)){
+         break;
+         }
+         $elementList[] = implode("=",$element);
+         }
+         $elementList = implode(",", $elementList);
 
 
-        if($elementList){
-            $headers['X-NLX-Request-Data-Elements'] = $elementList;
-            $headers['X-NLX-Request-Data-Subject'] = $elementList;
-        }
+         if($elementList){
+         $headers['X-NLX-Request-Data-Elements'] = $elementList;
+         $headers['X-NLX-Request-Data-Subject'] = $elementList;
+         }
+         */
 
         $item = $this->cash->getItem('commonground_'.md5($url));
         if ($item->isHit() && !$force) {
             //return $item->get();
         }
 
+        // To work with NLX we need a couple of default headers
+        $headers = $this->headers;
+
         if(!$async){
             $response = $this->client->request('GET', $url, [
-                    'query' => $query,
-                    'headers' => $headers,
-                ]
-            );
+                'query' => $query,
+                'headers' => $headers,
+            ]);
         }
         else {
 
             $response = $this->client->requestAsync('GET', $url, [
-                    'query' => $query,
-                    'headers' => $headers,
-                ]
-            );
+                'query' => $query,
+                'headers' => $headers,
+            ]);
         }
 
-        if($response->getStatusCode() != 200){
-            var_dump('GET returned:'.$response->getStatusCode());
-            var_dump(json_encode($query));
-            var_dump(json_encode($headers));
-            var_dump(json_encode($url));
-            var_dump($response->getBody());
-            die;
-        }
 
+        $statusCode= $response->getStatusCode();
         $response = json_decode($response->getBody(), true);
+
+        // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
+        if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url)){
+            return false;
+        }
+
+        $parsedUrl = parse_url($url);
 
         /* @todo this should look to al @id keus not just the main root */
         $response = $this->convertAtId($response, $parsedUrl);
@@ -149,7 +129,6 @@ class CommonGroundService
         $this->cash->save($item);
 
         return $response;
-
     }
 
     /*
@@ -157,63 +136,44 @@ class CommonGroundService
      */
     public function getResource($url, $query = [], $force = false, $async = false)
     {
+        $url = $this->cleanUrl($url, false);
 
-        if (!$url) {
-            //return false;
-        }
+        $item = $this->cash->getItem('commonground_'.md5($url));
 
-        // Split enviroments, if the env is not dev the we need add the env to the url name
-        $parsedUrl = parse_url($url);
-
-        // We only do this on non-production enviroments
-        if($this->params->get('app_env') != "prod"){
-
-            // Lets make sure we dont have doubles
-            $url = str_replace($this->params->get('app_env').'.','',$url);
-
-            // e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
-            $host = explode('.', $parsedUrl['host']);
-            $subdomain = $host[0];
-            $url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
+        if ($item->isHit() && !$force) {
+            return $item->get();
         }
 
         // To work with NLX we need a couple of default headers
         $headers = $this->headers;
         $headers['X-NLX-Request-Subject-Identifier'] = $url;
 
-        $item = $this->cash->getItem('commonground_'.md5($url));
-        if ($item->isHit() && !$force) {
-            //return $item->get();
-        }
-
         if(!$async){
             $response = $this->client->request('GET', $url, [
-                    'query' => $query,
-                    'headers' => $headers,
-                ]
-            );
+                'query' => $query,
+                'headers' => $headers,
+            ]);
         }
         else {
 
             $response = $this->client->requestAsync('GET', $url, [
-                    'query' => $query,
-                    'headers' => $headers,
-                ]
-            );
+                'query' => $query,
+                'headers' => $headers,
+            ]);
         }
 
-        if($response->getStatusCode() != 200){
-            var_dump('GET returned:'.$response->getStatusCode());
-            var_dump(json_encode($query));
-            var_dump(json_encode($headers));
-            var_dump(json_encode($url));
-            var_dump($response->getBody());
-            die;
-        }
-
+        $statusCode= $response->getStatusCode();
         $response = json_decode($response->getBody(), true);
 
-        $response = $this->convertAtId($response, $parsedUrl);
+        // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
+        if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url)){
+            return false;
+        }
+
+        $parsedUrl = parse_url($url);
+        if(array_key_exists('@id', $response) && $response['@id']){
+            $response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
+        }
 
         $item->set($response);
         $item->expiresAt(new \DateTime('tomorrow'));
@@ -227,35 +187,14 @@ class CommonGroundService
      */
     public function updateResource($resource, $url = null, $async = false)
     {
-        if (!$url && array_key_exists('@id', $resource)) {
-            $url = $resource['@id'];
-        }
 
-        // Split enviroments, if the env is not dev the we need add the env to the url name
-        $parsedUrl = parse_url($url);
-
-        // We only do this on non-production enviroments
-        if($this->params->get('app_env') != "prod"){
-
-            // Lets make sure we dont have doubles
-            $url = str_replace($this->params->get('app_env').'.','',$url);
-
-            // e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
-            $host = explode('.', $parsedUrl['host']);
-            $subdomain = $host[0];
-            $url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
-        }
+        $url = $this->cleanUrl($url, $resource);
 
         // To work with NLX we need a couple of default headers
         $headers = $this->headers;
         $headers['X-NLX-Request-Subject-Identifier'] = $url;
 
-        unset($resource['@context']);
-        unset($resource['@id']);
-        unset($resource['@type']);
-        unset($resource['id']);
-        unset($resource['_links']);
-        unset($resource['_embedded']);
+        $resource = $this->cleanResource($resource);
 
         foreach($resource as $key=>$value){
             if($value == null || (is_array($value && empty($value)))){
@@ -266,32 +205,30 @@ class CommonGroundService
 
         if(!$async){
             $response = $this->client->request('PUT', $url, [
-                    'body' => json_encode($resource),
-                    'headers' => $headers,
-                ]
-            );
+                'body' => json_encode($resource),
+                'headers' => $headers,
+            ]);
         }
         else {
 
             $response = $this->client->requestAsync('PUT', $url, [
-                    'body' => json_encode($resource),
-                    'headers' => $headers,
-                ]
-            );
+                'body' => json_encode($resource),
+                'headers' => $headers,
+            ]);
         }
 
-        if($response->getStatusCode() != 200){
-            var_dump('PUT returned:'.$response->getStatusCode());
-            var_dump($headers);
-            var_dump(json_encode($resource));
-            var_dump(json_encode($url));
-            var_dump(json_encode($response->getBody()));
-            die;
-        }
-
+        $statusCode= $response->getStatusCode();
         $response = json_decode($response->getBody(), true);
 
-        $response = $this->convertAtId($response, $parsedUrl);
+        // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
+        if($statusCode!= 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+            return false;
+        }
+
+        $parsedUrl = parse_url($url);
+        if(array_key_exists('@id', $response) && $response['@id']){
+            $response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
+        }
 
         // Lets cash this item for speed purposes
         $item = $this->cash->getItem('commonground_'.md5($url));
@@ -303,11 +240,214 @@ class CommonGroundService
     }
 
     /*
-     * Get a single resource from a common ground componant
+     * Create a sresource on a common ground component
      */
     public function createResource($resource, $url = null, $async = false)
     {
-        if (!$url && array_key_exists('@id', $resource)) {
+        $url = $this->cleanUrl($url, $resource);
+
+        // Set headers
+        $headers = $this->headers;
+
+        $resource = $this->cleanResource($resource);
+
+        if(!$async){
+            $response = $this->client->request('POST', $url, [
+                'body' => json_encode($resource),
+                'headers' => $headers,
+            ]);
+        }
+        else {
+            $response = $this->client->requestAsync('POST', $url, [
+                'body' => json_encode($resource),
+                'headers' => $headers,
+            ]);
+        }
+
+
+        $statusCode= $response->getStatusCode();
+        $response = json_decode($response->getBody(), true);
+
+        // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
+        if($statusCode!= 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+            return false;
+        }
+
+
+        $parsedUrl = parse_url($url);
+        if(array_key_exists('@id', $response) && $response['@id']){
+            $response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
+        }
+
+        // Lets cash this item for speed purposes
+        $item = $this->cash->getItem('commonground_'.md5($url.'/'.$response['id']));
+        $item->set($response);
+        $item->expiresAt(new \DateTime('tomorrow'));
+        $this->cash->save($item);
+
+        return $response;
+    }
+
+
+    /*
+     * Delete a single resource from a common ground component
+     */
+    public function deleteResource($resource, $url = null, $async = false)
+    {
+        $url = $this->cleanUrl($url, $resource);
+
+        // Set headers
+        $headers = $this->headers;
+
+        if(!$async){
+            $response = $this->client->request('DELETE', $url, [
+                'headers' => $headers,
+            ]);
+        }
+        else {
+            $response = $this->client->requestAsync('DELETE', $url, [
+                'headers' => $headers,
+            ]);
+        }
+
+        $statusCode= $response->getStatusCode();
+        $response = json_decode($response->getBody(), true);
+
+        // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
+        if($statusCode != 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+            return false;
+        }
+
+        // Remove the item from cash
+        $this->cash->delete('commonground_'.md5($url));
+
+        return true;
+    }
+
+    /*
+     * The save fucntion should only be used by applications that can render flashes
+     */
+    public function saveResource($resource, $endpoint = false)
+    {
+
+        // If the resource exists we are going to update it, if not we are going to create it
+        if($resource['@id']){
+            if($this->updateResource($resource)){
+                // Lets renew the resource
+                $resource= $this->getResource($resource['@id']);
+                $this->flash->add('success', $resource['name'].' '.$this->translator->trans('saved'));
+            }
+            else{
+                $this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be saved'));
+            }
+        }
+        else{
+            if($createdResource = $this->createResource($resource, $endpoint)){
+                // Lets renew the resource
+                $resource= $this->getResource($createdResource['@id']);
+                $this->flash->add('success', $resource['name'].' '.$this->translator->trans('created'));
+            }
+            else{
+                $this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be created'));
+            }
+        }
+
+        return $resource;
+    }
+
+
+    /*
+     * Get the current application from the wrc
+     */
+    public function getApplication($force = false, $async = false)
+    {
+        $applications = $this->getResourceList('https://wrc.'.$this->getDomain().'/applications',["domain"=>$this->getDomain()],$force, $async);
+
+        if(count($applications['hydra:member'])>0){
+            return $applications['hydra:member'][0];
+        }
+
+        return false;
+    }
+
+    /*
+     * Get a single resource from a common ground componant
+     */
+    public function clearFromsCash($resource, $url = false)
+    {
+        $url = $this->cleanUrl($url, $resource);
+
+        $this->cash->delete('commonground_'.md5($url));
+    }
+
+    /*
+     * Get a single resource from a common ground componant
+     */
+    public function cleanResource($resource)
+    {
+        unset($resource['@context']);
+        unset($resource['@id']);
+        unset($resource['@type']);
+        unset($resource['id']);
+        unset($resource['_links']);
+        unset($resource['_embedded']);
+
+        return $resource;
+    }
+
+
+    /*
+     * Get a single resource from a common ground componant
+     */
+    public function proccesErrors($response, $statusCode, $headers = null, $resource = null, $url = null )
+    {
+        //Should be cases
+        if($response['@type'] == 'ConstraintViolationList'){
+            foreach($response['violations'] as $violation){
+                $this->flash->add('error', $violation['propertyPath'].' '.$this->translator->trans($violation['message']));
+            }
+
+            return false;
+        }
+        else{
+            var_dump('POST returned:'.$statusCode);
+            var_dump($headers);
+            var_dump(json_encode($resource));
+            var_dump(json_encode($url));
+            var_dump($response);
+            die;
+        }
+
+        return $response;
+    }
+
+    /*
+     * Finds @id keys and replaceses the relative link with an absolute link
+     */
+    private function convertAtId(array $object, array $parsedUrl){
+        if(key_exists('@id', $object)){
+            $object['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$object['@id'];
+
+            // To prevent unnececary calls we cash al the items we get
+            $item = $this->cash->getItem('commonground_'.md5($object['@id']));
+            $item->set($object);
+            $item->expiresAt(new \DateTime('tomorrow'));
+            $this->cash->save($item);
+        }
+        foreach($object as $key=>$subObject){
+            if(is_array($subObject)){
+                $object[$key] = $this->convertAtId($subObject, $parsedUrl);
+            }
+        }
+        return $object;
+    }
+
+    /*
+     * Get a single resource from a common ground componant
+     */
+    public function cleanUrl($url= false , $resource = false)
+    {
+        if (!$url && $resource && array_key_exists('@id', $resource)) {
             $url = $resource['@id'];
         }
 
@@ -326,105 +466,26 @@ class CommonGroundService
             $url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
         }
 
-        $headers = $this->headers;
+        // Remove trailing slash
+        $url = rtrim($url, '/');
 
-        if(!$async){
-            $response = $this->client->request('POST', $url, [
-                    'body' => json_encode($resource),
-                    'headers' => $headers,
-                ]
-            );
-        }
-        else {
-            $response = $this->client->requestAsync('POST', $url, [
-                    'body' => json_encode($resource),
-                    'headers' => $headers,
-                ]
-            );
-        }
-
-
-        if($response->getStatusCode() != 201 && $response->getStatusCode() != 200){
-            var_dump('POST returned:'.$response->getStatusCode());
-            var_dump($headers);
-            var_dump(json_encode($resource));
-            var_dump(json_encode($url));
-            var_dump($response->getBody());
-            die;
-        }
-
-
-        $response = json_decode($response->getBody(), true);
-
-        $response = $this->convertAtId($response, $parsedUrl);
-//        if(array_key_exists('@id', $response) && $response['@id']){
-//            $response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
-//        }
-
-        // Lets cash this item for speed purposes
-        $item = $this->cash->getItem('commonground_'.md5($url.'/'.$response['id']));
-        $item->set($response);
-        $item->expiresAt(new \DateTime('tomorrow'));
-        $this->cash->save($item);
-
-        return $response;
-    }
-    public function deleteResource($url, $force = false, $async = false){
-
-
-        // Split enviroments, if the env is not dev the we need add the env to the url name
-        $parsedUrl = parse_url($url);
-
-        // We only do this on non-production enviroments
-        if($this->params->get('app_env') != "prod"){
-
-            // Lets make sure we dont have doubles
-            $url = str_replace($this->params->get('app_env').'.','',$url);
-
-            // e.g https://wrc.larping.eu/ becomes https://wrc.dev.larping.eu/
-            $host = explode('.', $parsedUrl['host']);
-            $subdomain = $host[0];
-            $url = str_replace($subdomain.'.',$subdomain.'.'.$this->params->get('app_env').'.',$url);
-        }
-
-        $headers = $this->headers;
-        $headers['X-NLX-Request-Subject-Identifier'] = $url;
-
-        $item = $this->cash->getItem('commonground_'.md5($url));
-        if ($item->isHit() && !$force) {
-            //return $item->get();
-        }
-
-        if(!$async){
-            $response = $this->client->request('DELETE', $url, [
-                    'headers' => $headers,
-                ]
-            );
-        }
-        else {
-
-            $response = $this->client->requestAsync('DELETE', $url, [
-                    'headers' => $headers,
-                ]
-            );
-        }
-
-        if($response->getStatusCode() != 204 && $response->getStatusCode() != 200){
-            var_dump('DELETE returned:'.$response->getStatusCode());
-            var_dump($headers);
-            var_dump(json_encode($url));
-            var_dump($response->getBody());
-            die;
-        }
-
-        return null;
+        return $url;
     }
 
     /*
      * Get a single resource from a common ground componant
      */
-    public function clearCash($url)
+    public function getDomain()
     {
+        $request = $this->requestStack->getCurrentRequest();
+        $host = $request->getHost();
+
+        if($host == "" | $host == "localhost"){$host = $this->params->get('app_domain');}
+
+        $host_names = explode(".", $host);
+        $host = $host_names[count($host_names)-2] . "." . $host_names[count($host_names)-1];
+
+        return $host;
     }
 
     /*
