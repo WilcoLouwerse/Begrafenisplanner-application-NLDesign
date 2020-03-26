@@ -26,7 +26,7 @@ class CommonGroundService
     {
         $this->params = $params;
         $this->session = $session;
-        $this->cash = $cache;
+        $this->cache = $cache;
         $this->session= $session;
         $this->requestStack = $requestStack;
         $this->flash = $flash;
@@ -88,7 +88,7 @@ class CommonGroundService
          }
          */
 
-        $item = $this->cash->getItem('commonground_'.md5($url));
+        $item = $this->cache->getItem('commonground_'.md5($url));
         if ($item->isHit() && !$force) {
             //return $item->get();
         }
@@ -115,7 +115,7 @@ class CommonGroundService
         $response = json_decode($response->getBody(), true);
 
         // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-        if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url)){
+        if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url, 'GET')){
             return false;
         }
 
@@ -126,7 +126,7 @@ class CommonGroundService
 
         $item->set($response);
         $item->expiresAt(new \DateTime('tomorrow'));
-        $this->cash->save($item);
+        $this->cache->save($item);
 
         return $response;
     }
@@ -138,7 +138,7 @@ class CommonGroundService
     {
         $url = $this->cleanUrl($url, false);
 
-        $item = $this->cash->getItem('commonground_'.md5($url));
+        $item = $this->cache->getItem('commonground_'.md5($url));
 
         if ($item->isHit() && !$force) {
             return $item->get();
@@ -166,18 +166,16 @@ class CommonGroundService
         $response = json_decode($response->getBody(), true);
 
         // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-        if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url)){
+        if($statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, null , $url, 'GET')){
             return false;
         }
 
         $parsedUrl = parse_url($url);
-        if(array_key_exists('@id', $response) && $response['@id']){
-            $response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
-        }
+        $response = $this->convertAtId($response, $parsedUrl);
 
         $item->set($response);
         $item->expiresAt(new \DateTime('tomorrow'));
-        $this->cash->save($item);
+        $this->cache->save($item);
 
         return $response;
     }
@@ -221,20 +219,18 @@ class CommonGroundService
         $response = json_decode($response->getBody(), true);
 
         // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-        if($statusCode!= 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+        if($statusCode!= 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url, 'PUT')){
             return false;
         }
 
         $parsedUrl = parse_url($url);
-        if(array_key_exists('@id', $response) && $response['@id']){
-            $response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
-        }
+        $response = $this->convertAtId($response, $parsedUrl);
 
-        // Lets cash this item for speed purposes
-        $item = $this->cash->getItem('commonground_'.md5($url));
+        // Lets cache this item for speed purposes
+        $item = $this->cache->getItem('commonground_'.md5($url));
         $item->set($response);
         $item->expiresAt(new \DateTime('tomorrow'));
-        $this->cash->save($item);
+        $this->cache->save($item);
 
         return $response;
     }
@@ -245,7 +241,6 @@ class CommonGroundService
     public function createResource($resource, $url = null, $async = false)
     {
         $url = $this->cleanUrl($url, $resource);
-
         // Set headers
         $headers = $this->headers;
 
@@ -269,21 +264,19 @@ class CommonGroundService
         $response = json_decode($response->getBody(), true);
 
         // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-        if($statusCode!= 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+        if($statusCode!= 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url, 'POST')){
             return false;
         }
 
 
         $parsedUrl = parse_url($url);
-        if(array_key_exists('@id', $response) && $response['@id']){
-            $response['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$response['@id'];
-        }
+        $response = $this->convertAtId($response, $parsedUrl);
 
-        // Lets cash this item for speed purposes
-        $item = $this->cash->getItem('commonground_'.md5($url.'/'.$response['id']));
+        // Lets cache this item for speed purposes
+        $item = $this->cache->getItem('commonground_'.md5($url.'/'.$response['id']));
         $item->set($response);
         $item->expiresAt(new \DateTime('tomorrow'));
-        $this->cash->save($item);
+        $this->cache->save($item);
 
         return $response;
     }
@@ -314,12 +307,12 @@ class CommonGroundService
         $response = json_decode($response->getBody(), true);
 
         // The trick here is that if statements are executed left to right. So the prosses errors wil only be called when all other conditions are met
-        if($statusCode != 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url)){
+        if($statusCode != 201 && $statusCode != 200 && !$this->proccesErrors($response, $statusCode, $headers, $resource, $url, 'DELETE')){
             return false;
         }
 
-        // Remove the item from cash
-        $this->cash->delete('commonground_'.md5($url));
+        // Remove the item from cache
+        $this->cache->delete('commonground_'.md5($url));
 
         return true;
     }
@@ -335,10 +328,26 @@ class CommonGroundService
             if($this->updateResource($resource)){
                 // Lets renew the resource
                 $resource= $this->getResource($resource['@id']);
-                $this->flash->add('success', $resource['name'].' '.$this->translator->trans('saved'));
+                if(key_exists('name', $resource)){
+                    $this->flash->add('success', $resource['name'].' '.$this->translator->trans('saved'));
+                }
+                elseif(key_exists('reference', $resource)){
+                    $this->flash->add('success', $resource['reference'].' '.$this->translator->trans('saved'));
+                }
+                else{
+                    $this->flash->add('success', $resource['id'].' '.$this->translator->trans('saved'));
+                }
             }
             else{
-                $this->flash->add('error', $resource['name'].' '.$this->translator->trans('could not be saved'));
+                if(key_exists('name', $resource)) {
+                    $this->flash->add('error', $resource['name'] . ' ' . $this->translator->trans('could not be saved'));
+                }
+                elseif(key_exists('reference', $resource)){
+                    $this->flash->add('error', $resource['reference'] . ' ' . $this->translator->trans('could not be saved'));
+                }
+                else{
+                    $this->flash->add('error', $resource['id'] . ' ' . $this->translator->trans('could not be saved'));
+                }
             }
         }
         else{
@@ -377,7 +386,7 @@ class CommonGroundService
     {
         $url = $this->cleanUrl($url, $resource);
 
-        $this->cash->delete('commonground_'.md5($url));
+        $this->cache->delete('commonground_'.md5($url));
     }
 
     /*
@@ -399,7 +408,7 @@ class CommonGroundService
     /*
      * Get a single resource from a common ground componant
      */
-    public function proccesErrors($response, $statusCode, $headers = null, $resource = null, $url = null )
+    public function proccesErrors($response, $statusCode, $headers = null, $resource = null, $url = null, $proces )
     {
         //Should be cases
         if($response['@type'] == 'ConstraintViolationList'){
@@ -410,7 +419,7 @@ class CommonGroundService
             return false;
         }
         else{
-            var_dump('POST returned:'.$statusCode);
+            var_dump($proces.' returned:'.$statusCode);
             var_dump($headers);
             var_dump(json_encode($resource));
             var_dump(json_encode($url));
@@ -428,11 +437,11 @@ class CommonGroundService
         if(key_exists('@id', $object)){
             $object['@id'] = $parsedUrl["scheme"]."://".$parsedUrl["host"].$object['@id'];
 
-            // To prevent unnececary calls we cash al the items we get
-            $item = $this->cash->getItem('commonground_'.md5($object['@id']));
+            // To prevent unnececary calls we cache al the items we get
+            $item = $this->cache->getItem('commonground_'.md5($object['@id']));
             $item->set($object);
             $item->expiresAt(new \DateTime('tomorrow'));
-            $this->cash->save($item);
+            $this->cache->save($item);
         }
         foreach($object as $key=>$subObject){
             if(is_array($subObject)){
@@ -470,6 +479,17 @@ class CommonGroundService
         $url = rtrim($url, '/');
 
         return $url;
+    }
+
+    /*
+     * Header overrides for ZGW and Camunda
+     */
+    public function setCredentials($username, $password){
+        $this->headers['auth'] = [$username, $password];
+    }
+
+    public function setHeader($key, $value){
+        $this->headers[$key] = $value;
     }
 
     /*
@@ -520,7 +540,7 @@ class CommonGroundService
     {
         $componentList = $this->getComponentList();
 
-        $item = $this->cash->getItem('componentHealth_'.md5($component));
+        $item = $this->cache->getItem('componentHealth_'.md5($component));
         if ($item->isHit() && !$force) {
             //return $item->get();
         }
@@ -550,7 +570,7 @@ class CommonGroundService
 
         $item->set($component);
         $item->expiresAt(new \DateTime('tomorrow'));
-        $this->cash->save($item);
+        $this->cache->save($item);
 
         return $component;
     }
@@ -562,7 +582,7 @@ class CommonGroundService
     {
         $componentList = $this->getComponentList();
 
-        $item = $this->cash->getItem('componentResources_'.md5($component));
+        $item = $this->cache->getItem('componentResources_'.md5($component));
         if ($item->isHit() && !$force) {
             //return $item->get();
         }
@@ -590,7 +610,7 @@ class CommonGroundService
 
         $item->set($component);
         $item->expiresAt(new \DateTime('tomorrow'));
-        $this->cash->save($item);
+        $this->cache->save($item);
 
         return $component;
     }
