@@ -8,6 +8,11 @@
                             <span>Home</span>
                         </a>
                     </li>
+                    <li class="nav__item">
+                        <a href="{{ path('app_grave_add') }}" title="Grave" class="nav__link  ">
+                            <span>Grave</span>
+                        </a>
+                    </li>
                     {% if user is defined and user is not empty %}
                     <li class="nav__item"><a class="nav__link " href="">Instemmingen</a></li>
                     <li class="nav__item"><a class="nav__link " href="">Verzoeken</a></li>
