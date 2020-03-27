@@ -82,6 +82,11 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-domain
+            - name: APP_DOMAINS
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-domains-json
             # organization
             - name: ORGANIZATION_NAME
               valueFrom:
@@ -173,6 +178,36 @@ spec:
                 secretKeyRef:
                   name: {{ template "fullname" . }}
                   key: mercure-jwt-secret
+            - name: APP_COMMONGROUND_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app_commonground_id
+            - name: APP_COMMONGROUND_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app_commonground_key
+            - name: APP_APPLICATION_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app_application_key
+            - name: APP_USER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app_user_key
+            - name: AUTH_PROVIDER_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: auth_provider_user
+            - name: AUTH_PROVIDER_APPLICATION
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: auth_provider_application
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}
