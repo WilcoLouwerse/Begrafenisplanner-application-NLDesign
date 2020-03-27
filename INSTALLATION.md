@@ -102,25 +102,26 @@ First we always need to update our dependencies
 ```CLI
 $ helm dependency update ./api/helm
 ```
+
 If you want to create a new instance
 ```CLI
-$ helm install --name bc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
-$ helm install --name bc-stag ./api/helm --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
-$ helm install --name bc-prod ./api/helm --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
+$ helm install --name instemmingen-dev ./api/helm  --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
+$ helm install --name instemmingen-stag ./api/helm --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
+$ helm install --name instemmingen-prod ./api/helm --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
 ```
 
 Or update if you want to update an existing one
 ```CLI
-$ helm upgrade bc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
-$ helm upgrade bc-stag ./api/helm --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
-$ helm upgrade bc-prod ./api/helm --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
+$ helm upgrade instemmingen-dev ./api/helm  --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
+$ helm upgrade instemmingen-stag ./api/helm --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
+$ helm upgrade instemmingen-prod ./api/helm --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
 ```
 
 Or del if you want to delete an existing  one
 ```CLI
-$ helm del bc-dev  --purge --kubeconfig="api/helm/kubeconfig-digi.yaml" 
-$ helm del bc-stag --purge --kubeconfig="api/helm/kubeconfig-digi.yaml" 
-$ helm del bc-prod --purge --kubeconfig="api/helm/kubeconfig-digi.yaml" 
+$ helm del instemmingen-dev  --purge --kubeconfig="api/helm/zaakonline-kubeconfig.yaml"
+$ helm del instemmingen-stag --purge --kubeconfig="api/helm/zaakonline-kubeconfig.yaml"  
+$ helm del instemmingen-prod --purge --kubeconfig="api/helm/zaakonline-kubeconfig.yaml"  
 ```
 
 Note that you can replace common ground with the namespace that you want to use (normally the name of your component).

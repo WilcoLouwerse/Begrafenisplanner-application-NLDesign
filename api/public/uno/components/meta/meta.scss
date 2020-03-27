@@ -1,0 +1,48 @@
+@import '../../settings/colors';
+@import '../../settings/font';
+@import '../../tools/font-size';
+
+.meta {
+  color: $text_secondary;
+  font-size: $font-size-xs - 0.1;
+  font-style: normal;
+  line-height: $line-height-xs;
+  max-width: 100%; //ie fix
+  padding: $default-margin 0;
+  text-transform: uppercase;
+
+  h1 + & {
+    padding: 0 0 $default-margin 0;
+  }
+
+  .file & {
+    display: block;
+  }
+}
+
+ul.meta {
+  display: flex;
+  margin-bottom: 0;
+  margin-left: 0;
+}
+
+.meta__item {
+  float: left;
+  list-style-type: none;
+
+  &:not(:first-child)::before {
+    content: '•';
+    padding: 0 0.6rem;
+  }
+}
+
+.meta--progress {
+  @include title-s();
+  text-transform: none;
+}
+
+.meta--search {
+  // needs docs
+  padding: 0;
+  text-decoration: none;
+}

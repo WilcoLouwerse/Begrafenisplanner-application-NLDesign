@@ -1,0 +1,324 @@
+@import '../../settings/animations';
+@import '../../settings/colors';
+@import '../../settings/font';
+
+@import '../../tools/icon';
+@import '../../tools/font-size';
+
+$collapse-transition: 0.1s;
+$collapse-z-index: 1;
+$block: 'collapse';
+
+.#{$block} {
+  background: $white;
+  margin-bottom: $default-margin * 2;
+  outline: none;
+
+  @include media-breakpoint-up(md) {
+    margin-bottom: $default-margin * 3;
+  }
+
+  &--icons {
+    background: none;
+
+    .collapse__title {
+      padding-left: 1rem;
+    }
+
+    .collapse__indicator {
+
+      &:before {
+        @include include-icon(icon-plus);
+      }
+    }
+  }
+
+  &--no-background {
+    background: none;
+  }
+
+  &--simple {
+    background: none;
+
+    .collapse__header {
+      font-size: 1.6rem;
+      padding: 0.6rem 2rem;
+
+      .collapse__title {
+        color: $link-blue;
+        font-weight: 400;
+        padding-left: 4px;
+        text-decoration: underline;
+      }
+    }
+
+    .collapse__indicator {
+      left: 0;
+      position: relative;
+      right: 0;
+      top: 0;
+
+      &:before {
+        font-size: 1.9rem;
+      }
+    }
+
+    .collapse__details {
+      padding: 0.2rem 2rem 1rem;
+    }
+  }
+  
+  &--nav,
+  &--navigation-mobile {
+    margin-bottom: 0;
+  }
+
+  &--indented {
+    margin-left: 2.5rem;
+  }
+
+  &__header {
+    align-items: baseline;
+    background: $donkerblauw-tint-2;
+    display: flex;
+    padding: $spacing-m $spacing-m $spacing-m $default-margin * 4;
+    position: relative;
+
+    &:not(:first-of-type) {
+      border-top: 1px solid $donkerblauw-tint-1;
+
+      .collapse--simple & {
+        border-top: none;
+      }
+    }
+       
+    &:hover {
+      background: $donkerblauw-tint-1;
+    }
+
+    @include media-breakpoint-up(md) {
+      padding: $spacing-l - 0.1rem $spacing-m $spacing-l - 0.2rem $default-margin * 4.5;
+    }
+
+    &.#{$block}__title--open,
+    &:active {
+      background-color: transparent;
+      border-color: $donkerblauw-tint-1;
+    }
+
+    &:hover {
+      background-color: $donkerblauw-tint-1;
+    }
+
+    .collapse--no-background & {
+      background: transparent;
+    }
+
+    .collapse--icons & {
+      background: $white;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: 2px solid $donkergeel;
+      z-index: $collapse-z-index;
+
+      [class*='background--'] & {
+        outline-color: inherit;
+      }
+    }
+
+    .table & {
+      background: transparent;
+      padding-left: $default-margin * 3;
+    }
+    
+    .collapse--simple & {
+      background: transparent;
+
+      &:hover {
+        background: transparent;
+      }
+    }
+  }
+
+  &__title {
+    color: $donkerblauw;
+    cursor: pointer;
+    font-size: $font-size-s;
+    font-weight: bold;
+    line-height: $line-height-s;
+
+    .#{$block}--navigation-mobile & {
+      color: $white;
+      font-weight: bold;
+      padding: $default-margin * 1.5 0;
+      text-decoration: none;
+    }
+  }
+
+  &__indicator {
+    left: $spacing-l;
+    position: absolute;
+    top: $default-margin;
+    transition: $collapse-transition ease-in;
+
+    @include media-breakpoint-up(md) {
+      left: $spacing-xl;
+      top: 1.1rem;
+    }
+
+    .#{$block}--navigation-mobile & {
+      font-size: 1rem;
+      margin-left: 0.4rem;
+      position: absolute;
+      right: 0;
+      top: 1.6rem;
+    }
+
+    .#{$block}__title--open & {
+      color: $donkerblauw;
+      transform: rotate(-180deg);
+      transform-origin: center;
+
+      .collapse--simple & {
+        transform: rotate(90deg);
+      }
+
+      .collapse--icons & {
+        transform: none;
+      }
+
+      &:before {
+
+        .collapse--icons & {
+          @include include-icon(icon-min);
+        }
+      }
+    }
+
+    &:before {
+      color: $donkerblauw;
+      font-size: 14px;
+      position: relative;
+      top: 0.2rem;
+      @include include-icon(icon-chevron-down);
+
+      .collapse--simple & {
+        color: $grijs-7;
+        @include include-icon(icon-collapse-right);
+      }
+
+      .collapse--icons & {
+        background-color: $donkerblauw;
+        border-radius: 15px;
+        color: $white;
+        display: inline-block;
+        padding: 4px 5px 5px 4px;
+        @include include-icon(icon-plus);
+      }
+
+      .#{$block}--navigation-mobile & {
+        color: $white;
+        transition: $collapse-transition;
+      }
+    }
+
+    .table & {
+      left: $default-margin;
+      top: $default-margin;
+    }
+  }
+
+  &__details {
+    display: none;
+    padding: $spacing-m $default-margin * 2;
+
+    &--open {
+      display: block;
+      outline: none;
+      overflow: hidden;
+
+      .table & {
+        display: table-row;
+
+        &.animating {
+          display: block;
+          position: absolute;
+          width: 100%;
+        }
+      }
+    }
+
+    h2,
+    h3,
+    h4,
+    h5 {
+
+      &:first-of-type {
+        margin-top: $default-margin;
+      }
+    }
+  }
+
+  &__table-divider {
+    display: none;
+  }
+
+  &__table-divider,
+  &__table-divider td {
+
+    .table & {
+      border: 0;
+      box-shadow: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  // Adjusting borders & colors
+  .content-background & {
+
+    .definition-list__item,
+    .definition-list__item:first-child {
+      border-color: $grijs-3;
+    }
+
+    .definition-list {
+      border-color: $grijs-3;
+
+      &:first-of-type {
+        margin-top: $default-margin;
+      }
+
+      &:last-child {
+        margin-bottom: $default-margin;
+      }
+
+      &:last-child .definition-list__item:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+[aria-expanded = 'true'] [data-contracted-i18n]:after {
+  content: attr(data-contracted-i18n);
+}
+
+[aria-expanded = 'false'] [data-expanded-i18n]:after {
+  content: attr(data-expanded-i18n);
+}
+
+h2 + .#{$block},
+h3 + .#{$block},
+h4 + .#{$block} {
+  margin-top: $spacing-s;
+}
+
+.animating + .#{$block}__table-divider {
+  display: table-row;
+}

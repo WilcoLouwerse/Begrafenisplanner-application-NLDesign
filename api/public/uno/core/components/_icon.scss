@@ -1,0 +1,18 @@
+@import '../../settings/font';
+@import '../../tools/icon';
+
+.icon {
+  @include include-icon();
+}
+
+.icon-secure {
+  //temp icon styling until new icons are added, with equal sizes
+  font-size: 1.6rem;
+}
+
+@each $icon, $glyph in $icons {
+
+  .#{$icon}::before {
+    content: $glyph;
+  }
+}

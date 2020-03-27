@@ -1,0 +1,180 @@
+@import '../../settings/colors';
+@import '../../settings/font';
+@import '../../settings/grid';
+
+@import '../../tools/icon';
+@import '../../tools/responsive';
+@import '../../tools/font-size';
+
+.notification {
+  align-items: baseline;
+  background-repeat: no-repeat;
+  border-left: 0.5rem solid;
+  color: $black-80;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $default-margin * 2;
+  padding: $default-margin $default-margin $default-margin 0;
+
+  + .notification {
+    margin-top: -$default-margin;
+  }
+
+  p:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.notification__title {
+  @include title-m();
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.notification__close-button {
+  background: transparent;
+  border: 0;
+  border-left: 1px dotted #565656;
+  color: #565656;
+  font-size: 1.2rem;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  .icon {
+    display: block;
+    font-size: 1.8rem;
+    margin-bottom: 0.4rem;
+  }
+
+  &:focus {
+    outline: 2px solid $donkergeel;
+
+    [class*='background--'] & {
+      outline-color: inherit;
+    }
+  }
+
+  &:hover {
+    color: $black-text;
+  }
+}
+
+.notification__content {
+  max-width: 100%;
+  padding: 0 $default-margin * 2;
+  position: relative;
+}
+
+.notification--warning {
+  background-color: $signal-warning-light;
+  border-color: $donkergeel;
+}
+
+.notification--info {
+  background-color: $signal-info-light;
+  border-color: $signal-info;
+}
+
+.notification--error {
+  background-color: $signal-error-light;
+  border-color: $signal-error;
+}
+
+.notification--success {
+  background-color: $signal-success-light;
+  border-color: $signal-success;
+}
+
+// setup notifications for top bar. Only applies to notifications which are
+// **not** inline. Unfortunately, we can't be less specific than this...
+main > .notification {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+}
+
+// For notifications on pages *with* navigation, we remove the margin-top
+nav ~ main > .notification {
+  max-width: inherit;
+}
+
+.notification--wide {
+  border: 0;
+  display: block;
+  margin-bottom: 0;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  width: 100%;
+}
+
+.notification--wide {
+
+  .notification__content {
+    border-left: 0.5rem solid;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+}
+
+.notification__type {
+  @include font-size-and-line-height(14, 1.125);
+  text-transform: uppercase;
+}
+
+.notification--wide.notification--info {
+
+  .notification__content {
+    border-color: $signal-info;
+  }
+}
+
+.notification--wide.notification--warning {
+
+  .notification__content {
+    border-color: $donkergeel;
+  }
+}
+
+.notification--wide.notification--error {
+
+  .notification__content {
+    border-color: $signal-error-light;
+  }
+}
+
+.notification--wide.notification--success {
+
+  .notification__content {
+    border-color: $signal-success-light;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+
+  .notification__content {
+    max-width: map-get($container-max-widths, 'sm');
+  }
+}
+
+@include media-breakpoint-up(md) {
+
+  .notification__content {
+    max-width: map-get($container-max-widths, 'md');
+  }
+}
+
+@include media-breakpoint-up(lg) {
+
+  .notification__content {
+    max-width: map-get($container-max-widths, 'lg');
+  }
+}
+
+@include media-breakpoint-up(xl) {
+
+  .notification__content {
+    max-width: map-get($container-max-widths, 'xl');
+  }
+}

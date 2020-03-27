@@ -1,0 +1,49 @@
+
+@import '../../theme/base';
+
+@import '../../settings/colors';
+@import '../../settings/spacing';
+
+@import '../../tools/font-size';
+@import '../../tools/responsive';
+
+.list--notification {
+  list-style: none;
+  margin-left: 0;
+
+  .list__item {
+    @include title-s();
+    background: $white;
+    font-weight: normal;
+    margin: 0;
+    padding: 1.5rem;
+
+    & a:focus {
+      outline: 2px solid  $outline-color;
+    }
+  }
+
+  .list__item--new {
+
+    a {
+      font-weight: bold;
+    }
+  }
+
+  .list__meta {
+    color: $text_secondary;
+    display: block;
+    font-size: $font-size-xxs;
+    font-weight: normal;
+    margin-bottom: $default-margin;
+    text-transform: uppercase;
+
+    @include media-breakpoint-up(md) {
+      font-size: $font-size-xs;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

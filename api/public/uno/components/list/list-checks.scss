@@ -1,0 +1,20 @@
+@import '../../tools/icon';
+
+.list--checks {
+  list-style: none outside;
+  margin-left: 2.4rem;
+
+  li {
+    position: relative;
+
+    &::before {
+      @include include-icon(icon-check);
+      font-size: 2rem;
+      line-height: 10px;
+      //margin-left: $list-bullet-margin-left--chevron;
+      //margin-right: $list-bullet-margin-right--chevron;
+      text-align: right;
+
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@import '../../settings/spacing';
+
+.list--search {
+  list-style: none;
+  margin-left: 0;
+}
+
+.list__item--search {
+  list-style: none;
+  margin-bottom: $default-margin * 2;
+
+  a {
+    display: inline-block;
+    font-weight: normal;
+  }
+}

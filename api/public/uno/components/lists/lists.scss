@@ -1,0 +1,71 @@
+
+@import '../../settings/animations';
+@import '../../settings/spacing';
+@import '../../settings/font';
+@import '../../settings/lists';
+@import '../../core/grid';
+
+.list {
+  list-style: none outside;
+  margin-left: $list-margin-left;
+
+  .list {
+    // Nested lists need a margin top as well
+    margin-top: $list-margin-bottom;
+
+    li:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.columns {
+    margin-bottom: 1.2rem;
+
+    p:only-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.columns > li {
+    // These properties:
+    //    display: inline-block
+    //    width: 100%;
+    //  are needed to for chrome when using columns. Without these, the columns
+    //  will not align
+    //  See http://jsfiddle.net/6cVqZ/
+    display: inline-block;
+    width: 100%;
+  }
+
+  & > li {
+    counter-increment: duo-counter;
+    margin-left: 0;
+
+    &::before {
+      display: inline-block;
+      font-size: $font-size-xxs;
+      line-height: $line-height-m;
+      margin-left: $list-bullet-margin-left;
+      margin-right: $list-default-gap * 2;
+      position: absolute;
+      width: $list-default-width;
+
+      @include media-breakpoint-up(md) {
+        font-size: $font-size-xs;
+      }
+    }
+  }
+
+  &:first-child {
+    counter-reset: duo-counter;
+  }
+}
+
+/**
+ * navigation modifiers
+ */
+@import '_lists-decimal';
+@import '_lists-dash';
+@import '_lists-links';
+@import '_lists-chevron';
+@import '_lists-mobile';

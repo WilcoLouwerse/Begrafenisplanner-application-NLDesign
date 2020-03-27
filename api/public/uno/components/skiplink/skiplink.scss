@@ -1,0 +1,44 @@
+@import '../../settings/colors';
+
+// Een skiplink stelt een gebruiker die met het toetsenbord navigeert in
+// staat de navigatie over te slaan en direct naar de content te springen.
+
+.skiplink {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+
+  &:active,
+  &:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    outline: none;
+    overflow: visible;
+    position: static;
+    width: auto;
+
+    .skiplink__text {
+      background: $donkergeel;
+    }
+  }
+}
+
+.skiplink__text {
+  display: inline-block;
+  outline: none;
+  padding: 1rem;
+}
+
+/**
+ * LET OP: Niet vergeten om ook tabindex="-1" mee te geven aan dit element
+ * zie http://getbootstrap.com/getting-started/#callout-skiplinks
+ */
+.skiplink-target {
+  outline: none;
+}

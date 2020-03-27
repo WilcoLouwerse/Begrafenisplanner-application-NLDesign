@@ -1,0 +1,55 @@
+@import '../../settings/colors';
+@import '../../settings/animations';
+@import '../../tools/icon';
+@import '../../tools/font-size';
+
+$arrow-width: 2.4rem;
+
+.backlink {
+  display: inline-block;
+  margin: 0 0 $default-margin 0;
+  padding: $spacing-s $default-margin $spacing-s $arrow-width + $default-margin;
+  position: relative;
+
+  @include media-breakpoint-up(md) {
+    margin: $default-margin 0;
+    padding: $default-margin $default-margin $default-margin $arrow-width + $default-margin;
+  }
+
+  &:visited,
+  &:hover,
+  &:active,
+  &:link {
+    color: $black-text;
+    text-decoration: none;
+  }
+
+  &:focus {
+    text-decoration: underline;
+  }
+
+  &:before {
+    // IE fix
+    text-decoration: underline;
+  }
+
+  &:before {
+    @include include-icon(icon-arr-backward);
+    font-size: 2.4rem;
+    left: 0.2rem;
+    line-height: inherit;
+    position: absolute;
+    text-decoration: none;
+    transform: translate3d(0, 0, 0);
+    transition: transform $duration-fast ease;
+    width: $arrow-width;
+  }
+
+  &:hover::before {
+    transform: translateX(-0.2rem);
+  }
+}
+
+.main {
+  padding-top: $default-margin * 2;
+}

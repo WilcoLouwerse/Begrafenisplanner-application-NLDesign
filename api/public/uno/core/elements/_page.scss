@@ -1,0 +1,25 @@
+html {
+  // Reset default font size so that 1rem = 10px,
+  // Don't use percentages (62.5% of 16px = 10px), IE11 doesn't scale well when
+  // using a percentage based font-size
+  font-size: 10px;
+}
+
+html, body {
+  background-color: $black-8;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: $black-text;
+  font-family: $font-sans;
+  font-size: $font-size-xs;
+  line-height: $line-height-s;
+  text-rendering: optimizeLegibility;
+
+  @include media-breakpoint-up(md) {
+    font-size: $font-size-s;
+    line-height: $line-height-m;
+  }
+}

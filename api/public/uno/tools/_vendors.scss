@@ -1,0 +1,29 @@
+@mixin ie-only() {
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    @content;
+  }
+}
+
+@mixin ie-10-only() {
+  /* stylelint-disable */
+  @media screen and (min-width:0\0) {
+    @content;
+  }
+  /* stylelint-enable */
+}
+
+@mixin ff-only() {
+  /* stylelint-disable */
+  @-moz-document url-prefix() {
+    @content;
+  }
+  /* stylelint-enable */
+}
+
+@mixin retina-only() {
+  /* stylelint-disable */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi){
+    @content;
+  }
+  /* stylelint-enable */
+}

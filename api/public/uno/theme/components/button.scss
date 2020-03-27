@@ -1,0 +1,37 @@
+$button-background:#148839;
+$button-background--hover: #004152;
+$button-background--disabled: #e0e0dd;
+
+$button-color: #ffffff;
+$button-color--hover: #ffffff;
+$button-color--disabled: #808080;
+
+$button-text-transform: none;
+
+$button-font-weight: 400;
+
+$button-padding: 1rem 2rem;
+
+$button-border-radius: 0;
+
+$button-border-right: 3px solid rgba(0, 0, 0, 0.2);
+$button-border-left: none;
+$button-border-top: none;
+$button-border-bottom: 3px solid rgba(0, 0, 0, 0.2);
+
+$button-color--primary: #000000;
+$button-color--primary--disabled: #000000;
+
+$button-background--primary: #ffffff;
+$button-background--primary--hover: #f2ebe4;
+$button-background--primary--disabled: #ffffff;
+
+$button-border-right--primary: $button-border-right;
+$button-border-left--primary: $button-border-left;
+$button-border-top--primary: $button-border-top;
+$button-border-bottom--primary: $button-border-bottom;
+
+$button-border-right--primary-hover: $button-border-right;
+$button-border-left--primary-hover: $button-border-left;
+$button-border-top--primary-hover: $button-border-top;
+$button-border-bottom--primary-hover: $button-border-bottom;

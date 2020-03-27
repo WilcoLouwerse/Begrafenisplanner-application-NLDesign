@@ -1,0 +1,42 @@
+.paragraph--xs {
+  font-size: 1.5rem;
+  line-height: $line-height-xs;
+}
+
+.paragraph--s {
+  font-size: $font-size-xs;
+  line-height: $line-height-s;
+}
+
+.paragraph--l,
+.content-header {
+  // content-header will be deprecated
+  font-size: $font-size-m;
+  line-height: $line-height-m;
+  margin-bottom: $default-margin * 2;
+
+  @include media-breakpoint-up(md) {
+    font-size: $font-size-m;
+    line-height: $line-height-xxl;
+    margin-bottom: $default-margin * 3;
+  }
+
+  @include media-breakpoint-up(xl) {
+    font-size: $font-size-l;
+    line-height: $line-height-xxxl;
+  }
+
+  h1,
+  [role=heading].is-h1,
+  .is-h1 {
+    
+    &:only-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.paragraph--l {
+  margin-bottom: $default-margin * 2;
+}
+

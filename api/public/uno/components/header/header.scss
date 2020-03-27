@@ -1,0 +1,201 @@
+@import '../../settings/colors';
+@import '../../settings/spacing';
+
+@import '../../tools/font-size';
+@import '../../tools/responsive';
+@import '../../tools/vendors';
+
+$ribbon-width-s: 40px;
+$ribbon-width-m: 45px;
+$ribbon-width-l: 50px;
+
+$header-logo-width-s: 136px;
+$header-logo-width-m: 228px;
+$header-logo-width-l: 254px;
+
+$header-logo-cte-width-s: 138px;
+$header-logo-cte-width-m: 230px;
+$header-logo-cte-width-l: 260px;
+
+$header-logo-ocw-width-s: 150px;
+$header-logo-ocw-width-m: 280px;
+$header-logo-ocw-width-l: 285px;
+
+.header {
+  background-color: $white;
+  height: 50px;
+}
+
+.header--transparent {
+  background-color: transparent;
+}
+
+.header-logo {
+  padding-bottom: $default-margin / 2;
+  text-align: center;
+
+  a {
+    background-size: 100%;
+    display: inline-block;
+    height: 6rem;
+    margin-bottom: 0.8rem;
+    margin-left: $header-logo-width-s - $ribbon-width-s;  // Add left margin to center the image
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    width: $header-logo-width-s;
+
+    @include media-breakpoint-up(md) {
+      height: 9.4rem;
+      margin-left: $header-logo-width-m - $ribbon-width-m;
+      width: $header-logo-width-m;
+    }
+
+    @include media-breakpoint-up(lg) {
+      height: 10.4rem;
+      margin-bottom: 1.4rem;
+      margin-left: $header-logo-width-l - $ribbon-width-l;
+      width: $header-logo-width-l;
+
+      @include ie-only() {
+        height: 10rem;
+      }
+    }
+
+    .header-logo--cte & {
+      margin-left: $header-logo-cte-width-s - $ribbon-width-s;
+      width: $header-logo-cte-width-s;
+
+      @include media-breakpoint-up(md) {
+        margin-left: $header-logo-cte-width-m - $ribbon-width-m;
+        width: $header-logo-cte-width-m;
+      }
+
+      @include media-breakpoint-up(lg) {
+        margin-left: $header-logo-cte-width-l - $ribbon-width-l;
+        width: $header-logo-cte-width-l;
+      }
+    }
+
+    .header-logo--ocw & {
+      margin-left: $header-logo-ocw-width-s - $ribbon-width-s;
+      width: $header-logo-ocw-width-s;
+
+      @include media-breakpoint-up(md) {
+        margin-left: $header-logo-cte-width-m - $ribbon-width-m;
+        width: $header-logo-ocw-width-m;
+      }
+
+      @include media-breakpoint-up(lg) {
+        margin-left: $header-logo-ocw-width-l - $ribbon-width-l;
+        width: $header-logo-ocw-width-l;
+      }
+    }
+
+    &:before {
+      background: $rijksblauw url('./images/beeldmerk.svg') no-repeat bottom center;
+      background-size: 100%;
+      content: '';
+      height: 6rem;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 4rem;
+
+      @include ie-only() {
+        background-position: 0 10px;
+      }
+
+      @include media-breakpoint-up(md) {
+        height: 9rem;
+        width: 4.5rem;
+      }
+
+      @include media-breakpoint-up(lg) {
+        height: 10rem;
+        width: 5rem;
+      }
+    }
+
+    &:after {
+      background-image: url('./images/duo-text-s.svg');
+      background-repeat: no-repeat;
+      bottom: 0.8rem;
+      content: '';
+      display: inline-block;
+      height: 2.6rem;
+      left: 4.8rem;
+      position: absolute;
+      width: 8.8rem;
+
+      .header-logo--cte & {
+        background-image: url('./images/cte-text-m.svg');
+      }
+
+      @include media-breakpoint-up(md) {
+        background-image: url('./images/duo-text-m.svg');
+        bottom: 0.1rem;
+        height: 4.5rem;
+        left: 5.5rem;
+        width: 17.3rem;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: -0.4rem;
+        height: 5.6rem;
+        left: 6rem;
+        width: 19.2rem;
+      }
+    }
+  }
+
+  &--white a {
+
+    &:after {
+      background-image: url('./images/duo-text-s-white.svg');
+
+      @include media-breakpoint-up(md) {
+        background-image: url('./images/duo-text-m-white.svg');
+
+      }
+
+    }
+  }
+
+  &--cte a {
+
+    &:after {
+      background-image: url('./images/cte-text-s.svg');
+
+      @include media-breakpoint-up(md) {
+        background-image: url('./images/cte-text-m.svg');
+        bottom: 0;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: -0.8rem;
+        width: 20rem;
+      }
+    }
+  }
+
+  &--ocw a {
+
+    &:after {
+      background-image: url('./images/ocw-text-s.svg');
+      width: 10rem;
+
+      @include media-breakpoint-up(md) {
+        background-image: url('./images/ocw-text-m.svg');
+        bottom: 0;
+        width: 22.4rem;
+      }
+
+      @include media-breakpoint-up(lg) {
+        bottom: -0.8rem;
+        width: 22.4rem;
+      }
+    }
+  }
+}
+

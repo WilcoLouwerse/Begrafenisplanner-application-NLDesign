@@ -1,0 +1,88 @@
+@import '../../settings/font';
+@import '../../tools/icon';
+
+a {
+  color: $link-blue;
+
+  path {
+    fill: $link-blue;
+    stroke: $link-blue;
+  }
+
+  &:visited {
+    color: $link-visited;
+
+    path {
+      fill: $link-visited;
+      stroke: $link-visited;
+    }
+  }
+
+  &:hover {
+    color: $black-text;
+    outline: none;
+
+    path {
+      fill: $black-text;
+      stroke: $black-text;
+    }
+  }
+  
+  &:focus:not(.btn):not(.pagination__link):not(.nav__link) {
+    background: $donkergeel;
+    color: $black-text;
+    outline: none;
+
+    .header-logo & {
+      background: none;
+      outline: 2px solid $outline-color;
+    }
+
+    path {
+      fill: $black-text;
+      stroke: $black-text;
+    }
+  }
+
+  &:active {
+    color: $violet;
+
+    path {
+      fill: $violet;
+      stroke: $violet;
+    }
+  }
+
+  &:not(.btn)[rel='external'] {
+    display: inline-block;
+    outline: none;
+
+    &:after {
+      // Bugfix for IE, we need to set the text-decoration *explicit*, before
+      // removing it again in the next statement */
+      text-decoration: underline;
+    }
+
+    &:after {
+      @include include-icon(icon-link-external);
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      top: 0.1rem;
+
+
+      /* stylelint-disable */
+      //margin-top: 0.1em;
+      transform: translate(0.1em, 0.1em);
+      /* stylelint-enable */
+    }
+  }
+
+  &.underline {
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

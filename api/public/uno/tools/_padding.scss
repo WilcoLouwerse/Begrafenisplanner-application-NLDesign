@@ -1,0 +1,30 @@
+
+@mixin apply-large-padding() {
+  @include media-breakpoint-up(md) {
+    // Add an additional column to the left and right of the content using padding
+    // We need to calculate the container size by getting the with of the content and dividing it by
+    // The number of columns it spans (11), and then add the desired padding.
+    // When the container is 720px, the content spans 11 columns, which is 720 / 12 * 11 == 660px
+    // However, css does not take the padding in the width when using percentages, 100% width is 650px,
+    // so we have to re-add it. Then we divide the width by the number of columns (11), which gives us the width
+    // of a single column (60px). We want 1 column offset, +30px. so we add the 30px - 1/2 the gutter width,
+    // because the padding is added to the container on both sides
+    // In short: (100% + 10px) / 11 + 30px - 5px;
+    padding-left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-md} + #{$grid-text-padding - $grid-gutter-width / 2});
+    padding-right: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-md} + #{$grid-text-padding - $grid-gutter-width / 2});
+  }
+
+  @include media-breakpoint-up(lg) {
+    // Add an additional column to the left and right of the content using padding. Same story here
+    padding-left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg} + #{$grid-text-padding - $grid-gutter-width / 2 + 1rem});
+    padding-right: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg} + #{$grid-text-padding - $grid-gutter-width / 2 + 1rem});
+
+  }
+
+  @include media-breakpoint-up(xl) {
+    // Add an additional column to the left and right of the content using padding. Same story here
+    padding-left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg});
+    padding-right: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg});
+
+  }
+}

@@ -12,9 +12,7 @@ parameters:
     env(APP_APPLICATION_KEY): '' 
     env(APP_USER_KEY): ''  
     env(APP_ENV): '' 
-    env(APP_VERSION): '' 
     env(APP_NAME): '' 
-    env(APP_DOMAIN): '' 
     env(APP_DOMAINS): '[]'      
     env(AUTH_PROVIDER_USER): '' 
     env(AUTH_PROVIDER_APPLICATION): '' 
@@ -23,16 +21,65 @@ parameters:
     app_commonground_key: '%env(APP_COMMONGROUND_KEY)%'   
     app_application_key: '%env(APP_APPLICATION_KEY)%'   
     app_user_key: '%env(APP_USER_KEY)%'               
-    app_env: '%env(APP_ENV)%'                     
-    app_version: '%env(APP_VERSION)%'         
-    app_name: '%env(APP_NAME)%'       
-    app_domain: '%env(APP_DOMAIN)%'   
+    app_env: '%env(APP_ENV)%'           
+    app_name: '%env(APP_NAME)%'   
     app_domains: '%env(json:APP_DOMAINS)%'  
     auth_provider_user: '%env(AUTH_PROVIDER_USER)%'   
-    auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'    
+    auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'        
     
     common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
     common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
+
+    common_ground.ac.location: 'https://ac.zaakonline.nl'
+    common_ground.ac.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.as.location: 'https://as.zaakonline.nl'
+    common_ground.as.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.bc.location: 'https://bc.zaakonline.nl'
+    common_ground.bc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.brp.location: 'https://brp.zaakonline.nl'
+    common_ground.brp.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.bs.location: 'https://bs.zaakonline.nl'
+    common_ground.bs.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.cc.location: 'https://cc.zaakonline.nl'
+    common_ground.cc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.irc.location: 'https://irc.zaakonline.nl'
+    common_ground.irc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.lc.location: 'https://lc.zaakonline.nl'
+    common_ground.lc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.ltc.location: 'https://ltc.zaakonline.nl'
+    common_ground.ltc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+    
+    common_ground.mrc.location: 'https://mrc.zaakonline.nl'
+    common_ground.mrc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.orc.location: 'https://orc.zaakonline.nl'
+    common_ground.orc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.pdc.location: 'https://pdc.zaakonline.nl'
+    common_ground.pdc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.ptc.location: 'https://ptc.zaakonline.nl'
+    common_ground.ptc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.vrc.location: 'https://vrc.zaakonline.nl'
+    common_ground.vrc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.vtc.location: 'https://vtc.zaakonline.nl'
+    common_ground.vtc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.wrc.location: 'https://wrc.zaakonline.nl'
+    common_ground.wrc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    
+    
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
     common_ground.oas.servers:

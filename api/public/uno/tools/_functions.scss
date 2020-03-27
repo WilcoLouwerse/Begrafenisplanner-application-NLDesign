@@ -1,0 +1,22 @@
+
+// Function for z-indexes
+@function z-index($element-level-1, $element-level-2: null) {
+  $map: $z-indexes;
+  $found-index: null;
+  $searched: $element-level-1;
+
+  @if (map-has-key($map, $element-level-1)) {
+    $found-index: index(map-keys($map), $element-level-1) * 100;
+
+    @if ($element-level-2) {
+      $sub: map-get($map, $element-level-1);
+      $searched: $searched + '.' + $element-level-2;
+      @if (index($sub, $element-level-2)) {
+        $found-index: $found-index + index($sub, $element-level-2);
+      }
+    }
+  }
+
+  @debug 'Index for ' + $searched + ': ' + $found-index;
+  @return $found-index;
+}

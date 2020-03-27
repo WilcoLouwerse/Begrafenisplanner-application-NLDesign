@@ -1,0 +1,199 @@
+@import '../../theme/base';
+
+@import '../../settings/colors';
+@import '../../settings/font';
+@import '../../settings/spacing';
+@import '../../settings/z-indexes';
+
+@import '../../tools/functions';
+@import '../../tools/icon';
+@import '../../tools/vendors';
+
+$checkbox-block-height: 4.8rem;
+$checkbox-border: 0.1rem;
+$checkbox-width: 2rem;
+
+.input__group--checkbox {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  .input.input__group-horizontal & {
+    margin-top: 2.6rem;
+  }
+
+}
+
+.input__label--checkbox {
+  background-color: $grijs-1;
+  border: 0.1rem $grijs-1 solid;
+  cursor: pointer;
+  display: inline-block;
+  min-height: $checkbox-block-height;
+  padding: 1.2rem 2rem 1rem $checkbox-block-height - $checkbox-border;
+  position: relative;
+  width: 100%;
+
+  &:before {
+    background-color: $white;
+    border: 1px solid $grijs-5;
+    content: '';
+    height: $checkbox-width;
+    left: 0;
+    margin-left: ($checkbox-block-height - $checkbox-width)/2;
+    position: absolute;
+    top: ($checkbox-block-height - $checkbox-width)/2;
+    width: $checkbox-width;
+  }
+
+  .input__group--compact & {
+    min-height: initial;
+    padding-left: $checkbox-block-height - $checkbox-width;
+
+    @include ie-only() {
+      min-height: auto;
+    }
+
+    &::before {
+      margin-left: 0;
+      top: 0.2rem;
+    }
+  }
+}
+
+.input__control--checkbox {
+
+  &:focus {
+
+    & + .input__label--checkbox {
+      outline: 1px solid $hemelblauw;
+
+      [class*='background--'] & {
+        outline-color: inherit;
+      }
+    }
+  }
+  //geen height en width 0, want beweegt het scherm niet mee als het focus krijgt.
+  height: 1px;
+  opacity: 0;
+  position: absolute;
+  width: 1px;
+  z-index: z-index(main, input);
+
+  &:checked,
+  &:checked:active,
+  &:checked:focus {
+
+    & + .input__label--checkbox {
+      background-color: transparent;
+      border: 0.1rem $hemelblauw solid;
+
+      &:before {
+        @include include-icon(icon-check);
+
+        background-color: $hemelblauw;
+        border: none;
+        color: $white;
+        font-size: 1.6rem;
+
+        // Set the lineheight explicitly in px for IE10,
+        // See https://connect.microsoft.com/IE/feedback/details/776744
+        line-height: 20px;
+        padding-left: 0.2rem;
+      }
+    }
+  }
+
+  &:indeterminate {
+
+    & + .input__label--checkbox {
+      background-color: transparent;
+      border: 0.1rem $hemelblauw solid;
+
+      &:before {
+        @include include-icon(icon-min);
+        background-color: $hemelblauw;
+        border: none;
+        color: $white;
+        font-size: 1.6rem;
+
+        // Set the lineheight explicitly in px for IE10,
+        // See https://connect.microsoft.com/IE/feedback/details/776744
+        line-height: 22px;
+        padding-left: 0.3rem;
+      }
+    }
+  }
+
+  &:disabled,
+  &:disabled:active,
+  &:disabled:focus {
+
+    & + .input__label--checkbox {
+      cursor: not-allowed;
+      opacity: 0.4;
+
+      &:before {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.input__group--compact .input__control--checkbox {
+
+  &:focus {
+
+    & + .input__label--checkbox {
+      outline: none;
+    }
+
+    & + .input__label--checkbox:before {
+      border: none;
+      outline: 2px solid $outline-color;
+
+      [class*='background--'] & {
+        outline-color: inherit;
+      }
+    }
+  }
+
+  &:indeterminate {
+
+    & + .input__label--checkbox {
+      border: none;
+    }
+  }
+}
+
+.input__group-list {
+  list-style: none;
+  margin: 0;
+
+  ul {
+    list-style: none;
+    margin-bottom: 0;
+  }
+
+  .input__group--compact, .input__group--compact li {
+    margin-bottom: 0;
+  }
+
+  li:not(.input__group--compact) {
+
+    ul {
+      margin: 0.7rem 0 0 0;
+
+      .input__label--checkbox {
+        padding: 1.2rem 2rem 1rem $checkbox-block-height - $checkbox-border + $default-margin * 3;
+
+        &:before {
+          left: $default-margin * 3;
+        }
+      }
+    }
+  }
+
+}

@@ -1,0 +1,108 @@
+@import '../../tools/responsive';
+@import '../../tools/icon';
+
+@import '../../settings/colors';
+@import '../../settings/spacing';
+@import '../../settings/font';
+
+$arrow-distance: 4rem;
+
+.content--inpage {
+  
+  h1 {
+    font-weight: normal;
+  }
+}
+
+.content.content--inpage-nav-footer {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.prev-next {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 60px;
+}
+
+.prev-next__next--hidden,
+.prev-next__prev--hidden {
+  display: none;
+}
+
+.prev-next__next,
+.prev-next__prev {
+  display: block;
+  flex-basis: 0;
+  flex-grow: 1;
+  line-height: $line-height-xs;
+  padding: 1rem;
+  position: relative;
+  text-decoration: none;
+
+  &:hover {
+    background: $grijs-1;
+  }
+
+  &::before {
+    color: $link-blue;
+    font-size: 2.8rem;
+    height: 3rem;
+    position: absolute;
+    top: 1.4rem;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .prev-next__meta {
+    color: $grijs-6;
+  }
+}
+
+.prev-next__next {
+  padding-right: $arrow-distance;
+  text-align: right;
+
+  &::before {
+    @include include-icon(icon-chevron-right);
+    right: 0;
+
+  }
+
+  &:hover::before {
+    transform: translateX(-0.6rem);
+  }
+
+}
+
+.prev-next__prev {
+  padding-left: $arrow-distance;
+
+  &:before {
+    @include include-icon(icon-chevron-left);
+    left: 0;
+  }
+
+  &:hover::before {
+    transform: translateX(0.6rem);
+  }
+}
+
+.prev-next__meta {
+  display: block;
+  font-size: 1.4rem;
+  padding: 0;
+}
+
+.prev-next__text {
+  display: block;
+  text-decoration: underline;
+}
+
+@include media-breakpoint-up(md) {
+
+  .prev-next {
+    flex-direction: row;
+  }
+}

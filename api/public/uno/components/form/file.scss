@@ -1,0 +1,84 @@
+@import '../../theme/base';
+
+@import '../../settings/colors';
+@import '../../settings/spacing';
+@import '../../tools/font-size';
+
+.input__control--file {
+  // Place button outside of viewport
+  position: fixed;
+  top: -1000px;
+
+  &:focus + .btn {
+    outline: 1px solid $outline-color;
+
+    [class*='background--'] & {
+      outline-color: inherit;
+    }
+  }
+}
+
+.file {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: $default-margin;
+
+  &:only-child {
+    padding-bottom: 0;
+  }
+
+  .meta {
+    display: block;
+    padding: 0;
+  }
+
+  .list--files & {
+    margin-bottom: 0;
+  }
+}
+
+.file__icon {
+  align-self: stretch;
+  display: block;
+  flex-shrink: 0;
+  position: relative;
+  width: 3.2rem;
+
+  @include media-breakpoint-up(md) {
+    width: 4.4rem;
+  }
+
+  &::before {
+    font-size: 3.2rem;
+    left: -0.6rem; //fixed alignment
+    position: absolute;
+    top: 0;
+
+    @include media-breakpoint-up(md) {
+      font-size: 4.4rem;
+    }
+  }
+}
+
+.file__title {
+  display: block;
+  padding-right: $default-margin;
+}
+
+.file__data {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: flex-start;
+
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.file__button {
+  flex-shrink: 0;
+}

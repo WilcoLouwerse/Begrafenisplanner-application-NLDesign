@@ -1,0 +1,185 @@
+@import '../../tools/responsive';
+@import '../../tools/font-size';
+@import '../../settings/animations';
+@import '../../settings/colors';
+@import '../../settings/font';
+
+$thumb-width-mobile: 80px;
+$thumb-height-mobile: 100px;
+$thumb-height-tablet: 120px;
+
+.card {
+  background: $white;
+  border-bottom: 2px solid $transparent-border-color;
+  color: $black-text;
+  display: block;
+  margin-bottom: $default-margin;
+  width: 100%;
+
+  &:not(:first-child):not(.card--small){
+
+    @include media-breakpoint-up(sm) {
+      margin-left: $default-margin * 2;
+    }
+
+    &:first-of-type {
+      margin-left: 0;
+    }
+  }
+
+  @include clearfix();
+
+  .card__content {
+    color: $black-text;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    text-decoration: none;
+    width: 100%;
+  }
+}
+
+.card__thumb {
+  background-position: center;
+  background-size: cover;
+  flex-shrink: 0;
+  min-height: $thumb-height-mobile;
+  width: $thumb-height-mobile;
+}
+
+.card__thumb--noscale {
+  background: no-repeat center;
+  background-size: auto;
+}
+
+.card__thumb--square {
+  width: $thumb-height-mobile;
+
+  :not(.card--small):not(.card:only-child) & {
+    @include media-breakpoint-up(sm) {
+      width: 100%;
+    }
+  }
+}
+
+.card__image {
+  height: 100%;
+  width: 100%;
+}
+
+.card__img {
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+
+  img {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
+}
+
+.card__body {
+  align-items: flex-start;
+  display: flex;
+  flex: 1 1 0%; // 0 1 auto does not work on IE11
+  flex-direction: column;
+  justify-content: center;
+  min-height: $thumb-height-mobile;
+  padding: $spacing-l $default-margin * 2 $default-margin * 2 $default-margin * 2;
+
+  p {
+    max-width: 100%;
+  }
+}
+
+.card__body--full-width-height {
+  height: 100%;
+  width: 100%;
+}
+
+.card__title {
+  color: $black-text;
+  font-family: $font-sans;
+  font-weight: bold;
+  max-width: 100%; // IE11 fix
+  text-decoration: none;
+
+  & > a {
+    text-decoration: none;
+  }
+
+  &.dimmed {
+    color: $grijs-3;
+  }
+}
+
+.card__title--as-link {
+  color: $link-blue;
+  text-decoration: underline;
+}
+
+.card__link {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+
+  &:hover {
+    box-shadow: 0 0.2rem 0 $black-8;
+    transition: box-shadow $duration-fast;
+
+    .card__title {
+      text-decoration: underline;
+    }
+  }
+}
+
+@include media-breakpoint-up(sm) {
+
+  // Only apply desktop styling if:
+  // - in a list, but not in a list with .list--card-small
+  // - in a list, but it's the only of it's type
+  // - not in a list, but it's the only of it's type within it's parent
+  .card:not(:only-of-type):not(.card--small)
+  {
+
+    .card__content {
+      flex-direction: column;
+    }
+
+    .card__title {
+      @include font-size-and-line-height(20, 1.2);
+    }
+
+    .card__thumb {
+      height: $thumb-height-tablet;
+      width: 100%;
+    }
+
+    .card__body {
+      display: flex;
+      flex-grow: 1;
+      height: auto;
+      justify-content: flex-start;
+      min-height: $thumb-height-tablet;
+      width: 100%;
+    }
+
+    .card__body--centered {
+      align-items: center;
+      justify-content: center;
+      
+      & > p {
+        text-align: center;
+        white-space: normal;
+      }
+    }
+  }
+}

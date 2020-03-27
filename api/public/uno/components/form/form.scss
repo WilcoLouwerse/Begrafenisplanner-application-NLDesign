@@ -1,0 +1,16 @@
+@import '../../tools/responsive';
+@import '../../settings/font';
+@import '../../settings/spacing';
+
+.form--flex {
+
+  @include media-breakpoint-up(md) {
+    align-items: flex-start;
+    display: flex;
+  }
+
+  .input {
+    flex: 1;
+    margin-right: $default-margin*2;
+  }
+}

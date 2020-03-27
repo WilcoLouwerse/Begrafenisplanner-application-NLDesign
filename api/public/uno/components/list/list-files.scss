@@ -1,0 +1,13 @@
+@import '../../tools/font-size';
+@import '../../tools/responsive';
+
+@import '../../settings/colors';
+@import '../../settings/lists';
+@import '../../settings/spacing';
+
+.list--files {
+  list-style: none;
+  margin-left: 0;
+  margin-top: $default-margin;
+  padding-left: 0;
+}

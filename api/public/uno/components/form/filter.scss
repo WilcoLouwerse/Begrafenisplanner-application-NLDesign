@@ -1,0 +1,18 @@
+@import '../../settings/colors';
+@import '../../tools/font-size';
+
+.filter {
+
+  &.input {
+    //todo make modifier of input
+    margin-bottom: $default-margin;
+  }
+}
+
+.filter__title {
+  @include title-s();
+  border-top: 1px solid $black-20;
+  font-weight: bold;
+  padding: $default-margin * 2 0 0 0;
+  width: 100%;
+}

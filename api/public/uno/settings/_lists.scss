@@ -1,0 +1,24 @@
+@import 'font';
+@import 'spacing';
+
+$list-margin-bottom: $default-margin + 0.3rem;
+
+$list-default-width: 2.2rem; // Distance between col start and text start
+$list-default-gap: 0.8rem; // Distance between bullet and list text
+
+$list-margin-left: $list-default-gap + $list-default-width;
+$list-default-left: ($list-margin-left * -1);
+$list-bullet-margin-left: $list-default-left - $list-default-gap;
+
+$list-roman-width: 7rem;
+//$list-roman-left: $list-default-left - 5rem;
+
+$list-bullet-margin-left--chevron: -3.6rem;
+$list-bullet-margin-right--chevron: 1rem;
+$list-chevron-top: 0.7rem;
+
+$list-decimal-circled-radius: 2.2rem;
+$list-margin-left--decimal-circled: $list-margin-left + 1rem;
+$list-bullet-margin-left--decimal-circled: -3.8rem;
+
+$list-bullet-margin-left--roman: ($list-margin-left + 5.2rem) * -1;

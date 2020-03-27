@@ -1,0 +1,57 @@
+@import '../../settings/spacing';
+@import '../../settings/colors';
+@import '../../tools/icon';
+
+.list--chevrons {
+  margin-left: 2.1rem;
+
+  & > li {
+
+    margin-bottom: $default-margin;
+    position: relative;
+
+    &::before {
+      @include include-icon(icon-chevron-right);
+      font-size: 1rem;
+      left: 2rem;
+      line-height: 10px;
+      position: absolute;
+      top: 0.7rem;
+      transform: translate3d(0, 0, 0);
+    }
+
+    &:hover::before {
+      transform: translate3d(0.4rem, 0, 0);
+    }
+  }
+
+  a {
+    color: currentColor;
+    text-decoration: none;
+
+    &:visited {
+      color: currentColor;
+      text-decoration: underline;
+    }
+
+    &:hover {
+      color: currentColor;
+      text-decoration: underline;
+    }
+
+    &:focus {
+      background: $donkergeel;
+      color: $black;
+      text-decoration: underline;
+    }
+    
+    [class*='background--donkergeel'] & {
+
+      &:focus {
+        background: $donkergeel-focus-color;
+        color: $donkergeel-focus-text-color;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,23 @@
+@import '../core/generic/duo-basic';
+
+@mixin include-icon($icon-name: '') {
+
+  /* use !important to prevent issues with browser extensions that change fonts */
+  /* stylelint-disable */
+  font-family: 'duo-basic' !important;
+  /* stylelint-enable */
+
+  /* Better Font Rendering */
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1;
+  speak: none;
+  text-transform: none;
+
+  @if($icon-name != '') {
+    content: map_get($icons, $icon-name);
+  }
+}

@@ -1,0 +1,96 @@
+@import '../../theme/base';
+
+// block elements
+h1,
+h2,
+h3,
+h4,
+h5,
+.is-h1,
+.is-h2,
+.is-h3,
+.is-h4,
+.is-h5,
+[role=heading].is-h1,
+[role=heading].is-h2,
+[role=heading].is-h3,
+[role=heading].is-h4,
+[role=heading].is-h5 {
+  font-family: $font-sans;
+  font-weight: 700;
+  margin: 0 0 $spacing-xs 0;
+  padding-bottom: $spacing-xxs;
+}
+
+[role=heading].is-h1,
+[role=heading].is-h2,
+[role=heading].is-h3,
+[role=heading].is-h4,
+[role=heading].is-h5,
+.is-h1,
+.is-h2,
+.is-h3,
+.is-h4,
+.is-h5 {
+  // Add display block so span's can be used as heading
+  display: block;
+}
+
+h1,
+[role=heading].is-h1,
+.is-h1 {
+  @include title-xl();
+  font-size: $h1-font-size;
+  font-weight: $h1-font-weight;
+}
+
+h2,
+[role=heading].is-h2,
+.is-h2 {
+  @include title-l();
+  font-size: $h2-font-size;
+  font-weight: $h2-font-weight;
+}
+
+h3,
+[role=heading].is-h3,
+.is-h3 {
+  @include title-m();
+}
+
+h4,
+[role=heading].is-h4,
+.is-h4 {
+  @include title-s();
+}
+
+h5,
+[role=heading].is-h5,
+.is-h5 {
+  @include title-xs();
+}
+
+p + h2,
+p + [role=heading].is-h2,
+p + h3,
+p + [role=heading].is-h3,
+p + h4,
+p + [role=heading].is-h4,
+p + h5,
+p + [role=heading].is-h5 {
+  margin-top: $default-margin * 2;
+}
+
+h2 + ul,
+[role=heading].is-h2 + ul,
+h3[role=heading].is-h3 ul {
+  margin-top: $spacing-s;
+}
+
+// subtitle
+.subheading {
+  color: $grijs-6;
+  font-weight: normal;
+  @include title-m();
+  margin-bottom: $default-margin;
+}

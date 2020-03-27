@@ -1,0 +1,63 @@
+@import '../../settings/colors';
+@import '../../settings/grid';
+@import '../../tools/responsive';
+@import '../../tools/a11y';
+
+.breadcrumbs {
+  flex: 0 0 auto;
+  padding-right: 2 * $grid-gutter-width;
+
+  .breadcrumbs__list {
+    list-style: none;
+    margin: 0;
+
+    li {
+      display: inline;
+      font-weight: bold;
+      line-height: 2.7rem;
+      padding: 2.3rem 1rem 2.2rem 0;
+      position: relative;
+
+      &:before {
+        content: '›';
+        display: inline-block;
+        font-weight: bold;
+        margin: 0 1.1rem 0 0;
+      }
+
+      &:first-child {
+        padding: 2.3rem 1rem 2.2rem 1rem;
+      
+        &:before {
+          display: none;
+        }
+      }
+
+      a {
+        color: inherit;
+        display: inline-block;
+        text-decoration: none;
+
+        &:hover, &:focus {
+          
+          span {
+            text-decoration: underline;
+          }
+        }
+
+        &:focus {
+          background: none;
+          color: $black;
+          outline: 3px solid $donkergeel;
+          text-decoration: none;
+        }
+      }
+
+      .icon {
+        margin-right: 3px;
+        vertical-align: -1px;
+      }
+
+    }
+  }
+}

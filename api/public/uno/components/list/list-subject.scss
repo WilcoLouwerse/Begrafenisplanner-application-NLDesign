@@ -1,0 +1,27 @@
+@import '../../tools/font-size';
+
+@import '../../settings/colors';
+@import '../../settings/spacing';
+
+.list--subjects {
+  // only needs 1x $default-margin, beacause of li & p margin's. 
+  list-style-type: none;
+  margin: 0;
+
+  .list__item {
+    display: inline-block;
+    margin-bottom: $default-margin;
+    width: 100%;
+
+    br {
+      display: none; // temp fix old br solution
+    }
+  }
+
+  .list__link {
+    @include title-m();
+    display: inline-block;
+    padding-bottom: 0.2rem;
+  }
+}
+

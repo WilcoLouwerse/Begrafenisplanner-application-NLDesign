@@ -1,0 +1,52 @@
+@import './duo-basic';
+
+@font-face {
+  font-family: 'RijksoverheidSans';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./fonts/ROsanswebtextregular.eot');
+  src: url('./fonts/ROsanswebtextregular.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/ROsanswebtextregular.woff') format('woff'),
+    url('./fonts/ROsanswebtextregular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'RijksoverheidSans';
+  font-style: normal;
+  font-weight: bold;
+  src: url('./fonts/ROsanswebtextbold.eot');
+  src: url('./fonts/ROsanswebtextbold.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/ROsanswebtextbold.woff') format('woff'),
+    url('./fonts/ROsanswebtextbold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'RijksoverheidSans';
+  font-style: italic;
+  font-weight: normal;
+  src: url('./fonts/ROsanswebtextitalic.eot');
+  src: url('./fonts/ROsanswebtextitalic.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/ROsanswebtextitalic.woff') format('woff'),
+    url('./fonts/ROsanswebtextitalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'duo-payoff';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./fonts/ROserifwebitalic.eot');
+  src: url('./fonts/ROserifwebitalic.eot') format('embedded-opentype'),
+    url('./fonts/ROserifwebitalic.woff') format('woff'),
+    url('./fonts/ROserifwebitalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'duo-basic';
+  font-style: normal;
+  font-weight: normal;
+  src: url('#{$icon-font-path}/duo-basic.eot?#{$icon-hash}');
+  src: url('#{$icon-font-path}/duo-basic.eot?#{$icon-hash}#iefix') format('embedded-opentype'),
+    url('#{$icon-font-path}/duo-basic.ttf?#{$icon-hash}') format('truetype'),
+    url('#{$icon-font-path}/duo-basic.woff?#{$icon-hash}') format('woff'),
+    url('#{$icon-font-path}/duo-basic.svg?#{$icon-hash}#duo-basic') format('svg');
+}

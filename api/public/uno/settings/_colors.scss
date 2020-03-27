@@ -1,0 +1,205 @@
+// Colors
+$rijksblauw: rgb(21, 66, 115);
+
+$violet: #a90061;
+$violet-tint-1: #e5b2cf;
+$violet-tint-2: #f2d9e7;
+$violet-text-color:  #ffffff;
+$violet-focus-color: #ffb612;
+$violet-focus-text-color: #000000;
+
+$roze: #f092cd;
+$roze-tint-1: #fadef0;
+$roze-tint-2: #fdeff8;
+$roze-text-color:  #000000;
+$roze-focus-color: #ffb612;
+$roze-focus-text-color: #000000;
+
+$rood: #d52b1e;
+$rood-tint-1: #f2bfbb;
+$rood-tint-2: #f9dfdd;
+$rood-text-color:  #ffffff;
+$rood-focus-color: #ffb612;
+$rood-focus-text-color: #000000;
+
+$robijnrood: #ca005d;
+$robijnrood-tint-1: #efb2ce;
+$robijnrood-tint-2: #f7d9e7;
+$robijnrood-text-color:  #ffffff;
+$robijnrood-focus-color: #ffb612;
+$robijnrood-focus-text-color: #000000;
+
+$paars: #42145f;
+$paars-tint-1: #c6b8cf;
+$paars-tint-2: #e3dce7;
+$paars-text-color:  #ffffff;
+$paars-focus-color: #ffb612;
+$paars-focus-text-color: #000000;
+
+$oranje: #e17000;
+$oranje-tint-1: #f6d4b2;
+$oranje-tint-2: #fbead9;
+$oranje-text-color:  #000000;
+$oranje-focus-color: #ffb612;
+$oranje-focus-text-color: #000000;
+
+// Officially it's #777c00;, but that color provides insufficient contrast
+$mosgroen: #767b00;
+$mosgroen-tint-1: #d6d7b2;
+$mosgroen-tint-2: #ebebd9;
+$mosgroen-text-color:  #ffffff;
+$mosgroen-focus-color: #ffb612;
+$mosgroen-focus-text-color: #000000;
+
+$mintgroen: #76d2b6;
+$mintgroen-tint-1: #d6f1e9;
+$mintgroen-tint-2: #ebf8f4;
+$mintgroen-text-color:  #000000;
+$mintgroen-focus-color: #ffb612;
+$mintgroen-focus-text-color: #000000;
+
+$lichtblauw: #8fcae7;
+$lichtblauw-tint-1: #ddeff8;
+$lichtblauw-tint-2: #eef7fb;
+$lichtblauw-text-color:  #000000;
+$lichtblauw-focus-color: #ffb612;
+$lichtblauw-focus-text-color: #000000;
+
+$hemelblauw: #007bc7;
+$hemelblauw-tint-1: #b2d7ee;
+$hemelblauw-tint-2: #d9ebf7;
+$hemelblauw-text-color:  #ffffff;
+$hemelblauw-focus-color: #ffb612;
+$hemelblauw-focus-text-color: #000000;
+
+$groen: #39870c;
+$groen-tint-1: #c3dbb6;
+$groen-tint-2: #e1eddb;
+$groen-text-color:  #ffffff;
+$groen-focus-color: #ffb612;
+$groen-focus-text-color: #000000;
+
+$geel: #f9e11e;
+$geel-tint-1: #fdf6bb;
+$geel-tint-2: #fefbdd;
+$geel-text-color:  #000000;
+$geel-focus-color: #007bc7;
+$geel-focus-text-color: #ffffff;
+
+$donkergroen: #275937;
+$donkergroen-tint-1: #becdc3;
+$donkergroen-tint-2: #dfe6e1;
+$donkergroen-text-color:  #ffffff;
+$donkergroen-focus-color: #ffb612;
+$donkergroen-focus-text-color: #000000;
+
+$donkergeel: #ffb612;
+$donkergeel-tint-1: #ffe9b7;
+$donkergeel-tint-2: #fff4dc;
+$donkergeel-text-color:  #000000;
+$donkergeel-focus-color: #007bc7;
+$donkergeel-focus-text-color: #ffffff;
+
+$donkerbruin: #673327;
+$donkerbruin-tint-1: #d1c1be;
+$donkerbruin-tint-2: #e8e1df;
+$donkerbruin-text-color:  #ffffff;
+$donkerbruin-focus-color: #ffb612;
+$donkerbruin-focus-text-color: #000000;
+
+$bruin: #94710a;
+$bruin-tint-1: #dfd4b5;
+$bruin-tint-2: #efeada;
+$bruin-text-color:  #ffffff;
+$bruin-focus-color: #ffb612;
+$bruin-focus-text-color: #000000;
+
+$donkerblauw: #01689b;
+$donkerblauw-tint-1: #cce0f1;
+$donkerblauw-tint-2: #e5f0f9;
+$donkerblauw-text-color:  #ffffff;
+$donkerblauw-focus-color: #ffb612;
+$donkerblauw-focus-text-color: #000000;
+
+$grijs-1: #f3f3f3;
+$grijs-2: #e6e6e6;
+$grijs-3: #cccccc;
+$grijs-4: #b4b4b4;
+$grijs-5: #999999;
+$grijs-6: #696969;
+$grijs-7: #535353;
+
+// Non-Rijkshuisstijl
+$white: rgb(255, 255, 255);
+$black: rgb(0, 0, 0);
+
+$black-8: mix($black, $white, 8%);
+$black-13: mix($black, $white, 13%);
+$black-20: mix($black, $white, 20%);
+$black-30: mix($black, $white, 30%);
+$black-40: mix($black, $white, 40%);
+$black-60: mix($black, $white, 60%);
+$black-80: mix($black, $white, 80%);
+
+$black-text: #2b2b2b;
+
+$link-blue: rgb(0, 94, 165);
+$link-visited: rgb(85, 26, 139);
+
+// Signal colors
+$signal-info: $donkerblauw;
+$signal-info-light: $donkerblauw-tint-1;
+
+$signal-error: $rood;
+$signal-error-light: $rood-tint-1;
+
+$signal-warning: $geel;
+$signal-warning-light: $geel-tint-1;
+
+$signal-success: $groen;
+$signal-success-light: $groen-tint-1;
+
+$gray-light: #c8cacc;
+$text-secondary: #696969;
+
+$transparent-border-color: rgba(43, 43, 43, 0.25);
+
+// filter-lists
+$filterlist-selected: #7b96a7;
+
+// timeline-lists
+$timeline-item: #b3b3b3;
+$timeline-item--active: $groen;
+$timeline-item--disabled: #a4a4a4;
+
+// Convenience variable, use in loops
+// keys are in quotes to prevent named color errors
+$rijkshuisstijl: (
+    'violet': ($violet, $violet-tint-1, $violet-tint-2, $violet-text-color, $violet-focus-color, $violet-focus-text-color),
+    'roze': ($roze, $roze-tint-1, $roze-tint-2, $roze-text-color, $roze-focus-color, $roze-focus-text-color),
+    'rood': ($rood, $rood-tint-1, $rood-tint-2, $rood-text-color, $rood-focus-color, $rood-focus-text-color),
+    'robijnrood': ($robijnrood, $robijnrood-tint-1, $robijnrood-tint-2, $robijnrood-text-color, $robijnrood-focus-color, $robijnrood-focus-text-color),
+    'paars': ($paars, $paars-tint-1, $paars-tint-2, $paars-text-color, $paars-focus-color, $paars-focus-text-color),
+    'oranje': ($oranje, $oranje-tint-1, $oranje-tint-2, $oranje-text-color, $oranje-focus-color, $oranje-focus-text-color),
+    'mosgroen': ($mosgroen, $mosgroen-tint-1, $mosgroen-tint-2, $mosgroen-text-color, $mosgroen-focus-color, $mosgroen-focus-text-color),
+    'mintgroen': ($mintgroen, $mintgroen-tint-1, $mintgroen-tint-2, $mintgroen-text-color, $mintgroen-focus-color, $mintgroen-focus-text-color),
+    'lichtblauw': ($lichtblauw, $lichtblauw-tint-1, $lichtblauw-tint-2, $lichtblauw-text-color, $lichtblauw-focus-color, $lichtblauw-focus-text-color),
+    'hemelblauw': ($hemelblauw, $hemelblauw-tint-1, $hemelblauw-tint-2, $hemelblauw-text-color, $hemelblauw-focus-color, $hemelblauw-focus-text-color),
+    'groen': ($groen, $groen-tint-1, $groen-tint-2, $groen-text-color, $groen-focus-color, $groen-focus-text-color),
+    'geel': ($geel, $geel-tint-1, $geel-tint-2, $geel-text-color, $geel-focus-color, $geel-focus-text-color),
+    'donkergroen': ($donkergroen, $donkergroen-tint-1, $donkergroen-tint-2, $donkergroen-text-color, $donkergroen-focus-color, $donkergroen-focus-text-color),
+    'donkergeel': ($donkergeel, $donkergeel-tint-1, $donkergeel-tint-2, $donkergeel-text-color, $donkergeel-focus-color, $donkergeel-focus-text-color),
+    'donkerbruin': ($donkerbruin, $donkerbruin-tint-1, $donkerbruin-tint-2, $donkerbruin-text-color, $donkerbruin-focus-color, $donkerbruin-focus-text-color),
+    'donkerblauw': ($donkerblauw, $donkerblauw-tint-1, $donkerblauw-tint-2, $donkerblauw-text-color, $donkerblauw-focus-color, $donkerblauw-focus-text-color),
+    'bruin': ($bruin, $bruin-tint-1, $bruin-tint-2, $bruin-text-color, $bruin-focus-color, $bruin-focus-text-color)
+  );
+
+$grijstinten: (
+    'grijs-1': (#f3f3f3, $black-text),
+    'grijs-2': (#e6e6e6, $black-text),
+    'grijs-3': (#cccccc, $black-text),
+    'grijs-4': (#b4b4b4, $black-text),
+    'grijs-5': (#999999, $black-text),
+    'grijs-6': (#696969, $white),
+    'grijs-7': (#535353, $white)
+  );

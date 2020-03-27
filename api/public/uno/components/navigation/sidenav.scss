@@ -1,0 +1,71 @@
+@import '../../settings/colors';
+@import '../../settings/spacing';
+
+.sidenav {
+
+  ul {
+    margin-bottom: 0;
+    margin-left: 0;
+  }
+}
+
+.sidenav__item {
+  list-style-type: none;
+  margin-bottom: 0.1rem;
+
+  a {
+    // Apply the background to the <a>, so we can create the gap with the
+    // previous element needed in --active state.
+    background: $white;
+    color: $black-text;
+    display: block;
+    padding: 1.2rem 1rem 1.1rem;
+    text-decoration: none;
+
+    &:focus,
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &:last-child {
+    border-bottom: 0.2rem solid $grijs-3;
+  }
+
+  .sidenav__item {
+    border-bottom: 0;
+    margin-bottom: 0;
+
+    a {
+      padding: $default-margin - 0.2rem $default-margin $default-margin - 0.2rem $default-margin * 2;
+    }
+  }
+
+  // Subnav should not be displayed 'separate'
+  .sidenav__item--active {
+    border: 0;
+    padding: 0;
+  }
+}
+
+.sidenav__item--active {
+  border-bottom: 0.2rem solid $grijs-3;
+  // The border-top mimics the border-bottom of the previous element
+  border-top: 0.2rem solid $grijs-3;
+  margin-bottom: 0.9rem;
+  padding-top: 0.9rem;
+
+  // If the first item is the active item, it should not apply the border-top
+  &:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  & > a {
+    font-weight: 700;
+  }
+
+  .sidenav__item:last-child a {
+    padding-bottom: $spacing-m;
+  }
+}

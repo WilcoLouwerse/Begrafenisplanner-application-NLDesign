@@ -1,0 +1,39 @@
+@import '../../settings/colors';
+@import '../../settings/spacing';
+
+.label {
+  break-inside: avoid;
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.8rem;
+  margin: 0 $default-margin / 4;
+  padding: 0 0.4rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.label--wit {
+  background-color: $white;
+  color: $black-text;
+}
+
+.label--zwart {
+  background-color: $black-text;
+  color: $white;
+}
+
+.label--optional {
+  color: $grijs-6;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+}
+
+@each $color, $hex in $rijkshuisstijl {
+
+  .label--#{$color} {
+    background-color: nth($hex, 1);
+    color: nth($hex, 4);
+  }
+}

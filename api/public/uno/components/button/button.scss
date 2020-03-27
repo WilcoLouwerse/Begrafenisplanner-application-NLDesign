@@ -1,0 +1,222 @@
+@import '../../theme/components/button';
+@import '../../theme/base';
+
+@import '../../settings/animations';
+@import '../../settings/colors';
+@import '../../settings/grid';
+@import '../../settings/spacing';
+
+@import '../../tools/font-size';
+@import '../../tools/vendors';
+@import '../../tools/a11y';
+@import '../../tools/spinner';
+
+@import '../../core/animations';
+
+.btn {
+  align-items: center;
+  background-color: $button-background;
+  border: 0;
+  border-bottom: $button-border-bottom;
+  border-left: $button-border-left;
+  border-radius: $button-border-radius;
+  border-right: $button-border-right;
+  border-top: $button-border-top;
+  color: $button-color;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: $font-size-xs;
+  font-weight: $button-font-weight;
+  justify-content: center;
+  min-width: 10rem;
+  padding: $button-padding;
+  text-transform: $button-text-transform;
+  transition: background-color $duration-fast, color $duration-fast, fill $duration-fast, stroke $duration-fast;
+
+  @include media-breakpoint-up(md) {
+    font-size: $font-size-s;
+  }
+
+  &:active,
+  &:hover {
+    background-color: $button-background--hover;
+    color: $button-color--hover;
+  }
+
+  &:focus {
+    outline: 2px solid $outline-color;
+  }
+
+  &:not(:last-child) {
+    margin-right: $default-margin;
+  }
+
+  &.btn--disabled,
+  &[disabled] {
+
+    // This fails wcag rule 1.4.3, but that rule does not apply for inactive elements,
+    // see https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html,
+    //
+    // "Text or images of text that are *part of an inactive user interface component*,
+    // that are pure decoration, that are not visible to anyone, or that are part of a
+    // picture that contains significant other visual content, have no contrast requirement."
+    background-color: $button-background--disabled;
+    color: $button-color--disabled;
+    cursor: default;
+    outline: none;
+  }
+
+  &__icon {
+    font-size: 2.4rem;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+}
+
+.btn__content {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.btn--icon {
+  min-height: 4.4rem;
+  min-width: 4.4rem;
+  padding-left: 0;
+  padding-right: 0;
+
+  .btn__icon {
+    margin: 0 auto;
+
+    @include ie-only() {
+      // IE won't center the icon...
+      margin-left: 0;
+    }
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.btn--primary {
+  background-color: $button-background--primary;
+  border-bottom: $button-border-bottom--primary;
+  border-left: $button-border-left--primary;
+  border-right: $button-border-right--primary;
+  border-top: $button-border-top--primary;
+  color: $button-color--primary;
+
+  &:active,
+  &:hover {
+    background-color: $button-background--primary--hover;
+    border-bottom: $button-border-bottom--primary-hover;
+    border-left: $button-border-left--primary-hover;
+    border-right: $button-border-right--primary-hover;
+    border-top: $button-border-top--primary-hover;
+    color: $button-color--primary;
+  }
+
+  &.btn--disabled,
+  &[disabled] {
+    background-color: $button-background--primary--disabled;
+    color: $button-color--primary--disabled;
+  }
+}
+
+.btn--link {
+  background: transparent;
+  border: 0;
+  color: $link-blue;
+  display: inline;
+  line-height: inherit;
+  min-width: 0;
+  padding: 0;
+  text-decoration: underline;
+
+  &:hover {
+    background: transparent;
+    color: $black-text;
+  }
+}
+
+.btn--send {
+  padding-right: $grid-gutter-width * 3 + 2.2rem;
+  position: relative;
+
+  .btn__icon {
+    position: absolute;
+    right: $grid-gutter-width * 2;
+    top: 1.1rem;
+  }
+}
+
+a.btn {
+  color: $button-color;
+  text-decoration: none;
+
+  &:not(.btn--disabled) {
+
+    &:active,
+    &:hover {
+      color: $button-color;
+    }
+  }
+
+  // Do not alter when link is visited
+  &:visited {
+    color: $button-color;
+  }
+
+  // Do not show external link image
+  &[rel='external'] {
+    margin-right: 0;
+
+    &:after {
+      display: none;
+    }
+  }
+}
+
+a.btn--primary {
+  color: $button-color--primary;
+
+  &:not(.btn--disabled) {
+
+    &:active,
+    &:hover {
+      color: $button-color--primary;
+    }
+  }
+
+  // Do not alter when link is visited
+  &:visited {
+    color: $button-color--primary;
+  }
+}
+
+.btn--digid {
+  margin-right: 5rem;
+  position: relative;
+
+  &::before {
+    background-image: url('../../images/digid.svg');
+    content: '';
+    height: 4rem;
+    position: absolute;
+    right: -5rem;
+    top: 0.4rem;
+    width: 4rem;
+  }
+}
+
+.btn__spinner {
+  @include spinner-inline(24px);
+  margin: 0 0 0 10px;
+
+  &::after {
+    border-right-color: #808080;
+
+    .btn--primary & {
+      border-right-color: $white;
+    }
+  }
+}

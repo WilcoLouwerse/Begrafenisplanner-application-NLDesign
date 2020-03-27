@@ -1,0 +1,21 @@
+$z-indexes: (
+    main: (
+      list--timeline,
+      combobox,
+      spinner,
+      popover,
+      input,
+      tabs
+    ),
+    header: (),
+    navigation: (
+      submenu,
+      popout
+    ),
+    bottom-bar: (),
+    panel: (
+      layer,
+      window
+    ),
+    modal: ()
+  );

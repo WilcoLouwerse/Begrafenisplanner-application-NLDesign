@@ -1,0 +1,40 @@
+@import '../theme/base';
+
+@import '../settings/animations';
+@import '../settings/font';
+@import '../settings/grid';
+@import '../settings/lists';
+@import '../settings/colors';
+@import '../settings/z-indexes';
+@import 'objects/wrapper'; // temp fix for background colors
+
+@import '../tools/a11y';
+@import '../tools/font-size';
+@import '../tools/functions';
+@import '../tools/responsive';
+@import '../tools/padding';
+@import '../tools/units';
+@import '../tools/vendors';
+
+@import 'generic/a11y';
+@import 'generic/reset';
+@import 'generic/font-face';
+@import 'generic/duo-basic';
+@import 'generic/utility';
+
+@import 'elements/headings';
+@import 'elements/lists';
+@import 'elements/links';
+@import 'elements/images';
+@import 'elements/page';
+@import 'elements/paragraphs';
+
+@import 'objects/background-color';
+@import 'objects/content';
+@import 'objects/colums';
+@import 'objects/content-background';
+@import 'objects/main';
+@import 'objects/theme-large-padding';
+
+@import 'components/icon';
+@import 'components/paragraphs';

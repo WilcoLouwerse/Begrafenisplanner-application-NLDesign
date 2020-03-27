@@ -1,0 +1,25 @@
+p {
+  margin: 0 0 $default-margin 0;
+
+  &.large-spacing {
+    margin-bottom: $default-margin*2;
+  }
+}
+
+.content-background {
+
+  p:last-of-type {
+    margin-bottom: $default-margin * 2; // add extra margin to make the content equal
+  }
+
+  p:first-child {
+    margin-bottom: $default-margin; // add extra margin to make the content equal
+  }
+
+  li {
+
+    p:last-of-type {
+      margin-bottom: $default-margin; // reset all the default margin's for <p> in a list
+    }
+  }
+}

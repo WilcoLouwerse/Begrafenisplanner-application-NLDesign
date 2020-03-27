@@ -1,0 +1,239 @@
+@import '../../settings/colors';
+@import '../../settings/grid';
+@import '../../settings/spacing';
+@import '../../settings/z-indexes.scss';
+
+@import '../../tools/font-size';
+@import '../../tools/functions';
+
+$circle-radius: 1.2rem;
+$gap-horizontal: 1.4rem;
+$gap-vertical: 1.4rem;
+$timeline-line-offset: 2rem;
+$mobile-timeline-offset: 4rem;
+$timeline-no-start-offset: 3rem;
+$timeline-no-end-offset: 4.3rem;
+
+.list--timeline {
+  margin-bottom: $gap-vertical + $default-margin * 2;
+  margin-left: $circle-radius + $gap-horizontal + 0.8rem;
+  
+  .list__item {
+    margin-bottom: 1rem;
+    padding-top: $gap-vertical;
+    position: relative;
+
+    &::before {
+      border-left: 0.2rem solid $timeline-item;
+      bottom: 0;
+      content: '';
+      display: block;
+      left: ($circle-radius * 0.5 + $gap-horizontal + 0.1rem) * -1;
+      margin-bottom: -1rem; // Negative margin of listitem
+      margin-left: 0;
+      position: absolute;
+      top: 0;
+    }
+
+    &::after {
+      background-color: $timeline-item;
+      border-radius: 50%;
+      content: '';
+      display: block;
+      height: $circle-radius;
+      left: ($circle-radius + $gap-horizontal) * -1;
+      position: absolute;
+      top: $gap-vertical + $circle-radius * 0.5;
+      width: $circle-radius;
+    }
+
+    & > p {
+      line-height: 2.4rem;
+    }
+  }
+
+  .list__item--disabled {
+    color: $timeline-item--disabled;
+  }
+
+}
+
+.list__item-heading {
+  font-size: 1.8rem;
+  font-weight: bold;
+  line-height: 2.4rem;
+  margin: 0;
+  padding: 0;
+}
+
+.list--timeline-compact {
+  line-height: 2.8rem;
+  margin-bottom: $default-margin * 2;
+
+  .list__item {
+
+    &::after {
+      background-color: $black-text;
+    }
+
+    // Compact timeline does not start with a line
+    &:first-child::before {
+      bottom: 0;
+      top: $gap-vertical + $circle-radius * 1.5;
+    }
+
+    // And does not end with a line
+    &:last-child::before {
+      height: $gap-vertical + $circle-radius * 0.5;
+      top: 0;
+    }
+  }
+
+  .list__item--active {
+    font-weight: bold;
+
+    &::after {
+      background-color: $timeline-item--active;
+    }
+  }
+
+  .list__item--disabled {
+
+    // This fails wcag rule 1.4.3, but that rule does not apply for inactive elements,
+    // see https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html,
+    //
+    // "Text or images of text that are *part of an inactive user interface component*,
+    // that are pure decoration, that are not visible to anyone, or that are part of a
+    // picture that contains significant other visual content, have no contrast requirement."
+    color: $timeline-item--disabled;
+
+    &::after {
+      background-color: $timeline-item;
+    }
+  }
+}
+
+@each $color, $hex in $rijkshuisstijl {
+
+  .list--timeline-#{$color} {
+
+    .list__item {
+      
+      &::before {
+        border-color: nth($hex, 1);
+      }
+
+      &::after {
+        background-color: nth($hex, 1);
+      }
+    }
+  }
+}
+
+.list--timeline-large {
+  margin-left: 0;
+
+  &::before {
+    left: $mobile-timeline-offset;
+
+    @include media-breakpoint-up(md) {
+      left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-md} + #{$grid-text-padding - $grid-gutter-width / 2} + #{$timeline-line-offset});
+    }
+
+    @include media-breakpoint-up(lg) {
+      left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg} + #{$grid-text-padding - $grid-gutter-width / 2 + 1rem} + #{$timeline-line-offset});
+
+    }
+
+    @include media-breakpoint-up(xl) {
+      left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg} + #{$timeline-line-offset});
+    }
+  }
+
+  .list__item {
+
+    &::before {
+      bottom: -1.8rem;
+      left: $mobile-timeline-offset;
+
+      @include media-breakpoint-up(md) {
+        left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-md} + #{$grid-text-padding - $grid-gutter-width / 2} + #{$timeline-line-offset});
+      }
+
+      @include media-breakpoint-up(lg) {
+        left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg} + #{$grid-text-padding - $grid-gutter-width / 2 + 1rem + #{$timeline-line-offset}});
+
+      }
+
+      @include media-breakpoint-up(xl) {
+        left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg + #{$timeline-line-offset}});
+      }
+    }
+
+    &::after {
+      left: $mobile-timeline-offset - 0.5rem;
+
+      @include media-breakpoint-up(md) {
+        left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-md} + #{$grid-text-padding - $grid-gutter-width / 2} + #{$timeline-line-offset - 0.5rem});
+      }
+
+      @include media-breakpoint-up(lg) {
+        left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg} + #{$grid-text-padding - $grid-gutter-width / 2 + 1rem + #{$timeline-line-offset - 0.5rem }});
+      }
+
+      @include media-breakpoint-up(xl) {
+        left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg} + #{$timeline-line-offset - 0.5rem});
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 3rem;
+
+      &::before {
+        border-left-style: dashed;
+        margin-bottom: -2rem;
+        top: 3.4rem;
+      }
+    }
+
+    & > .content {
+      padding-bottom: 0;
+      padding-top: 0;
+    }
+
+    .content-background {
+      position: relative;
+      z-index: z-index(main, list--timeline);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .list__date {
+    display: inline-block;
+    padding-bottom: 0.6rem;
+    padding-left: $default-margin * 4;
+    padding-top: 0;
+  }
+}
+
+.list--timeline-no-start {
+
+  &:before {
+    border-left: 0;
+  }
+
+  li:first-child:before {
+    top: $timeline-no-start-offset;
+  }
+}
+
+.list--timeline-no-end {
+
+  li:last-child:before {
+    bottom: $timeline-no-end-offset;
+  }
+
+}

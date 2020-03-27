@@ -1,0 +1,49 @@
+.content-background {
+  background: $white;
+
+  .content {
+    padding-bottom: $default-margin;
+    padding-top: $default-margin * 2;
+
+    @include media-breakpoint-up(md) {
+      padding-top: $default-margin * 3;
+    }
+
+    >:first-child {
+      margin-top: 0;
+    }
+  }
+
+  &:last-child {
+    // border-bottom: 2px solid $transparent-border-color;
+    margin-bottom: $default-margin * 2;
+
+    @include media-breakpoint-up(lg) {
+      margin-bottom: $default-margin*3;
+    }
+  }
+}
+
+@each $color, $hex in $rijkshuisstijl {
+
+  .background--#{$color} {
+    background-color: nth($hex, 1);
+    color: nth($hex, 4);
+
+    a {
+      color: nth($hex, 4);
+      text-decoration: underline;
+    }
+  }
+
+  .background--#{$color}-tint-1 {
+    background-color: nth($hex, 2);
+    color: $black-text;
+  }
+
+  .background--#{$color}-tint-2 {
+    background-color: nth($hex, 3);
+    color: $black-text;
+  }
+}
+

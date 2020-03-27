@@ -1,0 +1,77 @@
+@import '../../settings/colors';
+@import '../../settings/grid';
+@import '../../tools/font-size';
+@import '../../tools/responsive';
+
+.quote {
+  @include clearfix();
+  margin: $default-margin * 2 0;
+  width: 100%;
+
+  .content-background & {
+    border-left: 0.5rem solid $donkergeel;
+    padding: 0 0 0 2rem;
+  }
+
+  // Not the most elegant way, but this solution requires the least markup
+  // and is backwards compatible
+  &:not(.quote--with-image) {
+    font-family: $font-sans;
+    font-size: $font-size-m;
+    font-style: italic;
+    line-height: $line-height-l;
+
+    @include media-breakpoint-up(md) {
+      font-size: $font-size-l;
+      line-height: $line-height-xl;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    padding-right: 5rem;
+  }
+}
+
+.quote__body {
+  font-family: $font-sans;
+  font-size: $font-size-m;
+  font-style: italic;
+  line-height: $line-height-l;
+  margin-bottom: $default-margin;
+
+  @include media-breakpoint-up(md) {
+    font-size: $font-size-l;
+    line-height: $line-height-xl;
+  }
+}
+
+.quote__image {
+  float: left;
+  height: 6rem;
+  overflow: hidden;
+  width: 6rem;
+
+  & > img {
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+  }
+}
+
+.quote__meta {
+  float: right;
+  width: calc(100% - 7.5rem);
+}
+
+@include media-breakpoint-up(sm) {
+
+  .quote__body {
+    float: right;
+    margin-bottom: 0;
+    width: calc(100% - 8rem);
+  }
+
+  .quote__meta {
+    width: calc(100% - 8rem);
+  }
+}

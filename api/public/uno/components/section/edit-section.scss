@@ -1,0 +1,12 @@
+@import '../../settings/font';
+
+.edit-section {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+
+  a {
+    text-decoration: underline;
+  }
+  
+}
