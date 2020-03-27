@@ -1,0 +1,53 @@
+@import '../../settings/animations';
+@import '../../settings/colors';
+@import '../../settings/z-indexes';
+
+@import '../../tools/spinner';
+@import '../../tools/functions';
+
+.spinner {
+  @include spinner(40px);
+  animation: spinnerAnimation $duration-fast forwards;
+  position: relative;
+  transform: translate3d(0, 0, 0);
+
+  &::before {
+    background-color: $white;
+    bottom: 0;
+    content: '';
+    left: 0;
+    opacity: 0.6;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: z-index(main, spinner);
+  }
+
+  &--page {
+    animation: spinnerAnimationPage $duration-fast forwards;
+    min-height: 80vh;
+  }
+}
+
+@keyframes spinnerAnimation {
+
+  from {
+    min-height: 0;
+  }
+
+  to {
+    min-height: 20vh;
+  }
+}
+
+@keyframes spinnerAnimationPage {
+
+  from {
+    min-height: 0;
+  }
+
+  to {
+    min-height: 80vh;
+  }
+}
+

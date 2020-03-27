@@ -1,0 +1,17 @@
+@import '../../settings/colors';
+@import '../../settings/z-indexes.scss';
+
+@import '../../tools/font-size';
+@import '../../tools/functions';
+
+.bottom-bar {
+  background: $white;
+  bottom: 0;
+  box-shadow: 0 0 4px 4px rgba($black, 0.05);
+  height: auto;
+  left: 0;
+  padding: $default-margin 0;
+  position: fixed;
+  width: 100%;
+  z-index: z-index(bottom-bar);
+}

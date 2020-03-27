@@ -1,0 +1,12 @@
+figure {
+  margin: 2rem 0 0 0;
+
+  &.no-top-spacing {
+    margin-top: 0;
+  }
+}
+
+figcaption {
+  @include font-size-and-line-height(16, 1.25);
+  margin-left: 3rem;
+}

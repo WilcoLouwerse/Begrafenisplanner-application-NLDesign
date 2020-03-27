@@ -1,0 +1,30 @@
+.theme--large-padding .content:not(.content--wide) {
+  @include apply-large-padding();
+}
+
+// Fix for the --no-gutter modifier, add an extra gutter of padding, but not on
+// the first column of the row.
+// This selector is not something to be proud of...
+.theme--large-padding .row--no-gutter [class^='col-']:not(:first-child) .content {
+
+  @include media-breakpoint-up(md) {
+    padding-left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-md} + #{$grid-text-padding - $grid-gutter-width / 2} + #{$grid-gutter-width * 0.5});
+    padding-right: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-md} + #{$grid-text-padding - $grid-gutter-width / 2} + #{$grid-gutter-width * 0.5});
+
+    &.content--wide {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding-left: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg} + #{$grid-text-padding - $grid-gutter-width / 2} + #{$grid-gutter-width * 0.5});
+    padding-right: calc((100% + #{$grid-gutter-width}) / #{$grid-num-content-columns-lg} + #{$grid-text-padding - $grid-gutter-width / 2} + #{$grid-gutter-width * 0.5});
+
+    &.content--wide {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+

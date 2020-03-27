@@ -1,0 +1,8 @@
+/* stylelint-disable */
+<% if (hash) { %>$icon-hash: '<%= hash %>';
+<% } %>
+<% if (iconsStyles) { %>$icons: (<% for (var glyphIdx = 0; glyphIdx < glyphs.length; glyphIdx++) { %>
+    icon-<%= glyphs[glyphIdx] %>: '\<%= codepoints[glyphIdx] %>',<% } %>
+)<% } %>
+/* stylelint-enable */
+  

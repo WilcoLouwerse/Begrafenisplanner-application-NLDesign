@@ -1,0 +1,85 @@
+// Include our own variables in order to override the grid sizes
+@import '../settings/font';
+@import '../settings/grid';
+@import '../settings/spacing';
+@import '../settings/z-indexes';
+@import '../settings/colors';
+
+@import '../tools/responsive';
+@import '../tools/functions';
+
+@import 'bootstrapgrid/bootstrap-grid';
+@import 'bootstrapgrid/utilities-responsive';
+
+.clearfix {
+  @include clearfix();
+}
+
+.row--no-gutter {
+
+  @each $bp in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($bp) {
+
+      & > [class^='col-#{$bp}'] {
+        padding-right: 0;
+
+        &:not(:first-child) {
+          padding-left: 0;
+        }
+
+        &:last-child {
+          padding-right: $grid-gutter-width * 0.5;
+        }
+      }
+    }
+  }
+}
+
+@each $bp in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($bp) {
+
+    .col-#{$bp}-up--dotted {
+      border-right: 1px dotted $grijs-3;
+
+      &:last-child {
+        border-right: 0;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(xxl) {
+
+  .container {
+
+    // Disable xxl breakpoint by default
+    max-width: map_get($container-max-widths, xl);
+
+    .theme--xxl-breakpoint &,
+    .use-xxl-break-point & {
+
+      // Only enable it when additional class is set
+      max-width: map_get($container-max-widths, xxl);
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+
+  .col-sm-modal {
+    display: none;
+  }
+
+  .col-sm-modal:target {
+    background-color: #ebebeb;
+    bottom: 0;
+    display: block;
+    left: 0;
+    padding: $default-margin;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: z-index(modal);
+  }
+}

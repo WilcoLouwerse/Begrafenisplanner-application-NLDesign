@@ -1,0 +1,73 @@
+@import '../../tools/icon';
+@import '../../tools/font-size';
+@import '../../tools/responsive';
+
+@import '../../settings/colors';
+@import '../../settings/spacing';
+
+.list--filter {
+  font-size: $font-size-xxs;
+  margin-left: 0;
+
+  .combobox & {
+    margin-bottom: 0;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: $font-size-xs;
+  }
+
+  li:hover,
+  li:focus {
+    background-color: $filterlist-selected;
+  }
+
+  li {
+    background-color: $hemelblauw-tint-2;
+    cursor: pointer;
+    display: block;
+    height: 3.6rem;
+    margin-bottom: 1rem;
+    padding: 0.6rem 1rem 0 0.8rem;
+    position: relative;
+  }
+}
+
+.list--filter-inline {
+
+  li {
+    display: inline-block;
+    margin-right: 0.6rem; // li items hebben altijd 0.4rem afstand, dus 0.4+0.6=1rem;
+    width: auto;
+  }
+}
+
+.list--filter-button {
+  background: transparent;
+  border: 0;
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 0 0 0 0.6rem;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+// TODO: Verwijderen voor volgende major version release (5.x.x).
+.list--filter-closable {
+
+  li {
+    padding-right: 3.4rem;
+
+    &::before {
+      @include include-icon(icon-cross);
+      font-size: 1.3rem;
+      line-height: inherit;
+      position: absolute;
+      right: -1.6rem;
+      text-align: center;
+      top: 0.6rem;
+      width: 3.6rem;
+    }
+  }
+}

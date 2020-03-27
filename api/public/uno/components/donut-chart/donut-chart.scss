@@ -1,0 +1,59 @@
+@import '../../settings/colors';
+
+.donut-chart {
+  align-items: center;
+  color: #007bc7;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+  &__chart {
+    min-width: 200px;
+    position: relative;
+    // I wrote an entire logic for dynamicly resizing the donut chart.
+    // Turns out, we decided to make the donut chart available in 170px only.
+    // In the future, when there are more sizes needed, just set the
+    // width to 50% and Bob's your uncle.
+    width: 170px;
+  }
+
+  &__title {
+    color: $black-text;
+  }
+
+  &__subtitle {
+    display: block;
+    font-weight: 700;
+  }
+
+  &__canvas {
+    display: block;
+    width: 100%;
+  }
+
+  &__inner {
+    align-items: center;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    font-size: 2.2rem;
+    font-weight: 700;
+    justify-content: center;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    &--small {
+      font-size: 1.6rem;
+      font-weight: 400;
+    }
+  }
+}
+
+@each $color, $hex in $rijkshuisstijl {
+
+  .donut-chart--#{$color} {
+    color: nth($hex, 1);
+  }
+}

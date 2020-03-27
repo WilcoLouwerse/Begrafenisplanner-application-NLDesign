@@ -1,0 +1,146 @@
+@import '../../settings/colors';
+@import '../../settings/spacing';
+@import '../../settings/z-indexes';
+
+@import '../../tools/functions';
+@import '../../tools/vendors';
+
+$radio-block-height: 4.8rem;
+$radio-border: 0.1rem;
+$radio-width: 1.8rem;
+$radio-check-width: 0.8rem;
+$radio-label-spacing: 0.8rem;
+
+$radio-width--compact: 1.6rem;
+$radio-check-width--compact: 0.6rem;
+$radio-label-spacing--compact: 0.6rem;
+
+.input__group--radio {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.input__label--radio {
+  background-color: $grijs-1;
+  border: 0.1rem $grijs-1 solid;
+  cursor: pointer;
+  display: inline-block;
+  min-height: $radio-block-height;
+  padding: 1.2rem 2rem 1rem $radio-block-height - $radio-border;
+  position: relative;
+  vertical-align: middle;
+  width: 100%;
+
+  &:before {
+    background-color: $white;
+    border-radius: 100%;
+    box-shadow: 0 0 0 (($radio-width - $radio-check-width - ($radio-border*2)) / 2) $white, 0 0 0 (($radio-width - $radio-check-width) / 2) $grijs-5;
+    content: '';
+    display: block;
+    height: $radio-check-width;
+    left: 0;
+    margin-left: ($radio-block-height - $radio-width + $radio-check-width)/2;
+    position: absolute;
+    top: 2rem - $radio-border;
+    width: $radio-check-width;
+  }
+}
+
+.input__control--radio {
+  //geen height en width 0, want dan beweegt het scherm niet mee als het focus krijgt.
+  height: 1px;
+  opacity: 0;
+  position: absolute;
+  width: 1px;
+  z-index: z-index(main, input);
+
+  &:checked {
+
+    & + .input__label--radio {
+      background-color: transparent;
+      border: 0.1rem $hemelblauw solid;
+
+      &:before {
+        box-shadow: 0 0 0 0.5rem $hemelblauw;
+      }
+    }
+  }
+
+  &:focus,
+  &:active {
+
+    & + .input__label--radio {
+      outline: 0.1rem solid $hemelblauw;
+
+      [class*='background--'] & {
+        outline-color: inherit;
+      }
+    }
+  }
+
+  &:disabled,
+  &:disabled:active,
+  &:disabled:focus {
+
+    & + .input__label--radio {
+      cursor: not-allowed;
+      opacity: 0.4;
+
+      &:before {
+        box-shadow: 0 0 0 (($radio-width - $radio-check-width - ($radio-border*2)) / 2) $white, 0 0 0 (($radio-width - $radio-check-width) / 2) $grijs-5;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &:disabled:checked {
+
+    & + .input__label--radio:before {
+      box-shadow: 0 0 0 0.5rem $lichtblauw;
+    }
+  }
+}
+
+.input__group--compact {
+  margin-bottom: 0;
+
+  .input__label--radio {
+    border: 0;
+    min-height: initial;
+    padding-left: 2.7rem;
+
+    @include ie-only() {
+      min-height: auto;
+    }
+
+    &::before {
+      box-shadow: 0 0 0 (($radio-width--compact - $radio-check-width--compact - ($radio-border*2)) / 2) $white, 0 0 0 (($radio-width--compact - $radio-check-width--compact) / 2) $grijs-5;
+      height: $radio-check-width--compact;
+      margin-left: ($radio-width - $radio-border * 2) / 2;
+      top: $default-margin;
+      width: $radio-check-width--compact;
+    }
+  }
+
+  .input__control--radio:focus,
+  .input__control--radio:active {
+
+    & + .input__label--radio {
+      outline: none;
+    }
+
+    & + .input__label--radio:before {
+      box-shadow: 0 0 0 (($radio-width - $radio-check-width - ($radio-border*2)) / 2) $white, 0 0 0 (($radio-width--compact - $radio-check-width--compact) / 2) $grijs-5,  0 0 0 0.7rem $donkergeel;
+    }
+
+    &:checked {
+
+      & + .input__label--radio:before {
+        box-shadow: 0 0 0 0.5rem $hemelblauw, 0 0 0 0.7rem $donkergeel;
+      }
+    }
+  }
+}

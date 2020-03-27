@@ -1,0 +1,228 @@
+@import '../../settings/colors';
+@import '../../settings/font';
+@import '../../tools/a11y';
+@import '../../tools/icon';
+@import '../../tools/responsive';
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-left: 0;
+}
+
+.pagination--simple {
+  justify-content: space-between;
+
+  .pagination__item {
+    flex: 1 0 auto;
+  }
+}
+
+.pagination--dots {
+
+  .pagination__item {
+    font-size: 1.6rem;
+    font-weight: bold;
+    min-width: 44px;
+    padding: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    
+    .pagination__link {
+      color: $black;
+      text-decoration: none;
+    }
+
+    &--active {
+      background: $link-blue;
+      color: $white;
+    }
+
+    &--first:not(.pagination__item--active) {
+
+      @include media-breakpoint-up(sm) {
+
+        &:after {
+          content: '...';
+        }
+      }
+    }
+    
+    &--last:not(.pagination__item--active) {
+
+      @include media-breakpoint-up(sm) {
+
+        &:before {
+          content: '...';
+        }
+      }
+    }
+
+    &--previous, &--next {
+
+      .pagination__link {
+        color: $link-blue;
+
+        &:before, &:after {
+          font-size: $font-size-xs;
+        }
+      }
+    }
+
+    @include media-breakpoint-down(xs) {
+
+      &:not(.pagination__item--previous):not(.pagination__item--next):not(.pagination__item--active):not(.pagination__item--last)  {
+        display: none;
+      }
+
+      &--active, &--last {
+        padding: 1rem 0;
+        text-transform: lowercase;
+      }
+
+      &--active {
+        background: unset;
+        color: $black;
+        padding: 1rem;
+        padding-right: 0;
+
+        &:after{
+          content: 'van';
+          font-weight: 400;
+          padding-left: 1rem;
+        }
+      }
+
+      &--last {
+        padding-right: 1rem;
+        text-transform: lowercase;
+      }
+
+      &--previous, &--next  {
+
+        .pagination__link {
+          background: $donkerblauw-tint-1;
+          padding: 1rem;
+        }
+  
+        .pagination__link--previous, .pagination__link--next  {
+          display: none;
+        }
+      }
+    }
+
+    &:last-child {
+      padding-right: 1rem;
+    }
+  }
+}
+
+.pagination__item {
+  display: inline;
+  flex: 0 0 auto;
+  padding-right: 1rem;
+
+  @include media-breakpoint-up(sm) {
+    padding-right: 3rem;
+  }
+
+  &:last-child {
+    justify-content: flex-end;
+    padding-right: 0;
+    text-align: right;
+  }
+}
+
+.pagination__item--previous {
+  order: -1;
+}
+
+.pagination__link {
+
+  &:focus {
+    outline: 4px solid $donkergeel;
+    outline-offset: 2px;
+  }
+
+  .pagination__item--next &,
+  .pagination__item--previous & {
+    width: 100%;
+
+    &:before,
+    &:after {
+      display: inline-block;
+      font-size: 0.8rem;
+      line-height: inherit;
+      order: -1;
+      // IE8 - IE11 fix: text decoration op underline zetten en daarna weer op none zetten.
+      text-decoration: underline;
+    }
+
+    &:after,
+    &:before {
+      text-decoration: none;
+    }
+
+    &:before {
+      @include include-icon(icon-chevron-left);
+      padding-right: 0.25rem;
+    }
+
+    &:after {
+      @include include-icon(icon-chevron-right);
+      padding-left: 0.25rem;
+    }
+  }
+
+  .pagination__item--previous & {
+
+    &:after {
+      display: none;
+    }
+  }
+
+  .pagination__item--next & {
+
+    &:before {
+      display: none;
+    }
+  }
+
+  .pagination__item--first & {
+    margin-right: 1rem;
+
+    @include media-breakpoint-up(sm) {
+      margin-right: 2rem;
+    }
+  }
+
+  .pagination__item--last & {
+
+    @include media-breakpoint-up(sm) {
+      margin-left: 2rem;
+    }
+  }
+
+  .pagination__item--previous &,
+  .pagination__item--next & {
+
+    @include media-breakpoint-down(sm) {
+
+      > span {
+        @include sr-only();
+      }
+    }
+  }
+}
+
+// The :not train will be deprecated soon
+.pagination:not(.pagination--simple):not(.pagination--dots) > .pagination__item--previous:first-child,
+.pagination:not(.pagination--simple):not(.pagination--dots) > .pagination__item--previous:first-child + .pagination__item--next {
+  display: none;
+}
+
+.pagination:not(.pagination--simple):not(.pagination--dots) > .pagination__item--active:first-child ~ .pagination__item--previous,
+.pagination:not(.pagination--simple):not(.pagination--dots) .pagination__item--active + .pagination__item--previous + .pagination__item--next {
+  // Use visibility instead of display in order to keep the reserved width
+  visibility: hidden;
+}

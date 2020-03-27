@@ -1,0 +1,246 @@
+@import '../../theme/base';
+
+@import '../../settings/colors';
+@import '../../settings/font';
+@import '../../settings/spacing';
+@import '../../settings/z-indexes.scss';
+
+@import '../../tools/icon';
+@import '../../tools/functions';
+@import '../../tools/responsive';
+
+$tab-height: 6rem;
+$tab-height--inline: 4.8rem;
+
+ul.tab {
+  @include clearfix();
+
+  display: flex;
+  justify-content: space-between;
+  margin: 0 -0.5rem;
+}
+
+ul.tab--setup {
+  display: block;
+
+  > .tab__tab {
+    display: inline-block;
+    float: none;
+  }
+}
+
+.tab__tab {
+  background: $grijs-1;
+  flex-grow: 1;
+  height: $tab-height;
+  line-height: $tab-height;
+  list-style-type: none;
+  margin: 0 0.5rem;
+  text-align: center;
+  white-space: nowrap;
+
+  a {
+    display: block;
+    overflow: hidden;
+    padding: 0 2rem;
+    text-overflow: ellipsis;
+
+    &:focus {
+      outline: 2px solid $outline-color;
+      outline-offset: -2px;
+
+      [class*='background--'] & {
+        outline-color: inherit;
+      }
+    }
+
+    & > .label, & > .badge {
+      display: inline-block;
+      margin-left: 1rem;
+      margin-right: -2rem;
+      text-decoration: none;
+      transform: translate3d(0, -2px, 0);
+    }
+  }
+}
+
+.tab__tab--more {
+
+  a {
+    text-overflow: clip;
+  }
+
+  &.tab__tab--more-open,
+  &:hover {
+    filter: drop-shadow(0 1px 2px rgba(43, 43, 43, 0.5));
+    overflow: visible;
+    position: relative;
+    z-index: z-index(main, tabs);
+
+    & > .tab__more {
+      display: block;
+      position: absolute;
+      right: 0;
+      top: $tab-height;
+      z-index: z-index(main, tabs);
+
+      .tab--inline & {
+        top: $tab-height--inline;
+      }
+    }
+
+  }
+}
+
+.tab__tab--hidden {
+  display: none;
+}
+
+.tab__more {
+  display: none;
+
+  .tab__tab {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+
+    .tab--inline & {
+      background: $white;
+    }
+  }
+}
+
+.tab__pane {
+  display: none;
+  padding-bottom: $default-margin * 2;
+}
+
+.tab__pane--active {
+  display: block;
+
+  ~ .tab__pane--active {
+    // Prevent multiple active panes
+    display: none;
+  }
+}
+
+.tab__tab--active {
+  background: $white;
+
+  & > a {
+    color: $black-text;
+    cursor: default;
+    font-weight: bold;
+    pointer-events: none;
+    text-decoration: none;
+  }
+}
+
+.tab--inline {
+
+  .tab__tab {
+    background: transparent;
+    height: $tab-height--inline;
+    line-height: $tab-height--inline;
+    position: relative;
+
+    &:not(.tab__tab--disabled):hover {
+      background: $grijs-1;
+    }
+
+    &::before {
+      border-bottom: 1px solid $grijs-2;
+      bottom: 0;
+      content: ' ';
+      left: -1rem;
+      position: absolute;
+      right: -1rem;
+    }
+
+    &:first-child {
+
+      &::before {
+        left: 0;
+      }
+    }
+
+    &:last-child {
+
+      &::before {
+        right: 0;
+      }
+    }
+  }
+
+  .tab__tab--more {
+
+    text-decoration: none;
+
+    &.tab__tab--more-open,
+    &:hover {
+      background: $white;
+
+      &::before {
+        border-bottom: 0;
+      }
+    }
+
+    .tab__tab::before {
+      border: transparent;
+    }
+  }
+
+  .tab__tab--active {
+    border: 1px solid $grijs-2;
+    border-bottom: 1px solid transparent;
+
+    &::before {
+      border-bottom: 1px solid transparent;
+    }
+  }
+}
+
+.tab__content--inline {
+  border-bottom: 1px solid $grijs-2;
+  margin-bottom: 2 * $default-margin;
+}
+
+.tab__more-link {
+  margin-right: 1.8rem;
+  position: relative;
+  text-decoration: underline;
+
+  &::after {
+    // IE Fix
+    text-decoration: underline;
+  }
+
+  &::after {
+    @include include-icon(icon-collapse-down);
+    display: inline-block;
+    text-decoration: none;
+
+    .tab__tab--more.tab__tab--more-open &,
+    .tab__tab--more:hover & {
+      content: map_get($icons, icon-collapse-up);
+    }
+  }
+}
+
+.tab__tab--disabled {
+  // This fails wcag rule 1.4.3, but that rule does not apply for inactive elements,
+  // see https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html,
+  //
+  // "Text or images of text that are *part of an inactive user interface component*,
+  // that are pure decoration, that are not visible to anyone, or that are part of a
+  // picture that contains significant other visual content, have no contrast requirement."
+  background: $grijs-1;
+  color: $grijs-3;
+
+  a {
+    color: $grijs-3;
+    cursor: not-allowed;
+    pointer-events: none;
+    text-decoration: none;
+  }
+}

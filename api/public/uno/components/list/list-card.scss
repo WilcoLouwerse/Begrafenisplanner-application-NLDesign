@@ -1,0 +1,17 @@
+@import '../../tools/responsive';
+@import '../../settings/lists';
+@import '../../settings/spacing';
+
+.list--card {
+  margin-bottom: $default-margin * 2;
+  margin-left: 0;
+
+  @include media-breakpoint-up(sm) {
+
+    &:not(.list--card-small) {
+      display: flex;
+      position: relative;
+      width: auto;
+    }
+  }
+}

@@ -1,0 +1,74 @@
+@import '../settings/font';
+@import '../settings/spacing';
+
+@import '../tools/responsive';
+
+// Sets the font-size and the line-height.
+// The line-height is based on the font-size and multiplied by the line-height-multiplier
+@mixin font-size-and-line-height($font-size, $line-height-multiplier: 1.5) {
+  font-size: #{$font-size / 10}rem;
+  line-height: #{$font-size / 10 * $line-height-multiplier}rem;
+}
+
+@mixin font-size($font-size) {
+  font-size: #{$font-size / 10}rem;
+}
+
+@mixin title-xl() {
+  display: block;
+  line-height: $line-height-xl;
+  margin-bottom: $default-margin;
+
+  @include media-breakpoint-up(md) {
+    line-height: $line-height-xxl;
+  }
+
+  @include media-breakpoint-up(xl) {
+    line-height: $line-height-xxxl;
+  }
+}
+
+@mixin title-l() {
+  display: block;
+  line-height: $line-height-xl;
+  margin-bottom: $spacing-xs;
+}
+
+@mixin title-m($weight: false) {
+  display: block;
+  font-size: $font-size-l;
+  font-weight: normal;
+  line-height: $line-height-l;
+  margin-bottom: $spacing-xs;
+
+  @include media-breakpoint-up(md) {
+    font-size: $font-size-l;
+    line-height: $line-height-l;
+  }
+
+  @include media-breakpoint-up(xl) {
+    font-size: $font-size-l + 0.1;
+  }
+
+  @if $weight {
+    font-weight: $weight;
+  }
+
+  @else {
+    font-weight: normal;
+  }
+}
+
+@mixin title-s() {
+  display: block;
+  font-size: $font-size-s;
+  line-height: $line-height-m;
+  margin-bottom: $spacing-xs;
+}
+
+@mixin title-xs() {
+  display: block;
+  font-size: $font-size-xs;
+  line-height: $line-height-s;
+  margin-bottom: 0;
+}

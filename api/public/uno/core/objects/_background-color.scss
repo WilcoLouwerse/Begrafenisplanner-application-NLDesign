@@ -1,0 +1,35 @@
+@each $color, $hex in $rijkshuisstijl {
+
+  .background--#{$color} {
+    background-color: nth($hex, 1);
+    color: nth($hex, 4);
+
+    a {
+      color: nth($hex, 4);
+      text-decoration: underline;
+    }
+  }
+
+  .background--#{$color}-tint-1 {
+    background-color: nth($hex, 2);
+    color: $black-text;
+  }
+
+  .background--#{$color}-tint-2 {
+    background-color: nth($hex, 3);
+    color: $black-text;
+  }
+}
+
+@each $color, $hex in $grijstinten {
+
+  .background--#{$color} {
+    background-color: nth($hex, 1);
+    color: nth($hex, 2);
+
+    a {
+      color: nth($hex, 2);
+      text-decoration: underline;
+    }
+  }
+}

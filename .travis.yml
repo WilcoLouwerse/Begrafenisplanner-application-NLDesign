@@ -1,0 +1,108 @@
+sudo: required
+
+services:
+  - docker
+  
+branches:
+  only:
+  - master
+  - acceptation
+  - staging
+  - testing
+  - development
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+before_install:
+  - curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash -s -- --version v2.9.0
+
+install: true
+
+before_script:
+  - sudo service postgresql stop
+  # wait for postgresql to shutdown
+  - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
+
+script:
+# Doing branchs stuff
+#  - if [ "$TRAVIS_BRANCH" = "master" ]; then env: APP_ENV=prod ; fi
+#  - if [ "$TRAVIS_BRANCH" = "acceptation" ]; then env: APP_ENV=acce ; fi
+#  - if [ "$TRAVIS_BRANCH" = "staging" ]; then env: APP_ENV=stag ; fi
+#  - if [ "$TRAVIS_BRANCH" = "testing" ]; then env: APP_ENV=test ; fi
+#  - if [ "$TRAVIS_BRANCH" = "development" ]; then env: APP_ENV=dev ; fi  
+#  - if jq '.extra.symfony.id != null' api/composer.json -e > /dev/null; then echo 'composer.json must not have symfony.id' 1>&2 fi
+  - docker-compose pull --ignore-pull-failures
+  - docker-compose build --pull --build-arg APP_ENV=$APP_ENV
+  - docker-compose up -d
+  - sleep 30
+# @todo The following lines currently stop the build from passing, that is an issue that needs to be fixed  
+#  - docker-compose exec -T php bin/console security:check
+#  - curl -f http://localhost # Client
+#  - curl -f http://admin.localhost # Admin
+#  - curl -f http://api.localhost # API
+#  - curl -f http://stag.localhost # API
+#  - curl -f http://dev.localhost  # API
+#  - curl -fk https://localhost # Client (HTTP/2)
+#  - curl -fk https://localhost:444 # Admin (HTTP/2)
+#  - curl -fk https://localhost:8443 # API (HTTP/2)
+#  - curl -fk https://localhost:8444 # Varnish (HTTP/2)
+#  - helm lint ./api/helm/api/
+
+before_deploy:
+  - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin "$DOCKER_REGISTRY"
+
+deploy:
+  - provider: script
+    script: 
+        - docker-compose push
+    skip_cleanup: true
+    on:
+        branch: master
+  - provider: script
+    script: 
+        - docker-compose push
+    skip_cleanup: true
+    on:
+        branch: development
+  - provider: script
+    script: 
+        - docker-compose push
+    skip_cleanup: true
+    on:
+        branch: testing
+  - provider: script
+    script: 
+        - docker-compose push
+    skip_cleanup: true
+    on:
+        branch: acceptation
+  - provider: script
+    script: 
+        - docker-compose push
+    skip_cleanup: true
+    on:
+        branch: staging  
+        
+# kubectl rollout restart       
+
+# we also want to warn the common-ground dev page that a change has been made 
+    
+    
+#deploy:
+#  provider: script
+#  script: docker-compose push test-pc-php 
+#  skip_cleanup: true
+#  on:
+#    repo: ConductionNL/Proto-component-commonground
+#    branch: testing
+    
+#deploy:
+#  provider: script
+#  script: docker-compose push dev-pc-php 
+#  skip_cleanup: true
+#  on:
+#    repo: ConductionNL/Proto-component-commonground
+#    branch: development

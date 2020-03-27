@@ -1,0 +1,113 @@
+/*
+  No scroll
+*/
+.no-scroll {
+  overflow: hidden;
+}
+
+/*
+  Flexbox
+*/
+.align-flex-start {
+  align-items: flex-start;
+}
+
+.is-hidden {
+  display: none;
+}
+
+/*
+  Typography
+*/
+.break-all {
+  word-break: break-all;
+}
+
+.nowrap {
+  word-wrap: nowrap;
+}
+
+.capitalize {
+  font-variant: small-caps;
+}
+
+.dimmed {
+  color: $black-60;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+/*
+  Spacing Top
+*/
+.spacing-top-s {
+  margin-top: 0.4rem*3;
+}
+
+.spacing-top-m {
+  margin-top: 0.4rem*4;
+}
+
+.spacing-top-l {
+  margin-top: $default-margin * 2;
+
+  @include media-breakpoint-up(md) {
+    margin-top: $default-margin * 3;
+  }
+}
+
+/*
+  Spacing bottom
+*/
+.spacing-bottom-xxs {
+  margin-bottom: 0.4rem * 2;
+}
+
+.spacing-bottom-xs {
+  margin-bottom: 0.4rem * 2;
+}
+
+.spacing-bottom-s {
+  margin-bottom: 0.4rem * 3;
+}
+
+.spacing-bottom-m {
+  margin-bottom: 0.4rem * 4;
+}
+
+.spacing-bottom-l {
+  margin-bottom: 0.4rem * 5;
+}
+
+.spacing-bottom-xl {
+  margin-bottom: $default-margin * 3;
+}
+
+.spacing-bottom-xxl {
+  margin-bottom: $default-margin * 4;
+}
+
+/*
+  Spacing inner
+*/
+.spacing-inner-m {
+  padding: $default-margin * 2;
+}
+
+.spacing-none {
+  margin: 0;
+}

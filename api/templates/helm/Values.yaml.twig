@@ -1,0 +1,122 @@
+# Default values for api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+settings:
+  registryBase: {{ container_registry_base }}
+  projectName: {{ container_project_name }}
+  name: {{ app_name }}
+  title: {{ app_title }}
+  version: {{ app_version }}
+  description: '{{ app_description }}'
+  repro: '{{ app_repro }}'
+  domain: {{ app_domain }}  
+  organisationName: {{ organization_name }}
+  email: {{ organization_email }}
+  country: {{ organization_country }}
+  state: {{ organization_state }}
+  locality: {{ organization_locality }}
+  unit: {{ organization_unit }}  
+  demo: {{ app_demo }}
+  env: {{ app_env }}
+  debug: {{ app_debug }}
+  replicaCount: 1
+  corsAllowOrigin: ['*']
+  trustedHosts: '{{ trusted_hosts }}'
+  pullPolicy: Always
+  # You will need these proxies on kubernetes
+  trustedProxies:
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
+  loadbalancerEnabled: false
+  # If you want to enable NLX you are requered to add the appropreate certificates to you nlx-settings folder (located in the /api folder)
+  nlxInwayEnabled: {{ nlx_inway }}
+  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
+  notificationEnabled: false
+  audittrailEnabled: false
+  authorisationEnabled: false
+  healthEnabled: false
+  archiveEnabled: false
+
+
+php:
+  repository: docker.io/conduction/protocomponent-php
+  tag: latest
+  mercure:
+    jwtSecret: ""
+  env: prod
+  secret: ""
+
+nginx:
+  repository: docker.io/conduction/protocomponent-nginx
+  tag: latest
+  pullPolicy: Always
+  replicaCount: 1
+
+varnish:
+  enabled: true
+  #url: https://example.com
+  repository: docker.io/conduction/protocomponent-varnish
+  tag: latest
+  pullPolicy: Always
+  replicaCount: 1
+
+postgresql:
+  enabled: true
+  imageTag: 10-alpine
+  # If bringing your own PostgreSQL, the full uri to use
+  #url: pgsql://api-platform:!ChangeMe!@example.com/api?serverVersion=10.1
+  postgresqlUsername: "example"
+  postgresqlPassword: "!ChangeMe!"
+  postgresqlDatabase: "api"
+  # Persistent Volume Storage configuration.
+  # ref: https://kubernetes.io/docs/user-guide/persistent-volumes
+  persistence:
+    enabled: false
+  pullPolicy: IfNotPresent
+#  image:
+#    repository: postgres
+#    tag: alpine
+
+mercure:
+  enabled: true
+  publishUrl: http://mercure/hub
+  subscribeUrl: https://mercure.example.com/hub
+  allowAnonymous: "1"
+  corsAllowedOrigins: "^https?://.*?\\.example\\.com$"
+  acmeHosts: "" # TODO: Fix the Mercure chart
+  service:
+    type: NodePort
+    port: 80
+
+ingress:
+  annotations:
+    # kubernetes.io/ingress.global-static-ip-name: chart-ip
+    # kubernetes.io/ingress.class: gce
+    # kubernetes.io/tls-acme: "true"
+  tls:
+    # Secrets must be manually created in the namespace, you can also use cert-manager.
+    # - hosts:
+      # - example.com
+      # - mercure.example.com
+  hosts:
+    api:
+      host: example.com
+      serviceName: varnish
+    mercure:
+      host: mercure.example.com
+      serviceName: mercure
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi

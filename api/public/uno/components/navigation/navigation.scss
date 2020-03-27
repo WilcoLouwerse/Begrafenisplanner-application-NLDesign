@@ -1,0 +1,22 @@
+@import '../../settings/colors';
+@import '../../settings/grid';
+@import '../../settings/font';
+@import '../../tools/font-size';
+@import '../../tools/responsive';
+@import '../../tools/icon';
+@import '../../tools/a11y';
+
+/**
+ * #navigation variables
+ */
+$navigation-transition: 0.1s;
+
+/**
+ * navigation modules
+ */
+
+@import '_navigation-top-nav'; // include needs to be higher
+@import '_navigation-popout';
+@import '_navigation-mobile';
+@import '_navigation-nav';
+

@@ -1,0 +1,58 @@
+@import '../../settings/colors';
+@import '../../core/grid';
+
+.list--links {
+  margin-left: 0;
+
+  a {
+    color: $link-blue;
+    display: inline-block;
+    text-decoration: underline;
+
+    [class*='background--'] & {
+      color: inherit;
+    }
+
+    &:hover, &:focus {
+      text-decoration: underline;
+    }
+
+    &:visited {
+      color: $violet;
+    }
+
+    &:focus {
+      background: $donkergeel;
+      color: $black;
+      outline: none;
+    }
+    
+    [class*='background--donkergeel'] & {
+
+      &:focus {
+        background: $donkergeel-focus-color;
+        color: $donkergeel-focus-text-color;
+      }
+    }
+  }
+
+  [role=heading].is-h2,
+  [role=heading].is-h3,
+  [role=heading].is-h4,
+  [role=heading].is-h5,
+  h2,
+  h3,
+  h4,
+  h5 {
+    margin-bottom: 0;
+  }
+
+  .meta {
+    font-size: 1.4rem;
+    padding: 0;
+
+    @include media-breakpoint-up(md) {
+      font-size: 1.5rem;
+    }
+  }
+}

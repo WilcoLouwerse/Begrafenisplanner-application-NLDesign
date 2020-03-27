@@ -1,0 +1,13 @@
+.main,
+main {
+  padding-top: $default-margin*2;
+  z-index: z-index(main);
+
+  @include media-breakpoint-up(sm) {
+    min-height: 70vh;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding-top: $default-margin * 3;
+  }
+}

@@ -1,0 +1,32 @@
+ol, ul {
+  margin: 0 0 0 $list-margin-left;
+  padding: 0;
+
+  ul {
+    padding-top: $default-margin;
+  }
+}
+
+.content {
+
+  ul, ol {
+    margin-bottom: $default-margin * 2;
+  }
+}
+
+li {
+  break-inside: avoid;
+  // For Safari / Chrome
+  /* stylelint-disable */
+  -webkit-column-break-inside: avoid;
+  /* stylelint-enable */
+
+  line-height: 2.4rem;
+  margin-bottom: $spacing-s;
+
+  & ul,
+  & ol {
+    margin-left: $list-margin-left;
+  }
+
+}

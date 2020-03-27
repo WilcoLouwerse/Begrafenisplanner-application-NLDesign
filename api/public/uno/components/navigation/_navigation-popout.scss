@@ -1,0 +1,115 @@
+@import '../../settings/animations';
+@import '../../settings/z-indexes';
+
+@import '../../tools/functions';
+@import '../../tools/vendors.scss';
+
+$navigation-spacing: 2rem;
+
+.navigation {
+  align-items: center;
+  display: flex;
+  list-style: none;
+  margin: 0;
+}
+
+.navigation__item {
+  margin: 0;
+  position: relative;
+}
+
+.navigation__link,
+.navigation__link[rel=external]{
+  color: $white;
+  display: block;
+  line-height: 1;
+  padding: 2rem 1.5rem 1.8rem 1.5rem;
+  text-decoration: none;
+  white-space: nowrap;
+
+  @include ie-only() {
+    padding-top: 2.4rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding-left: $navigation-spacing;
+    padding-right: $navigation-spacing;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:visited,
+  &:hover {
+    color: $white;
+  }
+
+  &:focus {
+    color: $black;
+  }
+
+  .navigation__item--selected & {
+    font-weight: bold;
+  }
+
+  &:after {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.navigation__icon {
+  font-size: 1rem;
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
+  position: relative;
+  top: 0.4rem;
+  vertical-align: middle;
+
+  @include ff-only() {
+    line-height: 1;
+    top: 0.2rem;
+  }
+
+  &:before {
+    position: absolute;
+    text-decoration: none;
+    transition: $duration-fast;
+
+    .navigation__item--has-popout:hover & {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.navigation__popout {
+  background: $white;
+  box-shadow: 0 0 15px rgba($black, 0.3);
+  left: 10px;
+  min-width: 270px;
+  opacity: 0;
+  padding: 1.6rem 1rem 0 1rem;
+  pointer-events: none;
+  position: absolute;
+  top: 54px;
+  transform: translate3d(0, -0.4rem, 0);
+  visibility: hidden;
+  z-index: z-index(navigation, popout);
+
+  .navigation__item--has-popout:hover & {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+  }
+}
+
+.navigation__popout-items {
+  color: $black;
+  margin-bottom: 0;
+}
+
+.navigation__popout-link {
+  color: $black;
+}

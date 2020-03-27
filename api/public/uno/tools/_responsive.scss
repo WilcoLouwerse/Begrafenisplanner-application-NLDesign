@@ -1,0 +1,13 @@
+// Wrapper for bootstrap mixins
+@import '../core/bootstrapgrid/variables';
+@import '../core/bootstrapgrid/mixins/breakpoints';
+@import '../core/bootstrapgrid/mixins/clearfix';
+@import '../core/bootstrapgrid/mixins/grid';
+
+@mixin retina-only() {
+  /* stylelint-disable */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    @content;
+  }
+  /* stylelint-enable */
+}

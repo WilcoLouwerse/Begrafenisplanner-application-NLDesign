@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ include "name" . }}-nginx
+  labels:
+    app.kubernetes.io/name: {{ include "name" . }}-nginx
+    app.kubernetes.io/part-of: {{ include "name" . }}
+    helm.sh/chart: {{ include "chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "name" . }}-nginx
+        app.kubernetes.io/part-of: {{ include "name" . }}
+        helm.sh/chart: {{ include "chart" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+    spec:
+      containers:
+        - name: {{ include "name" . }}-nginx
+          image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-nginx:{{ .Values.settings.env }}"
+          imagePullPolicy: {{ .Values.settings.pullPolicy }}
+          ports:
+            - containerPort: 80
+          env:
+            - name: PHP_SERVICE
+              value: {{ include "name" . }}-php
+            - name: NGINX_HOST
+              value: {{ include "name" . }}-php
+            - name: BACKENDS
+              value: {{ include "name" . }}-php
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+    {{- end }}

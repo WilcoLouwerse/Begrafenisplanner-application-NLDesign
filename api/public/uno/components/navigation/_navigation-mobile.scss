@@ -1,0 +1,26 @@
+.navigation-mobile {
+  align-items: stretch;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  width: 100%;
+}
+
+.navigation-mobile__button {
+  border-radius: 0;
+  flex: 1;
+  line-height: 1;
+  padding-bottom: 1rem;
+  padding-top: 1.2rem;
+  text-align: center;
+
+  .icon {
+    display: block;
+    margin-bottom: 0.2rem;
+    margin-right: 0;
+  }
+
+  span {
+    font-size: 14px;
+  }
+}

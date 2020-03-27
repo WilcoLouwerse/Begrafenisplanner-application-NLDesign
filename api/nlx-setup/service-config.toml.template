@@ -1,0 +1,14 @@
+[services]
+
+# This block defines an service exposed by this inway.
+# A single inway can expose multiple services, therefore this block can be added multiple times.
+# The name of the API (in this example SwaggerPetstore) must be unique for each block.
+    [services.ProtoComponent]
+    # In this example we expose the petstore.swagger.io website.
+    endpoint-url = "http://pc.zaakonline.nl"
+    documentation-url = "http://pc.zaakonline.nl"
+    api-specification-document-url = "http://pc.zaakonline.nl/schema/openapi.yaml"
+    authorization-model = "none"
+    public-support-contact = "info@conduction.nl"
+    tech-support-contact = "info@conduction.nl"
+    #ca-cert-path = "/cert/organisation.crt"

@@ -1,0 +1,74 @@
+parameters:
+    # Adds a fallback VARNISH_URL if the env var is not set.
+    # This allows you to run cache:warmup even if your
+    # environment variables are not available yet.
+    # You should not need to change this value.
+    env(VARNISH_URL): ''
+    env(APP_VERSION): '
+    env(APP_NAME): '''
+    env(APP_TITLE): ''
+    env(APP_DESCRIPTION): ''
+    env(APP_REPRO): ''
+    env(APP_DEMO): ''
+    env(APP_ENV): ''
+    env(AUTH_ENABLED): ''
+    env(AUDITTRAIL_ENABLED): ''
+    env(NOTIFICATION_ENABLED): ''
+    env(HEALTH_ENABLED): ''
+    env(ARCHIVE_ENABLED): ''
+    env(CONTAINER_REGISTRY_BASE): ''
+    env(CONTAINER_PROJECT_NAME): ''
+    env(CONTAINER_REPRO): ''
+
+api_platform:
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+
+    # The basic API data
+    title: '%env(APP_TITLE)%'
+    description: |
+        API Details
+        - Component: %env(APP_TITLE)%
+        - Reference: %env(APP_NAME)%
+        - Enviroment: %env(APP_ENV)%
+        - Version: %env(APP_VERSION)%
+        - Repository: [online](%env(APP_REPRO)%) / [zip](%env(APP_REPRO)%/archive/master.zip)
+        - Docker Image: [online](%env(CONTAINER_REPRO)%) 
+        - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+        
+        %env(APP_DESCRIPTION)%         
+    
+    version: '%env(APP_VERSION)%'  
+    
+    # Lets configure the api platform bundle to display the docs in confrmation with common ground standards 
+    show_webby: false
+    enable_swagger_ui: false
+    enable_re_doc: true
+    
+    # In the NL api strategie we use snake case for naming
+    # name_converter: 'Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter'
+    
+    # Lets confirm to JSON-HA: first, as per common ground. But allow other serializers
+    formats:
+        jsonhal:  ['application/hal+json']
+        jsonld:   ['application/ld+json']
+        jsonapi:  ['application/vnd.api+json']
+        json:     ['application/json']
+        xml:      ['application/xml']
+        yaml:     ['application/x-yaml']
+        csv:      ['text/csv']
+        html:     ['text/html']
+    
+    # Varnish integration, remove if unwanted
+    # http_cache:
+    #    invalidation:
+    #        enabled: true
+    #        varnish_urls: ['%env(VARNISH_URL)%']
+    #    max_age: 0
+    #    shared_max_age: 3600
+    #    vary: ['Content-Type', 'Authorization']
+    #    public: true
+        
+    # Mercure integration, remove if unwanted
+    # mercure:
+    #    hub_url: '%env(MERCURE_SUBSCRIBE_URL)%'

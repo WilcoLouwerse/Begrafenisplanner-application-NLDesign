@@ -1,0 +1,69 @@
+@import '../../settings/spacing';
+@import '../../settings/colors';
+
+.list--mobile {
+  list-style: none;
+  margin: $default-margin*2 0 0 0;
+
+  > .list__item {
+    border-radius: 0;
+    flex: 1;
+    line-height: 1;
+    margin: 0;
+    position: relative;
+
+    &:before,
+    &:after {
+      background-image: radial-gradient(circle closest-side, $white 0, transparent 1px);
+      background-repeat: repeat-x;
+      background-size: 4px 2px;
+      content: '';
+      display: block;
+      height: 2px;
+      left: 0;
+      margin: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+
+      /* stylelint-disable */
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi){
+        background-image: radial-gradient(circle closest-side, $white 0px, transparent 2px);
+        background-size: 4px 2px;
+      }
+      /* stylelint-enable */
+    }
+
+    &:after {
+      bottom: -0.6rem;
+      display: none;
+      top: auto;
+    }
+
+    &:last-child:after {
+      display: block;
+    }
+
+    .list__link,
+    .list__link[rel=external] {
+      color: $white;
+      display: block;
+      font-weight: bold;
+      line-height: 1;
+      padding: $default-margin*2 0 $default-margin*1.6 0;
+      text-decoration: none;
+      white-space: nowrap;
+
+      &:visited,
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+
+  .list--chevrons {
+    margin-top: 0; // Needed for nested items
+  }
+}
+

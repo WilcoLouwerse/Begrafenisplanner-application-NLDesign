@@ -1,0 +1,62 @@
+@import '../../tools/responsive';
+@import '../../tools/vendors';
+
+@import '../../settings/spacing';
+@import '../../settings/lists';
+
+ul.list--grid {
+  $two-blocks: calc(99.9% / 2 - #{$default-margin});
+  $three-blocks: calc(99.9% / 3 - #{$default-margin * 2});
+
+  flex-flow: row wrap;
+  margin-bottom: $default-margin;
+  margin-left: 0;
+
+  &:not(.list--card-small) {
+    @include media-breakpoint-up(sm) {
+      display: flex;
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: calc(99.9% + #{$default-margin * 2});
+    }
+  }
+
+  > li,
+  li.card {
+
+    .card__content {
+      flex-direction: column;
+
+      @include ie-only() {
+        display: block;
+      }
+    }
+
+    @include media-breakpoint-up(sm) {
+      flex-basis: $two-blocks;
+      margin-bottom: $default-margin * 2;
+      max-width: $two-blocks;
+      position: relative;
+      width: auto;
+
+      &:nth-child(2n+1) {
+        margin-left: 0;
+      }
+    }
+
+    @include media-breakpoint-up(lg) {
+      flex-basis: $three-blocks;
+      max-width: $three-blocks;
+      position: relative;
+
+      &:nth-child(2n+1) {
+        margin-left: $default-margin * 2;
+      }
+
+      &:nth-child(3n+1) {
+        margin-left: 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,214 @@
+@import '../../settings/colors';
+@import '../../settings/z-indexes.scss';
+@import '../../tools/responsive';
+@import '../../tools/font-size';
+@import '../../tools/functions';
+@import '../../tools/vendors.scss';
+
+$modal-padding: 1.6rem;
+
+.modal {
+  bottom: 0;
+  display: none;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: z-index(modal);
+}
+
+.modal--backdrop {
+  background: rgba(235, 235, 235, 0.9);
+}
+
+.modal--open {
+  display: flex;
+}
+
+.modal__content {
+  background: $white;
+  border: 1px solid #dbdbdb;
+  bottom: 0;
+  box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+}
+
+.modal__close-button {
+  align-self: flex-start;
+  background: transparent;
+  border: 0;
+  border-left: 1px dotted #565656;
+  color: #565656;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 0 0 0 1.2rem;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  .icon {
+    display: block;
+    font-size: 2.4rem;
+    margin-bottom: 0.4rem;
+  }
+
+  &:focus {
+    outline: 1px solid $donkergeel;
+
+    [class*='background--'] & {
+      outline-color: inherit;
+    }
+  }
+
+  &:visited {
+    color: #565656;
+  }
+
+  &:hover {
+    color: $black-text;
+  }
+}
+
+.modal__title {
+  align-items: center;
+  display: flex;
+  flex: 1 auto;
+  flex-shrink: 0;
+  justify-content: space-between;
+  padding: $modal-padding $modal-padding 0 $modal-padding;
+
+  h1 {
+    @include font-size(32);
+    line-height: 1;
+  }
+}
+
+.modal__title--scrolled {
+  border-bottom: 1px solid #dedede;
+}
+
+.modal__body {
+  display: block;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 0 $modal-padding $modal-padding $modal-padding;
+}
+
+.modal__footer {
+  background-color: $donkergeel-tint-2;
+  flex: 1 0 auto;
+  padding: $modal-padding;
+}
+
+@include media-breakpoint-up(sm) {
+
+  .modal__content {
+    align-self: center;
+    bottom: auto;
+    height: auto;
+    left: auto;
+    max-height: 80vh;
+    max-width: 60rem;
+    position: static;
+    right: auto;
+    top: auto;
+    width: 50vw;
+  }
+
+  .modal--width-xl {
+    max-width: 90vw;
+    width: 90vw;
+  }
+
+  .modal--width-l {
+    max-width: 80rem;
+    width: 70vw;
+  }
+
+  .modal--width-s {
+    max-width: 40rem;
+    width: 30vw;
+  }
+
+  .modal--height-xl {
+    max-height: 100vh;
+  }
+
+  .modal--height-l {
+    max-height: 90vh;
+  }
+
+  .modal--height-s {
+    max-height: 40vh;
+  }
+}
+
+.modal--navigation {
+  $input-font-size: 1.6rem;
+
+  &.modal--open {
+    display: block;
+  }
+
+  .modal__close-button {
+    align-items: center;
+    border-color: $white;
+    border-left: 0;
+    border-radius: 0;
+    color: $white;
+    padding: 0.4rem 0 0.2rem 1.5rem;
+    position: relative;
+
+    &:before {
+      $dotted-size: 0.2rem 0.4rem;
+
+      background-image: radial-gradient(circle closest-side, $white 0, transparent 0.1rem);
+      background-repeat: repeat-y;
+      background-size: $dotted-size;
+      bottom: 0;
+      content: '';
+      display: block;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 2px;
+
+      @include ff-only() {
+        background-image: radial-gradient(circle closest-side, $white 0, transparent 0.2rem);
+        background-size: $dotted-size;
+      }
+    }
+  }
+
+  .modal__title {
+    align-items: flex-start;
+  }
+
+  .modal__content {
+    background: $hemelblauw;
+    border: none;
+    box-shadow: none;
+    color: $white;
+    display: block;
+    height: 100vh;
+    max-height: 100%;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .form {
+    flex: 1;
+    margin-right: $default-margin * 2;
+  }
+
+  .input__control--search {
+    border: none;
+  }
+}

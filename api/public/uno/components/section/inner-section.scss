@@ -1,0 +1,19 @@
+@import '../../settings/colors';
+@import '../../settings/font';
+@import '../../settings/spacing';
+
+.inner-section {
+  // Add background properties to allow a background image,
+  // this way, an inner section can be used as banner by
+  // setting the image with an inline style or additional class
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid $gray-light;
+  margin-bottom: $default-margin;
+  padding: 2rem;
+}
+
+.inner-section--no-border {
+  border: 0;
+}

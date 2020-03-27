@@ -1,0 +1,138 @@
+@import '../../settings/animations';
+@import '../../settings/colors';
+@import '../../settings/font';
+@import '../../settings/spacing';
+@import '../../settings/z-indexes';
+
+@import '../../tools/icon';
+@import '../../tools/functions';
+@import '../../tools/spinner';
+
+$combobox-height: 4.8rem;
+$combobox-size: 4.6rem;
+
+.combobox__autocomplete,
+.combobox__suggestion {
+  opacity: 0;
+  position: relative;
+  transform: translate3d(0, -10px, 0);
+  transition: $duration-fast ease-out;
+  visibility: hidden;
+  z-index: z-index(main, combobox);
+}
+
+.combobox--autocomplete-open .combobox__autocomplete {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  visibility: visible;
+}
+
+.combobox--suggestion-open .combobox__suggestion {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  visibility: visible;
+}
+
+.input__control.combobox__input {
+  padding-left: $default-margin*4;
+}
+
+.combobox__icon {
+  bottom: $default-margin + 0.2rem;
+  color: $gray-light;
+  font-size: 2.4rem;
+  left: $default-margin;
+  pointer-events: none;
+  position: absolute;
+}
+
+.combobox__icon--loading {
+
+  &::before {
+    content: '';
+  }
+
+  @include spinner(24px);
+
+  &::after {
+    margin: -24px 0 0 0;
+  }
+}
+
+.combobox__list-wrapper {
+  height: 100%;
+  max-height: $combobox-size*7;
+  max-width: 100%;
+  padding-right: 10rem;
+  position: relative;
+  width: 100%;
+}
+
+.combobox__list {
+  background: $white;
+  border: 0.1rem solid $black-20;
+  border-top: 0;
+  left: 0;
+  list-style: none;
+  margin: 0;
+  max-height: $combobox-size * 7;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  &--multiple {
+    outline: none;
+    padding: 10px;
+  }
+}
+
+.combobox__item {
+  margin: 0;
+  min-height: $combobox-size;
+
+  &:active, &:focus {
+    background: $donkergeel;
+    outline: none;
+  }
+  
+  &:first-child {
+    border-top: none;
+  }
+
+  &--no-results {
+    cursor: not-allowed;
+  }
+}
+
+.combobox__link {
+  display: block;
+  padding: $default-margin - 0.2rem $default-margin;
+
+  &:visited {
+    color: #005ea5;
+  }
+
+  &:active, &:focus {
+    border: 0;
+  }
+}
+
+.combobox__toggle {
+  background: transparent;
+  border: 0;
+  bottom: 0;
+  height: $combobox-height;
+  position: absolute;
+  right: 0;
+  width: $combobox-size;
+
+  &:focus {
+    outline: 3px solid $donkergeel;
+  }
+}
+
+.combobox__match {
+  text-decoration: underline;
+}
+

@@ -1,0 +1,8 @@
+@function parseInt($n) {
+  @return $n / ($n * 0 + 1);
+}
+
+@mixin remToPx($property, $rems) {
+  $value: parseInt($rems * 10);
+  #{$property}: #{$value}px;
+}

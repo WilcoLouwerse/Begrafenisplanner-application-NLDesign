@@ -1,0 +1,380 @@
+@import '../../theme/base';
+@import '../../theme/components/navigation';
+
+@import '../../tools/vendors.scss';
+@import '../../tools/functions';
+@import '../../settings/z-indexes';
+
+.top-nav {
+  background-color: $top-nav-background;
+  color: $top-nav-color;
+
+  & .container {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+  }
+}
+
+.top-nav__block {
+  display: block;
+  flex: 1;
+  line-height: 3rem;
+  list-style-type: none;
+  min-height: 1px;
+
+  a {
+    color: $top-nav-color;
+    text-decoration: none;
+  }
+}
+
+.top-nav__block-item {
+  display: block;
+  padding: $nav-item-padding;
+  text-decoration: none;
+
+  .icon {
+    margin-right: 5px;
+    vertical-align: -1px;
+  }
+
+  &:hover, &:focus {
+
+    span {
+      text-decoration: underline;
+    }
+  }
+
+  &:visited {
+    color: inherit;
+  }
+}
+
+.top-nav__block-item--collapse {
+  background-color: transparent;
+  border: none;
+  display: inline-block;
+  line-height: 3rem;
+
+  @include media-breakpoint-up(md) {
+    float: left;
+  }
+
+  &[aria-pressed='true'],
+  &:hover {
+    outline: none;
+    text-decoration: none;
+  }
+}
+
+.top-nav__block--right {
+  flex: 1 1 auto;
+  padding: 0 0 0 20px;
+
+  @include media-breakpoint-up(lg) {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .nav__block-item {
+    padding: $nav-item-padding;
+
+    &:hover {
+      outline: none;
+    }
+  }
+
+  // @todo: Prevent direct element styling
+  span {
+    display: none;
+    @include media-breakpoint-up(md) {
+      display: inline-block;
+    }
+  }
+
+  a:not(.btn) {
+    display: inline-block;
+    padding: $nav-item-padding;
+  }
+
+  .btn {
+    white-space: nowrap;
+  }
+}
+
+.top-nav__search {
+  $input-font-size: 1.6rem;
+
+  align-items: center;
+  display: none;
+
+  @include media-breakpoint-up(md) {
+    display: flex;
+    justify-content: flex-end;
+
+    @include ie-only() {
+      position: relative;
+      top: 0.4rem;
+    }
+  }
+
+  .input {
+    flex: 0 50%;
+    margin-bottom: 0;
+
+    @include media-breakpoint-up(md) {
+      flex: 1;
+    }
+
+    @include ie-only() {
+      flex: 0;
+      min-width: 220px;
+    }
+  }
+
+  .input__control--search {
+    border: 0;
+  }
+
+  /* stylelint-disable */
+
+  /* Check for better solution */
+  ::-webkit-input-placeholder {
+    font-size: $input-font-size;
+    font-style: italic;
+  }
+
+  ::-moz-placeholder {
+    font-size: $input-font-size;
+    font-style: italic;
+  }
+
+  :-ms-input-placeholder {
+    font-size: $input-font-size;
+    color: $black-30;
+    font-style: italic;
+  }
+  /* stylelint-enable */
+
+}
+
+// Rijkskleur modifiers
+@each $color, $hex in $rijkshuisstijl {
+
+  .top-nav--#{$color} {
+    background-color: nth($hex, 1);
+    color: nth($hex, 4);
+
+    .nav__link,
+    .nav__link:visited,
+    .top-nav__block-item,
+    .top-nav__block a {
+      border-bottom: 3px solid transparent;
+      color: nth($hex, 4);
+
+      &.collapse__title--open,
+      &:focus {
+        color: nth($hex, 4);
+        outline: 3px solid nth($hex, 5);
+        outline-offset: -3px;
+        text-decoration: none;
+      }
+
+      &.nav__link--active {
+        border-bottom: 3px solid #ffffff;
+        text-decoration: none;
+      }
+
+    }
+    
+    .nav__submenu {
+      background: $white;
+      
+      .nav__item {
+        background: $white;
+        border-bottom: 1px solid $black-text;
+
+        a {
+          color: $black;
+
+          &:focus {
+            color: $black;
+            outline: 3px solid nth($hex, 5);
+            outline-offset: -3px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.top-nav-autoresize {
+  flex-grow: 1;
+
+  @include media-breakpoint-down(xs) {
+
+    :first-child {
+      justify-content: flex-end;
+    }
+  }
+
+  &.top-nav-autoresize--setup {
+    overflow: hidden;
+
+    .nav {
+      display: block;
+
+      > .nav__item {
+        display: inline-block;
+        float: none;
+      }
+    }
+  }
+
+  .nav {
+    padding-right: 0;
+  }
+
+  .nav__item--hidden {
+    display: none;
+  }
+
+  .nav__item--clone {
+    background-color: $white;
+    border-bottom: 1px solid $black;
+
+    &:hover,
+    &:focus {
+      outline: none;
+      text-decoration: none;
+    }
+
+    .nav__link {
+      color: $black;
+
+      &:focus {
+        color: $black;
+        outline: 3px solid $donkergeel;
+        outline-offset: -3px;
+      }
+    }
+  }
+
+  .nav__item--more {
+    position: relative;
+
+    .nav__more {
+      background: $white;
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 7.2rem;
+      z-index: z-index(navigation, submenu);
+
+      .nav__link {
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      @include media-breakpoint-down(xs) {
+        padding-bottom: 0.6rem;
+      }
+    }
+
+    &.nav__item--more-open,
+    &:hover {
+      filter: drop-shadow(0 1px 2px rgba(43, 43, 43, 0.5));
+      position: relative;
+      z-index: z-index(navigation, submenu);
+
+      @include media-breakpoint-up(sm) {
+
+        .nav__link--more::after {
+          content: map_get($icons, icon-collapse-up);
+        }
+      }
+
+      .nav__more {
+        display: block;
+      }
+    }
+  }
+
+  .nav__link {
+    font-size: $top-nav-fontsize;
+    text-overflow: ellipsis;
+
+    &:hover {
+      background: $nav-item-hover-background;
+    }
+  }
+
+  .nav__item--clone:last-of-type {
+    border-bottom: none;
+  }
+
+  .nav__link--more {
+    font-size: 1.4rem;
+    font-weight: normal;
+    margin: 0;
+    padding: 3.9rem 3.8rem 0;
+    position: relative;
+
+    @include media-breakpoint-up(sm) {
+      font-size: $top-nav-fontsize;
+      font-weight: $top-nav-fontweight;
+      margin: 0;
+      padding: 2.3rem 3.8rem 1.6rem 2rem;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    &::before {
+      @include include-icon();
+      bottom: 0;
+      content: map_get($icons, icon-hamburger);
+      font-size: 2.8rem;
+      font-weight: bolder;
+      position: absolute;
+      text-decoration: none;
+      top: 2rem;
+    }
+
+    &::after {
+      // IE Fix
+      text-decoration: underline;
+    }
+
+    &::after {
+      @include include-icon();
+      content: '';
+      position: absolute;
+      text-decoration: none;
+    }
+
+    &::after {
+      content: map_get($icons, icon-collapse-down);
+      right: 1.8rem;
+      top: 2.8rem;
+    }
+  }
+
+  // Also target hover state to cancel collapse-up icon
+  .nav__item--minified:hover,
+  .nav__item--minified {
+    float: right;
+
+    .nav__link--more {
+
+      &::after {
+        content: '';
+      }
+    }
+  }
+}
