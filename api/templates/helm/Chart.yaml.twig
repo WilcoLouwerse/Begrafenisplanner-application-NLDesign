@@ -1,0 +1,7 @@
+apiVersion: v1
+appVersion: {{ app_version }}
+description: '{{ app_description }}'
+name: {{ app_name|replace({' ': ''})|lower }}
+version: 0.1.0
+home: {{ app_home }}
+icon: {{ app_logo }}

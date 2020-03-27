@@ -1,0 +1,11 @@
+/docker-compose.override.yaml
+/docker-compose.override.yml
+
+api/helm/kubeconfig.yaml
+
+!/api/public/bundle/*
+
+.idea/
+
+api/helm/*-kubeconfig.yaml
+api/helm/kubeconfig*
