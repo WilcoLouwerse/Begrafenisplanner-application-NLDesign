@@ -20,22 +20,18 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class GravecoverController extends AbstractController
 {
-    private $commonGroundService;
-
     /**
      * @Route("/view")
      * @Template
      */
     public function viewAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
-        $this->commonGroundService = $commonGroundService;
-
         $variables = [];
         $variables['testText'] = "Gravecovers :";
 
         $gravecovers = [];
         $gravecovers['name'] = "";
-        $gravecovers = $this->commonGroundService->getResourceList($this->commonGroundService->getComponent('grc')['href'].'/grave_covers');
+        $gravecovers = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/grave_covers');
 
         $variables['gravecovers'] = $gravecovers;
 
@@ -49,14 +45,12 @@ class GravecoverController extends AbstractController
      */
     public function addAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
-        $this->commonGroundService = $commonGroundService;
-
         $variables = [];
         $variables['testText'] = "Gravecovers data";
 
         $gravecovers = [];
         //$gravecovers['name'] = "";
-        //$gravecovers = $this->commonGroundService->getResourceList($this->commonGroundService->getComponent('grc')['href'].'/grave_covers');
+        //$gravecovers = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/grave_covers');
 
         //$test['gravecovers'] = $gravecovers;
 
