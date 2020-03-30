@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17d529b1-d761-4e0f-9a52-df5a4e33230a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/api/templates/grave/view.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/Controller/GravecoverController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/GravecoverController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/templates/gravecover/add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/gravecover/add.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/templates/gravecover/view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/gravecover/view.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/menu.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/Controller/GraveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/GraveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/grave/add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/grave/add.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -201,7 +205,6 @@
       <workItem from="1585554390981" duration="632000" />
       <workItem from="1585559128534" duration="5122000" />
       <workItem from="1585564516243" duration="13255000" />
-      <workItem from="1585581124423" duration="445000" />
     </task>
     <servers />
   </component>
