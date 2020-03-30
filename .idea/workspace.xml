@@ -2,14 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17d529b1-d761-4e0f-9a52-df5a4e33230a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/src/Controller/GraveController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/templates/grave/add.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/config/packages/common_ground.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/config/packages/common_ground.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/default/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/default/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/footer.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/footer.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/menu.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/Controller/GraveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/GraveController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/Service/CommonGroundService.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Service/CommonGroundService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/grave/add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/grave/add.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +160,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/api/templates/grave" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -196,6 +196,8 @@
       <workItem from="1585211733388" duration="6561000" />
       <workItem from="1585304605600" duration="1432000" />
       <workItem from="1585316434775" duration="4292000" />
+      <workItem from="1585554390981" duration="632000" />
+      <workItem from="1585559128534" duration="5122000" />
     </task>
     <servers />
   </component>
@@ -231,14 +233,18 @@
     </state>
     <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585319865801" />
     <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585145485952" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1585554427253">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585554427253" />
     <state x="610" y="334" key="NewPhpClassDialog" timestamp="1585319764240">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="610" y="334" key="NewPhpClassDialog/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585319764240" />
-    <state x="656" y="118" width="688" height="804" key="find.popup" timestamp="1585320739700">
+    <state x="656" y="118" width="688" height="804" key="find.popup" timestamp="1585563970569">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="118" width="688" height="804" key="find.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585320739700" />
+    <state x="656" y="118" width="688" height="804" key="find.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585563970569" />
     <state x="592" y="178" key="scopes" timestamp="1585319382383">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
