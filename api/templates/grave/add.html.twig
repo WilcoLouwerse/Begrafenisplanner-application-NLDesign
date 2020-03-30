@@ -11,67 +11,22 @@
 
                     <h2>Voeg hier een graf toe</h2>
 
-                    <form>
-                        <label>Reference: </label>
-                        <input type="text"
-                               id="Reference" name="Reference"
-                               value="Reference Here" />
-                        <br />
+                    <form action="add" method="post">
+                        Reference: <input type = "text" id="Reference" name = "Reference" value="Reference Here"/> <br />
+                        Cemetery: <input type = "text" name = "Cemetery" value="Cemetery Here"/> <br />
+                        Deceased: <input type = "text" name = "Deceased" value="Deceased Here"/> <br />
+                        Location: <input type = "text" name = "Location" value="Location Here"/> <br />
+                        Position: <input type = "text" name = "Position" value="Position Number Here"/> <br />
+                        Grave Type: <input type = "text" name = "GraveType" value="GraveType Here"/> <br />
+                        Status: <input type = "text" name = "Status" value="Status Here"/> <br />
+                        Acquisition: <input type = "text" name = "Acquisition" value="Acquisition Here"/> <br />
+                        Description: <input type = "text" name = "Description" value="Description Here"/> <br />
 
-                        <label>Cemetery: </label>
-                        <input type="text"
-                               id="Cemetery" name="Cemetery"
-                               value="Cemetery Here" />
-                        <br />
-
-                        <label>Deceased: </label>
-                        <input type="text"
-                               id="Deceased" name="Deceased"
-                               value="Deceased Here" />
-                        <br />
-
-                        <label>Location: </label>
-                        <input type="text"
-                               id="Location" name="Location"
-                               value="Location Here" />
-                        <br />
-
-                        <label>Position: </label>
-                        <input type="text"
-                               id="Position" name="Position"
-                               value="Position Number Here" />
-                        <br />
-
-                        <label>Grave Type: </label>
-                        <input type="text"
-                               id="GraveType" name="GraveType"
-                               value="Grave Type Here" />
-                        <br />
-
-                        <label>Status: </label>
-                        <input type="text"
-                               id="Status" name="Status"
-                               value="Status Here" />
-                        <br />
-
-                        <label>Acquisition: </label>
-                        <input type="text"
-                               id="Acquisition" name="Acquisition"
-                               value="Acquisition Here" />
-                        <br />
-
-                        <label>Description: </label>
-                        <input type="text"
-                               id="Description" name="Description"
-                               value="Description Here" />
-                        <br />
-
-                        <input type="submit" />
+                        <input type="submit" name="Submit" value="Add"/>
                     </form>
                     <br />
 
-                    <p>{{ testText }}</p>
-                    <p>{{ dump(graves) }}</p>
+                    <p>{{ dump(grave) }}</p>
 
                 </div><!-- /.content -->
             </div><!-- /.content-background -->
