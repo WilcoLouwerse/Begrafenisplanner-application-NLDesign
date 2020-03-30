@@ -1,0 +1,65 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-md-8 col-sm-12">
+
+            <div class="content-background" >
+                <div class="content">
+
+                    <div align="right"><a href="{{ path('app_grave_add') }}" title="Graves" class="btn btn-primary">Add Grave</a></div>
+
+                    <h2>Graves:</h2>
+                    <br />
+{#
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Grave ID</th>
+                            <th scope="col">Grave Reference</th>
+                            <th scope="col">Cemetery</th>
+                            <th scope="col">Deceased</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">Grave Type</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Acquisition</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Date Created</th>
+                            <th scope="col">Date Modified</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        {% for key, grave in graves %}
+                        <tr>
+                            <td>{{grave.id}}</td>
+                            <td>@row["graveReference"].ToString()</td>
+                            <td>@row["cemetery"].ToString()</td>
+                            <td>@row["deceased"].ToString()</td>
+                            <td>@row["location"].ToString()</td>
+                            <td>@row["position"].ToString()</td>
+                            <td>@row["graveType"].ToString()</td>
+                            <td>@row["status"].ToString()</td>
+                            <td>@row["acquisition"].ToString()</td>
+                            <td>@row["description"].ToString()</td>
+                            <td>@row["dateCreated"].ToString()</td>
+                            <td>@row["dateModified"].ToString()</td>
+                        </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+#}
+
+                    <p>{{ dump(graves) }}</p>
+
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+        </div><!-- /.col -->
+    </div>
+
+{% endblock %}
