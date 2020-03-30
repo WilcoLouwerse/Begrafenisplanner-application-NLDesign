@@ -31,6 +31,55 @@ parameters:
     
     common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
     common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
+
+    common_ground.ac.location: 'https://ac.huwelijksplanner.online'
+    common_ground.ac.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.as.location: 'https://as.zaakonline.nl'
+    common_ground.as.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.bc.location: 'https://bc.huwelijksplanner.online'
+    common_ground.bc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.brp.location: 'https://brp.huwelijksplanner.online'
+    common_ground.brp.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.bs.location: 'https://bs.huwelijksplanner.online'
+    common_ground.bs.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.cc.location: 'https://cc.huwelijksplanner.online'
+    common_ground.cc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.irc.location: 'https://irc.huwelijksplanner.online'
+    common_ground.irc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.lc.location: 'https://lc.huwelijksplanner.online'
+    common_ground.lc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.ltc.location: 'https://ltc.huwelijksplanner.online'
+    common_ground.ltc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.mrc.location: 'https://mrc.huwelijksplanner.online'
+    common_ground.mrc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.orc.location: 'https://orc.huwelijksplanner.online'
+    common_ground.orc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.pdc.location: 'https://pdc.huwelijksplanner.online'
+    common_ground.pdc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.ptc.location: 'https://ptc.huwelijksplanner.online'
+    common_ground.ptc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.vrc.location: 'https://vrc.huwelijksplanner.online'
+    common_ground.vrc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.vtc.location: 'https://vtc.huwelijksplanner.online'
+    common_ground.vtc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+
+    common_ground.wrc.location: 'https://wrc.huwelijksplanner.online'
+    common_ground.wrc.apikey: '%env(APP_COMMONGROUND_KEY)%'
+    
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
     common_ground.oas.servers:
