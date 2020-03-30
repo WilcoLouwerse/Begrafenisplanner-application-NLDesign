@@ -8,11 +8,35 @@
 
             <div class="content-background" >
                 <div class="content">
-
+                    <div align="right"><a href="{{ path('app_gravecover_add') }}" title="Gravecover" class="btn btn-primary">Add Grave</a></div>
                     <h2>Grafcovers:</h2>
+                    <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Grave Cover ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Date Created</th>
+                                <th scope="col">Date Modified</th>
+                            </tr>
+                            </thead>
+                        <tbody>
+                        {#  TODO loop for single attribute, Or make an object from the json with Jsondecode() to read it to the table.
+                         {% for key in gravecovers|keys %} #}
+                        <tr>
+                            <td>{{ (gravecovers['hydra:member'][0]["id"]) }}</td>
+                            <td>{{ (gravecovers['hydra:member'][0]["name"]) }}</td>
+                            <td>{{ (gravecovers['hydra:member'][0]["description"]) }}</td>
+                            <td>{{ (gravecovers['hydra:member'][0]["dateCreated"]) }}</td>
+                            <td>{{ (gravecovers['hydra:member'][0]["dateModified"]) }}</td>
+                        </tr>
+                       {# {% endfor %} #}
+                        </tbody>
+                    </table>
 
-                    <p>{{ testText }}</p>
-                    <p>{{ dump(gravecovers) }}</p>
+                    <br />
+
+                   {# <p>{{ dump(gravecovers['hydra:member']) }}</p> #}
 
                 </div><!-- /.content -->
             </div><!-- /.content-background -->
