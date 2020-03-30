@@ -34,7 +34,8 @@ class GraveController extends AbstractController
         $test['testText'] = "Graves :";
 
         $graves = [];
-        $graves = $this->commonGroundService->createResource($graves, $this->commonGroundService->getComponent('grc')['href'].'/graves');
+        $graves['name'] = "";
+        $graves = $this->commonGroundService->getResourceList($this->commonGroundService->getComponent('grc')['href'].'/graves');
 
         $test['graves'] = $graves;
 

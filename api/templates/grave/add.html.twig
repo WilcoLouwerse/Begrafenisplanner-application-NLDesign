@@ -8,10 +8,70 @@
 
             <div class="content-background" >
                 <div class="content">
+
                     <h2>Voeg hier een graf toe</h2>
-                    <p>Hier komen invoer velden</p>
+
+                    <form>
+                        <label>Reference: </label>
+                        <input type="text"
+                               id="Reference" name="Reference"
+                               value="Reference Here" />
+                        <br />
+
+                        <label>Cemetery: </label>
+                        <input type="text"
+                               id="Cemetery" name="Cemetery"
+                               value="Cemetery Here" />
+                        <br />
+
+                        <label>Deceased: </label>
+                        <input type="text"
+                               id="Deceased" name="Deceased"
+                               value="Deceased Here" />
+                        <br />
+
+                        <label>Location: </label>
+                        <input type="text"
+                               id="Location" name="Location"
+                               value="Location Here" />
+                        <br />
+
+                        <label>Position: </label>
+                        <input type="text"
+                               id="Position" name="Position"
+                               value="Position Number Here" />
+                        <br />
+
+                        <label>Grave Type: </label>
+                        <input type="text"
+                               id="GraveType" name="GraveType"
+                               value="Grave Type Here" />
+                        <br />
+
+                        <label>Status: </label>
+                        <input type="text"
+                               id="Status" name="Status"
+                               value="Status Here" />
+                        <br />
+
+                        <label>Acquisition: </label>
+                        <input type="text"
+                               id="Acquisition" name="Acquisition"
+                               value="Acquisition Here" />
+                        <br />
+
+                        <label>Description: </label>
+                        <input type="text"
+                               id="Description" name="Description"
+                               value="Description Here" />
+                        <br />
+
+                        <input type="submit" />
+                    </form>
+                    <br />
+
                     <p>{{ testText }}</p>
-                    <p>{{ graves }}</p>
+                    <p>{{ dump(graves) }}</p>
 
                 </div><!-- /.content -->
             </div><!-- /.content-background -->
