@@ -12,8 +12,6 @@
                     <div align="right"><a href="{{ path('app_grave_add') }}" title="Graves" class="btn btn-primary">Add Grave</a></div>
 
                     <h2>Graves:</h2>
-                    <br />
-{#
                     <table class="table">
                         <thead>
                         <tr>
@@ -31,31 +29,25 @@
                             <th scope="col">Date Modified</th>
                         </tr>
                         </thead>
-
                         <tbody>
-
-                        {% for key, grave in graves %}
+                         {% for grave in graves['hydra:member'] %}
                         <tr>
-                            <td>{{grave.id}}</td>
-                            <td>@row["graveReference"].ToString()</td>
-                            <td>@row["cemetery"].ToString()</td>
-                            <td>@row["deceased"].ToString()</td>
-                            <td>@row["location"].ToString()</td>
-                            <td>@row["position"].ToString()</td>
-                            <td>@row["graveType"].ToString()</td>
-                            <td>@row["status"].ToString()</td>
-                            <td>@row["acquisition"].ToString()</td>
-                            <td>@row["description"].ToString()</td>
-                            <td>@row["dateCreated"].ToString()</td>
-                            <td>@row["dateModified"].ToString()</td>
+                            <td>{{ (grave["id"]) }}</td>
+                            <td>{{ (grave["graveReference"]) }}</td>
+                            <td>{{ (grave["cemetery"]) }}</td>
+                            <td>{{ (grave["deceased"]) }}</td>
+                            <td>{{ (grave["location"]) }}</td>
+                            <td>{{ (grave["position"]) }}</td>
+                            <td>{{ (grave["graveType"]) }}</td>
+                            <td>{{ (grave["status"]) }}</td>
+                            <td>{{ (grave["acquisition"]) }}</td>
+                            <td>{{ (grave["description"]) }}</td>
+                            <td>{{ (grave["dateCreated"]) }}</td>
+                            <td>{{ (grave["dateModified"]) }}</td>
                         </tr>
                         {% endfor %}
-
                         </tbody>
                     </table>
-#}
-
-                    <p>{{ dump(graves) }}</p>
 
                 </div><!-- /.content -->
             </div><!-- /.content-background -->

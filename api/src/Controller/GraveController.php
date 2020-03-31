@@ -46,7 +46,6 @@ class GraveController extends AbstractController
     public function addAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-        $variables['grave'] = "";
 
         if(isset($_POST['Submit']))
         {
@@ -66,8 +65,6 @@ class GraveController extends AbstractController
             $grave['location'] = $_POST['Location'];
             $grave['position'] = (int) $_POST['Position'];
             $grave = $commonGroundService->createResource($grave, $commonGroundService->getComponent('grc')['href'].'/graves');
-
-            $variables['grave'] = $grave;
         }
 
         return $variables;

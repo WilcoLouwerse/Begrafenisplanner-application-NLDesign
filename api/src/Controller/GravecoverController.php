@@ -28,14 +28,10 @@ class GravecoverController extends AbstractController
     public function viewAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-        $variables['testText'] = "Gravecovers :";
 
-        $gravecovers = [];
-        $gravecovers['name'] = "";
         $gravecovers = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/grave_covers');
 
         $variables['gravecovers'] = $gravecovers;
-
 
         return $variables;
     }
