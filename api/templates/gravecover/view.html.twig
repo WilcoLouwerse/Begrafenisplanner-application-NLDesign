@@ -21,16 +21,16 @@
                             </tr>
                             </thead>
                         <tbody>
-                        {#  TODO loop for single attribute, Or make an object from the json with Jsondecode() to read it to the table.
-                         {% for key in gravecovers|keys %} #}
+
+                         {% for gravecover in gravecovers['hydra:member'] %}
                         <tr>
-                            <td>{{ (gravecovers['hydra:member'][0]["id"]) }}</td>
-                            <td>{{ (gravecovers['hydra:member'][0]["name"]) }}</td>
-                            <td>{{ (gravecovers['hydra:member'][0]["description"]) }}</td>
-                            <td>{{ (gravecovers['hydra:member'][0]["dateCreated"]) }}</td>
-                            <td>{{ (gravecovers['hydra:member'][0]["dateModified"]) }}</td>
+                            <td>{{ (gravecover["id"]) }}</td>
+                            <td>{{ (gravecover["name"]) }}</td>
+                            <td>{{ (gravecover["description"]) }}</td>
+                            <td>{{ (gravecover["dateCreated"]) }}</td>
+                            <td>{{ (gravecover["dateModified"]) }}</td>
                         </tr>
-                       {# {% endfor %} #}
+                       {% endfor %}
                         </tbody>
                     </table>
 

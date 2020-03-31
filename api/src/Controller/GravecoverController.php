@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use DateTimeZone;
 
 /**
  * Class DeveloperController
@@ -46,13 +47,22 @@ class GravecoverController extends AbstractController
     public function addAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-        $variables['testText'] = "Gravecovers data";
+        $variables['gravecover'] = "";
 
-        $gravecovers = [];
-        //$gravecovers['name'] = "";
-        //$gravecovers = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/grave_covers');
+        if(isset($_POST['Submit']))
+        {
+            $timezone = new DateTimeZone('Europe/Amsterdam');
+            $date     = \DateTime::createFromFormat('yy-m-d H:m:s', 'yy-m-d H:m:s', $timezone);
 
-        //$test['gravecovers'] = $gravecovers;
+            $gravecover = [];
+            $gravecover['dateCreated'] = $date;
+            $gravecover['dateModified'] = $date;
+            $gravecover['description'] = $_POST['Description'];
+            $gravecover['name'] = $_POST['Name'];
+            $gravecover = $commonGroundService->createResource($gravecover, $commonGroundService->getComponent('grc')['href'].'/grave_covers');
+
+            $variables['gravecover'] = $gravecover;
+        }
 
         return $variables;
     }

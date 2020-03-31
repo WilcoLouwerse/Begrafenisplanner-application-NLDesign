@@ -9,24 +9,18 @@
             <div class="content-background" >
                 <div class="content">
 
+
+
                     <h2>Voeg hier een grafcover toe</h2>
 
-                    <form>
-                        <label>Name: </label>
-                        <input type="text"
-                               id="Name" name="Name"
-                               value="Name Here" />
-                        <br />
+                    <form action="add" method="post">
+                        Name: <input type = "text" name = "Name" value="Name Here"/> <br />
+                        Description: <input type = "text" name = "Description" value="Description Here"/> <br />
 
-                        <label>Description: </label>
-                        <input type="text"
-                               id="Description" name="Description"
-                               value="Description Here" />
-                        <br />
-
-                        <input type="submit" value="Add" />
+                        <input type="submit" name="Submit" value="Add"/>
                     </form>
                     <br />
+
 
 
                 </div><!-- /.content -->
