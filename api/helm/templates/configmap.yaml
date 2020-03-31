@@ -21,6 +21,7 @@ data:
   app-domains: {{ .Values.settings.domains | quote }} 
   app-domains-json: {{ .Values.settings.domainsJson | toJson | quote }}
   app-description: {{ .Values.settings.description | quote }}
+  app-type: {{ .Values.settings.type | quote }}
   
   app-auth: {{ .Values.settings.authorisationEnabled | quote }}
   app-audittrail: {{ .Values.settings.audittrailEnabled | quote }}

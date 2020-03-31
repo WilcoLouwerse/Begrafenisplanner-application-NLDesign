@@ -37,7 +37,11 @@ class CommonGroundService
             'Accept'        => 'application/ld+json',
             'Content-Type'  => 'application/json',
             'Authorization'  => $this->params->get('app_commonground_key'),
-            'X-NLX-Request-Application-Id' => $this->params->get('app_commonground_id')// the id of the application performing the request
+            // NLX
+            'X-NLX-Request-Application-Id' => $this->params->get('app_commonground_id'),// the id of the application performing the request
+            // NL Api Strategie
+            'Accept-Crs'  => 'EPSG:4326',
+            'Content-Crs'  => 'EPSG:4326',
         ];
 
         if($session->get('user')){
@@ -67,9 +71,9 @@ class CommonGroundService
     /*
      * Get a single resource from a common ground componant
      */
-    public function getResourceList($url, $query = [], $force = false, $async = false)
+    public function getResourceList($url, $query = [], $force = false, $async = false, $autowire = true)
     {
-        $url = $this->cleanUrl($url);
+        $url = $this->cleanUrl($url, false, $autowire);
 
         /* This is broken
          $elementList = [];
@@ -124,6 +128,13 @@ class CommonGroundService
         /* @todo this should look to al @id keus not just the main root */
         $response = $this->convertAtId($response, $parsedUrl);
 
+        // plain json catch
+        if(array_key_exists ('results', $response)){
+            foreach($response['results'] as $key => $value ){
+                $response['results'][$key] = $this->enrichObject($value, $parsedUrl);
+            }
+        }
+
         $item->set($response);
         $item->expiresAt(new \DateTime('tomorrow'));
         $this->cache->save($item);
@@ -134,9 +145,9 @@ class CommonGroundService
     /*
      * Get a single resource from a common ground componant
      */
-    public function getResource($url, $query = [], $force = false, $async = false)
+    public function getResource($url, $query = [], $force = false, $async = false, $autowire = true)
     {
-        $url = $this->cleanUrl($url, false);
+        $url = $this->cleanUrl($url, false, $autowire);
 
         $item = $this->cache->getItem('commonground_'.md5($url));
 
@@ -171,7 +182,10 @@ class CommonGroundService
         }
 
         $parsedUrl = parse_url($url);
+
         $response = $this->convertAtId($response, $parsedUrl);
+
+        $response = $this->enrichObject($response, $parsedUrl);
 
         $item->set($response);
         $item->expiresAt(new \DateTime('tomorrow'));
@@ -183,10 +197,10 @@ class CommonGroundService
     /*
      * Get a single resource from a common ground componant
      */
-    public function updateResource($resource, $url = null, $async = false)
+    public function updateResource($resource, $url = null, $async = false, $autowire = true)
     {
 
-        $url = $this->cleanUrl($url, $resource);
+        $url = $this->cleanUrl($url, $resource, $autowire);
 
         // To work with NLX we need a couple of default headers
         $headers = $this->headers;
@@ -224,7 +238,10 @@ class CommonGroundService
         }
 
         $parsedUrl = parse_url($url);
+
         $response = $this->convertAtId($response, $parsedUrl);
+
+        $response = $this->enrichObject($response, $parsedUrl);
 
         // Lets cache this item for speed purposes
         $item = $this->cache->getItem('commonground_'.md5($url));
@@ -238,9 +255,10 @@ class CommonGroundService
     /*
      * Create a sresource on a common ground component
      */
-    public function createResource($resource, $url = null, $async = false)
+    public function createResource($resource, $url = null, $async = false, $autowire = true)
     {
-        $url = $this->cleanUrl($url, $resource);
+        $url = $this->cleanUrl($url, $resource, $autowire);
+
         // Set headers
         $headers = $this->headers;
 
@@ -270,7 +288,10 @@ class CommonGroundService
 
 
         $parsedUrl = parse_url($url);
+
         $response = $this->convertAtId($response, $parsedUrl);
+
+        $response = $this->enrichObject($response, $parsedUrl);
 
         // Lets cache this item for speed purposes
         $item = $this->cache->getItem('commonground_'.md5($url.'/'.$response['id']));
@@ -285,9 +306,9 @@ class CommonGroundService
     /*
      * Delete a single resource from a common ground component
      */
-    public function deleteResource($resource, $url = null, $async = false)
+    public function deleteResource($resource, $url = null, $async = false, $autowire = true)
     {
-        $url = $this->cleanUrl($url, $resource);
+        $url = $this->cleanUrl($url, $resource, $autowire);
 
         // Set headers
         $headers = $this->headers;
@@ -320,14 +341,14 @@ class CommonGroundService
     /*
      * The save fucntion should only be used by applications that can render flashes
      */
-    public function saveResource($resource, $endpoint = false)
+    public function saveResource($resource, $endpoint = false, $autowire = true)
     {
 
         // If the resource exists we are going to update it, if not we are going to create it
-        if($resource['@id']){
-            if($this->updateResource($resource)){
+        if(key_exists('@id', $resource)){
+            if($this->updateResource($resource, null, false, $autowire)){
                 // Lets renew the resource
-                $resource= $this->getResource($resource['@id']);
+                $resource= $this->getResource($resource['@id'], [], false, false, $autowire);
                 if(key_exists('name', $resource)){
                     $this->flash->add('success', $resource['name'].' '.$this->translator->trans('saved'));
                 }
@@ -351,9 +372,9 @@ class CommonGroundService
             }
         }
         else{
-            if($createdResource = $this->createResource($resource, $endpoint)){
+            if($createdResource = $this->createResource($resource, $endpoint, false, $autowire)){
                 // Lets renew the resource
-                $resource= $this->getResource($createdResource['@id']);
+                $resource = $this->getResource($createdResource['@id'], [], false, false, $autowire);
                 $this->flash->add('success', $resource['name'].' '.$this->translator->trans('created'));
             }
             else{
@@ -410,8 +431,17 @@ class CommonGroundService
      */
     public function proccesErrors($response, $statusCode, $headers = null, $resource = null, $url = null, $proces )
     {
-        //Should be cases
-        if($response['@type'] == 'ConstraintViolationList'){
+        // Non-Json suppor
+
+        if(!$response && $this->params->get('app_type') == 'application'){
+            $this->flash->add('error', $statusCode.':'.$url);
+        }
+        // ZGW support
+        elseif(!array_key_exists ('@type', $response) && array_key_exists ( 'types' , $response) && $this->params->get('app_type') == 'application'){
+            $this->flash->add('error', $this->translator->trans($response['detail']));
+        }
+        // Hydra Support
+        elseif(array_key_exists ('@type', $response) && $response['@type'] == 'ConstraintViolationList' && $this->params->get('app_type' == 'application')){
             foreach($response['violations'] as $violation){
                 $this->flash->add('error', $violation['propertyPath'].' '.$this->translator->trans($violation['message']));
             }
@@ -419,6 +449,7 @@ class CommonGroundService
             return false;
         }
         else{
+            http_response_code($statusCode);
             var_dump($proces.' returned:'.$statusCode);
             var_dump($headers);
             var_dump(json_encode($resource));
@@ -428,6 +459,104 @@ class CommonGroundService
         }
 
         return $response;
+    }
+
+
+    /*
+     * Turns plain json objects into ld+jsons
+     */
+    private function enrichObject(array $object, array $parsedUrl){
+
+        while(!array_key_exists ('@id', $object)){
+            if(array_key_exists ('url', $object)){
+                $object['@id']=$object['url'];
+                break;
+            }
+
+            // Lets see if the path ends in a UUID
+            /*
+            $path_parts = pathinfo($parsedUrl["path"]);
+            $path_parts['dirname'];
+
+            if (is_string($path_parts['dirname']) && (preg_match('/^[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}$/i', $path_parts['dirname']) == 1)) {
+                $object['@id'] = implode($parsedUrl);
+                break;
+            }
+            */
+            break;
+        }
+
+        //while(!array_key_exists ('@type', $object)){
+        //
+        //}
+
+        while(!array_key_exists ('@self', $object)){
+            if(array_key_exists ('@id', $object)){
+                $object['@self']=$object['@id'];
+                break;
+            }
+            if(array_key_exists ('url', $object)){
+                $object['@self']=$object['url'];
+                break;
+            }
+
+            break;
+        }
+
+        while(!array_key_exists ('id', $object)){
+            // Lets see if an UUID is provided
+            if(array_key_exists ('uuid', $object)){
+                $object['id'] = $object['uuid'];
+                break;
+            }
+
+            // Lets see if the path ends in a UUID
+            $parsedId = parse_url($object['@id']);
+
+            $path_parts = pathinfo($parsedId["path"]);
+            $path_parts['dirname'];
+
+            //var_dump($path_parts);
+
+            if (is_string($path_parts['basename']) && (preg_match('/^[a-f\d]{8}(-[a-f\d]{4}){4}[a-f\d]{8}$/i', $path_parts['basename']) == 1)) {
+                $object['id']=$path_parts['basename'];
+                break;
+            }
+            //$object['id']=$path_parts['basename'];
+
+            break;
+        }
+
+        while(!array_key_exists ('name', $object)){
+            // ZGW specifiek
+            if(array_key_exists ('omschrijving', $object)){
+                $object['name'] = $object['omschrijving'];
+                break;
+            }
+
+            // Fallbask set de id als naams
+            $object['name'] = $object['id'];
+            break;
+        }
+
+        while(!array_key_exists ('dateCreated', $object)){
+            // ZGW specifiek
+            if(array_key_exists ('registratiedatum', $object)){
+                $object['dateCreated'] = $object['registratiedatum'];
+                break;
+            }
+
+            break;
+        }
+
+
+        /*
+        while(!array_key_exists ('dateModified', $object)){
+
+            break;
+        }
+        */
+        return $object;
     }
 
     /*
@@ -454,7 +583,7 @@ class CommonGroundService
     /*
      * Get a single resource from a common ground componant
      */
-    public function cleanUrl($url= false , $resource = false)
+    public function cleanUrl($url= false , $resource = false, $autowire = true)
     {
         if (!$url && $resource && array_key_exists('@id', $resource)) {
             $url = $resource['@id'];
@@ -464,7 +593,7 @@ class CommonGroundService
         $parsedUrl = parse_url($url);
 
         // We only do this on non-production enviroments
-        if($this->params->get('app_env') != "prod"){
+        if($this->params->get('app_env') != "prod" && $autowire){
 
             // Lets make sure we dont have doubles
             $url = str_replace($this->params->get('app_env').'.','',$url);
@@ -508,26 +637,35 @@ class CommonGroundService
         return $host;
     }
 
+    public function getComponent($code)
+    {
+        $list = $this->getComponentList();
+        if(key_exists($code, $list)) {
+            return $list[$code];
+        }
+    }
     /*
      * Get a list of available commonground components
      */
     public function getComponentList()
     {
         $components = [
-            'cc'  => ['href'=>'http://cc.zaakonline.nl',  'authorization'=>''],
-            'lc'  => ['href'=>'http://lc.zaakonline.nl',  'authorization'=>''],
-            'ltc' => ['href'=>'http://ltc.zaakonline.nl', 'authorization'=>''],
-            'brp' => ['href'=>'http://brp.zaakonline.nl', 'authorization'=>''],
-            'irc' => ['href'=>'http://irc.zaakonline.nl', 'authorization'=>''],
-            'ptc' => ['href'=>'http://ptc.zaakonline.nl', 'authorization'=>''],
-            'mrc' => ['href'=>'http://mrc.zaakonline.nl', 'authorization'=>''],
-            'arc' => ['href'=>'http://arc.zaakonline.nl', 'authorization'=>''],
-            'vtc' => ['href'=>'http://vtc.zaakonline.nl', 'authorization'=>''],
-            'vrc' => ['href'=>'http://vrc.zaakonline.nl', 'authorization'=>''],
-            'pdc' => ['href'=>'http://pdc.zaakonline.nl', 'authorization'=>''],
-            'wrc' => ['href'=>'http://wrc.zaakonline.nl', 'authorization'=>''],
-            'orc' => ['href'=>'http://orc.zaakonline.nl', 'authorization'=>''],
-            'bc'  => ['href'=>'http://orc.zaakonline.nl', 'authorization'=>''],
+            'ac'    => ['href'=> $this->params->get('common_ground.ac.location'),   'authorization'=>$this->params->get('common_ground.ac.apikey')],
+            'as'    => ['href'=> $this->params->get('common_ground.as.location'),   'authorization'=>$this->params->get('common_ground.as.apikey')],
+            'bc'    => ['href'=> $this->params->get('common_ground.bc.location'),   'authorization'=>$this->params->get('common_ground.bc.apikey')],
+            'brp'   => ['href'=> $this->params->get('common_ground.brp.location'),  'authorization'=>$this->params->get('common_ground.brp.apikey')],
+            'bs'    => ['href'=> $this->params->get('common_ground.bs.location'),   'authorization'=>$this->params->get('common_ground.bs.apikey')],
+            'cc'    => ['href'=> $this->params->get('common_ground.cc.location'),   'authorization'=>$this->params->get('common_ground.cc.apikey')],
+            'irc'   => ['href'=> $this->params->get('common_ground.irc.location'),  'authorization'=>$this->params->get('common_ground.irc.apikey')],
+            'lc'    => ['href'=> $this->params->get('common_ground.lc.location'),   'authorization'=>$this->params->get('common_ground.lc.apikey')],
+            'ltc'   => ['href'=> $this->params->get('common_ground.ltc.location'),  'authorization'=>$this->params->get('common_ground.ltc.apikey')],
+            'mrc'   => ['href'=> $this->params->get('common_ground.mrc.location'),  'authorization'=>$this->params->get('common_ground.mrc.apikey')],
+            'orc'   => ['href'=> $this->params->get('common_ground.orc.location'),  'authorization'=>$this->params->get('common_ground.orc.apikey')],
+            'pdc'   => ['href'=> $this->params->get('common_ground.pdc.location'),  'authorization'=>$this->params->get('common_ground.pdc.apikey')],
+            'ptc'   => ['href'=> $this->params->get('common_ground.ptc.location'),  'authorization'=>$this->params->get('common_ground.ptc.apikey')],
+            'vrc'   => ['href'=> $this->params->get('common_ground.vrc.location'),  'authorization'=>$this->params->get('common_ground.vrc.apikey')],
+            'vtc'   => ['href'=> $this->params->get('common_ground.vtc.location'),  'authorization'=>$this->params->get('common_ground.vtc.apikey')],
+            'wrc'   => ['href'=> $this->params->get('common_ground.wrc.location'),  'authorization'=>$this->params->get('common_ground.wrc.apikey')],
         ];
 
         return $components;

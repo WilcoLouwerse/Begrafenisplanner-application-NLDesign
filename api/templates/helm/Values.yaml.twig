@@ -9,10 +9,11 @@ settings:
   title: {{ app_title }}
   version: {{ app_version }}
   description: '{{ app_description }}'
+  type: {{ app_type }}
   repro: {{ app_repro }}
   demo: {{ app_demo }}
   container: {{ app_container }}
-  subdomain: {{ app_subdomain }}  
+  subdomain: {{ app_subdomain }}
   domains:
 {% for domain in app_domains %}
     - {{ domain }}
@@ -23,7 +24,7 @@ settings:
   country: {{ organization_country }}
   state: {{ organization_state }}
   locality: {{ organization_locality }}
-  unit: {{ organization_unit }}  
+  unit: {{ organization_unit }}
   env: {{ app_env }}
   debug: {{ app_debug }}
   replicaCount: 1
