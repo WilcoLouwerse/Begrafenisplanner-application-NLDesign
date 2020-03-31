@@ -536,6 +536,7 @@ class CommonGroundService
             'vrc'   => ['href'=> $this->params->get('common_ground.vrc.location'),  'authorization'=>$this->params->get('common_ground.vrc.apikey')],
             'vtc'   => ['href'=> $this->params->get('common_ground.vtc.location'),  'authorization'=>$this->params->get('common_ground.vtc.apikey')],
             'wrc'   => ['href'=> $this->params->get('common_ground.wrc.location'),  'authorization'=>$this->params->get('common_ground.wrc.apikey')],
+            'grc'   => ['href'=> $this->params->get('common_ground.grc.location'),  'authorization'=>$this->params->get('common_ground.grc.apikey')],
         ];
 
         return $components;

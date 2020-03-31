@@ -6,24 +6,21 @@ namespace App\Controller;
 use App\Service\ApplicationService;
 //use App\Service\RequestService;
 use App\Service\CommonGroundService;
-use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\Integer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
+use DateTimeZone;
 
 /**
  * Class DeveloperController
  * @package App\Controller
- * @Route("/grave")
+ * @Route("/gravecover")
  */
-class GraveController extends AbstractController
+class GravecoverController extends AbstractController
 {
-
     /**
      * @Route("/view")
      * @Template
@@ -32,9 +29,9 @@ class GraveController extends AbstractController
     {
         $variables = [];
 
-        $graves = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/graves');
+        $gravecovers = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/grave_covers');
 
-        $variables['graves'] = $graves;
+        $variables['gravecovers'] = $gravecovers;
 
         return $variables;
     }
@@ -46,25 +43,21 @@ class GraveController extends AbstractController
     public function addAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
+        $variables['gravecover'] = "";
 
         if(isset($_POST['Submit']))
         {
             $timezone = new DateTimeZone('Europe/Amsterdam');
             $date     = \DateTime::createFromFormat('yy-m-d H:m:s', 'yy-m-d H:m:s', $timezone);
 
-            $grave = [];
-            $grave['dateCreated'] = $date;
-            $grave['dateModified'] = $date;
-            $grave['description'] = $_POST['Description'];
-            $grave['cemetery'] = $_POST['Cemetery'];
-            $grave['deceased'] = $_POST['Deceased'];
-            $grave['acquisition'] = $_POST['Acquisition'];
-            $grave['graveReference'] = $_POST['Reference'];
-            $grave['graveType'] = $_POST['GraveType'];
-            $grave['status'] = $_POST['Status'];
-            $grave['location'] = $_POST['Location'];
-            $grave['position'] = (int) $_POST['Position'];
-            $grave = $commonGroundService->createResource($grave, $commonGroundService->getComponent('grc')['href'].'/graves');
+            $gravecover = [];
+            $gravecover['dateCreated'] = $date;
+            $gravecover['dateModified'] = $date;
+            $gravecover['description'] = $_POST['Description'];
+            $gravecover['name'] = $_POST['Name'];
+            $gravecover = $commonGroundService->createResource($gravecover, $commonGroundService->getComponent('grc')['href'].'/grave_covers');
+
+            $variables['gravecover'] = $gravecover;
         }
 
         return $variables;
