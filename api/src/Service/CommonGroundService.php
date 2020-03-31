@@ -37,6 +37,7 @@ class CommonGroundService
             'Accept'        => 'application/ld+json',
             'Content-Type'  => 'application/json',
             'Authorization'  => $this->params->get('app_commonground_key'),
+            // NLX
             'X-NLX-Request-Application-Id' => $this->params->get('app_commonground_id'),// the id of the application performing the request
             // NL Api Strategie
             'Accept-Crs'  => 'EPSG:4326',
@@ -257,6 +258,7 @@ class CommonGroundService
     public function createResource($resource, $url = null, $async = false, $autowire = true)
     {
         $url = $this->cleanUrl($url, $resource, $autowire);
+
         // Set headers
         $headers = $this->headers;
 
@@ -343,7 +345,7 @@ class CommonGroundService
     {
 
         // If the resource exists we are going to update it, if not we are going to create it
-        if($resource['@id']){
+        if(key_exists('@id', $resource)){
             if($this->updateResource($resource, null, false, $autowire)){
                 // Lets renew the resource
                 $resource= $this->getResource($resource['@id'], [], false, false, $autowire);
@@ -429,39 +431,22 @@ class CommonGroundService
      */
     public function proccesErrors($response, $statusCode, $headers = null, $resource = null, $url = null, $proces )
     {
+        // Non-Json suppor
+
+        if(!$response && $this->params->get('app_type') == 'application'){
+            $this->flash->add('error', $statusCode.':'.$url);
+        }
         // ZGW support
-        if(!array_key_exists ('@type', $response) && array_key_exists ( 'types' , $response)){
-            if($this->params->get('app_type') == 'application'){
-                $this->flash->add('error', $this->translator->trans($response['detail']));
-            }
-            else{
-                http_response_code($statusCode);
-                var_dump($proces.' returned:'.$statusCode);
-                var_dump($headers);
-                var_dump(json_encode($resource));
-                var_dump(json_encode($url));
-                var_dump($response);
-                die;
-            }
+        elseif(!array_key_exists ('@type', $response) && array_key_exists ( 'types' , $response) && $this->params->get('app_type') == 'application'){
+            $this->flash->add('error', $this->translator->trans($response['detail']));
         }
         // Hydra Support
-        elseif(array_key_exists ('@type', $response) && $response['@type'] == 'ConstraintViolationList'){
-            if($this->params->get('app_type') == 'application'){
-                foreach($response['violations'] as $violation){
-                    $this->flash->add('error', $violation['propertyPath'].' '.$this->translator->trans($violation['message']));
-                    return false;
-                }
-            }else{
-                http_response_code($statusCode);
-                var_dump($proces.' returned:'.$statusCode);
-                var_dump($headers);
-                var_dump(json_encode($resource));
-                var_dump(json_encode($url));
-                var_dump($response);
-                die;
+        elseif(array_key_exists ('@type', $response) && $response['@type'] == 'ConstraintViolationList' && $this->params->get('app_type' == 'application')){
+            foreach($response['violations'] as $violation){
+                $this->flash->add('error', $violation['propertyPath'].' '.$this->translator->trans($violation['message']));
             }
 
-
+            return false;
         }
         else{
             http_response_code($statusCode);
