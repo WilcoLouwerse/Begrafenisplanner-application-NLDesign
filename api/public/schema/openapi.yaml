@@ -1,10 +1,10 @@
 openapi: 3.0.2
 info:
-  title: 'Betaal Service'
+  title: 'Proto component commonground'
   version: V.0.1
   description: |
     API Details
-    - Component: Betaal Service
+    - Component: Proto component commonground
     - Reference: pc
     - Enviroment: dev
     - Version: V.0.1
@@ -2413,12 +2413,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-03-13 10:32:15'
+        example: '2020-03-30 13:49:01'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-03-13 10:32:15'
+        example: '2020-03-30 13:49:01'
     required: []
   AuditTrail-write:
     properties:
@@ -2466,12 +2466,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-03-13 10:32:15'
+        example: '2020-03-30 13:49:01'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-03-13 10:32:15'
+        example: '2020-03-30 13:49:01'
     required: []
   ChangeLog-write:
     properties:
