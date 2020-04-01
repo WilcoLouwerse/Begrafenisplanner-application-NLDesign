@@ -30,7 +30,7 @@ parameters:
     common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
     common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
 
-    common_ground.ac.location: 'https://ac.zaakonline.nl'
+    common_ground.ac.location: 'https://ac.begraven.zaakonline.nl'
     common_ground.ac.apikey: '%env(APP_COMMONGROUND_KEY)%'
 
     common_ground.as.location: 'https://as.zaakonline.nl'

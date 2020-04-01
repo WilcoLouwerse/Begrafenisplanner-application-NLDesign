@@ -32,9 +32,7 @@ class GraveController extends AbstractController
     {
         $variables = [];
 
-        $graves = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/graves');
-
-        $variables['graves'] = $graves;
+        $variables['graves'] = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/graves');;
 
         return $variables;
     }
@@ -47,6 +45,8 @@ class GraveController extends AbstractController
     {
         $variables = [];
 
+        $variables['cemeteries'] = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/cemeteries');;
+
         if(isset($_POST['Submit']))
         {
             $timezone = new DateTimeZone('Europe/Amsterdam');
@@ -56,7 +56,11 @@ class GraveController extends AbstractController
             $grave['dateCreated'] = $date;
             $grave['dateModified'] = $date;
             $grave['description'] = $_POST['Description'];
-            $grave['cemetery'] = $_POST['Cemetery'];
+            $cemetery = $_POST['Cemetery'];
+            if($cemetery != "Select Cemetery")
+            {
+                $grave['cemetery'] = $variables['cemeteries']['hydra:member'][1];
+            }
             $grave['deceased'] = $_POST['Deceased'];
             $grave['acquisition'] = $_POST['Acquisition'];
             $grave['graveReference'] = $_POST['Reference'];
@@ -64,7 +68,7 @@ class GraveController extends AbstractController
             $grave['status'] = $_POST['Status'];
             $grave['location'] = $_POST['Location'];
             $grave['position'] = (int) $_POST['Position'];
-            $grave = $commonGroundService->createResource($grave, $commonGroundService->getComponent('grc')['href'].'/graves');
+            $commonGroundService->createResource($grave, $commonGroundService->getComponent('grc')['href'].'/graves');
         }
 
         return $variables;

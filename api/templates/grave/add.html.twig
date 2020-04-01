@@ -13,7 +13,15 @@
 
                     <form action="add" method="post">
                         Reference: <input type = "text" name = "Reference" value="Reference Here"/> <br />
-                        Cemetery: <input type = "text" name = "Cemetery" value="Cemetery Here"/> <br />
+                        <div class="field select-box">
+                            Cemetery:
+                            <select name="Cemetery">
+                                <option>Select Cemetery</option>
+                                {% for cemetery in cemeteries['hydra:member'] %}
+                                    <option>{{  (cemetery['reference']) }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                         Deceased: <input type = "text" name = "Deceased" value="Deceased Here"/> <br />
                         Location: <input type = "text" name = "Location" value="Location Here"/> <br />
                         Position: <input type = "text" name = "Position" value="Position Number Here"/> <br />
