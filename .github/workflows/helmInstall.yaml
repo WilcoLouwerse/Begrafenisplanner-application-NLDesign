@@ -2,9 +2,6 @@ name: Helm Install
 
 on: 
     repository_dispatch:
-        branches:
-            - master
-            - development
         types: [start-install-workflow]
 
 jobs:

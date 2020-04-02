@@ -2,9 +2,6 @@ name: Helm Upgrade
 
 on: 
     repository_dispatch:
-        branches:
-            - master
-            - development
         types: [start-upgrade-workflow]
 
 jobs:
