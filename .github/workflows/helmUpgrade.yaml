@@ -23,9 +23,13 @@ jobs:
             - name: enable debugging
               if: github.event.client_payload.environment == 'dev'
               run: echo ::set-env name=DEBUG::1
-            - name: Set APP_DOMAINS
+            - name: Set AUTH_KEY
               run: |
-                  export DOMAIN="${{ github.event.client_payload.domains }}"
+                  export CACHE=${{ github.event.client_payload.cache }}
+                  echo ::set-env name=APP_CACHE::$CACHE
+            - name: Set APP_DOMAIN
+              run: |
+                  export DOMAIN="${{ github.event.client_payload.domain }}"
                   echo ::set-env name=APP_DOMAIN::$DOMAIN
             - name: Set DB_URL
               run: |
@@ -38,7 +42,7 @@ jobs:
                   echo ::set-env name=AUTH_KEY::$AUTHKEY
             - name: Print variables
               run: |
-                  printf "APP_NAME: \t\t $APP_NAME\nAPP_ENV: \t\t $APP_ENV\nDEBUG: \t\t $DEBUG\nAPP_DOMAINS: \t\t $APP_DOMAIN\nDB_URL: \t\t $DB_URL\nAUTH_KEY: \t\t $AUTH_KEY"
+                  printf "APP_NAME: \t\t $APP_NAME\nAPP_ENV: \t\t $APP_ENV\nDEBUG: \t\t $DEBUG\nAPP_DOMAIN: \t\t $APP_DOMAIN\nDB_URL: \t\t $DB_URL\nAUTH_KEY: \t\t $AUTH_KEY"
             - name: Create kube config
               id: kubeconfig
               run: |
@@ -48,12 +52,11 @@ jobs:
                   else
                     echo "##[set-output name=success]false"
                   fi 
-            #            - name: Set correct helm version
-            #              if: steps.kubeconfig.outputs.success == 'true'
-            #              run: helm init --upgrade --kubeconfig="./kubeconfig.yaml"  
             - name: Set correct helm version
               if: steps.kubeconfig.outputs.success == 'true'
               run: curl -L https://git.io/get_helm.sh | bash -s -- --version v2.12.3
-            - name: Helm Upgrade
+            #            - run: helm version
+            - name: Helm Install
               if: steps.kubeconfig.outputs.success == 'true'
-                  helm upgrade $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domains=$APP_DOMAIN,postgresql.enabled=false,postgresql.url=$DB_URL
+              run: |
+                  helm install $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain="$APP_DOMAIN",settings.cache="APP_CACHE",postgresql.enabled=false,postgresql.url="$DB_URL"
