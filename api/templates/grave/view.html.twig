@@ -16,7 +16,7 @@
                         <thead>
                         <tr>
                             <th scope="col">Grave ID</th>
-                            <th scope="col">Grave Reference</th>
+                            <th scope="col">Grave Reference</th> <!-- word reference ipv grave reference -->
                             <th scope="col">Cemetery</th>
                             <th scope="col">Deceased</th>
                             <th scope="col">Location</th>
@@ -33,8 +33,8 @@
                          {% for grave in graves['hydra:member'] %}
                         <tr>
                             <td>{{ (grave["id"]) }}</td>
-                            <td>{{ (grave["graveReference"]) }}</td>
-                            <td>{{ (grave["cemetery"]) }}</td>
+                            <td>{{ (grave["graveReference"]) }}</td> <!-- word reference ipv graveReference -->
+                            <td>{{ (grave["cemetery"]["reference"]) }}</td>
                             <td>{{ (grave["deceased"]) }}</td>
                             <td>{{ (grave["location"]) }}</td>
                             <td>{{ (grave["position"]) }}</td>

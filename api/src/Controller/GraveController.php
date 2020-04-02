@@ -59,11 +59,11 @@ class GraveController extends AbstractController
             $cemetery = $_POST['Cemetery'];
             if($cemetery != "Select Cemetery")
             {
-                $grave['cemetery'] = $variables['cemeteries']['hydra:member'][1];
+                $grave['cemetery'] = $cemetery;
             }
             $grave['deceased'] = $_POST['Deceased'];
             $grave['acquisition'] = $_POST['Acquisition'];
-            $grave['graveReference'] = $_POST['Reference'];
+            $grave['graveReference'] = $_POST['Reference']; //word reference ipv graveReference
             $grave['graveType'] = $_POST['GraveType'];
             $grave['status'] = $_POST['Status'];
             $grave['location'] = $_POST['Location'];

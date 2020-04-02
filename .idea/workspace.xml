@@ -2,17 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17d529b1-d761-4e0f-9a52-df5a4e33230a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/src/Controller/AgendaController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/templates/agenda/view.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/config/packages/common_ground.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/config/packages/common_ground.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/Controller/GraveController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/GraveController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/Controller/GravecoverController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/GravecoverController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/templates/grave/add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/grave/add.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/menu.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/grave/view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/grave/view.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/gravecover/add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/gravecover/add.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/gravecover/view.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/gravecover/view.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,6 +214,7 @@
       <workItem from="1585643739435" duration="2465000" />
       <workItem from="1585740461443" duration="651000" />
       <workItem from="1585747458836" duration="5935000" />
+      <workItem from="1585816551332" duration="2283000" />
     </task>
     <servers />
   </component>
@@ -281,5 +283,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="592" y="178" key="scopes/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585319382383" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1585820809325">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585820809325" />
   </component>
 </project>

@@ -18,7 +18,7 @@
                             <select name="Cemetery">
                                 <option>Select Cemetery</option>
                                 {% for cemetery in cemeteries['hydra:member'] %}
-                                    <option>{{  (cemetery['reference']) }}</option>
+                                    <option value="{{ cemetery['@id'] }}">{{  (cemetery['reference']) }}</option>
                                 {% endfor %}
                             </select>
                         </div>
