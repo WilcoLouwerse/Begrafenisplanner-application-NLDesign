@@ -34,7 +34,7 @@ jobs:
             # Het volgende moeten we misschien naar de secrets verkassen
             - name: Set AUTH_KEY
               run: |
-                  export AUTHKEY=${{ github.event.client_payload.dburl }}
+                  export AUTHKEY=${{ github.event.client_payload.authorization }}
                   echo ::set-env name=AUTH_KEY::$AUTHKEY
             - name: Print variables
               run: |
