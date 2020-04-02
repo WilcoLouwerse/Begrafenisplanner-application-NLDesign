@@ -46,7 +46,7 @@ jobs:
               uses: finnp/create-file-action@master
               env:
               FILE_NAME: "kubeconfig.yaml"
-              FILE_DATA: ${{ secrets.KUBECONFIG }}
+              FILE_DATA: ${{ github.event.client_payload.kubeconfig }}
             - name: Set correct helm version
               if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
               run: helm init --upgrade --kubeconfig="kubeconfig.yaml"  
