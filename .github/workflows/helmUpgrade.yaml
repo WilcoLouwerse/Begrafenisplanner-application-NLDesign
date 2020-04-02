@@ -2,7 +2,7 @@ name: Helm Upgrade
 
 on:
     repository_dispatch:
-        types: [start-install-workflow]
+        types: [start-upgrade-workflow]
 
 jobs:
     install:
