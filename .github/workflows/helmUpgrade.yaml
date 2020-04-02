@@ -53,4 +53,4 @@ jobs:
             #              run: helm init --upgrade --kubeconfig="./kubeconfig.yaml"  
             - name: Helm Upgrade
               if: steps.kubeconfig.outputs.success == 'true'
-                  helm upgrade $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domains=$APP_DOMAINS,postgresql.enabled=false,postgresql.url=$DB_URL
+                  helm upgrade $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domains=$APP_DOMAIN,postgresql.enabled=false,postgresql.url=$DB_URL
