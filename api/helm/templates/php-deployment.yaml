@@ -77,6 +77,11 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: debug
+            - name: APP_CASH
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: cache
             - name: APP_DEMO
               valueFrom:
                 configMapKeyRef:
