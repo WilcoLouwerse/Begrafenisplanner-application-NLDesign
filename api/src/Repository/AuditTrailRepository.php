@@ -16,7 +16,7 @@ class AuditTrailRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-    	parent::__construct($registry, AuditTrail::class);
+        parent::__construct($registry, AuditTrail::class);
     }
 
     /**
