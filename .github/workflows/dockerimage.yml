@@ -80,7 +80,7 @@ jobs:
             else
               echo "##[set-output name=success;]false"
             fi
-      - if: steps.dockerhub-login.outputs.success == 'true'
+      - if: steps.dockerhub-login.outputs.success == 'true' && (github.ref == 'master' || github.ref == 'staging' || github.ref == 'development')
         name: Push to docker hub
         run: docker-compose push
 #      - name: Create kube config
