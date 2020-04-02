@@ -40,12 +40,15 @@ jobs:
               run: |
                   printf "APP_NAME: \t\t $APP_NAME\nAPP_ENV: \t\t $APP_ENV\nDEBUG: \t\t $DEBUG\nAPP_DOMAINS: \t\t $APP_DOMAINS\nDB_URL: \t\t $DB_URL\nAUTH_KEY: \t\t $AUTH_KEY"
             - name: Create kube config
-              uses: finnp/create-file-action@master
-              env:
-                  FILE_NAME: "kubeconfig.yaml"
-                  FILE_DATA: ${{ github.event.client_payload.kubeconfig }}
+              id: kubeconfig
+              run: |
+                  if [ "${{ github.event.client_payload.kubeconfig }}" != "" ]; then
+                    printf "${{ github.event.client_payload.kubeconfig }}" > kubeconfig.yaml
+                    echo "##[set-output name=success]true"
+                  else
+                    echo "##[set-output name=success]false"
+                  fi 
             - name: Set correct helm version
-              if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
               run: helm init --upgrade --kubeconfig="kubeconfig.yaml"  
             - name: Helm Install
               run: |
