@@ -54,4 +54,4 @@ jobs:
             - name: Helm Install
               if: steps.kubeconfig.outputs.success == 'true'
               run: |
-                  helm install $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domains=${{ github.event.client_payload.domains }},postgresql.enabled=false,postgresql.url=$DB_URL
+                  helm install $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domains="${{ github.event.client_payload.domains }}",postgresql.enabled=false,postgresql.url=$DB_URL
