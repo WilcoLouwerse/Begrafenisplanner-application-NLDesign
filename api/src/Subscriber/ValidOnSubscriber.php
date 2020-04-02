@@ -29,16 +29,16 @@ class ValidOnSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-           KernelEvents::VIEW => ['validOn', EventPriorities::PRE_SERIALIZE],
+            KernelEvents::VIEW => ['validOn', EventPriorities::PRE_SERIALIZE],
         ];
     }
 
     public function validOn(GetResponseForControllerResultEvent $event)
     {
-    	$result = $event->getControllerResult();
-    	$method = $event->getRequest()->getMethod();
-    	$route = $event->getRequest()->attributes->get('_route');
-    	
+        $result = $event->getControllerResult();
+        $method = $event->getRequest()->getMethod();
+        $route = $event->getRequest()->attributes->get('_route');
+
         // Lets get validOn from the query but deafult back to geldig op (for backward compatibality with api standaard)
         $geldigOp = $event->getRequest()->query->get('geldigOp', false);
         $validOn = $event->getRequest()->query->get('validOn', $geldigOp);
