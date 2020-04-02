@@ -51,6 +51,9 @@ jobs:
             #            - name: Set correct helm version
             #              if: steps.kubeconfig.outputs.success == 'true'
             #              run: helm init --upgrade --kubeconfig="./kubeconfig.yaml"  
+            - name: Set correct helm version
+              if: steps.kubeconfig.outputs.success == 'true'
+              run: curl -L https://git.io/get_helm.sh | bash -s -- --version v2.12.3
             - name: Helm Upgrade
               if: steps.kubeconfig.outputs.success == 'true'
                   helm upgrade $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domains=$APP_DOMAIN,postgresql.enabled=false,postgresql.url=$DB_URL
