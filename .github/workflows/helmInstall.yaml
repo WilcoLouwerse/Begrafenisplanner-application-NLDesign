@@ -54,7 +54,8 @@ jobs:
                   fi 
             - name: Set correct helm version
               if: steps.kubeconfig.outputs.success == 'true'
-              run: helm version 
+              run: curl -L https://git.io/get_helm.sh | bash -s -- --version v2.14.3 
+            - run: helm version
             - name: Helm Install
               if: steps.kubeconfig.outputs.success == 'true'
               run: |
