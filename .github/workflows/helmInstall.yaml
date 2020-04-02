@@ -52,10 +52,10 @@ jobs:
                   else
                     echo "##[set-output name=success]false"
                   fi 
-#            - name: Set correct helm version
-#              if: steps.kubeconfig.outputs.success == 'true'
-#              run: helm init --upgrade --kubeconfig="./kubeconfig.yaml"  
+            - name: Set correct helm version
+              if: steps.kubeconfig.outputs.success == 'true'
+              run: helm version 
             - name: Helm Install
               if: steps.kubeconfig.outputs.success == 'true'
               run: |
-                  helm install --name $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain="$APP_DOMAIN",settings.cache="APP_CACHE",postgresql.enabled=false,postgresql.url="$DB_URL"
+                  helm install $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain="$APP_DOMAIN",settings.cache="APP_CACHE",postgresql.enabled=false,postgresql.url="$DB_URL"
