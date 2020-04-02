@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\ChangeLog;
-use Gedmo\Loggable\Entity\Repository\LogEntryRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Gedmo\Loggable\Entity\Repository\LogEntryRepository;
 
 /**
  * @method ChangeLog|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,7 +14,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  */
 class ChangeLogRepository extends LogEntryRepository
 {
-	/*
+    /*
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ChangeLog::class);
