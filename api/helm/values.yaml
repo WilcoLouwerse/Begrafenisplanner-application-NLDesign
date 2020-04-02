@@ -9,7 +9,7 @@ settings:
   title: Proto component commonground
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
-  type: 
+  type: component
   repro: https://github.com/ConductionNL/proto-component
   demo: pc.zaakonline.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
