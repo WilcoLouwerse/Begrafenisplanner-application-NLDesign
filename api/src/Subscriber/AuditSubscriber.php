@@ -2,22 +2,19 @@
 
 namespace App\Subscriber;
 
-use ApiPlatform\Core\EventListener\EventPriorities;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Paginator;
 use ApiPlatform\Core\Api\Entrypoint;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Paginator;
+use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Entity\AuditTrail;
+use App\Service\NLXLogService;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\SerializerInterface;
-
-use App\Entity\AuditTrail;
-use App\Service\NLXLogService;
 
 class AuditSubscriber implements EventSubscriberInterface
 {
@@ -37,7 +34,7 @@ class AuditSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-        		KernelEvents::VIEW => ['LogRequest', EventPriorities::PRE_SERIALIZE],
+            KernelEvents::VIEW => ['LogRequest', EventPriorities::PRE_SERIALIZE],
         ];
     }
 
@@ -67,17 +64,17 @@ class AuditSubscriber implements EventSubscriberInterface
         $log->setSession($session->getId());
         $log->setHeaders($request->headers->all());
 
-        if($event->getRequest()->headers->get('X-NLX-Request-Data-Elements')){
-        	$log->setDataElements(explode(',',$event->getRequest()->headers->get('X-NLX-Request-Data-Elements')));
+        if ($event->getRequest()->headers->get('X-NLX-Request-Data-Elements')) {
+            $log->setDataElements(explode(',', $event->getRequest()->headers->get('X-NLX-Request-Data-Elements')));
         }
-        if($event->getRequest()->headers->get('X-NLX-Request-Data-Subject')){
-        	$log->setDataSubjects(explode(',',$event->getRequest()->headers->get('X-NLX-Request-Data-Subject')));
+        if ($event->getRequest()->headers->get('X-NLX-Request-Data-Subject')) {
+            $log->setDataSubjects(explode(',', $event->getRequest()->headers->get('X-NLX-Request-Data-Subject')));
         }
 
         //
-        if($result != null && !$result instanceof Paginator && !$result instanceof Entrypoint) {
-        	$log->setResource($result->getid());
-        	$log->setResourceType($this->em->getMetadataFactory()->getMetadataFor(get_class($result))->getName());
+        if ($result != null && !$result instanceof Paginator && !$result instanceof Entrypoint) {
+            $log->setResource($result->getid());
+            $log->setResourceType($this->em->getMetadataFactory()->getMetadataFor(get_class($result))->getName());
         }
 
         // Responce loging
@@ -85,9 +82,6 @@ class AuditSubscriber implements EventSubscriberInterface
         //$log->setNotFound($responce->isNotFound());
         //$log->setForbidden($responce->isForbidden());
         //$log->setOk($responce->isOk());
-
-
-
 
         $this->em->persist($log);
         $this->em->flush($log);
@@ -108,16 +102,16 @@ class AuditSubscriber implements EventSubscriberInterface
      * @param EntityManager $em
      * @param string|object $class
      *
-     * @return boolean
+     * @return bool
      */
-    function isEntity(EntityManager $em, $class)
+    public function isEntity(EntityManager $em, $class)
     {
-    	if (is_object($class)) {
-    		$class = ($class instanceof Proxy)
-    		? get_parent_class($class)
-    		: get_class($class);
-    	}
+        if (is_object($class)) {
+            $class = ($class instanceof Proxy)
+            ? get_parent_class($class)
+            : get_class($class);
+        }
 
-    	return ! $em->getMetadataFactory()->isTransient($class);
+        return !$em->getMetadataFactory()->isTransient($class);
     }
 }
