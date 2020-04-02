@@ -25,8 +25,8 @@ jobs:
               run: echo ::set-env name=DEBUG::1
             - name: Set APP_DOMAINS
               run: |
-                  export DOMAINS="${{ github.event.client_payload.domains }}"
-                  echo ::set-env name=APP_DOMAINS::$DOMAINS
+                  export DOMAIN="${{ github.event.client_payload.domains }}"
+                  echo ::set-env name=APP_DOMAIN::$DOMAIN
             - name: Set DB_URL
               run: |
                   export DBURL="${{ github.event.client_payload.dburl }}"
@@ -38,7 +38,7 @@ jobs:
                   echo ::set-env name=AUTH_KEY::$AUTHKEY
             - name: Print variables
               run: |
-                  printf "APP_NAME: \t\t $APP_NAME\nAPP_ENV: \t\t $APP_ENV\nDEBUG: \t\t $DEBUG\nAPP_DOMAINS: \t\t $APP_DOMAINS\nDB_URL: \t\t $DB_URL\nAUTH_KEY: \t\t $AUTH_KEY"
+                  printf "APP_NAME: \t\t $APP_NAME\nAPP_ENV: \t\t $APP_ENV\nDEBUG: \t\t $DEBUG\nAPP_DOMAINS: \t\t $APP_DOMAIN\nDB_URL: \t\t $DB_URL\nAUTH_KEY: \t\t $AUTH_KEY"
             - name: Create kube config
               id: kubeconfig
               run: |
@@ -54,4 +54,4 @@ jobs:
             - name: Helm Install
               if: steps.kubeconfig.outputs.success == 'true'
               run: |
-                  helm install $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domains="${{ github.event.client_payload.domains }}",postgresql.enabled=false,postgresql.url=$DB_URL
+                  helm install $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain="$APP_DOMAIN",postgresql.enabled=false,postgresql.url=$DB_URL
