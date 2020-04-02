@@ -36,6 +36,7 @@ data:
   organization-locality: {{ .Values.settings.locality | quote }}
   organization-unit: {{ .Values.settings.unit | quote }}
   
+  cache: {{ .Values.settings.cache | quote }}
   env: {{ .Values.settings.env | quote }}
   debug: {{ .Values.settings.debug | quote }}
   cors-allow-origin: {{ .Values.settings.corsAllowOrigin | quote }}

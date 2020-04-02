@@ -92,8 +92,8 @@ class CommonGroundService
          */
 
         $item = $this->cache->getItem('commonground_'.md5($url));
-        if ($item->isHit() && !$force) {
-            //return $item->get();
+        if ($item->isHit() && !$force && $this->params->get('app_cache')) {
+            // return $item->get();
         }
 
         // To work with NLX we need a couple of default headers
@@ -147,7 +147,7 @@ class CommonGroundService
 
         $item = $this->cache->getItem('commonground_'.md5($url));
 
-        if ($item->isHit() && !$force) {
+        if ($item->isHit() && !$force && $this->params->get('app_cache')) {
             return $item->get();
         }
 
