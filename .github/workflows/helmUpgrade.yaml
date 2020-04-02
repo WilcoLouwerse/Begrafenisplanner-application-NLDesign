@@ -13,7 +13,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
-            -   name: Setting APP_NAME
+            - name: Setting APP_NAME
               run: |
                   export NAME=$(grep APP_NAME= .env | cut -d '=' -f2)
                   echo ::set-env name=APP_NAME::$NAME
