@@ -25,7 +25,7 @@ jobs:
               run: echo ::set-env name=DEBUG::1
             - name: Set APP_DOMAINS
               run: |
-                  export DOMAIN="${{ github.event.client_payload.domains }}"
+                  export DOMAIN="${{ github.event.client_payload.domain }}"
                   echo ::set-env name=APP_DOMAIN::$DOMAIN
             - name: Set DB_URL
               run: |
@@ -54,4 +54,4 @@ jobs:
             - name: Helm Install
               if: steps.kubeconfig.outputs.success == 'true'
               run: |
-                  helm install $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain="$APP_DOMAIN",postgresql.enabled=false,postgresql.url=$DB_URL
+                  helm install $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain=$APP_DOMAIN,postgresql.enabled=false,postgresql.url=$DB_URL
