@@ -23,6 +23,10 @@ jobs:
             - name: enable debugging 
               if: github.event.client_payload.environment == 'dev'
               run: echo ::set-env name=DEBUG::1
+            - name: Set AUTH_KEY
+              run: |
+               export CACHE=${{ github.event.client_payload.cache }}
+               echo ::set-env name=APP_CACHE::$CACHE
             - name: Set APP_DOMAIN
               run: |
                   export DOMAIN="${{ github.event.client_payload.domain }}"
@@ -54,4 +58,4 @@ jobs:
             - name: Helm Install
               if: steps.kubeconfig.outputs.success == 'true'
               run: |
-                  helm install $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain="$APP_DOMAIN",postgresql.enabled=false,postgresql.url="$DB_URL"
+                  helm install --name=$APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain="$APP_DOMAIN",settings.cache="APP_CACHE",postgresql.enabled=false,postgresql.url="$DB_URL"
