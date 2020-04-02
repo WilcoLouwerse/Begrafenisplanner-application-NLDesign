@@ -12,7 +12,7 @@ parameters:
     env(APP_APPLICATION_KEY): '' 
     env(APP_USER_KEY): ''  
     env(APP_ENV): '' 
-    env(APP_CACHE): ''          
+    env(APP_CACHE): false          
     env(APP_VERSION): '' 
     env(APP_NAME): '' 
     env(APP_DOMAIN): '' 
