@@ -15,26 +15,22 @@ metadata:
 spec:
   tls: 
   - hosts: 
-  {{- range  .Values.settings.domains  }}
-    - {{ . }}
-  {{- end }}
+    - {{ $.Values.settings.domain }}
 #    - {{ .Values.settings.domain }}
     secretName: {{ include "name" . }}-{{ .Values.settings.env }}-cert
   rules:
-  {{- range  .Values.settings.domains  }}
     {{- if eq $.Values.settings.env "prod" }}
-      -   host: {{ $.Values.settings.name }}.{{ . }}
+      -   host: {{ $.Values.settings.name }}.{{ $.Values.settings.domain }}
           http:
               paths:
                       - backend:
                           serviceName: {{ $.Values.settings.name }}
                           servicePort: 80            
     {{- else }}      
-    - host: {{ $.Values.settings.name }}.{{ $.Values.settings.env }}.{{ . }}
+    - host: {{ $.Values.settings.name }}.{{ $.Values.settings.env }}.{{ $.Values.settings.domain }}
       http:
         paths:
           - backend:
               serviceName: {{ $.Values.settings.name }}
               servicePort: 80
      {{- end }}
-  {{- end }}
