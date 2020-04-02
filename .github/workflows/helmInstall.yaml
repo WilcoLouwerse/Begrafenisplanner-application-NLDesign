@@ -25,7 +25,7 @@ jobs:
               run: echo ::set-env name=DEBUG::1
             - name: Set APP_DOMAINS
               run: |
-                  export DOMAINS=${{ github.event.client_payload.domains }}
+                  export -A DOMAINS=${{ github.event.client_payload.domains }}
                   echo ::set-env name=APP_DOMAINS::$DOMAINS
             - name: Set DB_URL
               run: |
