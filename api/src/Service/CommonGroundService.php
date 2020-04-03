@@ -533,12 +533,6 @@ class CommonGroundService
     {
         if (array_key_exists('@id', $object)) {
             $object['@id'] = $parsedUrl['scheme'].'://'.$parsedUrl['host'].$object['@id'];
-
-            // To prevent unnececary calls we cache al the items we get
-            $item = $this->cache->getItem('commonground_'.md5($object['@id']));
-            $item->set($object);
-            $item->expiresAt(new \DateTime('tomorrow'));
-            $this->cache->save($item);
         }
         foreach ($object as $key=>$subObject) {
             if (is_array($subObject)) {
