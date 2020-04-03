@@ -16,7 +16,7 @@
                         <thead>
                         <tr>
                             <th scope="col">Grave Cover ID</th>
-                            <th scope="col">Name</th> <!-- word reference ipv name -->
+                            <th scope="col">Reference</th>
                             <th scope="col">Description</th>
                             <th scope="col">Date Created</th>
                             <th scope="col">Date Modified</th>
@@ -27,7 +27,7 @@
                          {% for gravecover in gravecovers['hydra:member'] %}
                         <tr>
                             <td>{{ (gravecover["id"]) }}</td>
-                            <td>{{ (gravecover["name"]) }}</td> <!-- word reference ipv name -->
+                            <td>{{ (gravecover["reference"]) }}</td>
                             <td>{{ (gravecover["description"]) }}</td>
                             <td>{{ (gravecover["dateCreated"]) }}</td>
                             <td>{{ (gravecover["dateModified"]) }}</td>

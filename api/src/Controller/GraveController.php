@@ -63,7 +63,7 @@ class GraveController extends AbstractController
             }
             $grave['deceased'] = $_POST['Deceased'];
             $grave['acquisition'] = $_POST['Acquisition'];
-            $grave['graveReference'] = $_POST['Reference']; //word reference ipv graveReference
+            $grave['reference'] = $_POST['Reference'];
             $grave['graveType'] = $_POST['GraveType'];
             $grave['status'] = $_POST['Status'];
             $grave['location'] = $_POST['Location'];

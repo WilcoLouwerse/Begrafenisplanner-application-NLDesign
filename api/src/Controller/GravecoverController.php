@@ -51,7 +51,7 @@ class GravecoverController extends AbstractController
             $gravecover['dateCreated'] = $date;
             $gravecover['dateModified'] = $date;
             $gravecover['description'] = $_POST['Description'];
-            $gravecover['name'] = $_POST['Name']; //word reference ipv name
+            $gravecover['reference'] = $_POST['Reference'];
             $commonGroundService->createResource($gravecover, $commonGroundService->getComponent('grc')['href'].'/grave_covers');
         }
 
