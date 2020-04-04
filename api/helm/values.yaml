@@ -16,13 +16,7 @@ settings:
   domain: conduction.nl
   subdomain: pc
   domains:
-    - conduction.nl
-    - zaakonline.nl
-    - larping.eu
-    - common-ground.dev
-    - trouwplanner.online
-    - huwelijksplanner.online
-  domainsJson: ["conduction.nl","zaakonline.nl","larping.eu","common-ground.dev","trouwplanner.online","huwelijksplanner.online"]
+  domainsJson: []
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
@@ -31,6 +25,7 @@ settings:
   unit: Common-Ground
   env: dev
   debug: 1
+  cache: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '127.0.0.1$|^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.dev$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
