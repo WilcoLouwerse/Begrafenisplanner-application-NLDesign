@@ -15,8 +15,6 @@ settings:
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: conduction.nl
   subdomain: pc
-  domains:
-  domainsJson: []
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
