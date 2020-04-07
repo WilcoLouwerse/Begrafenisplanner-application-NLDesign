@@ -15,8 +15,7 @@ parameters:
     env(APP_CACHE): false          
     env(APP_VERSION): '' 
     env(APP_NAME): '' 
-    env(APP_DOMAIN): '' 
-    env(APP_DOMAINS): '[]'      
+    env(APP_DOMAIN): ''  
     env(AUTH_PROVIDER_USER): '' 
     env(AUTH_PROVIDER_APPLICATION): '' 
     
@@ -28,9 +27,8 @@ parameters:
     app_cache: '%env(APP_CACHE)%'                             
     app_version: '%env(APP_VERSION)%'         
     app_name: '%env(APP_NAME)%'       
-    app_domain: '%env(APP_DOMAIN)%'
+    app_domain: '%env(APP_DOMAIN)%'   
     app_type: '%env(APP_TYPE)%'
-    app_domains: '%env(json:APP_DOMAINS)%'  
     auth_provider_user: '%env(AUTH_PROVIDER_USER)%'   
     auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'    
     

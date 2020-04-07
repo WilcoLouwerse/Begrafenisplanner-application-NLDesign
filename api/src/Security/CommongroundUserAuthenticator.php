@@ -90,7 +90,7 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 
         $user = $users[0];
 
-        if (in_array('ROLE_USER', $user['roles'])) {
+        if (!in_array('ROLE_USER', $user['roles'])) {
             $user['roles'][] = 'ROLE_USER';
         }
 
