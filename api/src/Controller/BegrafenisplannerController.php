@@ -6,31 +6,33 @@ namespace App\Controller;
 use App\Service\ApplicationService;
 //use App\Service\RequestService;
 use App\Service\CommonGroundService;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Integer;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
-use DateTimeZone;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Class DeveloperController
  * @package App\Controller
- * @Route("/agenda")
+ * @Route("/begrafenisplannen")
  */
-class AgendaController extends AbstractController
+class BegrafenisplannerController extends AbstractController
 {
+
     /**
-     * @Route("/view")
+     * @Route("/begraafplaats")
      * @Template
      */
-    public function viewAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
+    public function begraafplaatsAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
 
-        $variables['calendars'] = $commonGroundService->getResourceList($commonGroundService->getComponent('ac')['href'].'/calendars');;
-
         return $variables;
     }
+
 }
