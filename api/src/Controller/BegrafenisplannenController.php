@@ -39,14 +39,12 @@ class BegrafenisplannenController extends AbstractController
         return $variables;
     }
 
-    /**
-     * @Route("/datumtijd")
-     * @Template
-     */
     public function datumtijdAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-
+        if ($httpRequest->isMethod('POST')) {
+                return $this->redirect($this->generateUrl('app_begrafenisplannen_artikelen'));
+        }
         return $variables;
     }
 
@@ -54,32 +52,32 @@ class BegrafenisplannenController extends AbstractController
      * @Route("/artikelen")
      * @Template
      */
+    {
     public function artikelenAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
-    {
         $variables = [];
-
         return $variables;
+
     }
 
-    /**
      * @Route("/overledene")
+    /**
      * @Template
-     */
     public function overledeneAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
+     */
     {
         $variables = [];
 
-        return $variables;
     }
+        return $variables;
 
     /**
      * @Route("/belanghebbende")
-     * @Template
      */
+     * @Template
     public function belanghebbendeAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
-        $variables = [];
 
+        $variables = [];
         return $variables;
     }
 
@@ -91,6 +89,6 @@ class BegrafenisplannenController extends AbstractController
     {
         $variables = [];
 
-        return $variables;
     }
+        return $variables;
 }
