@@ -46,7 +46,9 @@ class BegrafenisplannenController extends AbstractController
     public function datumtijdAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-
+        if ($httpRequest->isMethod('POST')) {
+                return $this->redirect($this->generateUrl('app_begrafenisplannen_artikelen'));
+        }
         return $variables;
     }
 
@@ -57,7 +59,6 @@ class BegrafenisplannenController extends AbstractController
     public function artikelenAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-
         return $variables;
     }
 
@@ -68,7 +69,6 @@ class BegrafenisplannenController extends AbstractController
     public function overledeneAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-
         return $variables;
     }
 
@@ -79,7 +79,6 @@ class BegrafenisplannenController extends AbstractController
     public function belanghebbendeAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-
         return $variables;
     }
 
@@ -90,7 +89,7 @@ class BegrafenisplannenController extends AbstractController
     public function bevestigingAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-
         return $variables;
     }
+
 }

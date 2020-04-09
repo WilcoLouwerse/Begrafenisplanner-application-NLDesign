@@ -1,0 +1,163 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+
+    <div class="row">
+
+        <div class="col-md-7  col-sm-12">
+
+            <div class="content-background">
+                <div class="content">
+                    <h2>Datum & Tijd</h2>
+
+                    <form class="form" method="post" action="#">
+                        <div class="col-md-4  col-sm-12">
+                        <div class="input">
+                            <label class="input__label" for="week">Selecteer hier een week:</label>
+                            <select id="week" name="week" class="input__control input__control--m input__control--select "  required="" >
+                                <option>Week 1, 2020</option>
+                                <option>Week 2, 2020</option>
+                                <option>Week 3, 2020</option>
+                            </select>
+                        </div>
+                        </div>
+                        <table class="table table--hoverable">
+                            <caption>Selecteer hier een tijd:</caption>
+                            <tbody>
+                            <thead>
+                            <tr>
+                                <td>
+                                    <table>
+                                        <tr><th>Maandag</th></tr>
+                                        <tr><td>08:30-10:30</td></tr>
+                                        <tr><td>11:00-15:00</td></tr>
+                                        <tr><td>15:30-17:30</td></tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr><th>Dinsdag</th></tr>
+                                        <tr><td>08:30-10:30</td></tr>
+                                        <tr><td>11:00-15:00</td></tr>
+                                        <tr><td>15:30-17:30</td></tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr><th>Woensdag</th></tr>
+                                        <tr><td>08:30-10:30</td></tr>
+                                        <tr><td>11:00-15:00</td></tr>
+                                        <tr><td>15:30-17:30</td></tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr><th>Donderdag</th></tr>
+                                        <tr><td>08:30-10:30</td></tr>
+                                        <tr><td>11:00-15:00</td></tr>
+                                        <tr><td>15:30-17:30</td></tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table>
+                                        <tr><th>Vrijdag</th></tr>
+                                        <tr><td>08:30-10:30</td></tr>
+                                        <tr><td>11:00-15:00</td></tr>
+                                        <tr><td>15:30-17:30</td></tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            </thead>
+
+                            </tbody>
+                        </table>
+
+                    <div class="input">
+                        <button type="submit" class="btn" name="submit" value="save">Opslaan</button> of naar de <a href="{{ path('app_begrafenisplannen_begraafplaats') }}">vorige stap</a>
+                    </div>
+                    </form>
+
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+        </div><!-- /.col -->
+
+        <div class="col-md-5 col-sm-12">
+
+            <div class="content-background" >
+                <div class="content">
+
+                    <div class="content-background">
+                        <div class="content">
+                            <h2>Stappen</h2>
+                            <ul class="list list--timeline list--timeline-compact">
+                                <li class="list__item"><a href="{{ path('app_begrafenisplannen_begraafplaats') }}">Begraafplaats</a></li>
+                                <li class="list__item list__item--active"><a href="{{ path('app_begrafenisplannen_begraafplaats') }}">Datum & Tijd</a></li>
+                                <li class="list__item"><a href="{{ path('app_begrafenisplannen_artikelen') }}">Artikelen</a></li>
+                                <li class="list__item"><a href="{{ path('app_begrafenisplannen_overledene') }}">Overledene</a></li>
+                                <li class="list__item"><a href="{{ path('app_begrafenisplannen_belanghebbende') }}">Belanghebbende</a></li>
+                                <li class="list__item list__item--disabled"><a href="{{ path('app_begrafenisplannen_bevestiging') }}">Bevestiging</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+
+            <div class="content-background" >
+                <div class="content">
+
+                    <h2>Begrafenis</h2>
+
+                    <ul class="definition-list">
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Begraafplaats
+                            </div>
+                            <div class="definition-list__description">
+                                <p>Gekozen begraafplaats</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Datum & Tijd
+                            </div>
+                            <div class="definition-list__description">
+                                <p>Gekozen Datum & Tijd</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Artikelen
+                            </div>
+                            <div class="definition-list__description">
+                                <p>Gekozen Artikelen</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Overledene
+                            </div>
+                            <div class="definition-list__description">
+                                <p>Gekozen Overledene</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Belanghebbende
+                            </div>
+                            <div class="definition-list__description">
+                                <p>Gekozen Belanghebbende</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+
+        </div><!-- /.col -->
+    </div>
+{% endblock %}

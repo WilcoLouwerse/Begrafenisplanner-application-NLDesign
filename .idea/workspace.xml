@@ -2,20 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17d529b1-d761-4e0f-9a52-df5a4e33230a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/artikelen.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/belanghebbende.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/bevestiging.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/datumtijd.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/overledene.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannenController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplanner/begraafplaats.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/begraafplaats.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/menu.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannenController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,6 +210,7 @@
       <workItem from="1585816551332" duration="2283000" />
       <workItem from="1585903580219" duration="1190000" />
       <workItem from="1586421917032" duration="12564000" />
+      <workItem from="1586443808443" duration="271000" />
     </task>
     <servers />
   </component>
@@ -260,10 +252,11 @@
     </state>
     <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585319865801" />
     <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585145485952" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1586432384365">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="592" y="218" key="FileChooserDialogImpl" timestamp="1586436479739">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1586432384365" />
+    <state x="592" y="218" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586436479739" />
     <state x="610" y="334" key="NewPhpClassDialog" timestamp="1585319764240">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

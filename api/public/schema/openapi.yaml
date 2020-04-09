@@ -1,13 +1,13 @@
 openapi: 3.0.2
 info:
   title: 'Proto Applicatie NL Design'
-  version: V.0.9.1
+  version: V.0.9.2
   description: |
     API Details
     - Component: Proto Applicatie NL Design
     - Reference: pan
     - Enviroment: dev
-    - Version: V.0.9.1
+    - Version: V.0.9.2
     - Repository: [online](https://github.com/ConductionNL/pan) / [zip](https://github.com/ConductionNL/pan/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pan-php) 
     - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
@@ -2757,12 +2757,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-09T13:28:39+00:00'
+        example: '2020-04-09T14:53:40+00:00'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-09T13:28:39+00:00'
+        example: '2020-04-09T14:53:40+00:00'
     required: []
   AuditTrail-write:
     properties:
@@ -2812,12 +2812,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-09T13:28:39+00:00'
+        example: '2020-04-09T14:53:40+00:00'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-09T13:28:39+00:00'
+        example: '2020-04-09T14:53:40+00:00'
     required: []
   ChangeLog-write:
     properties:
