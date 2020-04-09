@@ -39,6 +39,10 @@ class BegrafenisplannenController extends AbstractController
         return $variables;
     }
 
+    /**
+     * @Route("/datumtijd")
+     * @Template
+     */
     public function datumtijdAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
@@ -52,31 +56,28 @@ class BegrafenisplannenController extends AbstractController
      * @Route("/artikelen")
      * @Template
      */
-    {
     public function artikelenAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
-        $variables = [];
-        return $variables;
-
-    }
-
-     * @Route("/overledene")
-    /**
-     * @Template
-    public function overledeneAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
-     */
     {
         $variables = [];
-
-    }
         return $variables;
+    }
+
+    /**
+     * @Route("/overledene")
+     * @Template
+     */
+    public function overledeneAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
+    {
+        $variables = [];
+        return $variables;
+    }
 
     /**
      * @Route("/belanghebbende")
-     */
      * @Template
+     */
     public function belanghebbendeAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
-
         $variables = [];
         return $variables;
     }
@@ -88,7 +89,7 @@ class BegrafenisplannenController extends AbstractController
     public function bevestigingAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-
-    }
         return $variables;
+    }
+
 }
