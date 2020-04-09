@@ -2,22 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17d529b1-d761-4e0f-9a52-df5a4e33230a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplanner/begraafplaats.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/artikelen.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/belanghebbende.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/bevestiging.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/datumtijd.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/overledene.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Controller/AgendaController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/DefaultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Controller/GraveController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Controller/GravecoverController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/agenda/view.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/grave/add.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/grave/view.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/gravecover/add.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/gravecover/view.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannenController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplanner/begraafplaats.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/begraafplaats.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/templates/menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/menu.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -169,7 +166,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/api/templates/begrafenisplanner" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/api/templates/begrafenisplannen" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
@@ -178,11 +175,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\templates\begrafenisplannen" />
       <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\templates\begrafenisplanner" />
       <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\src\Controller" />
       <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\templates\agenda" />
       <recent name="C:\Users\Yorick Groeneveld\Documents\GitHub\Begrafenisplanner-application-NLDesign\api\templates\gravecover" />
-      <recent name="C:\Users\Yorick Groeneveld\Documents\GitHub\Begrafenisplanner-application-NLDesign\api\templates" />
     </key>
   </component>
   <component name="RunManager" selected="PHP Script.DefaultController.php">
@@ -221,7 +218,7 @@
       <workItem from="1585747458836" duration="5935000" />
       <workItem from="1585816551332" duration="2283000" />
       <workItem from="1585903580219" duration="1190000" />
-      <workItem from="1586421917032" duration="5292000" />
+      <workItem from="1586421917032" duration="12564000" />
     </task>
     <servers />
   </component>
@@ -253,10 +250,10 @@
     </state>
     <state x="679" y="208" key="#DefaultController.php/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585316928952" />
     <state x="543" y="165" key="#DefaultController.php/0.0.1536.824@0.0.1536.824" timestamp="1585576075570" />
-    <state x="166" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586433656743">
+    <state x="166" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586436979523">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="166" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1586433656743" />
+    <state x="166" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1586436979523" />
     <state x="133" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1585570619554" />
     <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1585319865801">
       <screen x="0" y="0" width="1920" height="1040" />
