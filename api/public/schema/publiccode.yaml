@@ -5,8 +5,8 @@ applicationSuite: commonground
 url: "https://github.com/ConductionNL/pan"
 landingURL: "pan.huwelijksplanner.online" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
-softwareVersion: "V.0.9.2"
-releaseDate: "2020-09-04"
+softwareVersion: "V.0.9.3"
+releaseDate: "2020-10-04"
 logo: instemmingen.conduction.nl 
 monochromeLogo: img/logo-mono.svg
 

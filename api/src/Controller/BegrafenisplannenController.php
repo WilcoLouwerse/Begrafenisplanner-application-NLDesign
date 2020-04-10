@@ -69,6 +69,9 @@ class BegrafenisplannenController extends AbstractController
     public function overledeneAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
+        if ($httpRequest->isMethod('POST')) {
+            return $this->redirect($this->generateUrl('app_begrafenisplannen_belanghebbende'));
+        }
         return $variables;
     }
 
@@ -89,6 +92,9 @@ class BegrafenisplannenController extends AbstractController
     public function bevestigingAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
+        if ($httpRequest->isMethod('POST')) {
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
         return $variables;
     }
 

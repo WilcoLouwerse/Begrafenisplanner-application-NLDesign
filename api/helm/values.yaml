@@ -7,7 +7,7 @@ settings:
   projectName: pan
   name: pan
   title: Proto Applicatie NL Design
-  version: V.0.9.2
+  version: V.0.9.3
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   repro: 'https://github.com/ConductionNL/pan'
   domain: 'pan.zaakonline.nl'
