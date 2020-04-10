@@ -18,11 +18,8 @@ jobs:
               run: |
                   export ENV=${{ github.event.client_payload.environment }}
                   echo ::set-env name=APP_ENV::$ENV
-            - name: disable debugging
-              run: echo ::set-env name=DEBUG::0
-            - name: enable debugging
-              if: github.event.client_payload.environment == 'dev'
-              run: echo ::set-env name=DEBUG::1
+            - name: Set DEBUG
+              run: echo ::set-env name=DEBUG::${{ github.event.client_payload.debug }}
             - name: Set AUTH_KEY
               run: |
                   export CACHE=${{ github.event.client_payload.cache }}
@@ -40,9 +37,9 @@ jobs:
               run: |
                   export AUTHKEY=${{ github.event.client_payload.authorization }}
                   echo ::set-env name=AUTH_KEY::$AUTHKEY
-            - name: Print variables
-              run: |
-                  printf "APP_NAME: \t\t $APP_NAME\nAPP_ENV: \t\t $APP_ENV\nDEBUG: \t\t $DEBUG\nAPP_DOMAIN: \t\t $APP_DOMAIN\nDB_URL: \t\t $DB_URL\nAUTH_KEY: \t\t $AUTH_KEY"
+#            - name: Print variables
+#              run: |
+#                  printf "APP_NAME: \t\t $APP_NAME\nAPP_ENV: \t\t $APP_ENV\nDEBUG: \t\t $DEBUG\nAPP_DOMAIN: \t\t $APP_DOMAIN\nDB_URL: \t\t $DB_URL\nAUTH_KEY: \t\t $AUTH_KEY"
             - name: Create kube config
               id: kubeconfig
               run: |
@@ -59,4 +56,4 @@ jobs:
             - name: Helm Install
               if: steps.kubeconfig.outputs.success == 'true'
               run: |
-                  helm upgrade $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain="$APP_DOMAIN",settings.cache="APP_CACHE",postgresql.enabled=false,postgresql.url="$DB_URL"
+                  helm upgrade $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain="$APP_DOMAIN",settings.cache="$APP_CACHE",security.commongroundKey=$AUTH_KEY,security.applicationKey=$AUTH-KEY,postgresql.enabled=false,postgresql.url="$DB_URL"
