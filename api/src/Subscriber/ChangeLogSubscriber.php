@@ -79,7 +79,7 @@ class ChangeLogSubscriber implements EventSubscriberInterface
         // Creating a response
         $response = new Response(
             $response,
-            Response::HTTP_CREATED,
+            Response::HTTP_OK,
             ['content-type' => $contentType]
         );
 
