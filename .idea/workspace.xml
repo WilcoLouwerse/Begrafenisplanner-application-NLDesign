@@ -2,17 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17d529b1-d761-4e0f-9a52-df5a4e33230a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/public/uno/components/header/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/uno/components/header/header.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannenController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/artikelen.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/artikelen.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/belanghebbende.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/belanghebbende.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/header.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/bevestiging.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/bevestiging.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,6 +215,7 @@
       <workItem from="1586443808443" duration="271000" />
       <workItem from="1586509192791" duration="3584000" />
       <workItem from="1586517245717" duration="1794000" />
+      <workItem from="1586519341688" duration="180000" />
     </task>
     <servers />
   </component>
