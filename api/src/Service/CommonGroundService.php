@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class CommonGroundService
 {
@@ -424,7 +425,7 @@ class CommonGroundService
 
             return false;
         } else {
-            throw new Symfony\Component\HttpKernel\Exception\HttpException($statusCode, $url.' returned: '.json_encode($response));
+            throw new HttpException($statusCode, $url.' returned: '.json_encode($response));
         }
 
         return $response;

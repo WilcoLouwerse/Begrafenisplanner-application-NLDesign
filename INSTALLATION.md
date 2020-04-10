@@ -31,6 +31,13 @@ The Tiller pod name begins with the prefix tiller-deploy-.
 
 Now that we've installed both Helm components, we're ready to use helm to install our first application.
 
+Or all in one go
+
+```CLI
+$ kubectl -n kube-system create serviceaccount tiller --kubeconfig="kubeconfig.yaml"
+$ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller --kubeconfig="kubeconfig.yaml"
+$ helm init --service-account tiller --kubeconfig="kubeconfig.yaml"
+```
 
 ## Setting up ingress
 We need at least one nginx controller per kubernetes kluster, doh optionally we could set on up on a per namebase basis
