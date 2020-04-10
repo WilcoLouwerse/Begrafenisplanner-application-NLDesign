@@ -1,0 +1,130 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-md-7  col-sm-12">
+
+            <div class="content-background">
+                <div class="content">
+                    <h2>Artikelen</h2>
+
+                    <!-- Page Break -->
+                    <div style="height: 20px;"></div>
+
+                    <form class="form" method="post" action="#">
+                        <h3>Selecteer artikelen</h3>
+                        <fieldset class="input filter" id="artikelen">
+                            <legend class="filter__title">Artikelen:</legend>
+                            <ul class="input__group-list">
+                                <li class="input__group input__group--checkbox">
+                                    <input type="checkbox" id="Bijzettingen" class="input__control input__control--checkbox"><label for="Bijzettingen" class="input__label input__label--checkbox"> Bijzettingen</label>
+                                    <ul>
+                                        <li><input type="checkbox" class="input__control input__control--checkbox" id="option1"><label for="option1" class="input__label input__label--checkbox"> Asverstrooiing</label></li>
+                                        <li><input type="checkbox" class="input__control input__control--checkbox" id="option2"><label for="option2" class="input__label input__label--checkbox"> Bijzetting Asbus</label></li>
+                                    </ul>
+                                </li>
+                                <li class="input__group input__group--checkbox">
+                                    <input type="checkbox" id="Diversen" class="input__control input__control--checkbox"><label for="Diversen" class="input__label input__label--checkbox"> Diversen</label>
+                                    <ul>
+                                        <li><input type="checkbox" class="input__control input__control--checkbox" id="Veld1"><label for="Veld1" class="input__label input__label--checkbox"> Gebruik Orgel</label></li>
+                                        <li><input type="checkbox" class="input__control input__control--checkbox" id="Veld2"><label for="Veld2" class="input__label input__label--checkbox"> Gebruik Koffiekamer</label></li>
+                                        <li><input type="checkbox" class="input__control input__control--checkbox" id="Veld3"><label for="Veld3" class="input__label input__label--checkbox"> CD</label></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </fieldset>
+
+                        <!-- Page Break -->
+                        <div style="height: 20px;"></div>
+
+                        <div class="input">
+                            <button type="submit" class="btn" name="submit" value="save">Opslaan</button> of naar de <a href="{{ path('app_begrafenisplannen_datumtijd') }}">vorige stap</a>
+                        </div>
+                    </form>
+
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+        </div><!-- /.col -->
+
+        <div class="col-md-5 col-sm-12">
+
+            <div class="content-background" >
+                <div class="content">
+
+                    <div class="content-background">
+                        <div class="content">
+                            <h2>Stappen</h2>
+                            <ul class="list list--timeline list--timeline-compact">
+                                <li class="list__item"><a href="{{ path('app_begrafenisplannen_begraafplaats') }}">Begraafplaats</a></li>
+                                <li class="list__item"><a href="{{ path('app_begrafenisplannen_datumtijd') }}">Datum & Tijd</a></li>
+                                <li class="list__item list__item--active"><a href="{{ path('app_begrafenisplannen_artikelen') }}">Artikelen</a></li>
+                                <li class="list__item"><a href="{{ path('app_begrafenisplannen_overledene') }}">Overledene</a></li>
+                                <li class="list__item"><a href="{{ path('app_begrafenisplannen_belanghebbende') }}">Belanghebbende</a></li>
+                                <li class="list__item list__item--disabled"><a href="{{ path('app_begrafenisplannen_bevestiging') }}">Bevestiging</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+
+            <div class="content-background" >
+                <div class="content">
+
+                    <h2>Begrafenis</h2>
+
+                    <ul class="definition-list">
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Begraafplaats
+                            </div>
+                            <div class="definition-list__description">
+                                <p>Gekozen begraafplaats</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Datum & Tijd
+                            </div>
+                            <div class="definition-list__description">
+                                <p>Gekozen Datum & Tijd</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Artikelen
+                            </div>
+                            <div class="definition-list__description">
+                                <p>Gekozen Artikelen</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Overledene
+                            </div>
+                            <div class="definition-list__description">
+                                <p>Gekozen Overledene</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Belanghebbende
+                            </div>
+                            <div class="definition-list__description">
+                                <p>Gekozen Belanghebbende</p>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+
+        </div><!-- /.col -->
+    </div>
+
+{% endblock %}
