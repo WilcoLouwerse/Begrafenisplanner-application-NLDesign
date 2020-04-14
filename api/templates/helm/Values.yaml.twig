@@ -10,7 +10,12 @@ settings:
   version: {{ app_version }}
   description: '{{ app_description }}'
   repro: '{{ app_repro }}'
-  domain: {{ app_domain }}  
+  domain: '{{ app_domain }}'
+  domains:
+{% for domain in app_domains %}
+    - {{ domain }}
+{% endfor %}
+  domainsJson: {{ app_domains | json_encode()|raw }}
   organisationName: {{ organization_name }}
   email: {{ organization_email }}
   country: {{ organization_country }}
@@ -36,9 +41,16 @@ settings:
   # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   notificationEnabled: false
   audittrailEnabled: false
-  authorisationEnabled: false
   healthEnabled: false
   archiveEnabled: false
+
+security:
+  commongroundId: {{ app_commonground_id }}
+  commongroundKey: {{ app_commonground_key }}
+  applicationKey: {{  app_application_key }}
+  userKey: {{ app_user_key }}
+  authorisationProviderUser: {{ auth_provider_user }}
+  authorisationProviderApplication: {{ auth_provider_application }}
 
 
 php:

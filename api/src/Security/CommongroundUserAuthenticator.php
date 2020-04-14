@@ -11,13 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface; 
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use App\Service\CommonGroundService;
@@ -75,13 +74,12 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 	
 	public function getUser($credentials, UserProviderInterface $userProvider)
 	{
-		/*
+		
 		$token = new CsrfToken('authenticate', $credentials['csrf_token']);
 		if (!$this->csrfTokenManager->isTokenValid($token)) {
 			throw new InvalidCsrfTokenException();
 		}		
-		*/ 
-		
+				
 		$users = $this->commonGroundService->getResourceList($this->params->get('auth_provider_user').'/users',["username"=> $credentials['username']], true);
 		$users = $users["hydra:member"];
 				
@@ -91,12 +89,11 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 		
 		$user = $users[0];
 				
-		return new CommongroundUser($user['username'], $user['id'], null, ['ROLE_USER'],$user['person'],$user['organization']);
+		return new CommongroundUser($user['username'], $user['id'], null, ['user'],$user['person'],$user['organization']);
 	}
 	
 	public function checkCredentials($credentials, UserInterface $user)
 	{
-		
 		$user = $this->commonGroundService->createResource($credentials, $this->params->get('auth_provider_user').'/login');
 		
 		if(!$user){
@@ -108,13 +105,16 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 	}
 	
 	public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
-	{		
-		return new RedirectResponse($this->urlGenerator->generate('app_user_dashboard'));
+	{
+		//if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
+		//	return new RedirectResponse($targetPath);
+		//}
+		
+		return new RedirectResponse($this->urlGenerator->generate('app_user_settings'));
 	}
 	
 	public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
 	{
-		var_dump('noooz');
 		
 		return new RedirectResponse($this->urlGenerator->generate('app_user_login'));
 	}
@@ -124,7 +124,12 @@ class CommongroundUserAuthenticator extends AbstractGuardAuthenticator
 	 */
 	public function start(Request $request, AuthenticationException $authException = null)
 	{
-		return new RedirectResponse($this->urlGenerator->generate('app_user_login'));
+		$data = [
+				// you might translate this message
+				'message' => 'Authentication Required'
+		];
+		
+		return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
 	}
 	
 	public function supportsRememberMe()
