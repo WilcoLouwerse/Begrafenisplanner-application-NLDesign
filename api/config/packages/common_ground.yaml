@@ -7,83 +7,228 @@ parameters:
     env(NLX_OUTWAY): true
     env(NLX_INWAY): false
         
-    env(APP_COMMONGROUND_id): '' 
-    env(APP_COMMONGROUND_KEY): '' 
-    env(APP_APPLICATION_KEY): '' 
-    env(APP_USER_KEY): ''  
-    env(APP_ENV): '' 
+     # Security Details   
+    env(APP_COMMONGROUND_ID): 'huwelijksplanner-Wex83XXe'
+    env(APP_COMMONGROUND_KEY): ''
+    env(APP_COMMONGROUND_SECRET): '4_]}Khfxa;~"78Qm'
+
+    app_commonground_id: '%env(APP_COMMONGROUND_ID)%'
+    app_commonground_key: '%env(APP_COMMONGROUND_KEY)%'
+    app_commonground_secret: '%env(APP_COMMONGROUND_SECRET)%'
+
+    # Application Parameters
+    env(APP_ENV): 'dev' 
     env(APP_CACHE): false          
-    env(APP_VERSION): '' 
-    env(APP_NAME): '' 
-    env(APP_DOMAIN): ''  
-    env(AUTH_PROVIDER_USER): '' 
-    env(AUTH_PROVIDER_APPLICATION): '' 
+    env(APP_VERSION): 'v1' 
+    env(APP_NAME): 'Proto Component' 
+    env(APP_DOMAIN): 'zaakonline.nl'  
     
-    app_commonground_id: '%env(APP_COMMONGROUND_ID)%'  
-    app_commonground_key: '%env(APP_COMMONGROUND_KEY)%'   
-    app_application_key: '%env(APP_APPLICATION_KEY)%'   
-    app_user_key: '%env(APP_USER_KEY)%'               
     app_env: '%env(APP_ENV)%'                
     app_cache: '%env(APP_CACHE)%'                             
     app_version: '%env(APP_VERSION)%'         
-    app_name: '%env(APP_NAME)%'
-    app_subdomain: '%env(APP_SUBDOMAIN)%'
-    app_domain: '%env(APP_DOMAIN)%'   
+    app_name: '%env(APP_NAME)%'       
+    app_domain: '%env(APP_DOMAIN)%'
     app_type: '%env(APP_TYPE)%'
+    
+    # Dit is hieronder nu anders geregeld (ofwel aanpassen)
+    env(APP_APPLICATION_KEY): ''
+    env(APP_USER_KEY): ''
+    env(AUTH_PROVIDER_USER): ''
+    env(AUTH_PROVIDER_APPLICATION): ''
     auth_provider_user: '%env(AUTH_PROVIDER_USER)%'   
-    auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'    
-    
-    common_ground.bag.location: 'https://bag.basisregistraties.overheid.nl/api/v1/'
-    common_ground.bag.apikey: 'e8a95365-3078-4b41-990a-e3de43cecd36'
+    auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'
+    app_application_key: '%env(APP_APPLICATION_KEY)%'
+    app_user_key: '%env(APP_USER_KEY)%'
 
-    common_ground.ac.location: 'https://ac.huwelijksplanner.online'
-    common_ground.ac.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.as.location: 'https://as.zaakonline.nl'
-    common_ground.as.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.bc.location: 'https://bc.huwelijksplanner.online'
-    common_ground.bc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.brp.location: 'https://brp.huwelijksplanner.online'
-    common_ground.brp.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.bs.location: 'https://bs.huwelijksplanner.online'
+    # Autorisatiecomponent
+    env(APP_COMMONGROUND_AC_LOCATION): 'https://ac.%env(APP_DOMAIN)%'
+    common_ground.ac.location: '%env(APP_COMMONGROUND_AC_LOCATION)%'
+    env(APP_COMMONGROUND_AC_ID): '%env(APP_COMMONGROUND_ID)%'
+    common_ground.ac.id: '%env(APP_COMMONGROUND_AC_ID)%'
+    env(APP_COMMONGROUND_AC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
+    common_ground.ac.secret: '%env(APP_COMMONGROUND_AC_SECRET)%'
+    # Notificatierouteringcomponent
+    env(APP_COMMONGROUND_NRC_LOCATION): 'https://nrc.%env(APP_DOMAIN)%'
+    common_ground.nrc.location: '%env(APP_COMMONGROUND_NRC_LOCATION)%'
+    env(APP_COMMONGROUND_NRC_ID): '%env(APP_COMMONGROUND_ID)%'
+    common_ground.nrc.id: '%env(APP_COMMONGROUND_NRC_ID)%'
+    env(APP_COMMONGROUND_NRC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
+    common_ground.nrc.secret: '%env(APP_COMMONGROUND_NRC_SECRET)%'
+    # Zaakregistratiecomponent
+    env(APP_COMMONGROUND_ZRC_LOCATION): 'https://zrc.%env(APP_DOMAIN)%'
+    common_ground.zrc.location: '%env(APP_COMMONGROUND_ZRC_LOCATION)%'
+    env(APP_COMMONGROUND_ZRC_ID): '%env(APP_COMMONGROUND_ID)%'
+    common_ground.zrc.id: '%env(APP_COMMONGROUND_ZRC_ID)%'
+    env(APP_COMMONGROUND_ZRC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
+    common_ground.zrc.secret: '%env(APP_COMMONGROUND_ZRC_SECRET)%'
+    # Zaaktypecatalogus
+    env(APP_COMMONGROUND_ZTC_LOCATION): 'https://ztc.%env(APP_DOMAIN)%'
+    common_ground.ztc.location: '%env(APP_COMMONGROUND_ZTC_LOCATION)%'
+    env(APP_COMMONGROUND_ZTC_ID): '%env(APP_COMMONGROUND_ID)%'
+    common_ground.ztc.id: '%env(APP_COMMONGROUND_ZTC_ID)%'
+    env(APP_COMMONGROUND_ZTC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
+    common_ground.ztc.secret: '%env(APP_COMMONGROUND_ZZTC_SECRET)%'
+    # Documentregistratiecomponent
+    env(APP_COMMONGROUND_DRC_LOCATION): 'https://drc.%env(APP_DOMAIN)%'
+    common_ground.drc.location: '%env(APP_COMMONGROUND_DRC_LOCATION)%'
+    env(APP_COMMONGROUND_DRC_ID): '%env(APP_COMMONGROUND_ID)%'
+    common_ground.drc.id: '%env(APP_COMMONGROUND_DRC_ID)%'
+    env(APP_COMMONGROUND_DRC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
+    common_ground.drc.secret: '%env(APP_COMMONGROUND_DRC_SECRET)%'
+    # Besluitregistratiecomponent
+    env(APP_COMMONGROUND_BRC_LOCATION): 'https://brc.%env(APP_DOMAIN)%'
+    common_ground.brc.location: '%env(APP_COMMONGROUND_BRC_LOCATION)%'
+    env(APP_COMMONGROUND_BRC_ID): '%env(APP_COMMONGROUND_ID)%'
+    common_ground.brc.id: '%env(APP_COMMONGROUND_BRC_ID)%'
+    env(APP_COMMONGROUND_BRC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
+    common_ground.brc.secret: '%env(APP_COMMONGROUND_BRC_SECRET)%'
+    # Klantinteractiescomponent
+    env(APP_COMMONGROUND_KIC_LOCATION): 'https://kic.%env(APP_DOMAIN)%'
+    common_ground.kic.location: '%env(APP_COMMONGROUND_KIC_LOCATION)%'
+    env(APP_COMMONGROUND_KIC_ID): '%env(APP_COMMONGROUND_ID)%'
+    common_ground.kic.id: '%env(APP_COMMONGROUND_KIC_ID)%'
+    env(APP_COMMONGROUND_KIC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
+    common_ground.kic.secret: '%env(APP_COMMONGROUND_KIC_SECRET)%'
+    # WebResourceComponent
+    env(APP_COMMONGROUND_WRC_LOCATION): 'https://wrc.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_WRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.wrc.location: '%env(APP_COMMONGROUND_WRC_LOCATION)%'
+    common_ground.wrc.apikey: '%env(APP_COMMONGROUND_WRC_APIKEY)%'
+    # UserCmponent
+    env(APP_COMMONGROUND_UC_LOCATION): 'https://uc.%env(APP_DOMAIN)%'
+    common_ground.uc.location: '%env(APP_COMMONGROUND_UC_LOCATION)%'
+    env(APP_COMMONGROUND_UC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.uc.apikey: '%env(APP_COMMONGROUND_UC_APIKEY)%'
+    # ContactenComponent
+    env(APP_COMMONGROUND_CC_LOCATION): 'https://cc.%env(APP_DOMAIN)%'
+    common_ground.cc.location: '%env(APP_COMMONGROUND_CC_LOCATION)%'
+    env(APP_COMMONGROUND_CC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.cc.apikey: '%env(APP_COMMONGROUND_CC_APIKEY)%'
+    # InstemmingenRegistratiecomponent
+    env(APP_COMMONGROUND_IRC_LOCATION): 'https://irc.%env(APP_DOMAIN)%'
+    common_ground.irc.location: '%env(APP_COMMONGROUND_IRC_LOCATION)%'
+    env(APP_COMMONGROUND_IRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.irc.apikey: '%env(APP_COMMONGROUND_IRC_APIKEY)%'
+    # OmgevingenComponent
+    env(APP_COMMONGROUND_EVC_LOCATION): 'https://evc.%env(APP_DOMAIN)%'
+    common_ground.evc.location: '%env(APP_COMMONGROUND_EVC_LOCATION)%'
+    env(APP_COMMONGROUND_EVC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.evc.apikey: '%env(APP_COMMONGROUND_EVC_APIKEY)%'
+    # AgendaRegistratieComponent
+    env(APP_COMMONGROUND_ARC_LOCATION): 'https://ac.%env(APP_DOMAIN)%'
+    common_ground.arc.location: '%env(APP_COMMONGROUND_ARC_LOCATION)%'
+    env(APP_COMMONGROUND_ARC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.arc.apikey: '%env(APP_COMMONGROUND_ARC_APIKEY)%'
+    # MedewerkersRegistratieComponent
+    env(APP_COMMONGROUND_MRC_LOCATION): 'https://mrc.%env(APP_DOMAIN)%'
+    common_ground.mrc.location: '%env(APP_COMMONGROUND_MRC_LOCATION)%'
+    env(APP_COMMONGROUND_MRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.mrc.apikey: '%env(APP_COMMONGROUND_MRC_APIKEY)%'
+    # ProductenenDienstenComponent
+    env(APP_COMMONGROUND_PDC_LOCATION): 'https://pdc.%env(APP_DOMAIN)%'
+    common_ground.pdc.location: '%env(APP_COMMONGROUND_PDC_LOCATION)%'
+    env(APP_COMMONGROUND_PDC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.pdc.apikey: '%env(APP_COMMONGROUND_PDC_APIKEY)%'
+    # OrderRegistratieComponent
+    env(APP_COMMONGROUND_ORC_LOCATION): 'https://orc.%env(APP_DOMAIN)%'
+    common_ground.orc.location: '%env(APP_COMMONGROUND_ORC_LOCATION)%'
+    env(APP_COMMONGROUND_ORC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.orc.apikey: '%env(APP_COMMONGROUND_ORC_APIKEY)%'
+    # LocatieComponent
+    env(APP_COMMONGROUND_LC_LOCATION): 'https://lc.%env(APP_DOMAIN)%'
+    common_ground.lc.location: '%env(APP_COMMONGROUND_LC_LOCATION)%'
+    env(APP_COMMONGROUND_LC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.lc.apikey: '%env(APP_COMMONGROUND_LC_APIKEY)%'
+    # VerzoekTypeComponent
+    env(APP_COMMONGROUND_VTC_LOCATION): 'https://vtc.%env(APP_DOMAIN)%'
+    common_ground.vtc.location: '%env(APP_COMMONGROUND_VTC_LOCATION)%'
+    env(APP_COMMONGROUND_VTC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.vtc.apikey: '%env(APP_COMMONGROUND_VTC_APIKEY)%'
+    # VerzoekRegistratieComponent
+    env(APP_COMMONGROUND_VRC_LOCATION): 'https://vrc.%env(APP_DOMAIN)%'
+    common_ground.vrc.location: '%env(APP_COMMONGROUND_VRC_LOCATION)%'
+    env(APP_COMMONGROUND_VRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.vrc.apikey: '%env(APP_COMMONGROUND_VRC_APIKEY)%'
+    # BetaalService
+    env(APP_COMMONGROUND_BC_LOCATION): 'https://bc.%env(APP_DOMAIN)%'
+    common_ground.bc.location: '%env(APP_COMMONGROUND_BC_LOCATION)%'
+    env(APP_COMMONGROUND_BC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.bc.apikey: '%env(APP_COMMONGROUND_BC_APIKEY)%'
+    # BasisRegistratiePersonen
+    env(APP_COMMONGROUND_BRP_LOCATION): 'https://brp.%env(APP_DOMAIN)%'
+    common_ground.brp.location: '%env(APP_COMMONGROUND_BRP_LOCATION)%'
+    env(APP_COMMONGROUND_BRP_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.brp.apikey: '%env(APP_COMMONGROUND_BRP_APIKEY)%'
+    # BasisAdressenGemeenten
+    env(APP_COMMONGROUND_BAG_LOCATION): 'https://bag.basisregistraties.overheid.nl/api/v1/'
+    common_ground.bag.location: '%env(APP_COMMONGROUND_BAG_LOCATION)%'
+    env(APP_COMMONGROUND_BAG_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.bag.apikey: '%env(APP_COMMONGROUND_BAG_APIKEY)%'
+    # KamerVanKoophandel
+    env(APP_COMMONGROUND_KVK_LOCATION): 'https://kvk.%env(APP_DOMAIN)%'
+    common_ground.kvk.location: '%env(APP_COMMONGROUND_KVK_LOCATION)%'
+    env(APP_COMMONGROUND_KVK_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.kvk.apikey: '%env(APP_COMMONGROUND_KVK_APIKEY)%'
+    # DienstWegverkeer
+    env(APP_COMMONGROUND_RDW_LOCATION): 'https://rdw.%env(APP_DOMAIN)%'
+    common_ground.rdw.location: '%env(v)%'
+    env(APP_COMMONGROUND_RDW_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.rdw.apikey: '%env(APP_COMMONGROUND_RDW_APIKEY)%'    
+    # BerichtenService
+    env(APP_COMMONGROUND_BS_LOCATION): 'https://bs.%env(APP_DOMAIN)%'
+    common_ground.bs.location: '%env(APP_COMMONGROUND_AC)%'
+    env(APP_COMMONGROUND_BS_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     common_ground.bs.apikey: '%env(APP_COMMONGROUND_KEY)%'
+    # DashboardComponent
+    env(APP_COMMONGROUND_DB_LOCATION): 'https://db.%env(APP_DOMAIN)%'
+    common_ground.db.location: '%env(APP_COMMONGROUND_AC)%'
+    env(APP_COMMONGROUND_DB_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.db.apikey: '%env(APP_COMMONGROUND_KEY)%'
+    # ZaakAfhandelComponent
+    env(APP_COMMONGROUND_ZAC_LOCATION): 'https://zac.%env(APP_DOMAIN)%'
+    common_ground.zac.location: '%env(APP_COMMONGROUND_ZAC_LOCATION)%'
+    env(APP_COMMONGROUND_ZAC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.zac.apikey: '%env(APP_COMMONGROUND_ZAC_APIKEY)%'
+    # ProcesComponent
+    env(APP_COMMONGROUND_PC_LOCATION): 'https://pc.%env(APP_DOMAIN)%'
+    common_ground.pc.location: '%env(APP_COMMONGROUND_PC_LOCATION)%'
+    env(APP_COMMONGROUND_PC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.pc.apikey: '%env(APP_COMMONGROUND_PC_APIKEY)%'
+    # UserInterface
+    env(APP_COMMONGROUND_UI_LOCATION): 'https://ui.%env(APP_DOMAIN)%'
+    common_ground.ui.location: '%env(APP_COMMONGROUND_UI_LOCATION)%'
+    env(APP_COMMONGROUND_UI_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.ui.apikey: '%env(APP_COMMONGROUND_UI_APIKEY)%'
+    #a AuthenticatieComponent
+    env(APP_COMMONGROUND_AUTH_LOCATION): 'https://auth.%env(APP_DOMAIN)%'
+    common_ground.auth.location: '%env(APP_COMMONGROUND_AUTH_LOCATION)%'
+    env(APP_COMMONGROUND_AUTH_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.auth.apikey: '%env(APP_COMMONGROUND_AUTH_APIKEY)%'
+    # DocumentManagmentService
+    env(APP_COMMONGROUND_DMS_LOCATION): 'https://dms.%env(APP_DOMAIN)%'
+    common_ground.dms.location: '%env(APP_COMMONGROUND_DMS_LOCATION)%'
+    env(APP_COMMONGROUND_DMS_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.dms.apikey: '%env(APP_COMMONGROUND_DMS_APIKEY)%'
+    #n nlx-in
+    env(APP_COMMONGROUND_NLX_IN_LOCATION): 'https://nlx-in.%env(APP_DOMAIN)%'
+    common_ground.nlx_in.location: '%env(APP_COMMONGROUND_NLX_IN_LOCATION)%'
+    env(APP_COMMONGROUND_NLX_IN_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.nlx_in.apikey: '%env(APP_COMMONGROUND_NLX_IN_APIKEY)%'
+    # nlx-out
+    env(APP_COMMONGROUND_NLX_OUT_LOCATION): 'https://nlx-out.%env(APP_DOMAIN)%'
+    common_ground.nlx_out.location: '%env(APP_COMMONGROUND_NLX_OUT_LOCATION)%'
+    env(APP_COMMONGROUND_NLX_OUT_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.nlx_out.apikey: '%env(APP_COMMONGROUND_NLX_OUT_APIKEY)%'
 
-    common_ground.cc.location: 'https://cc.huwelijksplanner.online'
-    common_ground.cc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.irc.location: 'https://irc.huwelijksplanner.online'
-    common_ground.irc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.lc.location: 'https://lc.huwelijksplanner.online'
-    common_ground.lc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.ltc.location: 'https://ltc.huwelijksplanner.online'
-    common_ground.ltc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.mrc.location: 'https://mrc.huwelijksplanner.online'
-    common_ground.mrc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.orc.location: 'https://orc.huwelijksplanner.online'
-    common_ground.orc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.pdc.location: 'https://pdc.huwelijksplanner.online'
-    common_ground.pdc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.ptc.location: 'https://ptc.huwelijksplanner.online'
-    common_ground.ptc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.vrc.location: 'https://vrc.huwelijksplanner.online'
-    common_ground.vrc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.vtc.location: 'https://vtc.huwelijksplanner.online'
-    common_ground.vtc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-
-    common_ground.wrc.location: 'https://wrc.huwelijksplanner.online'
-    common_ground.wrc.apikey: '%env(APP_COMMONGROUND_KEY)%'
-    
+    # Test for commonground component by array
+    common_ground.components:
+        wrc:
+            location: '%env(APP_COMMONGROUND_WRC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_WRC_APIKEY)%'
+        uc:
+            location: '%env(APP_COMMONGROUND_UC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_UC_APIKEY)%'
+        
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
     common_ground.oas.servers:
