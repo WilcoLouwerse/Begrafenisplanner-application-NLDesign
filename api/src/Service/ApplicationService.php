@@ -48,13 +48,12 @@ class ApplicationService
     	// Lets handle the loading of a product is we have one
     	$resource= $this->request->get('resource');
     	if($resource|| $resource = $this->request->query->get('resource')){
-    		/*@todo dit zou de commonground service moeten zijn */
     		$variables['resource'] = $this->commonGroundService->getResource($resource);
     	}
 
     	// Lets handle a posible login
     	$bsn = $this->request->get('bsn');
-    	if($bsn || $bsn = $this->request->query->get('bsn')){ (
+    	if($bsn || $bsn = $this->request->query->get('bsn')){
     		$user = $this->commonGroundService->getResource(['component'=>'brp','type'=>'ingeschrevenpersonen','id'=>$bsn]);
     		$this->session->set('user', $user);
     	}
