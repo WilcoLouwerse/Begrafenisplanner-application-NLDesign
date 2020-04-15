@@ -58,7 +58,6 @@ twig:
         organization_locality: '%env(ORGANIZATION_LOCALITY)%'
         organization_unit: '%env(ORGANIZATION_UNIT_NAME)%'
         
-        app_name: '%env(APP_NAME)%'
         app_title: '%env(APP_TITLE)%'
         app_logo: '%env(APP_LOGO)%'
         app_home: '%env(APP_HOME)%'
