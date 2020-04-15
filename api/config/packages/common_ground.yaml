@@ -145,48 +145,42 @@ parameters:
     common_ground.lc.apikey: '%env(APP_COMMONGROUND_LC_APIKEY)%'
     # VerzoekTypeComponent
     env(APP_COMMONGROUND_VTC_LOCATION): 'https://vtc.%env(APP_DOMAIN)%'
-    common_ground.vtc.location: '%env(APP_COMMONGROUND_VTC_LOCATION)%'
     env(APP_COMMONGROUND_VTC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.vtc.apikey: '%env(APP_COMMONGROUND_VTC_APIKEY)%'
     # VerzoekRegistratieComponent
     env(APP_COMMONGROUND_VRC_LOCATION): 'https://vrc.%env(APP_DOMAIN)%'
-    common_ground.vrc.location: '%env(APP_COMMONGROUND_VRC_LOCATION)%'
     env(APP_COMMONGROUND_VRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.vrc.apikey: '%env(APP_COMMONGROUND_VRC_APIKEY)%'
     # BetaalService
     env(APP_COMMONGROUND_BC_LOCATION): 'https://bc.%env(APP_DOMAIN)%'
-    common_ground.bc.location: '%env(APP_COMMONGROUND_BC_LOCATION)%'
     env(APP_COMMONGROUND_BC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.bc.location: '%env(APP_COMMONGROUND_BC_LOCATION)%'
     common_ground.bc.apikey: '%env(APP_COMMONGROUND_BC_APIKEY)%'
     # BasisRegistratiePersonen
     env(APP_COMMONGROUND_BRP_LOCATION): 'https://brp.%env(APP_DOMAIN)%'
-    common_ground.brp.location: '%env(APP_COMMONGROUND_BRP_LOCATION)%'
     env(APP_COMMONGROUND_BRP_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.brp.apikey: '%env(APP_COMMONGROUND_BRP_APIKEY)%'
     # BasisAdressenGemeenten
     env(APP_COMMONGROUND_BAG_LOCATION): 'https://bag.basisregistraties.overheid.nl/api/v1/'
-    common_ground.bag.location: '%env(APP_COMMONGROUND_BAG_LOCATION)%'
     env(APP_COMMONGROUND_BAG_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.bag.location: '%env(APP_COMMONGROUND_BAG_LOCATION)%'
     common_ground.bag.apikey: '%env(APP_COMMONGROUND_BAG_APIKEY)%'
     # KamerVanKoophandel
     env(APP_COMMONGROUND_KVK_LOCATION): 'https://kvk.%env(APP_DOMAIN)%'
-    common_ground.kvk.location: '%env(APP_COMMONGROUND_KVK_LOCATION)%'
     env(APP_COMMONGROUND_KVK_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.kvk.location: '%env(APP_COMMONGROUND_KVK_LOCATION)%'
     common_ground.kvk.apikey: '%env(APP_COMMONGROUND_KVK_APIKEY)%'
     # DienstWegverkeer
     env(APP_COMMONGROUND_RDW_LOCATION): 'https://rdw.%env(APP_DOMAIN)%'
-    common_ground.rdw.location: '%env(v)%'
     env(APP_COMMONGROUND_RDW_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.rdw.location: '%env(v)%'
     common_ground.rdw.apikey: '%env(APP_COMMONGROUND_RDW_APIKEY)%'    
     # BerichtenService
     env(APP_COMMONGROUND_BS_LOCATION): 'https://bs.%env(APP_DOMAIN)%'
-    common_ground.bs.location: '%env(APP_COMMONGROUND_AC)%'
     env(APP_COMMONGROUND_BS_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.bs.location: '%env(APP_COMMONGROUND_AC)%'
     common_ground.bs.apikey: '%env(APP_COMMONGROUND_KEY)%'
     # DashboardComponent
     env(APP_COMMONGROUND_DB_LOCATION): 'https://db.%env(APP_DOMAIN)%'
-    common_ground.db.location: '%env(APP_COMMONGROUND_AC)%'
     env(APP_COMMONGROUND_DB_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    common_ground.db.location: '%env(APP_COMMONGROUND_AC)%'
     common_ground.db.apikey: '%env(APP_COMMONGROUND_KEY)%'
     # ZaakAfhandelComponent
     env(APP_COMMONGROUND_ZAC_LOCATION): 'https://zac.%env(APP_DOMAIN)%'
@@ -232,6 +226,15 @@ parameters:
         uc:
             location: '%env(APP_COMMONGROUND_UC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_UC_APIKEY)%'
+        brp:
+            location: '%env(APP_COMMONGROUND_BRP_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_BRP_APIKEY)%'
+        vrc:
+            location: '%env(APP_COMMONGROUND_VRC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_VRC_APIKEY)%'
+        vtc:
+            location: '%env(APP_COMMONGROUND_VTC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_VTC_APIKEY)%'
         
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
