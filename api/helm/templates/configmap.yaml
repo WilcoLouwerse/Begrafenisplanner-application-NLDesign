@@ -14,6 +14,7 @@ data:
   app-name: {{ .Values.settings.name | quote }}
   app-title: {{ .Values.settings.title | quote }}
   app-version: {{ .Values.settings.version | quote }}
+  app-id: {{ .Values.settings.id | quote }}
   app-repro: {{ .Values.settings.repro | quote }}
   app-demo: {{ .Values.settings.demo | quote }}
   app-container: {{ .Values.settings.container | quote }}
