@@ -4,10 +4,10 @@ security:
         chain_provider:
             chain:
                 providers: [CommongroundApplicationProvider, CommongroundUserProvider]
-        commongroundUserProvider:
-            id: App\Security\User\CommongroundUserProvider
         commongroundApplicationProvider:
             id: App\Security\User\CommongroundApplicationProvider
+        commongroundUserProvider:
+            id: App\Security\User\CommongroundUserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -17,13 +17,14 @@ security:
             anonymous: true
             pattern:  ^/$
             methods: [GET]
-        # The mollie webhook does not have our API key
-        webhook:
-            anonymous: true
-            pattern: ^/payments/mollie_webhook
-            methods: [POST]
         main:
             provider: chain_provider
+            # comment this function out on crud enviroments
+            #logout:
+            #    path:   app_user_login            
+            #form_login:
+            #    login_path: app_user_login
+            #    check_path: app_user_login   
             guard:
                 authenticators:
                     - App\Security\CommongroundApplicationAuthenticator

@@ -4,28 +4,30 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: pa
-  name: pa
-  title: Proto Applicatie
+  projectName: pan
+  name: pan
+  title: Proto component commonground
   version: V.0.1
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
+  type: application
   repro: 'https://github.com/ConductionNL/pan'
   domain: 'pan.zaakonline.nl'
   domains:
     - zaakonline.nl
   domainsJson: ["zaakonline.nl"]
+  subdomain: pc
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
   state: Noord-Holland
   locality: Amsterdam
-  unit: Common-Ground  
-  demo: test.conduction.nl
+  unit: Common-Ground
   env: dev
   debug: 1
+  cache: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.dev$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
+  trustedHosts: '127.0.0.1$|^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.dev$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
@@ -39,6 +41,8 @@ settings:
   # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   notificationEnabled: false
   audittrailEnabled: false
+  authorisationProviderUser: https://uc.larping.eu
+  authorisationProviderApplication: https://ac.larping.eu
   healthEnabled: false
   archiveEnabled: false
 

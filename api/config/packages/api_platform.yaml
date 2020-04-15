@@ -4,8 +4,8 @@ parameters:
     # environment variables are not available yet.
     # You should not need to change this value.
     env(VARNISH_URL): ''
-    env(APP_VERSION): '
-    env(APP_NAME): '''
+    env(APP_VERSION): ''
+    env(APP_NAME): ''
     env(APP_TITLE): ''
     env(APP_DESCRIPTION): ''
     env(APP_REPRO): ''
@@ -50,10 +50,10 @@ api_platform:
     
     # Lets confirm to JSON-HA: first, as per common ground. But allow other serializers
     formats:
-        jsonhal:  ['application/hal+json']
-        jsonld:   ['application/ld+json']
-        jsonapi:  ['application/vnd.api+json']
-        json:     ['application/json']
+        jsonld:   ['application/ld+json','application/json+ld']
+        jsonhal:  ['application/hal+json','application/json+hal']
+        jsonapi:  ['application/vnd.api+json','application/json+vnd.api']
+        json:     ['application/json', 'application/health+json','application/json+health']
         xml:      ['application/xml']
         yaml:     ['application/x-yaml']
         csv:      ['text/csv']

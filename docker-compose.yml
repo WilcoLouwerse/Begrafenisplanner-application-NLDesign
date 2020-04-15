@@ -33,14 +33,18 @@ services:
       - DATABASE_URL=mysql://api-platform:!ChangeMe!@db/api?serverVersion=10.1
       - APP_ENV=${APP_ENV}
       - APP_DEBUG=${APP_DEBUG} 
+      - APP_CACHE=${APP_CACHE}
       - APP_VERSION=${APP_VERSION}    
       - APP_NAME=${APP_NAME} 
       - APP_TITLE=${APP_TITLE}
+      - APP_ID=${APP_ID}
       - APP_DOMAIN=${APP_DOMAIN}
-      - APP_DOMAINS=${APP_DOMAINS}
+      - APP_SUBDOMAIN=${APP_SUBDOMAIN}
       - APP_DEMO=${APP_DEMO}
       - APP_REPRO=${APP_REPRO}
+      - APP_CONTAINER=${APP_CONTAINER}
       - APP_DESCRIPTION=${APP_DESCRIPTION}
+      - APP_TYPE=${APP_TYPE}
       - APP_LOGO=${APP_LOGO}
       - APP_HOME=${APP_HOME}
       - APP_COMMONGROUND_ID=${APP_COMMONGROUND_ID}
