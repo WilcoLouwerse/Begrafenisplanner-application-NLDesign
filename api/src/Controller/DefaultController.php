@@ -31,7 +31,18 @@ class DefaultController extends AbstractController
     {
         $variables = $applicationService->getVariables();
 
-        return $variables;
+        $applicationId = '536bfb73-63a5-4719-b535-d835607b88b2';
+        $wrcComponent = '536bfb73-63a5-4719-b535-d835607b88b2';
+        $template = $this->commonGroundService->getResource($wrcComponent.'/applications/'.$wrcComponent.'/'.$slug);
+
+        $template = $this->get('twig')->createTemplate($template);
+        $template = $template->render($variables);
+
+        return $response = new Response(
+            $template,
+            Response::HTTP_OK,
+            ['content-type' => 'text/html']
+        );
     }
 
 }
