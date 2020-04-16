@@ -31,6 +31,13 @@ class BegrafenisplannenController extends AbstractController
     {
         $variables = [];
 
+        $variables['cemeteries'] = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/cemeteries');
+
+        if(isset($_POST['autocomplete-begraafplaats']))
+        {
+            //Doe iets wanneer een begraafplaats geselecteerd word.
+        }
+
         if ($httpRequest->isMethod('POST'))
         {
             return $this->redirect($this->generateUrl('app_begrafenisplannen_datumtijd'));
