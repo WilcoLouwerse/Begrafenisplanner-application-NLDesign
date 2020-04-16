@@ -16,10 +16,9 @@
 
                                 <form class="form" method="post" action="#">
                                     <h3>Zoek op BSNnummer</h3>
-                                    <div class="input combobox" id="bsn_combobox">
-                                        <input
-                                            class="combobox__input input__control input__control--text input__control--xl input__control--select"
-                                            id="autocomplete-bsn">
+                                    <div class="input input--horizontal">
+
+                                        <input required="" type="text" id="bsn" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
                                     </div>
                                     <div class="input">
                                         <button type="submit" class="btn btn--primary" name="select" value="bsn">Zoeken</button>
@@ -30,28 +29,37 @@
                                     <fieldset class="input">
                                         <legend class="input__legend">Of wilt u:</legend>
                                         <div class="input__group input__group--radio">
-                                            <input type="radio" name="optradio" id="opt1" class="input__control input__control--radio">
+                                            <input type="radio" name="optradio" id="opt1" class="input__control input__control--radio input__control--l">
                                             <label class="input__label input__label--radio" for="opt1">Handmatig een overledene toevoegen</label>
                                         </div>
                                     </fieldset>
 
                                     <h3>Bsnnummer:</h3>
-                                    <div class="input combobox" id="bsnhandmatig_combobox">
-                                        <input
-                                            disabled=""
-                                            class="combobox__input input__control input__control--text input__control--xl input__control--select"
-                                            id="autocomplete-bsnhandmatig">
+                                    <div class="input input--horizontal">
+
+                                        <input required="" disabled="" type="text" id="bsnhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
                                     </div>
 
                                     <!-- Page Break -->
                                     <div style="height: 20px;"></div>
 
                                     <h3>Geboortedatum:</h3>
-                                    <div class="input combobox" id="geboortedatum_combobox">
-                                        <input
-                                            disabled=""
-                                            class="combobox__input input__control input__control--text input__control--xl input__control--select"
-                                            id="autocomplete-geboortedatum">
+                                    <div class="input">
+
+                                        <div class="input__control-group">
+                                            <div>
+                                                <label class="input__hint" for="date_of_birth-d">dag</label>
+                                                <input required="" disabled="" aria-label="Geboortedag" title="Geboortedag" required="" type="number" min="1" max="31" id="date_of_birth-d" class="input__control input__control--two-characters input__control--linked input__control--text">
+                                            </div>
+                                            <div>
+                                                <label class="input__hint" for="date_of_birth-m">maand</label>
+                                                <input required="" disabled="" aria-label="Geboortemaand" title="Geboortemaand" required="" type="number" min="1" max="12" id="date_of_birth-m" class="input__control input__control--two-characters input__control--linked input__control--text">
+                                            </div>
+                                            <div>
+                                                <span class="input__hint" for="date_of_birth-y">jaar</span>
+                                                <input required="" disabled="" aria-label="Geboortejaar" title="Geboortejaar" required="" type="number" id="date_of_birth-y" class="input__control input__control--four-characters input__control--linked input__control--text">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="input">
                                         <button disabled="" type="submit" class="btn btn--primary" name="select" value="bsn">Selecteren</button>

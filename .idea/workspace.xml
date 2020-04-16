@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17d529b1-d761-4e0f-9a52-df5a4e33230a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/belanghebbende.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/belanghebbende.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/bevestiging.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/bevestiging.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/datumtijd.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/datumtijd.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/overledene.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/overledene.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +158,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../NLDesignHulpmiddelen/corona-interface" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
@@ -216,6 +215,10 @@
       <workItem from="1586509192791" duration="3584000" />
       <workItem from="1586517245717" duration="1794000" />
       <workItem from="1586519341688" duration="180000" />
+      <workItem from="1586943919610" duration="4666000" />
+      <workItem from="1586952801597" duration="66000" />
+      <workItem from="1586960564960" duration="1312000" />
+      <workItem from="1587025856189" duration="16803000" />
     </task>
     <servers />
   </component>
@@ -257,12 +260,12 @@
     </state>
     <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585319865801" />
     <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585145485952" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1586517315995">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="592" y="218" key="FileChooserDialogImpl" timestamp="1586951626786">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/-1600.172.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1586517315995" />
     <state x="740" y="275" key="FileChooserDialogImpl/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1586432384365" />
-    <state x="592" y="218" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586436479739" />
+    <state x="592" y="218" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586951626786" />
     <state x="610" y="334" key="NewPhpClassDialog" timestamp="1585319764240">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -271,10 +274,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1585568547161" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1586507722392">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1587025862660">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1585643741641" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1587025862660" />
     <state x="656" y="118" width="688" height="804" key="find.popup" timestamp="1586517758986">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
