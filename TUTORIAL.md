@@ -18,7 +18,7 @@ You can install docker-desktop from [the docker website](https://hub.docker.com/
 ## Generating your component (repository/codebase)
 Starting up your first Common Ground component is extremely easy, al you need is a GitHub account and go the link below and fill in the form, press create and press to we have a component!
 
-[https://github.com/ConductionNL/Proto-component-commonground/generate](https://github.com/ConductionNL/Proto-component-commonground/generate) 
+[https://github.com/ConductionNL/Proto-application-NLDesign/generate](https://github.com/ConductionNL/Proto-application-NLDesign/generate) 
 
 After that you should be redirected to your own brand new repository. 
 
