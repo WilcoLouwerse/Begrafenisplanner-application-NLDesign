@@ -40,4 +40,9 @@ class CommongroundRuntime implements RuntimeExtensionInterface
     {
         return $this->commongroundService->getComponentResources($component);
     }
+
+    public function getApplication()
+    {
+        return $this->commongroundService->getApplication();
+    }
 }

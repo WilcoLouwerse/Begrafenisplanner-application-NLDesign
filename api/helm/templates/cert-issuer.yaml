@@ -1,7 +1,13 @@
 apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
 metadata:
-  name: {{ include "name" . }}-{{ .Values.settings.env }}-letsencrypt
+    name: {{ include "name" . }}-{{ .Values.settings.env }}-letsencrypt
+    labels:
+        app.kubernetes.io/name: {{ include "name" . }}
+        app.kubernetes.io/part-of: {{ include "name" . }}
+        helm.sh/chart: {{ include "chart" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   acme:
     email: {{ .Values.settings.email }}

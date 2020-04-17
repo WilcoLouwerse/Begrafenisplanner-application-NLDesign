@@ -36,13 +36,15 @@ class ValidOnSubscriber implements EventSubscriberInterface
     public function validOn(GetResponseForControllerResultEvent $event)
     {
         $result = $event->getControllerResult();
+        $method = $event->getRequest()->getMethod();
+        $route = $event->getRequest()->attributes->get('_route');
 
         // Lets get validOn from the query but deafult back to geldig op (for backward compatibality with api standaard)
         $geldigOp = $event->getRequest()->query->get('geldigOp', false);
         $validOn = $event->getRequest()->query->get('validOn', $geldigOp);
 
         // Only do somthing if fields is query supplied
-        if (!$validOn) {
+        if (!$validOn || $method != 'GET') {
             return $result;
         }
 
@@ -71,7 +73,7 @@ class ValidOnSubscriber implements EventSubscriberInterface
         }
 
         // Lets try to get an version valid on that date
-        $queryBuilder = $this->em->getRepository('Gedmo\Loggable\Entity\LogEntry')->createQueryBuilder('l')
+        $queryBuilder = $this->em->getRepository('App\Entity\ChangeLog')->createQueryBuilder('l')
             ->where('l.objectClass = :objectClass')
             ->setParameter('objectClass', $this->em->getMetadataFactory()->getMetadataFor(get_class($result))->getName())
             ->andWhere('l.objectId = :objectId')
@@ -89,7 +91,7 @@ class ValidOnSubscriber implements EventSubscriberInterface
         }
 
         // Lets use the found version to rewind the object and return is
-        $repo = $this->em->getRepository('\Gedmo\Loggable\Entity\LogEntry'); // we use default log entry class
+        $repo = $this->em->getRepository('App\Entity\ChangeLog'); // we use default log entry class
         $repo->revert($result, $version->getVersion());
 
         return $result;
