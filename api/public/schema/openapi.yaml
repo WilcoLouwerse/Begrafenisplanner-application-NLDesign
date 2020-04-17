@@ -1,15 +1,15 @@
 openapi: 3.0.2
 info:
-  title: 'Proto Applicatie NL Design'
+  title: Begrafenisplanner
   version: V.0.9.6
   description: |
     API Details
-    - Component: Proto Applicatie NL Design
-    - Reference: pan
+    - Component: Begrafenisplanner
+    - Reference: bpui
     - Enviroment: dev
     - Version: V.0.9.6
     - Repository: [online](https://github.com/ConductionNL/pan) / [zip](https://github.com/ConductionNL/pan/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pan-php) 
+    - Docker Image: [online](https://hub.docker.com/repository/docker/wilcolouwerse/bpui-php) 
     - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         

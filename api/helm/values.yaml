@@ -3,17 +3,17 @@
 # Declare variables to be passed into your templates.
 
 settings:
-  registryBase: docker.io/conduction
-  projectName: pan
-  name: pan
-  title: Proto Applicatie NL Design
+  registryBase: docker.io/wilcolouwerse
+  projectName: bpui
+  name: bpui
+  title: Begrafenisplanner
   version: V.0.9.6
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   repro: 'https://github.com/ConductionNL/pan'
   domain: 'pan.zaakonline.nl'
   domains:
-    - zaakonline.nl
-  domainsJson: ["zaakonline.nl"]
+    - begraven.zaakonline.nl
+  domainsJson: ["begraven.zaakonline.nl"]
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
