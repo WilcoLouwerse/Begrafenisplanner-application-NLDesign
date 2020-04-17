@@ -54,6 +54,10 @@ class BegrafenisplannenController extends AbstractController
     {
         $variables = [];
 
+        $cemeteries = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/cemeteries');
+
+        $variables['calendar'] = $commonGroundService->getResourceList($cemeteries['hydra:member'][0]['calendar']);
+
         if ($httpRequest->isMethod('POST'))
         {
                 return $this->redirect($this->generateUrl('app_begrafenisplannen_artikelen'));
@@ -85,7 +89,12 @@ class BegrafenisplannenController extends AbstractController
     public function overledeneAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-        if ($httpRequest->isMethod('POST')) {
+
+        $variables['ingeschrevenpersonen'] = $commonGroundService->getResourceList($commonGroundService->getComponent('brp')['href'].'/ingeschrevenpersonen');
+
+
+        if ($httpRequest->isMethod('POST'))
+        {
             return $this->redirect($this->generateUrl('app_begrafenisplannen_belanghebbende'));
         }
         return $variables;

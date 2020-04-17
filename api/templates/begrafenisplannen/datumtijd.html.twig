@@ -98,21 +98,21 @@
 
                                 datetc1 = new Date(split[2], parseInt(split[1]) - 1, parseInt(split[0]), 08, 30, 0, 0);
                                 datetc2 = new Date(split[2], parseInt(split[1]) - 1, parseInt(split[0]), 11, 30, 0, 0);
-                                document.getElementById("TCMaandag1").textContent = formatDateTimeslots(datetc1) + " <<<- TIMESLOT START --------------- TIMESLOT END ------>>>" + formatDateTimeslots(datetc2) ;
+                                document.getElementById("TCMaandag1").textContent = formatDateTimeslots(datetc1) + " <-> " + formatDateTimeslots(datetc2) ;
 
                             }
 
                             function formatDateTimeslots(date) {
 
-                                return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()+ " " + date.getHours() + ":" + date.getMinutes()+ " " + date;
+                                return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()+ " " + date.getHours() + ":" + date.getMinutes();
 
                             }
 
                             function formatDate(date) {
-                                const dayNames = ["Zondag", "Maandag", "Dinsdag", "Woensdag", "Donderdag", "Vrijdag", "Zaterdag"
+                                const dayNames = ["Zo", "Ma", "Di", "Wo", "Do", "Vr", "Za"
 
                                 ];
-                                return dayNames[date.getDay()] + " " + date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()+ " " + date;
+                                return dayNames[date.getDay()] + " " + date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
                             }
                         </script>
 
@@ -142,6 +142,7 @@
                     </div>
                     </form>
 
+                    <p>{{ dump(calendar['events']) }}</p>
                 </div><!-- /.content -->
             </div><!-- /.content-background -->
         </div><!-- /.col -->

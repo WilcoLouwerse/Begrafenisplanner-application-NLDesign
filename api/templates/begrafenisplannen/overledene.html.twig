@@ -3,6 +3,26 @@
 {% block content %}
 
 
+    <script>
+
+        /* Load tab component */
+        System.import('/uno/components/tabs/tabs.js').then(function (module) {
+            /* Select all .tab elements on the page */
+            var tabs = document.querySelectorAll('.tab');
+            /* Initialize all tabs */
+            for (var i = 0; i < tabs.length; i++) {
+                new module.Tabs(tabs.item(i));
+            }
+        });
+
+        /* Load tab component */
+        System.import('/uno/components/tabs/tabs.js').then(function (module) {
+            /* Create tab component */
+            var tab = new module.Tabs(document.querySelector('.tab'));
+        });
+
+    </script>
+
     <div class="row">
 
         <div class="col-md-7  col-sm-12">
@@ -14,67 +34,83 @@
                       <!-- Page Break -->
                                 <div style="height: 20px;"></div>
 
-                                <form class="form" method="post" action="#">
-                                    <h3>Zoek op BSNnummer</h3>
-                                    <div class="input input--horizontal">
+                     <ul class="tab tab--inline" role="tablist">
+                        <li class="tab__tab tab__tab--active" role="tab" aria-controls="panel1-1" id="tab1-1"><a href="#panel1-1">Zoeken</a></li>
+                         <li class="tab__tab" role="tab" aria-controls="panel1-2" id="tab1-2"><a href="#panel1-2">Invoeren</a></li>
+                     </ul>
 
-                                        <input required="" type="text" id="bsn" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
+                    <!-- Page Break -->
+                    <div style="height: 20px;"></div>
+
+                    <div class="tab__content tab__content--inline">
+
+                        <section class="tab__pane tab__pane--active" id="panel1-1" role="tabpanel" aria-labelledby="tab1-1">
+                            <form class="form" method="post" action="#">
+                                <h3>Zoek op Bsnnummer</h3>
+                                <div class="input input--horizontal">
+
+                                    <input required="" type="text" id="bsn" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
+                                </div>
+                                <div class="input">
+                                    <button type="submit" class="btn btn--primary" name="select" value="bsn">Zoeken</button>
+                                </div>
+                            </form>
+                            <div>
+                                <p>bsnnummer: 123456789 </p>
+                                <p>naam: Henk Willemsen </p>
+                                <p>geboortedatum: 03-05-1971 </p>
+                            </div>
+
+                        </section>
+
+
+                        <section class="tab__pane tab__pane--active" id="panel1-2" role="tabpanel" aria-labelledby="tab1-2">
+                            <h3>Bsnnummer:</h3>
+                            <div class="input input--horizontal">
+
+                                <input required="" type="text" id="bsnhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
+                            </div>
+
+                            <h3>Naam:</h3>
+                            <div class="input input--horizontal">
+
+                                <input required="" type="text" id="naamhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--l">
+                            </div>
+
+                            <!-- Page Break -->
+                            <div style="height: 20px;"></div>
+
+
+                            <h3>Geboortedatum:</h3>
+                            <div class="input">
+
+                                <div class="input__control-group">
+                                    <div>
+                                        <label class="input__hint" for="date_of_birth-d">dag</label>
+                                        <input required="" aria-label="Geboortedag" title="Geboortedag" required="" type="number" min="1" max="31" id="date_of_birth-d" class="input__control input__control--two-characters input__control--linked input__control--text">
                                     </div>
-                                    <div class="input">
-                                        <button type="submit" class="btn btn--primary" name="select" value="bsn">Zoeken</button>
+                                    <div>
+                                        <label class="input__hint" for="date_of_birth-m">maand</label>
+                                        <input required="" aria-label="Geboortemaand" title="Geboortemaand" required="" type="number" min="1" max="12" id="date_of_birth-m" class="input__control input__control--two-characters input__control--linked input__control--text">
                                     </div>
-
-                                    <!-- Page Break -->
-                                    <div style="height: 20px;"></div>
-                                    <fieldset class="input">
-                                        <legend class="input__legend">Of wilt u:</legend>
-                                        <div class="input__group input__group--radio">
-                                            <input type="radio" name="optradio" id="opt1" class="input__control input__control--radio input__control--l">
-                                            <label class="input__label input__label--radio" for="opt1">Handmatig een overledene toevoegen</label>
-                                        </div>
-                                    </fieldset>
-
-                                    <h3>Bsnnummer:</h3>
-                                    <div class="input input--horizontal">
-
-                                        <input required="" disabled="" type="text" id="bsnhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
+                                    <div>
+                                        <span class="input__hint" for="date_of_birth-y">jaar</span>
+                                        <input required="" aria-label="Geboortejaar" title="Geboortejaar" required="" type="number" id="date_of_birth-y" class="input__control input__control--four-characters input__control--linked input__control--text">
                                     </div>
+                                </div>
+                            </div>
+                            <div class="input">
+                                <button type="submit" class="btn btn--primary" name="select" value="bsn">Selecteren</button>
+                            </div>
+                    </section>
+                </div>
 
-                                    <!-- Page Break -->
-                                    <div style="height: 20px;"></div>
-
-                                    <h3>Geboortedatum:</h3>
-                                    <div class="input">
-
-                                        <div class="input__control-group">
-                                            <div>
-                                                <label class="input__hint" for="date_of_birth-d">dag</label>
-                                                <input required="" disabled="" aria-label="Geboortedag" title="Geboortedag" required="" type="number" min="1" max="31" id="date_of_birth-d" class="input__control input__control--two-characters input__control--linked input__control--text">
-                                            </div>
-                                            <div>
-                                                <label class="input__hint" for="date_of_birth-m">maand</label>
-                                                <input required="" disabled="" aria-label="Geboortemaand" title="Geboortemaand" required="" type="number" min="1" max="12" id="date_of_birth-m" class="input__control input__control--two-characters input__control--linked input__control--text">
-                                            </div>
-                                            <div>
-                                                <span class="input__hint" for="date_of_birth-y">jaar</span>
-                                                <input required="" disabled="" aria-label="Geboortejaar" title="Geboortejaar" required="" type="number" id="date_of_birth-y" class="input__control input__control--four-characters input__control--linked input__control--text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="input">
-                                        <button disabled="" type="submit" class="btn btn--primary" name="select" value="bsn">Selecteren</button>
-                                    </div>
-
-                                    <!-- Page Break -->
-                                    <div style="height: 20px;"></div>
-
-
-                        <div class="input">
-                            <button type="submit" class="btn" name="submit" value="save">Opslaan</button> of naar de <a href="{{ path('app_begrafenisplannen_artikelen') }}">vorige stap</a>
-                        </div>
-                    </form>
-
-                </div><!-- /.content -->
+                        <form class="form" method="post" action="#">
+                            <div class="input">
+                                <button type="submit" class="btn" name="submit" value="save">Opslaan</button> of naar de <a href="{{ path('app_begrafenisplannen_artikelen') }}">vorige stap</a>
+                            </div>
+                        </form>
+                    </div><!-- /.content -->
             </div><!-- /.content-background -->
         </div><!-- /.col -->
 
