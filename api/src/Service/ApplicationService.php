@@ -31,7 +31,6 @@ class ApplicationService
         $this->flash = $flash;
         $this->request= $requestStack->getCurrentRequest();
         $this->commonGroundService = $commonGroundService;
-
     }
 
     /*
@@ -41,51 +40,24 @@ class ApplicationService
     {
     	$variables = [];
 
+    	if($this->params->get('app_id')){
+            $variables['application']  = $this->commonGroundService->getResource(['component'=>'wrc','type'=>'applications','id'=>$this->params->get('app_id')]);
+            $variables['organization'] = $this->commonGroundService->getResource(['component'=>'wrc','type'=>'organizations','id'=> $variables['application']['organization']['id']]);
+        }
+
     	// Lets handle the loading of a product is we have one
     	$resource= $this->request->get('resource');
     	if($resource|| $resource = $this->request->query->get('resource')){
-    		/*@todo dit zou de commonground service moeten zijn */
     		$variables['resource'] = $this->commonGroundService->getResource($resource);
     	}
 
     	// Lets handle a posible login
     	$bsn = $this->request->get('bsn');
     	if($bsn || $bsn = $this->request->query->get('bsn')){
-    		$user = $this->commonGroundService->getResource('https://brp.huwelijksplanner.online/ingeschrevenpersonen/'.$bsn);
+    		$user = $this->commonGroundService->getResource(['component'=>'brp','type'=>'ingeschrevenpersonen','id'=>$bsn]);
     		$this->session->set('user', $user);
     	}
     	$variables['user']  = $this->session->get('user');
-
-    	// @todo iets met organisaties en applicaties
-    	$organization= $this->request->get('organization');
-    	if($organization|| $organization= $this->request->query->get('organization')){
-    		$organization= $this->commonGroundService->getResource($organization);
-    		$this->session->set('organization', $organization);
-    	}
-    	// lets default
-    	elseif(!$this->session->get('organization') ){
-    		/*@todo param bag interface */
-    		$organization= $this->commonGroundService->getResource('http://wrc.huwelijksplanner.online/organizations/68b64145-0740-46df-a65a-9d3259c2fec8');
-    	    $this->session->set('organization', $organization);
-    		//$this->session->set('organization', 0000);
-    	}
-    	$variables['organization']  = $this->session->get('organization');
-
-    	// application
-    	$application= $this->request->get('application');
-    	if($application|| $application= $this->request->query->get('application')){
-    		$application= $this->commonGroundService->getResource($application);
-    		$this->session->set('application', $application);
-    	}
-    	// lets default
-    	elseif(!$this->session->get('application')){
-    		/*@todo param bag interface */
-    		$application= $this->commonGroundService->getResource('http://wrc.huwelijksplanner.online/applications/536bfb73-63a5-4719-b535-d835607b88b2');
-    		$this->session->set('application', $application);
-    	}
-    	$variables['application']  = $this->session->get('application');
-
-
 
     	// Let handle posible request creation
     	$requestType = $this->request->request->get('requestType');

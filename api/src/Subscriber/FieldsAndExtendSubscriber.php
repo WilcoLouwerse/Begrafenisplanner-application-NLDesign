@@ -33,37 +33,36 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
 
     public function FilterFields(GetResponseForControllerResultEvent $event)
     {
-        /* @todo Contains a bug
         $result = $event->getControllerResult();
+        $method = $event->getRequest()->getMethod();
+        $route = $event->getRequest()->attributes->get('_route');
+
         $fields = $event->getRequest()->query->get('fields');
         $extends = $event->getRequest()->query->get('extend');
-        $contentType= $event->getRequest()->headers->get('accept');
-        if(!$contentType){
-        	$contentType= $event->getRequest()->headers->get('Accept');
+        $contentType = $event->getRequest()->headers->get('accept');
+        if (!$contentType) {
+            $contentType = $event->getRequest()->headers->get('Accept');
         }
 
-
         // Only do somthing if fields is query supplied
-        if (!$fields && !$extends) {
+        if ((!$fields && !$extends) || $method != 'GET') {
             return $result;
         }
 
-        // This needs to be bassed on the content-type
-
         // Lets set a return content type
         switch ($contentType) {
-        	case 'application/json':
-        		$renderType = "json";
-        		break;
-        	case 'application/ld+json':
-        		$renderType= "jsonld";
-        		break;
-        	case 'application/hal+json':
-        		$renderType= "jsonhal";
-        		break;
-        	default:
-        		$contentType = 'application/json';
-        		$renderType = "json";
+            case 'application/json':
+                $renderType = 'json';
+                break;
+            case 'application/ld+json':
+                $renderType = 'jsonld';
+                break;
+            case 'application/hal+json':
+                $renderType = 'jsonhal';
+                break;
+            default:
+                $contentType = 'application/json';
+                $renderType = 'json';
         }
 
         // let turn fields into an array if it isn't one already
@@ -71,15 +70,15 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
             $fields = explode(',', $fields);
         }
         if (!is_array($extends)) {
-        	$extends= explode(',', $extends);
+            $extends = explode(',', $extends);
         }
 
         // Its possible to nest fields for filterins
-        foreach($fields as $key=>$value){
-        	// Lets check if the fields contain one or more .'s
-        	if (strpos($value, '.') !== false) {
-        		// This is where it gets complicated couse it could go on indevinitly
-        	}
+        foreach ($fields as $key=>$value) {
+            // Lets check if the fields contain one or more .'s
+            if (strpos($value, '.') !== false) {
+                // This is where it gets complicated couse it could go on indevinitly
+            }
         }
 
         // Overwrite maxdepth for extended properties
@@ -88,22 +87,26 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         if (!in_array('id', $fields)) {
             $fields[] = 'id';
         }
-        if (!in_array('_links', $fields)) {
-            $fields[] = '_links';
+        if (!in_array('@id', $fields)) {
+            $fields[] = '@id';
+        }
+        if (!in_array('@type', $fields)) {
+            $fields[] = '@type';
+        }
+        if (!in_array('@context', $fields)) {
+            $fields[] = '@context';
         }
 
         // now we need to overide the normal subscriber
         $json = $this->serializer->serialize(
             $result,
-        		$renderType,
-        	['enable_max_depth' => true,
-        	'attributes'=> $fields]
+            $renderType,
+            ['enable_max_depth' => true,
+                'attributes'    => $fields, ]
         );
 
-
+        /*
         $jsonArray = json_decode($json, true);
-
-
         // The we want to extend properties from the extend query
         foreach($extends as $extend){
         	// @todo add security checks
@@ -116,20 +119,23 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         		['enable_max_depth' => true,
         		'attributes'=> $fields]
         	);
+
         	// add to the array
         	$jsonArray[$extend] = json_decode($extendjson, true);
         }
 
-
-        $json = json_encode($jsonArray);
-
-        $response = new Response(
-                $json,
-                Response::HTTP_OK,
-        		['content-type' => $contentType]
-                );
-
-        $event->setResponse($response);
+        $response = $this->serializer->serialize(
+            $jsonArray,
+            $renderType, ['enable_max_depth'=>true]
+        );
         */
+
+        // Creating a response
+        $response = new Response(
+            $json,
+            Response::HTTP_CREATED,
+            ['content-type' => $contentType]
+        );
+        $event->setResponse($response);
     }
 }
