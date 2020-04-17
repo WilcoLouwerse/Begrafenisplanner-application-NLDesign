@@ -303,7 +303,7 @@ parameters:
             location: '%env(APP_COMMONGROUND_BRP_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_BRP_APIKEY)%'
         bag:
-            location: '%env(APP_COMMONGROUND_BBAG_LOCATION)%'
+            location: '%env(APP_COMMONGROUND_BAG_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_BAG_APIKEY)%'
         kvk:
             location: '%env(APP_COMMONGROUND_KVK_LOCATION)%'
