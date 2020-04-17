@@ -260,7 +260,7 @@ parameters:
         nlx_in:
             location: '%env(APP_COMMONGROUND_NLX_IN_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_NLX_IN_APIKEY)%'
-        nlx_uit:
+        nlx_out:
             location: '%env(APP_COMMONGROUND_NLX_OUT_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_NLX_OUT_APIKEY)%'        
         pdc:
