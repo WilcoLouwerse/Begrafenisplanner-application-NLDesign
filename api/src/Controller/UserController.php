@@ -1,37 +1,38 @@
 <?php
 
-// src/Controller/DefaultController.php
+// src/Controller/DashboardController.php
 
 namespace App\Controller;
 
-use App\Service\CommonGroundService;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Service\CommonGroundService;
+
 /**
- * Class UserController.
+ * Class DeveloperController
+ * @package App\Controller
  */
 class UserController extends AbstractController
-{
-    /**
-     * @Route("/login", methods={"GET"})
-     * @Template
-     */
-    public function login(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
-    {
-        return [];
-    }
+{	
+	
+	/**
+	 * @Route("/login")
+	 * @Template
+	 */
+	public function loginAction()
+	{
+		return [];
+	}
+		
 
-    /**
-     * @Route("/logout", methods={"GET"})
-     * @Template
-     */
-    public function logout(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
-    {
-        return [];
-    }
 }
+
+
+
+
+
+

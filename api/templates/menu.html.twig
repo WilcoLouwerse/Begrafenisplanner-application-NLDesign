@@ -1,18 +1,7 @@
-    <nav class=" {% if application is defined and application.defaultConfiguration.configuration.colorScheme is defined  %}{{ application.defaultConfiguration.configuration.colorScheme }}{% else %}background--donkerblauw{% endif %}" id="docs-nav">
+    <nav class="top-nav" id="docs-nav">
         <div class="container">
             <div class="top-nav__block top-nav-autoresize">
                 <ul class="nav">
-                {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.mainMenu is defined  %}
-                    {% set menu = commonground_resource(application.defaultConfiguration.configuration.mainMenu) %}
-                    {% for item in menu.menuItems %}
-                        <li class="nav__item">
-                            <a href="{{ item.href }}" title="Home" class="nav__link  ">
-                                <i class="{{ item.icon }}" role="presentation"></i>
-                                <span>{{ item.name }}</span>
-                            </a>
-                        </li>
-                    {% endfor %}
-                {% else %}
                     <li class="nav__item">
                         <a href="{{ path('app_default_index') }}" title="Home" class="nav__link  ">
                             <i class="icon icon-home" role="presentation"></i>
@@ -28,14 +17,14 @@
                     <li class="nav__item"><a class="nav__link " href="">Instemmingen</a></li>
                     <li class="nav__item"><a class="nav__link " href="">Verzoeken</a></li>
                     <li class="nav__item"><a class="nav__link " href="app_logout">Uitloggen</a></li>
-                {% else %}
+                    {% else %}
                     <li class="nav__item">
                         <a href="app_login" title="Home" class="nav__link  ">
                             <i class="icon icon-user" role="presentation"></i>
                             <span>Inloggen</span>
                         </a>
                     </li>
-                {% endif %}
+                    {% endif %}
                 </ul>
             </div>
         </div>

@@ -18,7 +18,6 @@ class CommongroundExtension extends AbstractExtension
             new TwigFunction('commonground_component_list', [CommongroundRuntime::class, 'getComponentList']),
             new TwigFunction('commonground_component_health', [CommongroundRuntime::class, 'getComponentHealth']),
             new TwigFunction('commonground_component_resources', [CommongroundRuntime::class, 'getComponentResources']),
-            new TwigFunction('commonground_application', [CommongroundRuntime::class, 'getApplication']),
         ];
     }
 }
