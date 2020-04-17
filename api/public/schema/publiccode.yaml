@@ -1,6 +1,6 @@
 publiccodeYmlVersion: "0.2"
 
-name: test1
+name: bpui
 applicationSuite: commonground
 url: "https://github.com/ConductionNL/pan"
 landingURL: "pan.huwelijksplanner.online" 

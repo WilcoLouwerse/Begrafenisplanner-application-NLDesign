@@ -4,8 +4,8 @@
 
 settings:
   registryBase: docker.io/wilcolouwerse
-  projectName: test1
-  name: test1
+  projectName: bpui
+  name: bpui
   title: Begrafenisplanner
   version: V.0.9.6
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'

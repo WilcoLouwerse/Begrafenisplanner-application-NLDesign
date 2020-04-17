@@ -5,11 +5,11 @@ info:
   description: |
     API Details
     - Component: Begrafenisplanner
-    - Reference: test1
+    - Reference: bpui
     - Enviroment: dev
     - Version: V.0.9.6
     - Repository: [online](https://github.com/ConductionNL/pan) / [zip](https://github.com/ConductionNL/pan/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/wilcolouwerse/test1-php) 
+    - Docker Image: [online](https://hub.docker.com/repository/docker/wilcolouwerse/bpui-php) 
     - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
@@ -2757,12 +2757,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-17T11:29:09+00:00'
+        example: '2020-04-17T12:42:50+00:00'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-17T11:29:09+00:00'
+        example: '2020-04-17T12:42:50+00:00'
     required: []
   AuditTrail-write:
     properties:
@@ -2812,12 +2812,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-17T11:29:09+00:00'
+        example: '2020-04-17T12:42:50+00:00'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-17T11:29:09+00:00'
+        example: '2020-04-17T12:42:50+00:00'
     required: []
   ChangeLog-write:
     properties:

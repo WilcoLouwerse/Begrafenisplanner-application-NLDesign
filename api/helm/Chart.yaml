@@ -1,7 +1,7 @@
 apiVersion: v1
 appVersion: V.0.9.6
 description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
-name: test1
+name: bpui
 version: 0.1.0
 home: instemmingen.conduction.nl
 icon: instemmingen.conduction.nl
