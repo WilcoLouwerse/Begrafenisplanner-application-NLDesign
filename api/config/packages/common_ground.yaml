@@ -3,9 +3,6 @@ parameters:
     # This allows you to run cache:warmup even if your
     # environment variables are not available yet.
     # You should not need to change this value.
-    env(CONDUCTION_COMMONGROUND_BAG_APIKEY): 'Change me in your .env file'
-    env(NLX_OUTWAY): true
-    env(NLX_INWAY): false
         
      # Security Details   
     env(APP_COMMONGROUND_ID): 'huwelijksplanner-Wex83XXe'
@@ -17,32 +14,98 @@ parameters:
     app_commonground_secret: '%env(APP_COMMONGROUND_SECRET)%'
 
     # Application Parameters
-    env(APP_ENV): 'dev' 
-    env(APP_CACHE): false          
-    env(APP_VERSION): 'v1' 
+    env(APP_ENV): 'prod'
+    env(APP_DEBUG): false
+    env(APP_CACHE): false
+    env(APP_AUTH): true
+    env(AUDITTRAIL_ENABLED): true
+    env(NOTIFICATION_ENABLED): false
+    env(HEALTH_ENABLED): true
+    env(APP_VERSION): '1.0.0' 
     env(APP_NAME): 'Proto Component'
     env(APP_ID): ''
     env(APP_DESCRIPTION): 'A commonground component'
-    env(APP_DOMAIN): 'zaakonline.nl'  
+    env(APP_DOMAIN): 'zaakonline.nl'
+    env(APP_TITLE): 'Proto Component'
+    env(APP_LOGO): 'zaakonline.nl'
+    env(APP_HOME): 'zaakonline.nl'
+    env(APP_SUBDOMAIN): 'pc'
+    env(APP_DEMO): 'pc.zaakonline.nl'
     
-    app_env: '%env(APP_ENV)%'                
-    app_cache: '%env(APP_CACHE)%'                             
+    env(APP_CONTAINER): ''
+    env(APP_REPRO): ''    
+
+    app_env: '%env(APP_ENV)%'
+    app_debug: '%env(APP_DEBUG)%'         
+    app_cache: '%env(APP_CACHE)%'
+    app_auth: '%env(APP_AUTH)%'
+    app_audittrail: '%env(AUDITTRAIL_ENABLED)%'
+    app_notification: '%env(NOTIFICATION_ENABLED)%'
+    app_health: '%env(HEALTH_ENABLED)%'
     app_version: '%env(APP_VERSION)%'         
     app_name: '%env(APP_NAME)%'
     app_id: '%env(APP_ID)%'
     app_description: '%env(APP_DESCRIPTION)%'
     app_domain: '%env(APP_DOMAIN)%'
     app_type: '%env(APP_TYPE)%'
+    app_title: '%env(APP_TITLE)%'
+    app_logo: '%env(APP_LOGO)%'
+    app_home: '%env(APP_HOME)%'
+    app_subdomain: '%env(APP_SUBDOMAIN)%'
+    app_demo: '%env(APP_DEMO)%'
+    app_container: '%env(APP_CONTAINER)%'
+    app_repro: '%env(APP_REPRO)%'
     
+    # Organisatie details
+    env(GOOGLE_TAG_MANAGER_ID): ''
+    env(HUBSPOT_EMBED_CODE): ''
+        
+    env(CONTAINER_REGISTRY_BASE): ''
+    env(CONTAINER_PROJECT_NAME): ''
+
+    env(ORGANIZATION_NAME): ''
+    env(ORGANIZATION_EMAIL_ADDRESS): ''
+    env(ORGANIZATION_COUNTRY_NAME): ''
+    env(ORGANIZATION_STATE): ''
+    env(ORGANIZATION_LOCALITY): ''
+    env(ORGANIZATION_UNIT_NAME): ''
+
+    google_tag_manager_id: '%env(GOOGLE_TAG_MANAGER_ID)%'
+    hubspot_embed_code: '%env(HUBSPOT_EMBED_CODE)%'
+
+    container_registry_base: '%env(CONTAINER_REGISTRY_BASE)%'
+    container_project_name: '%env(CONTAINER_PROJECT_NAME)%'
+
+    organization_name: '%env(ORGANIZATION_NAME)%'
+    organization_email: '%env(ORGANIZATION_EMAIL_ADDRESS)%'
+    organization_country: '%env(ORGANIZATION_COUNTRY_NAME)%'
+    organization_state: '%env(ORGANIZATION_STATE)%'
+    organization_locality: '%env(ORGANIZATION_LOCALITY)%'
+    organization_unit: '%env(ORGANIZATION_UNIT_NAME)%'
+
     # Dit is hieronder nu anders geregeld (ofwel aanpassen)
     env(APP_APPLICATION_KEY): ''
     env(APP_USER_KEY): ''
     env(AUTH_PROVIDER_USER): ''
     env(AUTH_PROVIDER_APPLICATION): ''
+
+    env(TRUSTED_HOSTS): ''
+    env(TRUSTED_PROXIES): ''
+
+    env(NLX_OUTWAY): ''
+    env(NLX_INWAY): ''
+
+    # Dit is hieronder nu anders geregeld (ofwel aanpassen)
     auth_provider_user: '%env(AUTH_PROVIDER_USER)%'   
     auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'
     app_application_key: '%env(APP_APPLICATION_KEY)%'
     app_user_key: '%env(APP_USER_KEY)%'
+
+    trusted_hosts: '%env(TRUSTED_HOSTS)%'
+    trusted_proxies: '%env(TRUSTED_PROXIES)%'
+
+    nlx_outway: '%env(NLX_OUTWAY)%'
+    nlx_inway: '%env(NLX_INWAY)%'
 
     # Autorisatiecomponent
     env(APP_COMMONGROUND_AC_LOCATION): 'https://ac.%env(APP_DOMAIN)%'
@@ -282,9 +345,60 @@ parameters:
               url: https://scrutinizer-ci.com/g/api-platform/core/?branch=master 
 
 twig:
-    globals:
+    globals:        
+            
+        # Application Parameters
+        app_env: '%env(APP_ENV)%'
+        app_debug: '%env(APP_DEBUG)%'
+        app_cache: '%env(APP_CACHE)%'
+        app_auth: '%env(AUTH_ENABLED)%'
+        app_audittrail: '%env(AUDITTRAIL_ENABLED)%'
+        app_notification: '%env(NOTIFICATION_ENABLED)%'
+        app_health: '%env(HEALTH_ENABLED)%'
+        app_version: '%env(APP_VERSION)%'
+        app_name: '%env(APP_NAME)%'
         app_id: '%env(APP_ID)%'
         app_description: '%env(APP_DESCRIPTION)%'
+        app_domain: '%env(APP_DOMAIN)%'
+        app_type: '%env(APP_TYPE)%'            
+        app_title: '%env(APP_TITLE)%'
+        app_logo: '%env(APP_LOGO)%'
+        app_home: '%env(APP_HOME)%'
+        app_subdomain: '%env(APP_SUBDOMAIN)%'
+        app_demo: '%env(APP_DEMO)%'
+        app_container: '%env(APP_CONTAINER)%'
+        app_repro: '%env(APP_REPRO)%'
+            
+        # Security Details
+        app_commonground_id: '%env(APP_COMMONGROUND_ID)%'
+        app_commonground_key: '%env(APP_COMMONGROUND_KEY)%'
+        app_commonground_secret: '%env(APP_COMMONGROUND_SECRET)%'
+
+        # Organisations Parameters
+        google_tag_manager_id: '%env(GOOGLE_TAG_MANAGER_ID)%'
+        hubspot_embed_code: '%env(HUBSPOT_EMBED_CODE)%'
+
+        container_registry_base: '%env(CONTAINER_REGISTRY_BASE)%'
+        container_project_name: '%env(CONTAINER_PROJECT_NAME)%'
+
+        organization_name: '%env(ORGANIZATION_NAME)%'
+        organization_email: '%env(ORGANIZATION_EMAIL_ADDRESS)%'
+        organization_country: '%env(ORGANIZATION_COUNTRY_NAME)%'
+        organization_state: '%env(ORGANIZATION_STATE)%'
+        organization_locality: '%env(ORGANIZATION_LOCALITY)%'
+        organization_unit: '%env(ORGANIZATION_UNIT_NAME)%'
+        
+        # Dit is hieronder nu anders geregeld (ofwel aanpassen)
+        auth_provider_user: '%env(AUTH_PROVIDER_USER)%'
+        auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'
+        app_application_key: '%env(APP_APPLICATION_KEY)%'
+        app_user_key: '%env(APP_USER_KEY)%'
+
+        trusted_hosts: '%env(TRUSTED_HOSTS)%'
+        trusted_proxies: '%env(TRUSTED_PROXIES)%'
+
+        nlx_outway: '%env(NLX_OUTWAY)%'
+        nlx_inway: '%env(NLX_INWAY)%'
 
         
         
