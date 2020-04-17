@@ -10,8 +10,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 use App\Service\CommonGroundService;
 
@@ -24,18 +26,25 @@ class DefaultController extends AbstractController
 {
 
 	/**
-	 * @Route("/")
+	 * @Route("/{slug}", requirements={"slug"=".+"})
 	 * @Template
 	 */
-    public function indexAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
+    public function indexAction(Session $session, string $slug = 'home',Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
 
-        $applicationId = '536bfb73-63a5-4719-b535-d835607b88b2';
-        $wrcComponent = '536bfb73-63a5-4719-b535-d835607b88b2';
-        $template = $this->commonGroundService->getResource($wrcComponent.'/applications/'.$wrcComponent.'/'.$slug);
+        // Lets find an appoptiate slug
+        $slugs = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'slugs'],['application.id'=>$variables['application']['id'],'slug'=>$slug])["hydra:member"];
 
-        $template = $this->get('twig')->createTemplate($template);
+        if(count($slugs) != 0){
+            $content = $slugs[0]['template']['content'];
+        }
+        else{
+            // Throw not found
+        }
+
+        // Create the template
+        $template = $this->get('twig')->createTemplate($content);
         $template = $template->render($variables);
 
         return $response = new Response(
