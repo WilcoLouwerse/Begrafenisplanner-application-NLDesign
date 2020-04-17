@@ -3,22 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="17d529b1-d761-4e0f-9a52-df5a4e33230a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/config/packages/common_ground.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/config/packages/common_ground.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Controller/AssentController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Service/CommonGroundService.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Service/CommonGroundService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/assent/index.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/assent/view.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/datumtijd.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/datumtijd.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/overledene.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/overledene.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" doNotAsk="true">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/api/composer.json</pharConfigPath>
     <execution>
       <executable />
@@ -26,6 +22,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="test" pattern="file[Begrafenisplanner-application-NLDesign]:api/templates/*" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -160,11 +159,34 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\rjzon\Documents\Conduction\instemmingen-interface\api\src\Service" />
+      <recent name="C:\Users\Yorick Groeneveld\Documents\GitHub\Begrafenisplanner-application-NLDesign\api\templates\publiccode" />
+      <recent name="C:\Users\Yorick Groeneveld\Documents\GitHub\Begrafenisplanner-application-NLDesign\resources" />
+      <recent name="C:\Users\Yorick Groeneveld\Documents\GitHub\Begrafenisplanner-application-NLDesign\api\public\uno\components\header\images" />
+      <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\templates\begrafenisplannen" />
+      <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\templates\begrafenisplanner" />
     </key>
+  </component>
+  <component name="RunManager" selected="PHP Script.DefaultController.php">
+    <configuration name="index.html.twig" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Begrafenisplanner-application-NLDesign/api/templates/default/index.html.twig" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="DefaultController.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/api/src/Controller/DefaultController.php">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHP Script.DefaultController.php" />
+        <item itemvalue="JavaScript Debug.index.html.twig" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -179,6 +201,24 @@
       <workItem from="1585145025042" duration="4634000" />
       <workItem from="1585211733388" duration="6561000" />
       <workItem from="1585304605600" duration="1432000" />
+      <workItem from="1585316434775" duration="4292000" />
+      <workItem from="1585554390981" duration="632000" />
+      <workItem from="1585559128534" duration="5122000" />
+      <workItem from="1585564516243" duration="13255000" />
+      <workItem from="1585643739435" duration="2465000" />
+      <workItem from="1585740461443" duration="651000" />
+      <workItem from="1585747458836" duration="5935000" />
+      <workItem from="1585816551332" duration="2283000" />
+      <workItem from="1585903580219" duration="1190000" />
+      <workItem from="1586421917032" duration="12564000" />
+      <workItem from="1586443808443" duration="271000" />
+      <workItem from="1586509192791" duration="3584000" />
+      <workItem from="1586517245717" duration="1794000" />
+      <workItem from="1586519341688" duration="180000" />
+      <workItem from="1586943919610" duration="4666000" />
+      <workItem from="1586952801597" duration="66000" />
+      <workItem from="1586960564960" duration="1312000" />
+      <workItem from="1587025856189" duration="16803000" />
     </task>
     <servers />
   </component>
@@ -205,9 +245,57 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1585145485952">
+    <state x="543" y="165" key="#DefaultController.php" timestamp="1585576075570">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="679" y="208" key="#DefaultController.php/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585316928952" />
+    <state x="543" y="165" key="#DefaultController.php/0.0.1536.824@0.0.1536.824" timestamp="1585576075570" />
+    <state x="166" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1586436979523">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="166" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1586436979523" />
+    <state x="133" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1536.824@0.0.1536.824" timestamp="1585570619554" />
+    <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1585319865801">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585319865801" />
     <state x="210" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1585145485952" />
+    <state x="592" y="218" key="FileChooserDialogImpl" timestamp="1586951626786">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/-1600.172.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1586517315995" />
+    <state x="740" y="275" key="FileChooserDialogImpl/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1586432384365" />
+    <state x="592" y="218" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1586951626786" />
+    <state x="610" y="334" key="NewPhpClassDialog" timestamp="1585319764240">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="610" y="334" key="NewPhpClassDialog/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585319764240" />
+    <state x="604" y="336" key="NewPhpFileDialog" timestamp="1585568547161">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1585568547161" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1587025862660">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1587025862660" />
+    <state x="656" y="118" width="688" height="804" key="find.popup" timestamp="1586517758986">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="656" y="118" width="688" height="804" key="find.popup/-1600.172.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1586517758986" />
+    <state x="656" y="118" width="688" height="804" key="find.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585647102247" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1587048700601">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/-1600.172.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1587048700601" />
+    <state x="616" y="240" key="run.anything.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1587029368602" />
+    <state x="592" y="178" key="scopes" timestamp="1585319382383">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="592" y="178" key="scopes/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585319382383" />
+    <state x="498" y="178" width="672" height="538" key="search.everywhere.popup" timestamp="1586517479559">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1585820809325" />
+    <state x="498" y="178" width="672" height="538" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1586517479559" />
   </component>
 </project>

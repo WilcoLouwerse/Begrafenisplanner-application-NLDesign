@@ -7,6 +7,5 @@ api/helm/kubeconfig.yaml
 
 .idea/
 
-api/helm/*-kubeconfig.yaml
 api/helm/kubeconfig*
 api/helm/huwelijksplanner-kubeconfig.yaml

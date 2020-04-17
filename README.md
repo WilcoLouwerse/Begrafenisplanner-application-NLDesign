@@ -1,3 +1,4 @@
+
 # Readme
 -------
 Welcome to the the VNG Common Ground proto component!
@@ -17,7 +18,7 @@ This repository uses the power of conductions [commonground bundle](https://pack
 * Build in support for public API's like BAG (Kadaster), KVK (Kamer van Koophandel)
 * Build in validators for common dutch variables like BSN (Burger service nummer), RSIN(), KVK(), BTW()
 * AVG and VNG proof audit trails
-* And [much more](https://packagist.org/packages/conduction/commongroundbundle) .... 
+* And [muchs more](https://packagist.org/packages/conduction/commongroundbundle) .... 
 
 Be sure to read our [design considerations](/design.md) concerning the [VNG Api Strategie](https://docs.geostandaarden.nl/api/API-Strategie/). 
 
