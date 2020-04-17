@@ -1,12 +1,12 @@
 publiccodeYmlVersion: "0.2"
 
-name: pan
+name: test1
 applicationSuite: commonground
 url: "https://github.com/ConductionNL/pan"
 landingURL: "pan.huwelijksplanner.online" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V.0.9.6"
-releaseDate: "2020-16-04"
+releaseDate: "2020-17-04"
 logo: instemmingen.conduction.nl 
 monochromeLogo: img/logo-mono.svg
 

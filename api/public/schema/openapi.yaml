@@ -1,15 +1,15 @@
 openapi: 3.0.2
 info:
-  title: 'Proto Applicatie NL Design'
+  title: Begrafenisplanner
   version: V.0.9.6
   description: |
     API Details
-    - Component: Proto Applicatie NL Design
-    - Reference: pan
+    - Component: Begrafenisplanner
+    - Reference: test1
     - Enviroment: dev
     - Version: V.0.9.6
     - Repository: [online](https://github.com/ConductionNL/pan) / [zip](https://github.com/ConductionNL/pan/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pan-php) 
+    - Docker Image: [online](https://hub.docker.com/repository/docker/wilcolouwerse/test1-php) 
     - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
@@ -2757,12 +2757,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-16T15:23:13+00:00'
+        example: '2020-04-17T11:29:09+00:00'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-16T15:23:13+00:00'
+        example: '2020-04-17T11:29:09+00:00'
     required: []
   AuditTrail-write:
     properties:
@@ -2812,12 +2812,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-04-16T15:23:13+00:00'
+        example: '2020-04-17T11:29:09+00:00'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-04-16T15:23:13+00:00'
+        example: '2020-04-17T11:29:09+00:00'
     required: []
   ChangeLog-write:
     properties:
