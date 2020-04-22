@@ -13,10 +13,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         # In order to read the docs we must allow anonymous GET reqoust on root    
-        docs:
-            anonymous: true
-            pattern:  ^/$
+        www:
+            pattern:  ^/
             methods: [GET]
+            anonymous: true
         main:
             provider: chain_provider
             # comment this function out on crud enviroments
