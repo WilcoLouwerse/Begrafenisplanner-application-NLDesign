@@ -1,0 +1,61 @@
+
+<div class="content-background {{ background-color }}">
+
+    <div class="content">
+        <h2>{{ 'your data'|translate }}</h2>
+
+        <ul class="definition-list">
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title">
+                    Voornamen
+                </div>
+                <div class="definition-list__description">
+                    <p>{{ user.naam.voornamen }}</p>
+                </div>
+            </li>
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title">
+                    Achternaam
+                </div>
+                <div class="definition-list__description">
+                    <p>{{ user.naam.geslachtsnaam }}</p>
+                </div>
+            </li>
+            {% if user.naam.voorvoegsel is not empty%}
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        Voorvoegsel
+                    </div>
+                    <div class="definition-list__description">
+                        <p>{{ user.naam.voorvoegsel }}</p>
+                    </div>
+                </li>
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        Leeftijd
+                    </div>
+                    <div class="definition-list__description">
+                        <p>{{ user.leeftijd }}</p>
+                    </div>
+                </li>
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        Geslacht
+                    </div>
+                    <div class="definition-list__description">
+                        <p>{{ user.geslachtsaanduiding }}</p>
+                    </div>
+                </li>
+            {% endif %}
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title">
+                    Addres
+                </div>
+                <div class="definition-list__description">
+                    <p>{{ user.verblijfplaats.straatnaam }} {{ user.verblijfplaats.huisnummer }}{{ user.verblijfplaats.huisletter }}{{ user.verblijfplaats.huisnummertoevoeging }}
+                        <br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="content-background {{ backgroundColor }}">
+    <div class="content">
+        <h2>{{ 'start a request'|translate }}</h2>
+            {% set requestTypes = commonground_resourelist(['component'=>'vtc','type'=>'request_types']) %}
+            <ul class="list list--links list--chevrons">
+                {% for  requestType in requestTypes %}
+                <li>
+                    <a href="{{  path('slug', {'slug':'request', 'requestType': requestType['@id'] }) }}">{{ requestType.name }}</a>
+                </li>
+                {% else %}
+                <li>
+                    {{ 'there are curently no request available for you to start'|translate }}
+                </li>
+                {% endfor %}
+            </ul>
+
+    </div>
+</div>
