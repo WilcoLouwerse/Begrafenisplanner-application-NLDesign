@@ -3,10 +3,14 @@
 namespace App\Subscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
+use App\Service\CommonGroundService;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -16,12 +20,16 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
     private $params;
     private $serializer;
     private $propertyAccessor;
+    private $em;
+    private $commonGroundService;
 
-    public function __construct(ParameterBagInterface $params, SerializerInterface $serializer)
+    public function __construct(ParameterBagInterface $params, SerializerInterface $serializer, EntityManagerInterface $em, CommonGroundService $commonGroundService)
     {
         $this->params = $params;
         $this->serializer = $serializer;
         $this->propertyAccessor = PropertyAccess::createPropertyAccessor();
+        $this->em = $em;
+        $this->commonGroundService = $commonGroundService;
     }
 
     public static function getSubscribedEvents()
@@ -31,7 +39,7 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function FilterFields(GetResponseForControllerResultEvent $event)
+    public function FilterFields(ViewEvent $event)
     {
         $result = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
@@ -43,6 +51,9 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         if (!$contentType) {
             $contentType = $event->getRequest()->headers->get('Accept');
         }
+        $authorization = $event->getRequest()->headers->get('Authorization');
+
+        $this->commonGroundService->setHeader('Authorization',$authorization);
 
         // Only do somthing if fields is query supplied
         if ((!$fields && !$extends) || $method != 'GET') {
@@ -61,18 +72,19 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
                 $renderType = 'jsonhal';
                 break;
             default:
-                $contentType = 'application/json';
-                $renderType = 'json';
+                $contentType = 'application/ld+json';
+                $renderType = 'jsonld';
         }
 
-        // let turn fields into an array if it isn't one already
-        if (!is_array($fields)) {
-            $fields = explode(',', $fields);
-        }
         if (!is_array($extends)) {
             $extends = explode(',', $extends);
         }
 
+        if($fields != [] && $fields != ""){
+        // let turn fields into an array if it isn't one already
+        if (!is_array($fields)) {
+            $fields = explode(',', $fields);
+        }
         // Its possible to nest fields for filterins
         foreach ($fields as $key=>$value) {
             // Lets check if the fields contain one or more .'s
@@ -97,14 +109,38 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
             $fields[] = '@context';
         }
 
-        // now we need to overide the normal subscriber
-        $json = $this->serializer->serialize(
-            $result,
-            $renderType,
-            ['enable_max_depth' => true,
-                'attributes'    => $fields, ]
-        );
 
+
+            // now we need to overide the normal subscriber
+            $json = $this->serializer->serialize(
+                $result,
+                $renderType,
+                ['enable_max_depth' => true,
+                    'attributes'    => $fields, ]
+            );
+        }
+        else{
+            $json = $this->serializer->serialize(
+                $result,
+                $renderType,
+                ['enable_max_depth' => true,]
+            );
+        }
+        $array = json_decode($json, true);
+//        var_dump($array);
+
+        foreach($array as $key=>$value){
+            if(in_array($key, $extends) &&
+                filter_var($value, FILTER_VALIDATE_URL) &&
+                $value = $this->commonGroundService->isResource($value)){
+                $array[$key]=$value;
+            }
+        }
+        $json = $this->serializer->serialize(
+            $array,
+            $renderType,
+            ['enable_max_depth' => true,]
+        );
         /*
         $jsonArray = json_decode($json, true);
         // The we want to extend properties from the extend query
