@@ -127,44 +127,18 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
             );
         }
         $array = json_decode($json, true);
-//        var_dump($array);
-
-        foreach($array as $key=>$value){
-            if(in_array($key, $extends) &&
-                filter_var($value, FILTER_VALIDATE_URL) &&
-                $value = $this->commonGroundService->isResource($value)){
-                $array[$key]=$value;
-            }
+        
+        foreach($extends as $extend){
+            $extend = explode('.',$extend);
+            $array = $this->recursiveExtend($array, $extend);
         }
+
         $json = $this->serializer->serialize(
             $array,
             $renderType,
             ['enable_max_depth' => true,]
         );
-        /*
-        $jsonArray = json_decode($json, true);
-        // The we want to extend properties from the extend query
-        foreach($extends as $extend){
-        	// @todo add security checks
-        	// Get new object for the extend
-        	$extendObject = $this->propertyAccessor->getValue($result, $extend);
-        	// turn to json
-        	$extendjson = $this->serializer->serialize(
-        		$result,
-        		$type,
-        		['enable_max_depth' => true,
-        		'attributes'=> $fields]
-        	);
 
-        	// add to the array
-        	$jsonArray[$extend] = json_decode($extendjson, true);
-        }
-
-        $response = $this->serializer->serialize(
-            $jsonArray,
-            $renderType, ['enable_max_depth'=>true]
-        );
-        */
 
         // Creating a response
         $response = new Response(
@@ -173,5 +147,22 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
             ['content-type' => $contentType]
         );
         $event->setResponse($response);
+    }
+
+    public function recursiveExtend(array $resource, array $extend){
+        $sub = array_shift($extend);
+        if(
+            key_exists($sub, $resource) &&
+            is_array($resource[$sub])
+        ){
+            $resource[$sub] = $this->recursiveExtend($resource[$sub], $extend);
+        }elseif(
+            key_exists($sub, $resource) &&
+            filter_var($resource[$sub], FILTER_VALIDATE_URL) &&
+            $value = $this->commonGroundService->isResource($resource[$sub])
+        ){
+            $resource[$sub] = $value;
+        }
+        return $resource;
     }
 }
