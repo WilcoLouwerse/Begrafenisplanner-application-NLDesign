@@ -81,36 +81,32 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
         }
 
         if($fields != [] && $fields != ""){
-        // let turn fields into an array if it isn't one already
-        if (!is_array($fields)) {
-            $fields = explode(',', $fields);
-        }
-        // Its possible to nest fields for filterins
-        foreach ($fields as $key=>$value) {
-            // Lets check if the fields contain one or more .'s
-            if (strpos($value, '.') !== false) {
-                // This is where it gets complicated couse it could go on indevinitly
+            // let turn fields into an array if it isn't one already
+            if (!is_array($fields)) {
+                $fields = explode(',', $fields);
             }
-        }
+            // Its possible to nest fields for filterins
+            foreach ($fields as $key=>$field) {
+                $field = explode('.',$field);
+                $field = $this->recursiveField($field);
+                $fields = array_merge($field, $fields);
+            }
 
-        // Overwrite maxdepth for extended properties
+            // Overwrite maxdepth for extended properties
 
-        // we always need to return an id and links (in order not to break stuff)
-        if (!in_array('id', $fields)) {
-            $fields[] = 'id';
-        }
-        if (!in_array('@id', $fields)) {
-            $fields[] = '@id';
-        }
-        if (!in_array('@type', $fields)) {
-            $fields[] = '@type';
-        }
-        if (!in_array('@context', $fields)) {
-            $fields[] = '@context';
-        }
-
-
-
+            // we always need to return an id and links (in order not to break stuff)
+            if (!in_array('id', $fields)) {
+                $fields[] = 'id';
+            }
+            if (!in_array('@id', $fields)) {
+                $fields[] = '@id';
+            }
+            if (!in_array('@type', $fields)) {
+                $fields[] = '@type';
+            }
+            if (!in_array('@context', $fields)) {
+                $fields[] = '@context';
+            }
             // now we need to overide the normal subscriber
             $json = $this->serializer->serialize(
                 $result,
@@ -127,7 +123,7 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
             );
         }
         $array = json_decode($json, true);
-        
+
         foreach($extends as $extend){
             $extend = explode('.',$extend);
             $array = $this->recursiveExtend($array, $extend);
@@ -164,5 +160,14 @@ class FieldsAndExtendSubscriber implements EventSubscriberInterface
             $resource[$sub] = $value;
         }
         return $resource;
+    }
+    public function recursiveField(array $field){
+        $sub = array_shift($field);
+
+        if($field == null)
+            return $sub;
+        else
+            return [$sub=>$this->recursiveField($field)];
+
     }
 }
