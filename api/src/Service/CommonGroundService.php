@@ -501,6 +501,15 @@ class CommonGroundService
         return $resource;
     }
 
+    public function isResource($url){
+        try{
+            return $this->getResource($url);
+        }
+        catch(HttpException $e){
+            return false;
+        }
+    }
+
     /*
      * Get the current application from the wrc
      */
