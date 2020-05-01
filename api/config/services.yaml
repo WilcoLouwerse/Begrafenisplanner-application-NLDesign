@@ -33,3 +33,5 @@ services:
         decorates: 'api_platform.swagger.normalizer.api_gateway'
         arguments: [ '@App\Swagger\SwaggerDecorator.inner' ]
         autoconfigure: false
+        
+    'Conduction\CommonGroundBundle\Service\CommonGroundService': ~
