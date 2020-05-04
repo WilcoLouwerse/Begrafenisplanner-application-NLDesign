@@ -30,9 +30,23 @@ class BegrafenisplannenController extends AbstractController
     public function begraafplaatsAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
+        $variables['cemeteries'] = [];
 
-        $variables['organizations'] = $commonGroundService->getResourceList($commonGroundService->getComponent('wrc')['href'].'/organizations');
-        $variables['cemeteries'] = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/cemeteries');
+        $variables['organizations'] = $commonGroundService->getResourceList($commonGroundService->getComponent('wrc')['href'].'/organizations')["hydra:member"];
+
+        $cemeteries = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/cemeteries');
+        if(key_exists("hydra:view", $cemeteries))
+        {
+            $lastPageCemeteries = (int) str_replace("/cemeteries?page=", "", $cemeteries["hydra:view"]["hydra:last"]);
+            for ($i = 1; $i <= $lastPageCemeteries; $i++)
+            {
+                $variables['cemeteries'] = array_merge($variables['cemeteries'], $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/cemeteries', ['page'=>$i])["hydra:member"]);
+            }
+        }
+        else
+        {
+            $variables["cemeteries"] = $cemeteries["hydra:member"];
+        }
 
         if ($httpRequest->isMethod('POST'))
         {

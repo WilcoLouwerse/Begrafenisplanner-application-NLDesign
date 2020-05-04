@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17d529b1-d761-4e0f-9a52-df5a4e33230a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/config/packages/common_ground.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/config/packages/common_ground.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannenController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/begraafplaats.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/begraafplaats.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/header.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,7 +232,7 @@
       <workItem from="1588152707645" duration="878000" />
       <workItem from="1588161698037" duration="1159000" />
       <workItem from="1588588435898" duration="117000" />
-      <workItem from="1588588664815" duration="2684000" />
+      <workItem from="1588588664815" duration="4645000" />
     </task>
     <servers />
   </component>

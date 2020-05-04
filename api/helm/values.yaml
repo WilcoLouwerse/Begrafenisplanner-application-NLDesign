@@ -7,7 +7,7 @@ settings:
   projectName: bpui
   name: bpui
   title: Begrafenisplanner
-  version: V.0.9.7
+  version: V.0.9.8
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   repro: 'https://github.com/ConductionNL/pan'
   domain: 'pan.zaakonline.nl'
