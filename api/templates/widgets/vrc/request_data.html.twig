@@ -28,7 +28,7 @@
         <form class="form" method="post" action="#">
             {% if  stage.description is defined and stage.description  is not empty %}<p>{{ stage.description }}</p>{% endif %}
             {% for section in stage.sections %}
-            <h3>{{ section.name }}/h3>
+            <h3>{{ section.name }}</h3>
             {% if  section.description is defined and section.description  is not empty %}<p>{{ section.description }}</p>{% endif %}
 
             {# en dan hier pas iets met de daadwerkelijke properties #}
