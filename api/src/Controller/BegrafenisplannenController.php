@@ -31,12 +31,8 @@ class BegrafenisplannenController extends AbstractController
     {
         $variables = [];
 
+        $variables['organizations'] = $commonGroundService->getResourceList($commonGroundService->getComponent('wrc')['href'].'/organizations');
         $variables['cemeteries'] = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/cemeteries');
-
-        if(isset($_POST['autocomplete-begraafplaats']))
-        {
-            //Doe iets wanneer een begraafplaats geselecteerd word.
-        }
 
         if ($httpRequest->isMethod('POST'))
         {
@@ -91,7 +87,6 @@ class BegrafenisplannenController extends AbstractController
         $variables = [];
 
         $variables['ingeschrevenpersonen'] = $commonGroundService->getResourceList($commonGroundService->getComponent('brp')['href'].'/ingeschrevenpersonen');
-
 
         if ($httpRequest->isMethod('POST'))
         {

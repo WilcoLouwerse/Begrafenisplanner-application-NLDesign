@@ -75,7 +75,7 @@ parameters:
     common_ground.vtc.location: 'https://vtc.zaakonline.nl'
     common_ground.vtc.apikey: '%env(APP_COMMONGROUND_KEY)%'
 
-    common_ground.wrc.location: 'https://wrc.zaakonline.nl'
+    common_ground.wrc.location: 'https://wrc.begraven.zaakonline.nl'
     common_ground.wrc.apikey: '%env(APP_COMMONGROUND_KEY)%'
 
     common_ground.grc.location: 'https://grc.begraven.zaakonline.nl'
