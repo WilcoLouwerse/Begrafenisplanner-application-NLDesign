@@ -31,7 +31,7 @@ class ZZController extends AbstractController
 	 * @Route("/{slug}", requirements={"slug"=".+"}, name="slug")
 	 * @Template
 	 */
-    public function indexAction(Session $session, string $slug = 'home',Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function indexAction(Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
 
@@ -58,7 +58,7 @@ class ZZController extends AbstractController
 
             // Passing the variables to the resource
             $resource = $request->request->all();
-            $configuration = $commonGroundService->saveResource($resource, ['component'=>$resource['@component'],'type'=>>$resource['@type']]);
+            $configuration = $commonGroundService->saveResource($resource, ['component'=>$resource['@component'],'type'=>$resource['@type']]);
         }
 
 
