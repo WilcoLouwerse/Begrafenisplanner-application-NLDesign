@@ -30,7 +30,7 @@ class RequestController extends AbstractController
 	 * @Route("/load/{id}")
 	 * @Template
 	 */
-    public function loadAction(Session $session, string $slug = 'home',Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function loadAction(Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
 
@@ -42,7 +42,7 @@ class RequestController extends AbstractController
      * @Route("/start/{id}")
      * @Template
      */
-    public function startAction(Session $session, string $slug = 'home',Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function startAction(Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
 
