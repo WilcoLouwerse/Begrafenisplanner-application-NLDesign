@@ -52,11 +52,22 @@ class ProcessController extends AbstractController
             $resource = $request->request->all();
             if(key_exists('organization',$resource)){
                 if(key_exists('request',$variables) && key_exists('properties',$variables['request'])){
-
                     $resource['properties'] = array_replace_recursive($variables['request']['properties'],$resource['properties']);
                 }
-//                var_dump($resource);
-//                die;
+                foreach($resource['properties'] as $key=>$property){
+                    if(is_array($property)
+                        && key_exists('postalCode', $property)
+                        && key_exists('houseNumber',$property)
+                    ){
+                        $addresses = $commonGroundService->getResourceList(['component'=>'as','type'=>'adressen'],['postcode'=>$property['postalCode'],'huisnummer'=>$property['houseNumber'],'huisnummertoevoeging'=>$property['houseNumberSuffix']])['adressen'];
+                        if(empty($addresses)){
+                            $this->addFlash('error', "adres niet gevonden");
+                            unset($resource['properties'][$key]);
+                        }else{
+                            $resource['properties'][$key] = $addresses[0]['id'];
+                        }
+                    }
+                }
                 $variables['request'] = $commonGroundService->saveResource($resource, ['component'=>'vrc','type'=>'requests']);
                 $session->set('request', $variables['request']);
                 if(key_exists('next',$resource)){
@@ -73,7 +84,6 @@ class ProcessController extends AbstractController
                 $variables['stage'] = $commonGroundService->getResource($variables['request']['currentStage']);
         }
         elseif($slug != 'home'){
-//            var_dump($variables['process']['stages']);
             foreach($variables['process']['stages'] as $stage){
                 if($stage['slug'] == $slug){
                     $variables['stage'] = $stage;
@@ -87,11 +97,8 @@ class ProcessController extends AbstractController
             }
         }
         $variables["slug"] = $slug;
-        // Lets provide this data to the template
-//        $redirect = $request->query->get('redirect');
 
         return $variables;
-        //$result =
     }
 }
 

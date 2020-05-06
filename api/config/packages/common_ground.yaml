@@ -194,7 +194,10 @@ parameters:
     env(APP_COMMONGROUND_VTC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     # VerzoekRegistratieComponent
     env(APP_COMMONGROUND_VRC_LOCATION): 'https://vrc.%env(APP_DOMAIN)%'
-    env(APP_COMMONGROUND_VRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    env(APP_COMMONGROUND_VRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%' 
+    # Adresservice
+    env(APP_COMMONGROUND_AS_LOCATION): 'https://as.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_AS_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     # BetaalService
     env(APP_COMMONGROUND_BC_LOCATION): 'https://bc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_BC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
@@ -242,6 +245,9 @@ parameters:
     
     # Test for commonground component by array
     common_ground.components:
+        as:
+            location: '%env(APP_COMMONGROUND_AS_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_AS_APIKEY)%'
         db:
             location: '%env(APP_COMMONGROUND_DB_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_DB_APIKEY)%'
