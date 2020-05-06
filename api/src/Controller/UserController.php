@@ -41,6 +41,6 @@ class UserController extends AbstractController
         $session->set('contact', null);
 
         $this->addFlash('info', 'U bent uitgelogd');
-        return $this->redirect($this->generateUrl('app_default_index'));
+        return $this->redirect($this->generateUrl('app_process_index'));
     }
 }

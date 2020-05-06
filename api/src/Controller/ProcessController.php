@@ -27,6 +27,17 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
  */
 class ProcessController extends AbstractController
 {
+    /**
+     * This function shows all available processes
+     *
+     * @Route("/")
+     * @Template
+     */
+    public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params){
+        $variables = $applicationService->getVariables();
+        $variables['processes'] = $commonGroundService->getResourceList(['component'=>'ptc','type'=>'process_types'])['hydra:member'];
+        return $variables;
+    }
 	/**
      * This function will kick of the suplied proces with given values
      *
