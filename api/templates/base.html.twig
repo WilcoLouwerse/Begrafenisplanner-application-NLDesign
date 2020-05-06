@@ -97,6 +97,19 @@
 
     <main class="skiplink-target main" id="content" tabindex="-1">
         <div class="container">
+
+            <!-- the alert box -->
+            {% for label, messages in app.flashes() %}
+                {% for message in messages %}
+                    <div class="notification notification--{{ label }}">
+                        <div class="notification__content">
+                            <h2 class="notification__title">{{ message|trans|capitalize }}</h2>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+
           {% block content %}
 
           {% endblock %}

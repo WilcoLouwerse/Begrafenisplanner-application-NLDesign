@@ -11,6 +11,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 
 /**
  * Class UserController.
@@ -27,11 +29,18 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/logout", methods={"GET"})
+     * @Route("/logout")
      * @Template
      */
-    public function logout(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function logoutAction(Session $session)
     {
-        return [];
+        $session->set('requestType', null);
+        $session->set('request', null);
+        $session->set('user', null);
+        $session->set('employee', null);
+        $session->set('contact', null);
+
+        $this->addFlash('info', 'U bent uitgelogd');
+        return $this->redirect($this->generateUrl('app_default_index'));
     }
 }
