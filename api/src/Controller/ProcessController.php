@@ -59,6 +59,9 @@ class ProcessController extends AbstractController
 //                die;
                 $variables['request'] = $commonGroundService->saveResource($resource, ['component'=>'vrc','type'=>'requests']);
                 $session->set('request', $variables['request']);
+                if(key_exists('next',$resource)){
+                    $slug = $resource['next'];
+                }
             }
         }
         $variables['process'] = $commonGroundService->getResource(['component'=>'ptc','type'=>'process_types','id'=>$id]);

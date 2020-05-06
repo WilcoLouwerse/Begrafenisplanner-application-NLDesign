@@ -5,6 +5,8 @@
 <input type="hidden" name="processType" value="{{ process['@id'] }}">
 {% if stage.next is defined and stage.next is not null %}
     <input type="hidden" name="currentStage" value="{{ stage.next['@id'] }}">
+    {% else %}
+    <input type="hidden" name="next" value="indienen">
 {% endif %}
 {% if request is defined and request is not null %}
     <input type="hidden" name="@id" value="{{ request['@id'] }}">
