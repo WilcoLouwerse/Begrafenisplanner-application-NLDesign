@@ -20,6 +20,14 @@
         <form method="post">
         {% include 'widgets/processes/default.html.twig' %}
         {% include 'widgets/processes/'~process.id~'.html.twig' %}
+    {% if stage.slug == 'indienen' %}
+    {% set slug = stage.slug %}
+    {% endif %}
+
+    {% if slug == 'indienen' %}
+        {% include 'widgets/zz/submit.html.twig' %}
+
+    {% endif %}
     {% if stage.sections is defined and stage.sections is not null %}
 
         {% for section in stage.sections %}

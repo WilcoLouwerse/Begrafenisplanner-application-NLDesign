@@ -7,6 +7,6 @@
     <input type="hidden" name="currentStage" value="{{ stage.next['@id'] }}">
 {% endif %}
 {% if request is defined and request is not null %}
-                    <input type="hidden" name="@id" value="{{ request['@id'] }}">
+    <input type="hidden" name="@id" value="{{ request['@id'] }}">
 {#    {{ dump(request) }}#}
 {% endif %}

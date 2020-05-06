@@ -40,15 +40,19 @@ class ProcessController extends AbstractController
         if($request->isMethod('POST')){
             $resource = $request->request->all();
             if(key_exists('organization',$resource)){
-                var_dump($resource);
-                die;
+                if(key_exists('request',$variables) && key_exists('properties',$variables['request'])){
+
+                    $resource['properties'] = array_replace_recursive($resource['properties'],$variables['request']['properties']);
+                }
+//                var_dump($resource);
+//                die;
                 $variables['request'] = $commonGroundService->saveResource($resource, ['component'=>'vrc','type'=>'requests']);
                 $session->set('request', $variables['request']);
             }
         }
         $variables['process'] = $commonGroundService->getResource(['component'=>'ptc','type'=>'process_types','id'=>$id]);
         if(
-            !$slug &&
+            $slug == 'home' &&
             key_exists('request',$variables) &&
             key_exists('currentStage', $variables['request']) &&
             $variables['request']['currentStage']){
@@ -68,6 +72,7 @@ class ProcessController extends AbstractController
                     $variables['stage'] = $stage;
             }
         }
+        $variables["slug"] = $slug;
         // Lets provide this data to the template
 //        $redirect = $request->query->get('redirect');
 
