@@ -36,7 +36,6 @@
                     <h2>{{ section.name }}</h2>
                     {% for property in section.properties %}
                         {% set property = commonground_resource(property) %}
-                        {{ dump(property.slug) }}
                         {% if property.type == 'array' and property.format == 'bsn' %}
                             {% include 'widgets/zz/person.html.twig' %}
                         {% elseif property.format == 'bag' %}
