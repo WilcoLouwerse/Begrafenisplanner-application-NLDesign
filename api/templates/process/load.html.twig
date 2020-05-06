@@ -1,10 +1,11 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-
+    {% if user is defined and user is not null %}
     <section class="row">
         <div class="col-md-12">
             <div class="content">
+
                 <header class="content__header">
 {#                    <a class="backlink" href="{{ path('app_default_index') }}">Home</a>#}
                     <header class="content__header">
@@ -16,20 +17,24 @@
     </section>
     <div class="row">
     <div class="col-md-8  col-sm-12">
-    {% if stage.sections is defined and stage.sections is not null %}
         <form method="post">
+        {% include 'widgets/processes/default.html.twig' %}
+        {% include 'widgets/processes/'~process.id~'.html.twig' %}
+    {% if stage.sections is defined and stage.sections is not null %}
+
         {% for section in stage.sections %}
             <div class="content-background">
             	<div class="content">
                     <h2>{{ section.name }}</h2>
                     {% for property in section.properties %}
                         {% set property = commonground_resource(property) %}
+                        {{ dump(property.slug) }}
                         {% if property.type == 'array' and property.format == 'bsn' %}
-                            {% include 'widgets/zz/wie_input.html.twig' %}
+                            {% include 'widgets/zz/person.html.twig' %}
                         {% elseif property.format == 'bag' %}
-                            {% include 'widgets/zz/waar_input.html.twig' %}
+                            {% include 'widgets/zz/address.html.twig' %}
                         {% elseif property.format == 'date' %}
-                            {% include 'widgets/zz/wanneer_input.html.twig' %}
+                            {% include 'widgets/zz/date.html.twig' %}
                         {% endif %}
                     {% endfor %}
 
@@ -39,73 +44,81 @@
 
             </div><!-- /.content-background -->
         {% endfor %}
+    {% endif %}
         <div class="col-md-4">
             <button class="btn btn--block" name="submit">Opslaan</button>
         </div><!-- /.col -->
         </form>
+        <pre>
+                    {% if request is defined and request is not null %}
+                        {#                <input type="hidden" name="@id" value="{{ request['@id'] }}">#}
+                        {{ dump(request) }}
+                    {% endif %}
+        </pre>
+
     </div><!-- /.col -->
-        {% endif %}
+
         <div class="col-md-4  col-sm-12">
-{#            <div class="content-background">#}
+            <div class="content-background">
 
-{#                <div class="content">#}
-{#                    <h2>Uw gegevens</h2>#}
+                <div class="content">
+                    <h2>Uw gegevens</h2>
 
-{#    				<ul class="definition-list">#}
-{#    					<li class="definition-list__item definition-list__item--horizontal">#}
-{#    						<div class="definition-list__title">#}
-{#    							 Voornamen#}
-{#    						</div>#}
-{#    						<div class="definition-list__description">#}
-{#    							<p>{{ user.naam.voornamen }}</p>#}
-{#    						</div>#}
-{#    					</li>#}
-{#    					<li class="definition-list__item definition-list__item--horizontal">#}
-{#    						<div class="definition-list__title">#}
-{#    							Achternaam#}
-{#    						</div>#}
-{#    						<div class="definition-list__description">#}
-{#    							<p>{{ user.naam.geslachtsnaam }}</p>#}
-{#    						</div>#}
-{#    					</li>#}
-{#                        {% if user.naam.voorvoegsel is not empty%}#}
-{#    					<li class="definition-list__item definition-list__item--horizontal">#}
-{#    						<div class="definition-list__title">#}
-{#    							Voorvoegsel#}
-{#    						</div>#}
-{#    						<div class="definition-list__description">#}
-{#    							<p>{{ user.naam.voorvoegsel }}</p>#}
-{#    						</div>#}
-{#    					</li>#}
-{#    					<li class="definition-list__item definition-list__item--horizontal">#}
-{#    						<div class="definition-list__title">#}
-{#    							Leeftijd#}
-{#    						</div>#}
-{#    						<div class="definition-list__description">#}
-{#    							<p>{{ user.leeftijd }}</p>#}
-{#    						</div>#}
-{#    					</li>#}
-{#    					<li class="definition-list__item definition-list__item--horizontal">#}
-{#    						<div class="definition-list__title">#}
-{#    							Geslacht#}
-{#    						</div>#}
-{#    						<div class="definition-list__description">#}
-{#    							<p>{{ user.geslachtsaanduiding }}</p>#}
-{#    						</div>#}
-{#    					</li>#}
-{#    					{% endif %}#}
-{#    					<li class="definition-list__item definition-list__item--horizontal">#}
-{#    						<div class="definition-list__title">#}
-{#    							Addres#}
-{#    						</div>#}
-{#    						<div class="definition-list__description">#}
-{#    							<p>{{ user.verblijfplaats.straatnaam }} {{ user.verblijfplaats.huisnummer }}{{ user.verblijfplaats.huisletter }}{{ user.verblijfplaats.huisnummertoevoeging }}#}
-{#    							<br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}</p>#}
-{#    						</div>#}
-{#    					</li>#}
-{#    				</ul>#}
-{#                </div>#}
-{#            </div>#}
+    				<ul class="definition-list">
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							 Voornamen
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.naam.voornamen }}</p>
+    						</div>
+    					</li>
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Achternaam
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.naam.geslachtsnaam }}</p>
+    						</div>
+    					</li>
+                        {% if user.naam.voorvoegsel is not empty%}
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Voorvoegsel
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.naam.voorvoegsel }}</p>
+    						</div>
+    					</li>
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Leeftijd
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.leeftijd }}</p>
+    						</div>
+    					</li>
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Geslacht
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.geslachtsaanduiding }}</p>
+    						</div>
+    					</li>
+    					{% endif %}
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Adres
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.verblijfplaats.straatnaam }} {{ user.verblijfplaats.huisnummer }}{{ user.verblijfplaats.huisletter }}{{ user.verblijfplaats.huisnummertoevoeging }}
+    							<br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}</p>
+    						</div>
+    					</li>
+    				</ul>
+                </div>
+            </div>
 
             <!-- Page Break -->
             <div style="height: 20px"></div>
@@ -177,5 +190,5 @@
         </div> <!-- /.col -->
     </div> <!-- /.col -->
     #}
-
+{% endif %}
 {% endblock %}

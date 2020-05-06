@@ -37,11 +37,25 @@ class ProcessController extends AbstractController
     public function loadAction(Session $session, $id, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
+        if($request->isMethod('POST')){
+            $resource = $request->request->all();
+            if(key_exists('organization',$resource)){
+                var_dump($resource);
+                die;
+                $variables['request'] = $commonGroundService->saveResource($resource, ['component'=>'vrc','type'=>'requests']);
+                $session->set('request', $variables['request']);
+            }
+        }
         $variables['process'] = $commonGroundService->getResource(['component'=>'ptc','type'=>'process_types','id'=>$id]);
-        if(key_exists('request',$variables) && $variables['request']['currentStage']){
+        if(
+            !$slug &&
+            key_exists('request',$variables) &&
+            key_exists('currentStage', $variables['request']) &&
+            $variables['request']['currentStage']){
                 $variables['stage'] = $commonGroundService->getResource($variables['request']['currentStage']);
         }
         elseif($slug != 'home'){
+//            var_dump($variables['process']['stages']);
             foreach($variables['process']['stages'] as $stage){
                 if($stage['slug'] == $slug){
                     $variables['stage'] = $stage;
@@ -56,6 +70,7 @@ class ProcessController extends AbstractController
         }
         // Lets provide this data to the template
 //        $redirect = $request->query->get('redirect');
+
         return $variables;
         //$result =
     }

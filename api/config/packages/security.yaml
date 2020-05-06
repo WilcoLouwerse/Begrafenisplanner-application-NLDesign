@@ -17,14 +17,18 @@ security:
             pattern:  ^/
             methods: [GET]
             anonymous: true
+        demo:
+            anonymous: true
         main:
-            provider: chain_provider
-            # comment this function out on crud enviroments
-            #logout:
-            #    path:   app_user_login            
-            #form_login:
-            #    login_path: app_user_login
-            #    check_path: app_user_login   
+            anonymous: ~
+            form_login:
+                login_path: app_user_login
+                check_path: app_user_login
+            logout:
+                path: app_user_logout
+                target: app_user_login
+            stateless: false
+            provider: commongroundUserProvider
             guard:
                 authenticators:
                     - App\Security\CommongroundApplicationAuthenticator
