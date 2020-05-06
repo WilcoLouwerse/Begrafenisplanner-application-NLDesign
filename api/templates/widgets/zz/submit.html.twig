@@ -1,5 +1,5 @@
 
-
-
-<button name="status" id="status_submit" value="submitted" class="btn btn--block">{{ 'submit'|trans|capitalize }}</button>
+ {% if request is defined and request is not null and request.status != 'submitted' %}
+<button name="status" id="status_submit" value="submitted" class="btn btn--block">{{ 'submit'|trans|capitalize }}</button>\
+ {% endif %}
 <button name="status" id="status_cancel" value="cancelled" class="btn btn--block btn--primary">{{ 'cancel'|trans|capitalize }}</button>

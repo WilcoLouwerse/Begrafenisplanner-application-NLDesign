@@ -28,6 +28,7 @@ class ZZController extends AbstractController
 {
 
 	/**
+     * @Route("/", name="app_default_index")
 	 * @Route("/{slug}", requirements={"slug"=".+"}, name="slug")
 	 * @Template
 	 */

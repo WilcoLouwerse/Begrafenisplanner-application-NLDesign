@@ -17,7 +17,7 @@
     </section>
     <div class="row">
     <div class="col-md-8  col-sm-12">
-        <form method="post">
+        <form method="post" action="{{ path('app_process_load',{id:process.id}) }}">
         {% include 'widgets/processes/default.html.twig' %}
         {% include 'widgets/processes/'~process.id~'.html.twig' %}
     {% if stage.slug == 'indienen' %}
@@ -53,17 +53,25 @@
             </div><!-- /.content-background -->
         {% endfor %}
     {% endif %}
+            {% if slug != 'indienen' %}
         <div class="col-md-4">
             <button class="btn btn--block" name="submit">Opslaan</button>
         </div><!-- /.col -->
+                {% endif %}
+            {% if stage.previous is defined and stage.previous is not null %}
+            <div class="col-md-4">
+            <a class="btn btn--primary btn--block" href="{{ path('app_process_slug',{id: process.id, slug: stage.previous.slug}) }}">Terug naar {{ stage.previous.name }}</a>
+            </div>
+                {% endif %}
         </form>
+        <div class="col-md-12">
         <pre>
                     {% if request is defined and request is not null %}
                         {#                <input type="hidden" name="@id" value="{{ request['@id'] }}">#}
                         {{ dump(request) }}
                     {% endif %}
         </pre>
-
+        </div>
     </div><!-- /.col -->
 
         <div class="col-md-4  col-sm-12">
@@ -135,9 +143,9 @@
                 <div class="content">
                     <h2>Stappen</h2>
                  	<ul class="list list--timeline list--timeline-compact">
-                		<li class="list__item list__item--active">Instructie</li>
-                		{% for stage in process.stages %}
-                        <li class="list__item">{{ stage.name }}</li>
+                		<li class="list__item list__item">Instructie</li>
+                		{% for iteratedStage in process.stages %}
+                        <li class="list__item {% if stage.slug == iteratedStage.slug %}list__item--active{% endif %}"><a href="{{ path('app_process_slug',{id:process.id,slug:iteratedStage.slug}) }}">{{ iteratedStage.name }}</a></li>
                         {% endfor %}
                 		<li class="list__item list__item--disabled" >In behandeling</li>
                 		<li class="list__item list__item--disabled">Uitsluitsel</li>

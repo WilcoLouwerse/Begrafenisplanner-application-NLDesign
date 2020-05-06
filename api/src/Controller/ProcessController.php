@@ -31,7 +31,7 @@ class ProcessController extends AbstractController
      * This function will kick of the suplied proces with given values
      *
 	 * @Route("/{id}")
-	 * @Route("/{id}/{slug}")
+	 * @Route("/{id}/{slug}", name="app_process_slug")
 	 * @Template
 	 */
     public function loadAction(Session $session, $id, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
@@ -42,7 +42,7 @@ class ProcessController extends AbstractController
             if(key_exists('organization',$resource)){
                 if(key_exists('request',$variables) && key_exists('properties',$variables['request'])){
 
-                    $resource['properties'] = array_replace_recursive($resource['properties'],$variables['request']['properties']);
+                    $resource['properties'] = array_replace_recursive($variables['request']['properties'],$resource['properties']);
                 }
 //                var_dump($resource);
 //                die;
