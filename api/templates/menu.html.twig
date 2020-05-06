@@ -14,7 +14,7 @@
                     {% endfor %}
                 {% else %}
                     <li class="nav__item">
-                        <a href="{{ path('app_default_index') }}" title="Home" class="nav__link  ">
+{#                        <a href="{{ path('app_default_index') }}" title="Home" class="nav__link  ">#}
                             <i class="icon icon-home" role="presentation"></i>
                             <span>Home</span>
                         </a>
@@ -24,7 +24,7 @@
                     <li class="nav__item"><a class="nav__link " href="app_logout">Uitloggen</a></li>
                 {% else %}
                     <li class="nav__item">
-                        <a href="app_login" title="Home" class="nav__link  ">
+                        <a href="https://digispoof.processen.zaakonline.nl/?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" title="Home" class="nav__link  ">
                             <i class="icon icon-user" role="presentation"></i>
                             <span>Inloggen</span>
                         </a>

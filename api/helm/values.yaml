@@ -6,17 +6,16 @@ settings:
   registryBase: docker.io/conduction
   projectName: pan
   name: pan
-  title: Proto component commonground
+  title: Proto Applicatie NL Design
   version: V.0.1
-  id: &#039;&#039;
+  id: d4f44b90-6bf6-4695-81ef-809623160a32
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
-  repro: 'https://github.com/ConductionNL/pan'
-  domain: 'pan.zaakonline.nl'
-  domains:
-    - zaakonline.nl
-  domainsJson: ["zaakonline.nl"]
-  subdomain: pc
+  repro: https://github.com/ConductionNL/pan
+  demo: pan.conduction.nl
+  container: https://hub.docker.com/repository/docker/conduction/pc-php
+  domain: processen.zaakonline.nl
+  subdomain: pan
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
@@ -42,16 +41,15 @@ settings:
   # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   notificationEnabled: false
   audittrailEnabled: false
-  authorisationProviderUser: https://uc.larping.eu
-  authorisationProviderApplication: https://ac.larping.eu
+  authorisationEnabled: false
   healthEnabled: false
   archiveEnabled: false
 
 security:
-  commongroundId: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
-  commongroundKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
-  applicationKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
-  userKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+  commongroundId: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
+  commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
+  applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
+  userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   authorisationProviderUser: https://uc.conduction.nl
   authorisationProviderApplication: https://uc.conduction.nl
 

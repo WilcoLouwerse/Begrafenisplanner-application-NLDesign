@@ -180,6 +180,9 @@ parameters:
     # ProductenenDienstenComponent
     env(APP_COMMONGROUND_PDC_LOCATION): 'https://pdc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_PDC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+    # ProcesTypeCatalogus
+    env(APP_COMMONGROUND_PTC_LOCATION): 'https://ptc.processen.zaakonline.nl'
+    env(APP_COMMONGROUND_PTC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     # OrderRegistratieComponent
     env(APP_COMMONGROUND_ORC_LOCATION): 'https://orc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_ORC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
@@ -266,6 +269,9 @@ parameters:
         pdc:
             location: '%env(APP_COMMONGROUND_PDC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_PDC_APIKEY)%'
+        ptc:
+            location: '%env(APP_COMMONGROUND_PTC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_PTC_APIKEY)%'
         orc:
             location: '%env(APP_COMMONGROUND_ORC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_ORC_APIKEY)%'

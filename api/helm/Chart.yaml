@@ -3,5 +3,5 @@ appVersion: V.0.1
 description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
 name: pan
 version: 0.1.0
-home: instemmingen.conduction.nl
-icon: instemmingen.conduction.nl
+home: pan.conduction.nl
+icon: pan.conduction.nl

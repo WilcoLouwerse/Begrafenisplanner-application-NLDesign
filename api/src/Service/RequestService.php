@@ -74,7 +74,7 @@ class RequestService
     		$request["currentStage"] = $requestType['stages'][0]['slug'];
     	}
 
-    	$request = $this->commonGroundService->createResource($request, $this->commonGroundService->getComponent('vrc')['href'].'/requests'); //HP Specifiek
+    	$request = $this->commonGroundService->createResource($request, ['component'=>'vrc', 'type'=>'requests']); //HP Specifiek
         if($user){
             $request['submitters'] = [['brp'=>$user['@id']]];
         }

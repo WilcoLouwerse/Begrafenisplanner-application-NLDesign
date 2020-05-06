@@ -1,0 +1,202 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    {% if user is defined and user is not null %}
+    <section class="row">
+        <div class="col-md-12">
+            <div class="content">
+
+                <header class="content__header">
+{#                    <a class="backlink" href="{{ path('app_default_index') }}">Home</a>#}
+                    <header class="content__header">
+                        <h1 class="content__header-title">{{ process.name }}</h1>
+                    </header>
+                </header>
+            </div><!-- ./content -->
+        </div><!-- ./col -->
+    </section>
+    <div class="row">
+    <div class="col-md-8  col-sm-12">
+        <form method="post">
+        {% include 'widgets/processes/default.html.twig' %}
+        {% include 'widgets/processes/'~process.id~'.html.twig' %}
+    {% if stage.slug == 'indienen' %}
+    {% set slug = stage.slug %}
+    {% endif %}
+
+    {% if slug == 'indienen' %}
+        {% include 'widgets/zz/submit.html.twig' %}
+
+    {% endif %}
+    {% if stage.sections is defined and stage.sections is not null %}
+
+        {% for section in stage.sections %}
+            <div class="content-background">
+            	<div class="content">
+                    <h2>{{ section.name }}</h2>
+                    {% for property in section.properties %}
+                        {% set property = commonground_resource(property) %}
+                        {{ dump(property.slug) }}
+                        {% if property.type == 'array' and property.format == 'bsn' %}
+                            {% include 'widgets/zz/person.html.twig' %}
+                        {% elseif property.format == 'bag' %}
+                            {% include 'widgets/zz/address.html.twig' %}
+                        {% elseif property.format == 'date' %}
+                            {% include 'widgets/zz/date.html.twig' %}
+                        {% endif %}
+                    {% endfor %}
+
+{#                    <a class="btn" href="{{ path('app_request_data') }}">Begin</a>#}
+
+                </div><!-- /.content -->
+
+            </div><!-- /.content-background -->
+        {% endfor %}
+    {% endif %}
+        <div class="col-md-4">
+            <button class="btn btn--block" name="submit">Opslaan</button>
+        </div><!-- /.col -->
+        </form>
+        <pre>
+                    {% if request is defined and request is not null %}
+                        {#                <input type="hidden" name="@id" value="{{ request['@id'] }}">#}
+                        {{ dump(request) }}
+                    {% endif %}
+        </pre>
+
+    </div><!-- /.col -->
+
+        <div class="col-md-4  col-sm-12">
+            <div class="content-background">
+
+                <div class="content">
+                    <h2>Uw gegevens</h2>
+
+    				<ul class="definition-list">
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							 Voornamen
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.naam.voornamen }}</p>
+    						</div>
+    					</li>
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Achternaam
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.naam.geslachtsnaam }}</p>
+    						</div>
+    					</li>
+                        {% if user.naam.voorvoegsel is not empty%}
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Voorvoegsel
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.naam.voorvoegsel }}</p>
+    						</div>
+    					</li>
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Leeftijd
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.leeftijd }}</p>
+    						</div>
+    					</li>
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Geslacht
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.geslachtsaanduiding }}</p>
+    						</div>
+    					</li>
+    					{% endif %}
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Adres
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.verblijfplaats.straatnaam }} {{ user.verblijfplaats.huisnummer }}{{ user.verblijfplaats.huisletter }}{{ user.verblijfplaats.huisnummertoevoeging }}
+    							<br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}</p>
+    						</div>
+    					</li>
+    				</ul>
+                </div>
+            </div>
+
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+
+            <div class="content-background">
+                <div class="content">
+                    <h2>Stappen</h2>
+                 	<ul class="list list--timeline list--timeline-compact">
+                		<li class="list__item list__item--active">Instructie</li>
+                		{% for stage in process.stages %}
+                        <li class="list__item">{{ stage.name }}</li>
+                        {% endfor %}
+                		<li class="list__item list__item--disabled" >In behandeling</li>
+                		<li class="list__item list__item--disabled">Uitsluitsel</li>
+                	</ul>
+                </div>
+            </div>
+
+            <!--
+            <div class="content-background background--geel">
+                <div class="content">
+                    <button class="btn btn--primary">Primaire knop</button>
+                </div>
+            </div>
+
+
+            <div class="content-background background--donkergeel">
+                <div class="content">
+                	<button class="btn btn--primary">Primaire knop</button>
+
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+	{#
+<div class="row">
+        <div class="col-md-12">
+            <h2> Uitgelicht</h2>
+            <ul class="list list--card">
+                <li class="card">
+                    <a href="{{  path('app_challenge_index') }}" class="card__content">
+                        <div class="card__thumb" style="background-image: url('https://picsum.photos/id/1/200')"></div>
+                        <div class="card__body">
+                            <span class="card__title">Ik heb hulp nodig</span>
+                            Heeft u behoefte aan hulp? Bijvoorbeeld omdat u geen eten meer in huis heeft, of ergens niet uit komt? <br><br> Lees hier hoe u aan hulp kan komen.
+                        </div>
+                    </a>
+                </li>
+                <li class="card">
+                    <a href="{{   path('app_pitch_index') }}" class="card__content">
+                        <div class="card__thumb" style="background-image: url('https://picsum.photos/id/1/200')"></div>
+                        <div class="card__body">
+                        	<span class="card__title">Ik wil helpen</span>
+                        	Wilt u hulp aanbieden aan uw buren of gemeenschap? Bijvoorbeeld omdat u beschikt over bepaalde vaardigheden of inventaris. <br><br>Lees hier hoe u dat kenbaar kan maken.
+                        </div>
+                    </a>
+                </li>
+                <li class="card">
+                    <a href="{{ path('app_news_index') }}" class="card__content">
+                        <div class="card__thumb" style="background-image: url('https://picsum.photos/id/1/200')"></div>
+                        <div class="card__body">
+                        	<span class="card__title">Ik denk dat ik Corona heb</span>
+                        	Vermoedt u dat u zelf besmet bent met het corona virus? <br><br><br>  Lees dan hier wat u moet doen
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div> <!-- /.col -->
+    </div> <!-- /.col -->
+    #}
+{% endif %}
+{% endblock %}
