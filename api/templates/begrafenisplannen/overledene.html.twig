@@ -15,13 +15,18 @@
             }
         });
 
-        /* Load tab component */
-        System.import('/uno/components/tabs/tabs.js').then(function (module) {
-            /* Create tab component */
-            var tab = new module.Tabs(document.querySelector('.tab'));
-        });
-
     </script>
+
+<script>
+    function FindBsn() {
+        var selectedbsn = document.getElementById("bsn").value;
+        alert("Selected bsnnummer is: " + selectedbsn);
+        document.getElementById("bsnnummer").textContent = selectedbsn;
+
+                   }
+</script>
+
+
 
     <div class="row">
 
@@ -29,14 +34,15 @@
 
             <div class="content-background">
                 <div class="content">
+
                     <h2>Overledene</h2>
 
                       <!-- Page Break -->
                                 <div style="height: 20px;"></div>
 
                      <ul class="tab tab--inline" role="tablist">
-                        <li class="tab__tab tab__tab--active" role="tab" aria-controls="panel1-1" id="tab1-1"><a href="#panel1-1">Zoeken</a></li>
-                         <li class="tab__tab" role="tab" aria-controls="panel1-2" id="tab1-2"><a href="#panel1-2">Invoeren</a></li>
+                        <li class="tab__tab tab__tab--active" role="tab" aria-controls="panel2-1" id="tab2-1"><a href="#panel2-1">Zoeken</a></li>
+                         <li class="tab__tab" role="tab" aria-controls="panel2-2" id="tab2-2"><a href="#panel2-2">Invoeren</a></li>
                      </ul>
 
                     <!-- Page Break -->
@@ -44,7 +50,7 @@
 
                     <div class="tab__content tab__content--inline">
 
-                        <section class="tab__pane tab__pane--active" id="panel1-1" role="tabpanel" aria-labelledby="tab1-1">
+                        <section class="tab__pane tab__pane--active" id="panel2-1" role="tabpanel" aria-labelledby="tab2-1">
                             <form class="form" method="post" action="#">
                                 <h3>Zoek op Bsnnummer</h3>
                                 <div class="input input--horizontal">
@@ -52,19 +58,37 @@
                                     <input required="" type="text" id="bsn" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
                                 </div>
                                 <div class="input">
-                                    <button type="submit" class="btn btn--primary" name="select" value="bsn">Zoeken</button>
+                                    <button type="button" onclick="FindBsn()" class="btn btn--primary" name="select" value="bsn">Zoeken</button>
                                 </div>
                             </form>
+
+
                             <div>
-                                <p>bsnnummer: 123456789 </p>
-                                <p>naam: Henk Willemsen </p>
-                                <p>geboortedatum: 03-05-1971 </p>
+                                <p>bsn: 999999230</p>
+                                {% for ingeschrevenpersoon in ingeschrevenpersonen %}
+                                    {% if ingeschrevenpersoon['burgerservicenummer'] == "999999230" %}
+                                        <p>naam: {{ ingeschrevenpersoon['naam']['voornamen'] }} {{ ingeschrevenpersoon['naam']['geslachtsnaam'] }}</p>
+
+
+                                        {% for geboorte in geboortes['hydra:member'] %}
+
+                                            {% if geboorte['@id'] == ingeschrevenpersoon['geboorte']['@id']%}
+                                                <p>geboortedatum: {{ geboorte['datum'] }}</p>
+                                                {% set break = true %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% set break = true %}
+                                    {% endif %}
+                                {% endfor %}
+
+
                             </div>
 
                         </section>
 
 
-                        <section class="tab__pane tab__pane--active" id="panel1-2" role="tabpanel" aria-labelledby="tab1-2">
+                        <section class="tab__pane" id="panel2-2" role="tabpanel" aria-labelledby="tab2-2">
                             <h3>Bsnnummer:</h3>
                             <div class="input input--horizontal">
 
@@ -99,10 +123,13 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="input">
                                 <button type="submit" class="btn btn--primary" name="select" value="bsn">Selecteren</button>
                             </div>
-                    </section>
+
+                        </section>
+
                 </div>
 
                         <form class="form" method="post" action="#">

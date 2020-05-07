@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="17d529b1-d761-4e0f-9a52-df5a4e33230a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannenController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/BegrafenisplannenController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/begraafplaats.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/begraafplaats.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/datumtijd.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/datumtijd.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/begrafenisplannen/overledene.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/begrafenisplannen/overledene.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,7 +277,7 @@
     </state>
     <state x="740" y="275" key="FileChooserDialogImpl/-1600.172.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1587478254371" />
     <state x="740" y="275" key="FileChooserDialogImpl/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1586432384365" />
-    <state x="592" y="218" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1587132723987" />
+    <state x="592" y="218" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1588596187347" />
     <state x="610" y="334" key="NewPhpClassDialog" timestamp="1585319764240">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -288,10 +286,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="604" y="336" key="NewPhpFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1585568547161" />
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1587138548924">
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog" timestamp="1588841145867">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1587138548924" />
+    <state x="465" y="236" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1588841145867" />
     <state x="656" y="118" width="688" height="804" key="find.popup" timestamp="1586517758986">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

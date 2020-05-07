@@ -11,15 +11,43 @@
             <div class="content-background">
                 <div class="content">
                     <h2>Datum & Tijd</h2>
+                    {# <p> {{ dump(calendar) }}</p> #}
+                    <p>Agenda van de begraafplaats: {{ selectedCemetery["reference"] }}</p>
+
+                    <p>{{  dump(calendar['events'][1]) }}</p>
+
+                    <script>
+
+                        var events = [
+
+                            {% for event in calendar['events'] %}
+
+                            {% if date(event['startDate']) >= date(lastMonday) and date(event['startDate']) <= date(lastMonday|date_modify("+20 days"))%}
+
+                            {
+                                name: '{{ event['name'] }}',
+                                startDate: '{{ event['startDate'] }}',
+                                endDate: '{{ event['endDate'] }}',
+                                id: '{{ event['id'] }}'
+                            },
+
+                            {% endif %}
+
+                            {% endfor %}
+                        ];
+
+                    </script>
+                    <script>alert("Selected time is: " + events[1]['startDate'])</script>
+
 
                     <form class="form" method="post" action="#">
                         <div class="col-md-4  col-sm-12">
                         <div class="input">
                             <label class="input__label" for="week">Selecteer hier een week:</label>
                             <select onchange="showChangeTableHeader()" id="week" name="week" class="input__control input__control--m input__control--select "  required="">
-                                <option value="13 4 2020">13/4 - 17/4, 2020</option>
-                                <option value="20 4 2020">20/4 - 24/4, 2020</option>
-                                <option value="27 4 2020">27/4 - 31/4, 2020</option>
+                                <option value="{{ lastMonday|date('d m Y') }}">{{ lastMonday|date('d/m') }} - {{ lastMonday|date_modify("+6 days")|date('d/m') }}, 2020</option>
+                                <option value="{{ lastMonday|date_modify("+7 days")|date('d m Y') }}">{{  lastMonday|date_modify("+7 days")|date('d/m') }} - {{ lastMonday|date_modify("+13 days")|date('d/m') }}, 2020</option>
+                                <option value="{{ lastMonday|date_modify("+14 days")|date('d m Y') }}">{{  lastMonday|date_modify("+14 days")|date('d/m') }} - {{ lastMonday|date_modify("+20 days")|date('d/m') }}, 2020</option>
                             </select>
                         </div>
                         </div>
@@ -96,8 +124,8 @@
                                 date.setDate(day + 4);
                                 document.getElementById("THVrijdag").textContent = formatDate(date);
 
-                                datetc1 = new Date(split[2], parseInt(split[1]) - 1, parseInt(split[0]), 08, 30, 0, 0);
-                                datetc2 = new Date(split[2], parseInt(split[1]) - 1, parseInt(split[0]), 11, 30, 0, 0);
+                                datetc1 =  Date.parse(events[1]['startDate']);
+                                datetc2 =  Date.parse(events[1]['endDate']);
                                 document.getElementById("TCMaandag1").textContent = formatDateTimeslots(datetc1) + " <-> " + formatDateTimeslots(datetc2) ;
 
                             }
@@ -142,7 +170,6 @@
                     </div>
                     </form>
 
-                    <p>{{ dump(calendar['events']) }}</p>
                 </div><!-- /.content -->
             </div><!-- /.content-background -->
         </div><!-- /.col -->

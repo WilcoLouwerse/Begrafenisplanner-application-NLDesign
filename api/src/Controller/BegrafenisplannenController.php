@@ -9,6 +9,7 @@ use App\Service\CommonGroundService;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Integer;
+use PhpParser\Node\Stmt\Break_;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,8 +66,30 @@ class BegrafenisplannenController extends AbstractController
         $variables = [];
 
         $cemeteries = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/cemeteries');
+        //$variables['events'] = $commonGroundService->getResourceList($commonGroundService->getComponent('arc')['href'].'/events');
 
-        $variables['calendar'] = $commonGroundService->getResourceList($cemeteries['hydra:member'][0]['calendar']);
+        $variables['selectedCemetery'] = $commonGroundService->getResourceList($cemeteries['hydra:member'][27]['@id']);
+        $variables['calendar'] = $commonGroundService->getResourceList($cemeteries['hydra:member'][27]['calendar']);
+        $variables['futureEvents'] = [];
+        $todayDate = new \DateTime();
+        $variables['todayDate'] = $todayDate;
+        $variables['lastMonday'] = $todayDate;
+        $i = 0;
+
+        while(false)
+        {
+
+            $dayToCheck = $todayDate->modify('-'.$i.' days');
+            if ($dayToCheck->format('N')== 1)
+            {
+                $variables['lastMonday'] = $dayToCheck;
+                break;
+            }
+            else
+            {
+            $i--;
+            }
+        }
 
         if ($httpRequest->isMethod('POST'))
         {
@@ -99,13 +122,15 @@ class BegrafenisplannenController extends AbstractController
     public function overledeneAction(Session $session, $slug = false, Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService)
     {
         $variables = [];
-
         $variables['ingeschrevenpersonen'] = $commonGroundService->getResourceList($commonGroundService->getComponent('brp')['href'].'/ingeschrevenpersonen');
+        $variables['geboortes'] = $commonGroundService->getResourceList($commonGroundService->getComponent('brp')['href'].'/geboortes');
 
         if ($httpRequest->isMethod('POST'))
         {
             return $this->redirect($this->generateUrl('app_begrafenisplannen_belanghebbende'));
         }
+
+
         return $variables;
     }
 
