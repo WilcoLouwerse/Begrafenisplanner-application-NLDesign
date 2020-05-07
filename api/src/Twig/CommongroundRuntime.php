@@ -4,7 +4,7 @@
 
 namespace App\Twig;
 
-use App\Service\CommonGroundService;
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Twig\Extension\RuntimeExtensionInterface;
 
 class CommongroundRuntime implements RuntimeExtensionInterface
