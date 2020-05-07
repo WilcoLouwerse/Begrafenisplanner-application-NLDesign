@@ -56,22 +56,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
-                  key: app-description            
-            - name: APP_TYPE
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: app-type
+                  key: app-description
             - name: APP_VERSION
               valueFrom:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-version
-            - name: APP_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: app-id
             - name: APP_ENV
               valueFrom:
                 configMapKeyRef:
@@ -82,36 +72,47 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: debug
-            - name: APP_CASH
+            - name: APP_TYPE
               valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: cache
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: app-type
+            - name: APP_ID
+              valueFrom:
+                    configMapKeyRef:
+                        name: {{ template "fullname" . }}
+                        key: app-id
             - name: APP_DEMO
               valueFrom:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-demo
-            - name: APP_REPRO
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: app-repro
-            - name: APP_CONTAINER
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: app-container
-            - name: APP_DOMAIN
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: app-domain
             - name: APP_DOMAINS
               valueFrom:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-domains-json
+
+            - name: APP_REPRO
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: app-repro
+            - name: APP_CONTAINER
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: app-container
+            - name: APP_DOMAIN
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: app-domain
+            - name: APP_CASH
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: cache      
             # organization
             - name: ORGANIZATION_NAME
               valueFrom:
@@ -223,16 +224,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "fullname" . }}
                   key: app_user_key
-            - name: AUTH_PROVIDER_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: auth_provider_user
-            - name: AUTH_PROVIDER_APPLICATION
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: auth_provider_application
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

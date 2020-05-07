@@ -3,9 +3,6 @@ parameters:
     # This allows you to run cache:warmup even if your
     # environment variables are not available yet.
     # You should not need to change this value.
-    env(CONDUCTION_COMMONGROUND_BAG_APIKEY): 'Change me in your .env file'
-    env(NLX_OUTWAY): true
-    env(NLX_INWAY): false
         
      # Security Details   
     env(APP_COMMONGROUND_ID): 'huwelijksplanner-Wex83XXe'
@@ -17,132 +14,178 @@ parameters:
     app_commonground_secret: '%env(APP_COMMONGROUND_SECRET)%'
 
     # Application Parameters
-    env(APP_ENV): 'dev' 
-    env(APP_CACHE): false          
-    env(APP_VERSION): 'v1' 
+    env(APP_ENV): 'prod'
+    env(APP_DEBUG): false
+    env(APP_CACHE): false
+    env(APP_AUTH): true
+    env(AUDITTRAIL_ENABLED): true
+    env(NOTIFICATION_ENABLED): false
+    env(HEALTH_ENABLED): true
+    env(APP_VERSION): '1.0.0' 
     env(APP_NAME): 'Proto Component'
     env(APP_ID): ''
     env(APP_DESCRIPTION): 'A commonground component'
-    env(APP_DOMAIN): 'zaakonline.nl'  
+    env(APP_DOMAIN): 'zaakonline.nl'
+    env(APP_TITLE): 'Proto Component'
+    env(APP_LOGO): 'zaakonline.nl'
+    env(APP_HOME): 'zaakonline.nl'
+    env(APP_SUBDOMAIN): 'pc'
+    env(APP_DEMO): 'pc.zaakonline.nl'
     
-    app_env: '%env(APP_ENV)%'                
-    app_cache: '%env(APP_CACHE)%'                             
+    env(APP_CONTAINER): ''
+    env(APP_REPRO): ''    
+
+    app_env: '%env(APP_ENV)%'
+    app_debug: '%env(APP_DEBUG)%'         
+    app_cache: '%env(APP_CACHE)%'
+    app_auth: '%env(APP_AUTH)%'
+    app_audittrail: '%env(AUDITTRAIL_ENABLED)%'
+    app_notification: '%env(NOTIFICATION_ENABLED)%'
+    app_health: '%env(HEALTH_ENABLED)%'
     app_version: '%env(APP_VERSION)%'         
     app_name: '%env(APP_NAME)%'
     app_id: '%env(APP_ID)%'
     app_description: '%env(APP_DESCRIPTION)%'
     app_domain: '%env(APP_DOMAIN)%'
     app_type: '%env(APP_TYPE)%'
+    app_title: '%env(APP_TITLE)%'
+    app_logo: '%env(APP_LOGO)%'
+    app_home: '%env(APP_HOME)%'
+    app_subdomain: '%env(APP_SUBDOMAIN)%'
+    app_demo: '%env(APP_DEMO)%'
+    app_container: '%env(APP_CONTAINER)%'
+    app_repro: '%env(APP_REPRO)%'
     
+    # Organisatie details
+    env(GOOGLE_TAG_MANAGER_ID): ''
+    env(HUBSPOT_EMBED_CODE): ''
+        
+    env(CONTAINER_REGISTRY_BASE): ''
+    env(CONTAINER_PROJECT_NAME): ''
+
+    env(ORGANIZATION_NAME): ''
+    env(ORGANIZATION_EMAIL_ADDRESS): ''
+    env(ORGANIZATION_COUNTRY_NAME): ''
+    env(ORGANIZATION_STATE): ''
+    env(ORGANIZATION_LOCALITY): ''
+    env(ORGANIZATION_UNIT_NAME): ''
+
+    google_tag_manager_id: '%env(GOOGLE_TAG_MANAGER_ID)%'
+    hubspot_embed_code: '%env(HUBSPOT_EMBED_CODE)%'
+
+    container_registry_base: '%env(CONTAINER_REGISTRY_BASE)%'
+    container_project_name: '%env(CONTAINER_PROJECT_NAME)%'
+
+    organization_name: '%env(ORGANIZATION_NAME)%'
+    organization_email: '%env(ORGANIZATION_EMAIL_ADDRESS)%'
+    organization_country: '%env(ORGANIZATION_COUNTRY_NAME)%'
+    organization_state: '%env(ORGANIZATION_STATE)%'
+    organization_locality: '%env(ORGANIZATION_LOCALITY)%'
+    organization_unit: '%env(ORGANIZATION_UNIT_NAME)%'
+
     # Dit is hieronder nu anders geregeld (ofwel aanpassen)
     env(APP_APPLICATION_KEY): ''
     env(APP_USER_KEY): ''
     env(AUTH_PROVIDER_USER): ''
     env(AUTH_PROVIDER_APPLICATION): ''
+
+    env(TRUSTED_HOSTS): ''
+    env(TRUSTED_PROXIES): ''
+
+    env(NLX_OUTWAY): ''
+    env(NLX_INWAY): ''
+
+    # Dit is hieronder nu anders geregeld (ofwel aanpassen)
     auth_provider_user: '%env(AUTH_PROVIDER_USER)%'   
     auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'
     app_application_key: '%env(APP_APPLICATION_KEY)%'
     app_user_key: '%env(APP_USER_KEY)%'
 
+    trusted_hosts: '%env(TRUSTED_HOSTS)%'
+    trusted_proxies: '%env(TRUSTED_PROXIES)%'
+
+    nlx_outway: '%env(NLX_OUTWAY)%'
+    nlx_inway: '%env(NLX_INWAY)%'
+
+    # Busnes Engine
+    env(APP_COMMONGROUND_BE_LOCATION): 'https://ac.%env(APP_DOMAIN)%'
+    env(APP_COMMONGROUND_BE_USERNAME): '%env(APP_COMMONGROUND_ID)%'
+    env(APP_COMMONGROUND_BE_PASSWORD): '%env(APP_COMMONGROUND_SECRET)%'
+    
     # Autorisatiecomponent
     env(APP_COMMONGROUND_AC_LOCATION): 'https://ac.%env(APP_DOMAIN)%'
-    common_ground.ac.location: '%env(APP_COMMONGROUND_AC_LOCATION)%'
     env(APP_COMMONGROUND_AC_ID): '%env(APP_COMMONGROUND_ID)%'
-    common_ground.ac.id: '%env(APP_COMMONGROUND_AC_ID)%'
     env(APP_COMMONGROUND_AC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
-    common_ground.ac.secret: '%env(APP_COMMONGROUND_AC_SECRET)%'
+    
     # Notificatierouteringcomponent
     env(APP_COMMONGROUND_NRC_LOCATION): 'https://nrc.%env(APP_DOMAIN)%'
-    common_ground.nrc.location: '%env(APP_COMMONGROUND_NRC_LOCATION)%'
     env(APP_COMMONGROUND_NRC_ID): '%env(APP_COMMONGROUND_ID)%'
-    common_ground.nrc.id: '%env(APP_COMMONGROUND_NRC_ID)%'
     env(APP_COMMONGROUND_NRC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
-    common_ground.nrc.secret: '%env(APP_COMMONGROUND_NRC_SECRET)%'
+
     # Zaakregistratiecomponent
     env(APP_COMMONGROUND_ZRC_LOCATION): 'https://zrc.%env(APP_DOMAIN)%'
-    common_ground.zrc.location: '%env(APP_COMMONGROUND_ZRC_LOCATION)%'
     env(APP_COMMONGROUND_ZRC_ID): '%env(APP_COMMONGROUND_ID)%'
-    common_ground.zrc.id: '%env(APP_COMMONGROUND_ZRC_ID)%'
     env(APP_COMMONGROUND_ZRC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
-    common_ground.zrc.secret: '%env(APP_COMMONGROUND_ZRC_SECRET)%'
+
     # Zaaktypecatalogus
     env(APP_COMMONGROUND_ZTC_LOCATION): 'https://ztc.%env(APP_DOMAIN)%'
-    common_ground.ztc.location: '%env(APP_COMMONGROUND_ZTC_LOCATION)%'
     env(APP_COMMONGROUND_ZTC_ID): '%env(APP_COMMONGROUND_ID)%'
-    common_ground.ztc.id: '%env(APP_COMMONGROUND_ZTC_ID)%'
     env(APP_COMMONGROUND_ZTC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
-    common_ground.ztc.secret: '%env(APP_COMMONGROUND_ZZTC_SECRET)%'
+    
     # Documentregistratiecomponent
     env(APP_COMMONGROUND_DRC_LOCATION): 'https://drc.%env(APP_DOMAIN)%'
-    common_ground.drc.location: '%env(APP_COMMONGROUND_DRC_LOCATION)%'
     env(APP_COMMONGROUND_DRC_ID): '%env(APP_COMMONGROUND_ID)%'
-    common_ground.drc.id: '%env(APP_COMMONGROUND_DRC_ID)%'
     env(APP_COMMONGROUND_DRC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
-    common_ground.drc.secret: '%env(APP_COMMONGROUND_DRC_SECRET)%'
+    
     # Besluitregistratiecomponent
     env(APP_COMMONGROUND_BRC_LOCATION): 'https://brc.%env(APP_DOMAIN)%'
-    common_ground.brc.location: '%env(APP_COMMONGROUND_BRC_LOCATION)%'
     env(APP_COMMONGROUND_BRC_ID): '%env(APP_COMMONGROUND_ID)%'
-    common_ground.brc.id: '%env(APP_COMMONGROUND_BRC_ID)%'
     env(APP_COMMONGROUND_BRC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
-    common_ground.brc.secret: '%env(APP_COMMONGROUND_BRC_SECRET)%'
+    
     # Klantinteractiescomponent
     env(APP_COMMONGROUND_KIC_LOCATION): 'https://kic.%env(APP_DOMAIN)%'
-    common_ground.kic.location: '%env(APP_COMMONGROUND_KIC_LOCATION)%'
     env(APP_COMMONGROUND_KIC_ID): '%env(APP_COMMONGROUND_ID)%'
-    common_ground.kic.id: '%env(APP_COMMONGROUND_KIC_ID)%'
     env(APP_COMMONGROUND_KIC_SECRET): '%env(APP_COMMONGROUND_SECRET)%'
-    common_ground.kic.secret: '%env(APP_COMMONGROUND_KIC_SECRET)%'
+    
     # WebResourceComponent
     env(APP_COMMONGROUND_WRC_LOCATION): 'https://wrc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_WRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.wrc.location: '%env(APP_COMMONGROUND_WRC_LOCATION)%'
-    common_ground.wrc.apikey: '%env(APP_COMMONGROUND_WRC_APIKEY)%'
+    
     # UserCmponent
     env(APP_COMMONGROUND_UC_LOCATION): 'https://uc.%env(APP_DOMAIN)%'
-    common_ground.uc.location: '%env(APP_COMMONGROUND_UC_LOCATION)%'
     env(APP_COMMONGROUND_UC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.uc.apikey: '%env(APP_COMMONGROUND_UC_APIKEY)%'
+    
     # ContactenComponent
     env(APP_COMMONGROUND_CC_LOCATION): 'https://cc.%env(APP_DOMAIN)%'
-    common_ground.cc.location: '%env(APP_COMMONGROUND_CC_LOCATION)%'
     env(APP_COMMONGROUND_CC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.cc.apikey: '%env(APP_COMMONGROUND_CC_APIKEY)%'
+    
     # InstemmingenRegistratiecomponent
     env(APP_COMMONGROUND_IRC_LOCATION): 'https://irc.%env(APP_DOMAIN)%'
-    common_ground.irc.location: '%env(APP_COMMONGROUND_IRC_LOCATION)%'
     env(APP_COMMONGROUND_IRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.irc.apikey: '%env(APP_COMMONGROUND_IRC_APIKEY)%'
+    
     # OmgevingenComponent
     env(APP_COMMONGROUND_EVC_LOCATION): 'https://evc.%env(APP_DOMAIN)%'
-    common_ground.evc.location: '%env(APP_COMMONGROUND_EVC_LOCATION)%'
     env(APP_COMMONGROUND_EVC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.evc.apikey: '%env(APP_COMMONGROUND_EVC_APIKEY)%'
+    
     # AgendaRegistratieComponent
     env(APP_COMMONGROUND_ARC_LOCATION): 'https://ac.%env(APP_DOMAIN)%'
-    common_ground.arc.location: '%env(APP_COMMONGROUND_ARC_LOCATION)%'
     env(APP_COMMONGROUND_ARC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.arc.apikey: '%env(APP_COMMONGROUND_ARC_APIKEY)%'
+    
     # MedewerkersRegistratieComponent
     env(APP_COMMONGROUND_MRC_LOCATION): 'https://mrc.%env(APP_DOMAIN)%'
-    common_ground.mrc.location: '%env(APP_COMMONGROUND_MRC_LOCATION)%'
     env(APP_COMMONGROUND_MRC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.mrc.apikey: '%env(APP_COMMONGROUND_MRC_APIKEY)%'
+    
     # ProductenenDienstenComponent
     env(APP_COMMONGROUND_PDC_LOCATION): 'https://pdc.%env(APP_DOMAIN)%'
-    common_ground.pdc.location: '%env(APP_COMMONGROUND_PDC_LOCATION)%'
     env(APP_COMMONGROUND_PDC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.pdc.apikey: '%env(APP_COMMONGROUND_PDC_APIKEY)%'
+    
     # OrderRegistratieComponent
     env(APP_COMMONGROUND_ORC_LOCATION): 'https://orc.%env(APP_DOMAIN)%'
-    common_ground.orc.location: '%env(APP_COMMONGROUND_ORC_LOCATION)%'
     env(APP_COMMONGROUND_ORC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.orc.apikey: '%env(APP_COMMONGROUND_ORC_APIKEY)%'
+    
     # LocatieComponent
     env(APP_COMMONGROUND_LC_LOCATION): 'https://lc.%env(APP_DOMAIN)%'
-    common_ground.lc.location: '%env(APP_COMMONGROUND_LC_LOCATION)%'
     env(APP_COMMONGROUND_LC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.lc.apikey: '%env(APP_COMMONGROUND_LC_APIKEY)%'
     # VerzoekTypeComponent
     env(APP_COMMONGROUND_VTC_LOCATION): 'https://vtc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_VTC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
@@ -152,16 +195,12 @@ parameters:
     # BetaalService
     env(APP_COMMONGROUND_BC_LOCATION): 'https://bc.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_BC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.bc.location: '%env(APP_COMMONGROUND_BC_LOCATION)%'
-    common_ground.bc.apikey: '%env(APP_COMMONGROUND_BC_APIKEY)%'
     # BasisRegistratiePersonen
     env(APP_COMMONGROUND_BRP_LOCATION): 'https://brp.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_BRP_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
     # BasisAdressenGemeenten
     env(APP_COMMONGROUND_BAG_LOCATION): 'https://bag.basisregistraties.overheid.nl/api/v1/'
     env(APP_COMMONGROUND_BAG_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.bag.location: '%env(APP_COMMONGROUND_BAG_LOCATION)%'
-    common_ground.bag.apikey: '%env(APP_COMMONGROUND_BAG_APIKEY)%'
     # KamerVanKoophandel
     env(APP_COMMONGROUND_KVK_LOCATION): 'https://kvk.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_KVK_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
@@ -170,56 +209,146 @@ parameters:
     # DienstWegverkeer
     env(APP_COMMONGROUND_RDW_LOCATION): 'https://rdw.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_RDW_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.rdw.location: '%env(v)%'
-    common_ground.rdw.apikey: '%env(APP_COMMONGROUND_RDW_APIKEY)%'    
     # BerichtenService
     env(APP_COMMONGROUND_BS_LOCATION): 'https://bs.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_BS_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.bs.location: '%env(APP_COMMONGROUND_AC)%'
-    common_ground.bs.apikey: '%env(APP_COMMONGROUND_KEY)%'
     # DashboardComponent
     env(APP_COMMONGROUND_DB_LOCATION): 'https://db.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_DB_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.db.location: '%env(APP_COMMONGROUND_AC)%'
-    common_ground.db.apikey: '%env(APP_COMMONGROUND_KEY)%'
     # ZaakAfhandelComponent
     env(APP_COMMONGROUND_ZAC_LOCATION): 'https://zac.%env(APP_DOMAIN)%'
-    common_ground.zac.location: '%env(APP_COMMONGROUND_ZAC_LOCATION)%'
     env(APP_COMMONGROUND_ZAC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.zac.apikey: '%env(APP_COMMONGROUND_ZAC_APIKEY)%'
     # ProcesComponent
     env(APP_COMMONGROUND_PC_LOCATION): 'https://pc.%env(APP_DOMAIN)%'
-    common_ground.pc.location: '%env(APP_COMMONGROUND_PC_LOCATION)%'
     env(APP_COMMONGROUND_PC_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.pc.apikey: '%env(APP_COMMONGROUND_PC_APIKEY)%'
     # UserInterface
     env(APP_COMMONGROUND_UI_LOCATION): 'https://ui.%env(APP_DOMAIN)%'
-    common_ground.ui.location: '%env(APP_COMMONGROUND_UI_LOCATION)%'
     env(APP_COMMONGROUND_UI_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.ui.apikey: '%env(APP_COMMONGROUND_UI_APIKEY)%'
     #a AuthenticatieComponent
     env(APP_COMMONGROUND_AUTH_LOCATION): 'https://auth.%env(APP_DOMAIN)%'
-    common_ground.auth.location: '%env(APP_COMMONGROUND_AUTH_LOCATION)%'
     env(APP_COMMONGROUND_AUTH_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.auth.apikey: '%env(APP_COMMONGROUND_AUTH_APIKEY)%'
     # DocumentManagmentService
     env(APP_COMMONGROUND_DMS_LOCATION): 'https://dms.%env(APP_DOMAIN)%'
-    common_ground.dms.location: '%env(APP_COMMONGROUND_DMS_LOCATION)%'
     env(APP_COMMONGROUND_DMS_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.dms.apikey: '%env(APP_COMMONGROUND_DMS_APIKEY)%'
     #n nlx-in
     env(APP_COMMONGROUND_NLX_IN_LOCATION): 'https://nlx-in.%env(APP_DOMAIN)%'
-    common_ground.nlx_in.location: '%env(APP_COMMONGROUND_NLX_IN_LOCATION)%'
     env(APP_COMMONGROUND_NLX_IN_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.nlx_in.apikey: '%env(APP_COMMONGROUND_NLX_IN_APIKEY)%'
     # nlx-out
     env(APP_COMMONGROUND_NLX_OUT_LOCATION): 'https://nlx-out.%env(APP_DOMAIN)%'
-    common_ground.nlx_out.location: '%env(APP_COMMONGROUND_NLX_OUT_LOCATION)%'
     env(APP_COMMONGROUND_NLX_OUT_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
-    common_ground.nlx_out.apikey: '%env(APP_COMMONGROUND_NLX_OUT_APIKEY)%'
-
+    
     # Test for commonground component by array
     common_ground.components:
+        be:
+            location: '%env(APP_COMMONGROUND_BE_LOCATION)%'
+            auth: 'username-password'
+            username: '%env(APP_COMMONGROUND_BE_USERNAME)%'
+            password: '%env(APP_COMMONGROUND_BE_PASSWORD)%'
+            accept: 'application/ld+json'
+            autowire: false
+        drc:
+            location: '%env(APP_COMMONGROUND_DRC_LOCATION)%'
+            auth: 'jwt'
+            id: 'huwelijksplanner-Wex83XXe'
+            secret: '%env(APP_COMMONGROUND_DRC_SECRET)%'
+            accept: 'application/json'
+            autowire: false
+        ac:
+            location: '%env(APP_COMMONGROUND_AC_LOCATION)%'
+            auth: 'jwt'
+            id: 'huwelijksplanner-Wex83XXe'
+            secret: '%env(APP_COMMONGROUND_AC_SECRET)%'
+            accept: 'application/json'
+            autowire: false
+        nrc:
+            location: '%env(APP_COMMONGROUND_NRC_LOCATION)%'
+            auth: 'jwt'
+            id: 'huwelijksplanner-Wex83XXe'
+            secret: '%env(APP_COMMONGROUND_NRC_SECRET)%'
+            accept: 'application/json'
+            autowire: false
+        zrc:
+            location: '%env(APP_COMMONGROUND_NRC_LOCATION)%'
+            auth: 'jwt'
+            id: 'huwelijksplanner-Wex83XXe'
+            secret: '%env(APP_COMMONGROUND_NRC_SECRET)%'
+            accept: 'application/json'
+            autowire: false
+        ztc:
+            location: '%env(APP_COMMONGROUND_ZTC_LOCATION)%'
+            auth: 'jwt'
+            id: 'huwelijksplanner-Wex83XXe'
+            secret: '%env(APP_COMMONGROUND_ZTC_SECRET)%'
+            accept: 'application/json'
+            autowire: false
+        brc:
+            location: '%env(APP_COMMONGROUND_BRC_LOCATION)%'
+            auth: 'jwt'
+            id: 'huwelijksplanner-Wex83XXe'
+            secret: '%env(APP_COMMONGROUND_BRC_SECRET)%'
+            accept: 'application/json'
+            autowire: false
+        kic:
+            location: '%env(APP_COMMONGROUND_KIC_LOCATION)%'
+            auth: 'jwt'
+            id: 'huwelijksplanner-Wex83XXe'
+            secret: '%env(APP_COMMONGROUND_KIC_SECRET)%'
+            accept: 'application/json'
+            autowire: false
+        db:
+            location: '%env(APP_COMMONGROUND_DB_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_DB_APIKEY)%'
+        zac:
+            location: '%env(APP_COMMONGROUND_ZAC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_ZAC_APIKEY)%'
+        pc:
+            location: '%env(APP_COMMONGROUND_PC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_PC_APIKEY)%'
+        ui:
+            location: '%env(APP_COMMONGROUND_UI_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_UI_APIKEY)%'
+        auth:
+            location: '%env(APP_COMMONGROUND_AUTH_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_AUTH_APIKEY)%'
+        dms:
+            location: '%env(APP_COMMONGROUND_DMS_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_DMS_APIKEY)%'
+        nlx_in:
+            location: '%env(APP_COMMONGROUND_NLX_IN_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_NLX_IN_APIKEY)%'
+        nlx_out:
+            location: '%env(APP_COMMONGROUND_NLX_OUT_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_NLX_OUT_APIKEY)%'        
+        pdc:
+            location: '%env(APP_COMMONGROUND_PDC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_PDC_APIKEY)%'
+        orc:
+            location: '%env(APP_COMMONGROUND_ORC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_ORC_APIKEY)%'
+        lc:
+            location: '%env(APP_COMMONGROUND_LC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_LC_APIKEY)%'
+        bc:
+            location: '%env(APP_COMMONGROUND_BC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_BC_APIKEY)%'
+        bs:
+            location: '%env(APP_COMMONGROUND_BS_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_BS_APIKEY)%'   
+        arc:
+            location: '%env(APP_COMMONGROUND_ARC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_ARC_APIKEY)%'
+        cc:
+            location: '%env(APP_COMMONGROUND_CC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_CC_APIKEY)%'
+        evc:
+            location: '%env(APP_COMMONGROUND_EVC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_EVC_APIKEY)%'
+        irc:
+            location: '%env(APP_COMMONGROUND_IRC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_IRC_APIKEY)%'
+        mrc:
+            location: '%env(APP_COMMONGROUND_MRC_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_MRC_APIKEY)%'            
         wrc:
             location: '%env(APP_COMMONGROUND_WRC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_WRC_APIKEY)%'
@@ -229,6 +358,15 @@ parameters:
         brp:
             location: '%env(APP_COMMONGROUND_BRP_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_BRP_APIKEY)%'
+        bag:
+            location: '%env(APP_COMMONGROUND_BAG_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_BAG_APIKEY)%'
+        kvk:
+            location: '%env(APP_COMMONGROUND_KVK_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_KVK_APIKEY)%'
+        rdw:
+            location: '%env(APP_COMMONGROUND_RDW_LOCATION)%'
+            apikey: '%env(APP_COMMONGROUND_RDW_APIKEY)%'
         vrc:
             location: '%env(APP_COMMONGROUND_VRC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_VRC_APIKEY)%'
@@ -282,8 +420,60 @@ parameters:
               url: https://scrutinizer-ci.com/g/api-platform/core/?branch=master 
 
 twig:
-    globals:
+    globals:        
+            
+        # Application Parameters
+        app_env: '%env(APP_ENV)%'
+        app_debug: '%env(APP_DEBUG)%'
+        app_cache: '%env(APP_CACHE)%'
+        app_auth: '%env(AUTH_ENABLED)%'
+        app_audittrail: '%env(AUDITTRAIL_ENABLED)%'
+        app_notification: '%env(NOTIFICATION_ENABLED)%'
+        app_health: '%env(HEALTH_ENABLED)%'
+        app_version: '%env(APP_VERSION)%'
+        app_name: '%env(APP_NAME)%'
         app_id: '%env(APP_ID)%'
         app_description: '%env(APP_DESCRIPTION)%'
+        app_domain: '%env(APP_DOMAIN)%'
+        app_type: '%env(APP_TYPE)%'            
+        app_title: '%env(APP_TITLE)%'
+        app_logo: '%env(APP_LOGO)%'
+        app_home: '%env(APP_HOME)%'
+        app_subdomain: '%env(APP_SUBDOMAIN)%'
+        app_demo: '%env(APP_DEMO)%'
+        app_container: '%env(APP_CONTAINER)%'
+        app_repro: '%env(APP_REPRO)%'
+            
+        # Security Details
+        app_commonground_id: '%env(APP_COMMONGROUND_ID)%'
+        app_commonground_key: '%env(APP_COMMONGROUND_KEY)%'
+        app_commonground_secret: '%env(APP_COMMONGROUND_SECRET)%'
+
+        # Organisations Parameters
+        google_tag_manager_id: '%env(GOOGLE_TAG_MANAGER_ID)%'
+        hubspot_embed_code: '%env(HUBSPOT_EMBED_CODE)%'
+
+        container_registry_base: '%env(CONTAINER_REGISTRY_BASE)%'
+        container_project_name: '%env(CONTAINER_PROJECT_NAME)%'
+
+        organization_name: '%env(ORGANIZATION_NAME)%'
+        organization_email: '%env(ORGANIZATION_EMAIL_ADDRESS)%'
+        organization_country: '%env(ORGANIZATION_COUNTRY_NAME)%'
+        organization_state: '%env(ORGANIZATION_STATE)%'
+        organization_locality: '%env(ORGANIZATION_LOCALITY)%'
+        organization_unit: '%env(ORGANIZATION_UNIT_NAME)%'
+        
+        # Dit is hieronder nu anders geregeld (ofwel aanpassen)
+        auth_provider_user: '%env(AUTH_PROVIDER_USER)%'
+        auth_provider_application: '%env(AUTH_PROVIDER_APPLICATION)%'
+        app_application_key: '%env(APP_APPLICATION_KEY)%'
+        app_user_key: '%env(APP_USER_KEY)%'
+
+        trusted_hosts: '%env(TRUSTED_HOSTS)%'
+        trusted_proxies: '%env(TRUSTED_PROXIES)%'
+
+        nlx_outway: '%env(NLX_OUTWAY)%'
+        nlx_inway: '%env(NLX_INWAY)%'
+
         
         
