@@ -35,7 +35,8 @@ services:
         tags: ['doctrine.repository_service']
 
     #CommonGround Services
-    'Conduction\CommonGroundBundle\Service\CommonGroundService': ~
+    'Conduction\CommonGroundBundle\Service\CommonGroundService':
+        tags: ['conduction.commongroundservice.service']
     'Conduction\CommonGroundBundle\Service\NLXLogService': ~
 
     #CommonGround User Providers
@@ -92,6 +93,7 @@ services:
     'Conduction\CommonGroundBundle\Twig\CommonGroundExtension':
         tags: ['twig.extension']
     'Conduction\CommonGroundBundle\Twig\CommonGroundRuntime':
+        arguments: ["@CommonGroundBundle.CommonGroundService"]
         tags: ['twig.runtime']
         
     #CommmonGround Controllers
