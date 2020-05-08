@@ -85,7 +85,7 @@ class BegrafenisplannenController extends AbstractController
             }
             else
             {
-            $i++;
+                $i++;
             }
         }
 
