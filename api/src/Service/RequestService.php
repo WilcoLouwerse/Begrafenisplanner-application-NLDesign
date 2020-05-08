@@ -11,7 +11,7 @@ use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-use App\Service\CommonGroundService;
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use App\Service\ZgwService;
 use App\Service\CamundaService;
 

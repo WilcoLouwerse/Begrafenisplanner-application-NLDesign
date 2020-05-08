@@ -2286,11 +2286,11 @@ definitions:
         maxLength: 255
       subject:
         description: '???'
-        type: \sting
+        type: string
         maxLength: 255
       process:
         description: 'The procces on behalf of wich the request was made'
-        type: \sting
+        type: string
         maxLength: 255
       dataElements:
         description: 'The moment this request was created'
@@ -2300,39 +2300,39 @@ definitions:
         type: array
       resource:
         description: 'The resource that was requested'
-        type: \sting
+        type: string
         maxLength: 255
       resourceType:
         description: 'The type of the resource that was requested'
-        type: \sting
+        type: string
         maxLength: 255
       route:
         description: 'The moment this request was created'
-        type: \sting
+        type: string
         maxLength: 255
       endpoint:
         description: 'The endpoint that the request was made to'
-        type: \sting
+        type: string
         maxLength: 255
       method:
         description: 'The method that was used'
-        type: \sting
+        type: string
         maxLength: 255
       accept:
         description: 'The contentType that was reqousted'
-        type: \sting
+        type: string
         maxLength: 255
       contentType:
         description: 'The contentType that was suplieds'
-        type: \sting
+        type: string
         maxLength: 255
       content:
         description: 'The moment this request was created'
-        type: \sting
+        type: string
         maxLength: 2555
       ip:
         description: 'The moment this request was created'
-        type: \sting
+        type: string
         maxLength: 255
       session:
         description: 'The moment this request was created'
@@ -2361,12 +2361,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-06 11:23:49'
+        example: '2020-05-07 13:35:42'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-06 11:23:49'
+        example: '2020-05-07 13:35:42'
     required: []
   AuditTrail-write:
     properties:
@@ -2408,18 +2408,18 @@ definitions:
         type: string
       session:
         description: 'The moment this request was created'
-        type: \sting
+        type: string
         maxLength: 255
       dateCreated:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-06 11:23:49'
+        example: '2020-05-07 13:35:42'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-06 11:23:49'
+        example: '2020-05-07 13:35:42'
     required: []
   ChangeLog-write:
     properties:

@@ -5,9 +5,9 @@ security:
             chain:
                 providers: [CommongroundApplicationProvider, CommongroundUserProvider]
         commongroundApplicationProvider:
-            id: App\Security\User\CommongroundApplicationProvider
+            id: Conduction\CommonGroundBundle\Security\User\CommongroundApplicationProvider
         commongroundUserProvider:
-            id: App\Security\User\CommongroundUserProvider
+            id: Conduction\CommonGroundBundle\Security\User\CommongroundUserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -31,9 +31,9 @@ security:
             provider: commongroundUserProvider
             guard:
                 authenticators:
-                    - App\Security\CommongroundApplicationAuthenticator
-                    - App\Security\CommongroundUserAuthenticator  
-                entry_point: App\Security\CommongroundApplicationAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator  
+                entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

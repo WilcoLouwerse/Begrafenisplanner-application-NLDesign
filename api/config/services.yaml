@@ -27,26 +27,34 @@ services:
     # please note that last definitions always *replace* previous ones
 
     'Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter': ~
-    
-    # We use a custom swagger decorator to add the commonground specific docs 
-    'App\Swagger\SwaggerDecorator':
-        decorates: 'api_platform.swagger.normalizer.api_gateway'
-        arguments: [ '@App\Swagger\SwaggerDecorator.inner' ]
-        autoconfigure: false
         
         
+    #CommonGround Repositories
+    'Conduction\CommonGroundBundle\Repository\AuditTrailRepository':
+        autowire: true
+        tags: ['doctrine.repository_service']
+
+    #CommonGround Services
     'Conduction\CommonGroundBundle\Service\CommonGroundService': ~
     'Conduction\CommonGroundBundle\Service\NLXLogService': ~
 
+    #CommonGround User Providers
+    'Conduction\CommonGroundBundle\Security\User\CommongroundApplicationProvider': ~
+    'Conduction\CommonGroundBundle\Security\User\CommongroundUserProvider': ~
+
+    #CommonGround Authenticators
+    'Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator': ~
+    'Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator': ~
+
     #CommonGround Subscribers
-    #    audit.subscriber:
-    #        class: Conduction\CommonGroundBundle\Subscriber\AuditSubscriber
-    #        tags:
-    #            - { name: kernel.event_subscriber, connection: default }
-    #    audit.trail.subscriber:
-    #        class: Conduction\CommonGroundBundle\Subscriber\AuditTrailSubscriber
-    #        tags:
-    #            - { name: kernel.event_subscriber, connection: default }
+    audit.subscriber:
+        class: Conduction\CommonGroundBundle\Subscriber\AuditSubscriber
+        tags:
+            - { name: kernel.event_subscriber, connection: default }
+    audit.trail.subscriber:
+        class: Conduction\CommonGroundBundle\Subscriber\AuditTrailSubscriber
+        tags:
+            - { name: kernel.event_subscriber, connection: default }
     change.log.subscriber:
         class: Conduction\CommonGroundBundle\Subscriber\ChangeLogSubscriber
         tags:
@@ -67,3 +75,24 @@ services:
         autowire: true
         tags:
             - { name: doctrine.repository_service }
+
+    #CommonGround Commands
+    'Conduction\CommonGroundBundle\Command\ApiHelmCommand':
+        tags: ['console.command']
+    'Conduction\CommonGroundBundle\Command\PubliccodeCommand':
+        tags: ['console.command']
+
+    # We use a custom swagger decorator to add the commonground specific docs 
+    'Conduction\CommonGroundBundle\Swagger\SwaggerDecorator':
+        decorates: 'api_platform.swagger.normalizer.api_gateway'
+        arguments: [ '@Conduction\CommonGroundBundle\Swagger\SwaggerDecorator.inner' ]
+        autoconfigure: false
+    
+    #CommonGround Twig Extension
+    'Conduction\CommonGroundBundle\Twig\CommonGroundExtension':
+        tags: ['twig.extension']
+    'Conduction\CommonGroundBundle\Twig\CommonGroundRuntime':
+        tags: ['twig.runtime']
+        
+    #CommmonGround Controllers
+    'Conduction\CommonGroundBundle\Controllers\UserController': ~
