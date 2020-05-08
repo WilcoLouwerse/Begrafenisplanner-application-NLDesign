@@ -71,14 +71,12 @@ class BegrafenisplannenController extends AbstractController
         $variables['selectedCemetery'] = $commonGroundService->getResourceList($cemeteries['hydra:member'][27]['@id']);
         $variables['calendar'] = $commonGroundService->getResourceList($cemeteries['hydra:member'][27]['calendar']);
         $variables['futureEvents'] = [];
-        $todayDate = new \DateTime();
-        $variables['todayDate'] = $todayDate;
-        $variables['lastMonday'] = $todayDate;
+
         $i = 0;
 
-        while(false)
+        while(true)
         {
-
+            $todayDate = new \DateTime("now");
             $dayToCheck = $todayDate->modify('-'.$i.' days');
             if ($dayToCheck->format('N')== 1)
             {
@@ -87,7 +85,7 @@ class BegrafenisplannenController extends AbstractController
             }
             else
             {
-            $i--;
+            $i++;
             }
         }
 

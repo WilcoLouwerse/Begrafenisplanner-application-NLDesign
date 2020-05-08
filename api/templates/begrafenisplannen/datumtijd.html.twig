@@ -11,19 +11,12 @@
             <div class="content-background">
                 <div class="content">
                     <h2>Datum & Tijd</h2>
-                    {# <p> {{ dump(calendar) }}</p> #}
                     <p>Agenda van de begraafplaats: {{ selectedCemetery["reference"] }}</p>
-
-                    <p>{{  dump(calendar['events'][1]) }}</p>
-
                     <script>
-
                         var events = [
 
                             {% for event in calendar['events'] %}
-
                             {% if date(event['startDate']) >= date(lastMonday) and date(event['startDate']) <= date(lastMonday|date_modify("+20 days"))%}
-
                             {
                                 name: '{{ event['name'] }}',
                                 startDate: '{{ event['startDate'] }}',
@@ -37,8 +30,6 @@
                         ];
 
                     </script>
-                    <script>alert("Selected time is: " + events[1]['startDate'])</script>
-
 
                     <form class="form" method="post" action="#">
                         <div class="col-md-4  col-sm-12">
@@ -51,52 +42,46 @@
                             </select>
                         </div>
                         </div>
-                        <script>
 
-                        </script>
                         <table class="table table--hoverable">
                             <caption>Selecteer hier een tijd:</caption>
                             <tbody>
                             <thead>
                             <tr>
                                 <td>
-                                    <table id="EventTable" onclick="addRowHandlers()">
+                                    <table id="MaandagTabel" onclick="addRowHandlers()">
                                         <tr><th id="THMaandag">Maandag</th></tr>
-                                        <tr><td id="TCMaandag1">08:30-10:30</td></tr>
-                                        <tr><td id="TCMaandag2">11:00-15:00</td></tr>
-                                        <tr><td id="TCMaandag3">15:30-17:30</td></tr>
+
                                     </table>
                                 </td>
                                 <td>
-                                    <table>
+                                    <table id="DinsdagTabel" onclick="addRowHandlers()">
                                         <tr><th id="THDinsdag">Dinsdag</th></tr>
-                                        <tr><td id="TCDinsdag1">08:30-10:30</td></tr>
-                                        <tr><td id="TCDinsdag2">11:00-15:00</td></tr>
-                                        <tr><td id="TCDinsdag3">15:30-17:30</td></tr>
                                     </table>
                                 </td>
                                 <td>
-                                    <table>
+                                    <table id="WoensdagTabel" onclick="addRowHandlers()">
                                         <tr><th id="THWoensdag">Woensdag</th></tr>
-                                        <tr><td id="TCWoensdag1">08:30-10:30</td></tr>
-                                        <tr><td id="TCWoensdag2">11:00-15:00</td></tr>
-                                        <tr><td id="TCWoensdag3">15:30-17:30</td></tr>
                                     </table>
                                 </td>
                                 <td>
-                                    <table>
+                                    <table id="DonderdagTabel" onclick="addRowHandlers()">
                                         <tr><th id="THDonderdag">Donderdag</th></tr>
-                                        <tr><td id="TCDonderdag1">08:30-10:30</td></tr>
-                                        <tr><td id="TCDonderdag2">11:00-15:00</td></tr>
-                                        <tr><td id="TCDonderdag3">15:30-17:30</td></tr>
                                     </table>
                                 </td>
                                 <td>
-                                    <table>
+                                    <table id="VrijdagTabel" onclick="addRowHandlers()">
                                         <tr><th id="THVrijdag">Vrijdag</th></tr>
-                                        <tr><td id="TCVrijdag1">08:30-10:30</td></tr>
-                                        <tr><td id="TCVrijdag2">11:00-15:00</td></tr>
-                                        <tr><td id="TCVrijdag3">15:30-17:30</td></tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table id="ZaterdagTabel" onclick="addRowHandlers()">
+                                        <tr><th id="THZaterdag">Zaterdag</th></tr>
+                                    </table>
+                                </td>
+                                <td>
+                                    <table id="ZondagTabel" onclick="addRowHandlers()">
+                                        <tr><th id="THZondag">Zondag</th></tr>
                                     </table>
                                 </td>
                             </tr>
@@ -107,6 +92,58 @@
                             showChangeTableHeader();
 
                             function showChangeTableHeader() {
+                                var maandagTabel = document.getElementById("MaandagTabel");
+                                var dinsdagTabel = document.getElementById("DinsdagTabel");
+                                var woensdagTabel = document.getElementById("WoensdagTabel");
+                                var donderdagTabel = document.getElementById("DonderdagTabel");
+                                var vrijdagTabel = document.getElementById("VrijdagTabel");
+                                var zaterdagTabel = document.getElementById("ZaterdagTabel");
+                                var zondagTabel = document.getElementById("ZondagTabel");
+
+                                for (var i = 0; i < events.length;i++){
+
+                                    var startDate = events[i]['startDate'].substring(0, events[i]['startDate'].length-15);
+                                    var startTime = events[i]['startDate'].substring(11, events[i]['startDate'].length-9);
+                                    var endTime = events[i]['endDate'].substring(11, events[i]['endDate'].length-9);
+
+                                    if(startDate == "{{ lastMonday|date('Y-m-d') }}" ){
+                                        var row = maandagTabel.insertRow(1);
+                                        var cell1 = row.insertCell(0);
+                                        cell1.innerHTML = startTime + "/" + endTime;
+                                    }
+                                    if(startDate == "{{ lastMonday|date_modify("+1 days")|date('Y-m-d') }}" ){
+                                        var row = dinsdagTabel.insertRow(1);
+                                        var cell1 = row.insertCell(0);
+                                        cell1.innerHTML = events[i]['startDate'] + "/" + events[i]['endDate'];
+                                    }
+                                    if(startDate == "{{ lastMonday|date_modify("+2 days")|date('Y-m-d') }}" ){
+                                        var row = woensdagTabel.insertRow(1);
+                                        var cell1 = row.insertCell(0);
+                                        cell1.innerHTML = startTime + "/" + endTime;
+                                    }
+                                    if(startDate == "{{ lastMonday|date_modify("+3 days")|date('Y-m-d') }}" ){
+                                        var row = donderdagTabel.insertRow(1);
+                                        var cell1 = row.insertCell(0);
+                                        cell1.innerHTML = startTime + "/" + endTime;
+                                    }
+                                    if(startDate == "{{ lastMonday|date_modify("+4 days")|date('Y-m-d') }}" ){
+                                        var row = vrijdagTabel.insertRow(1);
+                                        var cell1 = row.insertCell(0);
+                                        cell1.innerHTML = startTime + "/" + endTime;
+                                    }
+                                    if(startDate == "{{ lastMonday|date_modify("+5 days")|date('Y-m-d') }}" ){
+                                        var row = zaterdagTabel.insertRow(1);
+                                        var cell1 = row.insertCell(0);
+                                        cell1.innerHTML = startTime + "/" + endTime;
+                                    }
+                                    if(startDate == "{{ lastMonday|date_modify("+6 days")|date('Y-m-d') }}" ){
+                                        var row = zondagTabel.insertRow(1);
+                                        var cell1 = row.insertCell(0);
+                                        cell1.innerHTML = startTime + "/" + endTime;
+                                    }
+                                }
+
+
                                 var date = document.getElementById('week').value;
                                 var split = date.split(' ');
                                 date = new Date(split[2], parseInt(split[1]) - 1, parseInt(split[0]), 0, 0, 0, 0);
@@ -124,9 +161,11 @@
                                 date.setDate(day + 4);
                                 document.getElementById("THVrijdag").textContent = formatDate(date);
 
-                                datetc1 =  Date.parse(events[1]['startDate']);
-                                datetc2 =  Date.parse(events[1]['endDate']);
-                                document.getElementById("TCMaandag1").textContent = formatDateTimeslots(datetc1) + " <-> " + formatDateTimeslots(datetc2) ;
+                                date.setDate(day + 5);
+                                document.getElementById("THZaterdag").textContent = formatDate(date);
+
+                                date.setDate(day + 6);
+                                document.getElementById("THZondag").textContent = formatDate(date);
 
                             }
 
@@ -140,7 +179,7 @@
                                 const dayNames = ["Zo", "Ma", "Di", "Wo", "Do", "Vr", "Za"
 
                                 ];
-                                return dayNames[date.getDay()] + " " + date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+                                return dayNames[date.getDay()];
                             }
                         </script>
 
