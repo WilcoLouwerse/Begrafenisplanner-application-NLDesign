@@ -50,38 +50,38 @@
                             <tr>
                                 <td>
                                     <table id="MaandagTabel" onclick="addRowHandlers()">
-                                        <tr><th id="THMaandag">Maandag</th></tr>
+                                        <tr><th id="THMaandag">Ma</th></tr>
 
                                     </table>
                                 </td>
                                 <td>
                                     <table id="DinsdagTabel" onclick="addRowHandlers()">
-                                        <tr><th id="THDinsdag">Dinsdag</th></tr>
+                                        <tr><th id="THDinsdag">Di</th></tr>
                                     </table>
                                 </td>
                                 <td>
                                     <table id="WoensdagTabel" onclick="addRowHandlers()">
-                                        <tr><th id="THWoensdag">Woensdag</th></tr>
+                                        <tr><th id="THWoensdag">Wo</th></tr>
                                     </table>
                                 </td>
                                 <td>
                                     <table id="DonderdagTabel" onclick="addRowHandlers()">
-                                        <tr><th id="THDonderdag">Donderdag</th></tr>
+                                        <tr><th id="THDonderdag">Do</th></tr>
                                     </table>
                                 </td>
                                 <td>
                                     <table id="VrijdagTabel" onclick="addRowHandlers()">
-                                        <tr><th id="THVrijdag">Vrijdag</th></tr>
+                                        <tr><th id="THVrijdag">Vr</th></tr>
                                     </table>
                                 </td>
                                 <td>
                                     <table id="ZaterdagTabel" onclick="addRowHandlers()">
-                                        <tr><th id="THZaterdag">Zaterdag</th></tr>
+                                        <tr><th id="THZaterdag">Za</th></tr>
                                     </table>
                                 </td>
                                 <td>
                                     <table id="ZondagTabel" onclick="addRowHandlers()">
-                                        <tr><th id="THZondag">Zondag</th></tr>
+                                        <tr><th id="THZondag">Zo</th></tr>
                                     </table>
                                 </td>
                             </tr>
@@ -91,7 +91,21 @@
                         <script>
                             showChangeTableHeader();
 
+                            function formatDayOfTheWeek(i) {
+
+                                var formatDayOfTheWeek = document.getElementById('week').value;
+                                var split = formatDayOfTheWeek.split(' ');
+                                formatDayOfTheWeek = new Date(split[2], parseInt(split[1]) - 1, parseInt(split[0]), 0, 0, 0, 0);
+                                var day = formatDayOfTheWeek.getDate();
+                                formatDayOfTheWeek.setDate(day + i);
+                                var fdotwformat = formatDayOfTheWeek.getFullYear() + '-'
+                                    + ('0' + (formatDayOfTheWeek.getMonth()+1)).slice(-2) + '-'
+                                    + ('0' + formatDayOfTheWeek.getDate()).slice(-2);
+
+                                return fdotwformat;
+                            }
                             function showChangeTableHeader() {
+
                                 var maandagTabel = document.getElementById("MaandagTabel");
                                 var dinsdagTabel = document.getElementById("DinsdagTabel");
                                 var woensdagTabel = document.getElementById("WoensdagTabel");
@@ -100,86 +114,57 @@
                                 var zaterdagTabel = document.getElementById("ZaterdagTabel");
                                 var zondagTabel = document.getElementById("ZondagTabel");
 
+                                for(var i = maandagTabel.rows.length - 1; i > 0; i--) { maandagTabel.deleteRow(i);}
+                                for(var i = dinsdagTabel.rows.length - 1; i > 0; i--) { dinsdagTabel.deleteRow(i);}
+                                for(var i = woensdagTabel.rows.length - 1; i > 0; i--) { woensdagTabel.deleteRow(i);}
+                                for(var i = donderdagTabel.rows.length - 1; i > 0; i--) { donderdagTabel.deleteRow(i);}
+                                for(var i = vrijdagTabel.rows.length - 1; i > 0; i--) { vrijdagTabel.deleteRow(i);}
+                                for(var i = zaterdagTabel.rows.length - 1; i > 0; i--) { zaterdagTabel.deleteRow(i);}
+                                for(var i = zondagTabel.rows.length - 1; i > 0; i--) { zondagTabel.deleteRow(i);}
+
                                 for (var i = 0; i < events.length;i++){
 
                                     var startDate = events[i]['startDate'].substring(0, events[i]['startDate'].length-15);
                                     var startTime = events[i]['startDate'].substring(11, events[i]['startDate'].length-9);
                                     var endTime = events[i]['endDate'].substring(11, events[i]['endDate'].length-9);
 
-                                    if(startDate == "{{ lastMonday|date('Y-m-d') }}" ){
+                                    if(startDate == formatDayOfTheWeek(0)){
                                         var row = maandagTabel.insertRow(1);
                                         var cell1 = row.insertCell(0);
                                         cell1.innerHTML = startTime + "/" + endTime;
                                     }
-                                    if(startDate == "{{ lastMonday|date_modify("+1 days")|date('Y-m-d') }}" ){
+                                    if(startDate == formatDayOfTheWeek(1)){
                                         var row = dinsdagTabel.insertRow(1);
                                         var cell1 = row.insertCell(0);
-                                        cell1.innerHTML = events[i]['startDate'] + "/" + events[i]['endDate'];
+                                        cell1.innerHTML = startTime + "/" + endTime;
                                     }
-                                    if(startDate == "{{ lastMonday|date_modify("+2 days")|date('Y-m-d') }}" ){
+                                    if(startDate == formatDayOfTheWeek(2)){
                                         var row = woensdagTabel.insertRow(1);
                                         var cell1 = row.insertCell(0);
                                         cell1.innerHTML = startTime + "/" + endTime;
                                     }
-                                    if(startDate == "{{ lastMonday|date_modify("+3 days")|date('Y-m-d') }}" ){
+                                    if(startDate == formatDayOfTheWeek(3)){
                                         var row = donderdagTabel.insertRow(1);
                                         var cell1 = row.insertCell(0);
                                         cell1.innerHTML = startTime + "/" + endTime;
                                     }
-                                    if(startDate == "{{ lastMonday|date_modify("+4 days")|date('Y-m-d') }}" ){
+                                    if(startDate == formatDayOfTheWeek(4)){
                                         var row = vrijdagTabel.insertRow(1);
                                         var cell1 = row.insertCell(0);
                                         cell1.innerHTML = startTime + "/" + endTime;
                                     }
-                                    if(startDate == "{{ lastMonday|date_modify("+5 days")|date('Y-m-d') }}" ){
+                                    if(startDate == formatDayOfTheWeek(5)){
                                         var row = zaterdagTabel.insertRow(1);
                                         var cell1 = row.insertCell(0);
                                         cell1.innerHTML = startTime + "/" + endTime;
                                     }
-                                    if(startDate == "{{ lastMonday|date_modify("+6 days")|date('Y-m-d') }}" ){
+                                    if(startDate == formatDayOfTheWeek(6)){
                                         var row = zondagTabel.insertRow(1);
                                         var cell1 = row.insertCell(0);
                                         cell1.innerHTML = startTime + "/" + endTime;
                                     }
                                 }
 
-
-                                var date = document.getElementById('week').value;
-                                var split = date.split(' ');
-                                date = new Date(split[2], parseInt(split[1]) - 1, parseInt(split[0]), 0, 0, 0, 0);
-                                var day = date.getDate();
-                                document.getElementById("THMaandag").textContent = formatDate(date);
-                                date.setDate(day + 1);
-                                document.getElementById("THDinsdag").textContent = formatDate(date);
-
-                                date.setDate(day + 2);
-                                document.getElementById("THWoensdag").textContent = formatDate(date);
-
-                                date.setDate(day + 3);
-                                document.getElementById("THDonderdag").textContent = formatDate(date);
-
-                                date.setDate(day + 4);
-                                document.getElementById("THVrijdag").textContent = formatDate(date);
-
-                                date.setDate(day + 5);
-                                document.getElementById("THZaterdag").textContent = formatDate(date);
-
-                                date.setDate(day + 6);
-                                document.getElementById("THZondag").textContent = formatDate(date);
-
-                            }
-
-                            function formatDateTimeslots(date) {
-
-                                return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()+ " " + date.getHours() + ":" + date.getMinutes();
-
-                            }
-
-                            function formatDate(date) {
-                                const dayNames = ["Zo", "Ma", "Di", "Wo", "Do", "Vr", "Za"
-
-                                ];
-                                return dayNames[date.getDay()];
                             }
                         </script>
 
