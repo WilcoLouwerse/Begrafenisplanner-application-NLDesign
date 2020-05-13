@@ -65,11 +65,11 @@ class BegrafenisplannenController extends AbstractController
     {
         $variables = [];
 
-        $cemeteries = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/cemeteries');
+        $cemetery = $commonGroundService->getResourceList($commonGroundService->getComponent('grc')['href'].'/cemeteries/b38e2efd-6f5a-4bba-b755-50accf15372f');
         //$variables['events'] = $commonGroundService->getResourceList($commonGroundService->getComponent('arc')['href'].'/events');
 
-        $variables['selectedCemetery'] = $commonGroundService->getResourceList($cemeteries['hydra:member'][27]['@id']);
-        $variables['calendar'] = $commonGroundService->getResourceList($cemeteries['hydra:member'][27]['calendar']);
+        $variables['selectedCemetery'] = $commonGroundService->getResourceList($cemetery['@id']);
+        $variables['calendar'] = $commonGroundService->getResourceList($cemetery['calendar']);
         $variables['futureEvents'] = [];
 
         $i = 0;
