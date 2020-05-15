@@ -19,8 +19,11 @@ class ApiService
         //TODO rechten
         return $this->commonGroundService->createResource($resource, ['component'=>$component, 'type'=>$type]);
     }
-    public function getResource($component, $type, $id){
+    public function getResource($component, $type, $id, $log){
         //TODO rechten
+        if($log){
+            return $this->commonGroundService->getResource(['component'=>$component, 'type'=>$type, 'id'=>"$id/$log"]);
+        }
         return $this->commonGroundService->getResource(['component'=>$component, 'type'=>$type, 'id'=>$id]);
     }
     public function updateResource($resource, $component, $type, $id){

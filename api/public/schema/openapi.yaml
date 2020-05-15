@@ -2361,12 +2361,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-14 13:42:52'
+        example: '2020-05-15 08:16:16'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-14 13:42:52'
+        example: '2020-05-15 08:16:16'
     required: []
   AuditTrail-write:
     properties:
@@ -2414,12 +2414,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-14 13:42:52'
+        example: '2020-05-15 08:16:16'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-14 13:42:52'
+        example: '2020-05-15 08:16:16'
     required: []
   ChangeLog-write:
     properties:
@@ -2460,8 +2460,8 @@ securityDefinitions:
 host: irc.zaakonline.nl
 servers:
   -
-    name: processen.zaakonline.nl
-    url: pan.dev.processen.zaakonline.nl
+    name: begraven.zaakonline.nl
+    url: pan.dev.begraven.zaakonline.nl
 externalDocs:
   -
     description: 'OAS Documentatie'
