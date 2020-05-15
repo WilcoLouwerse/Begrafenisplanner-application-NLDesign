@@ -76,8 +76,9 @@ class ApiController extends AbstractController
     }
     /**
      * @Route("/{component}/{type}/{id}")
+     * @Route("/{component}/{type}/{id}/{log}")
      */
-    public function itemAction($component, $type, $id, Request $request, ApiService $apiService, SerializerInterface $serializer){
+    public function itemAction($component, $type, $id, $log = null, Request $request, ApiService $apiService, SerializerInterface $serializer){
         $contentType = $request->headers->get('accept');
         if (!$contentType) {
             $contentType = $request->headers->get('Accept');
@@ -100,7 +101,7 @@ class ApiController extends AbstractController
             $results = $apiService->updateResource(json_decode($request->getContent(),true), $component, $type, $id);
         }
         elseif($request->isMethod('GET')){
-            $results = $apiService->getResource($component, $type, $id);
+            $results = $apiService->getResource($component, $type, $id, $log);
         }
         elseif($request->isMethod('DELETE')){
             $results = $apiService->deleteResource($component, $type, $id);
