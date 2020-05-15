@@ -6,7 +6,7 @@
 		"ext-ctype": "*",
 		"ext-iconv": "*",
 		"api-platform/api-pack": "^1.1",
-		"conduction/commongroundbundle": "dev-master",
+		"conduction/commongroundbundle": "dev-dev-ruben",
 		"doctrine/doctrine-fixtures-bundle": "^3.2",
 		"doctrine/rst-parser": "^0.1.0",
 		"guzzlehttp/guzzle": "^6.3",

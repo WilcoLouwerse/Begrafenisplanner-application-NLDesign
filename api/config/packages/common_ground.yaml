@@ -9,6 +9,7 @@ parameters:
     env(APP_COMMONGROUND_KEY): ''
     env(APP_COMMONGROUND_SECRET): '4_]}Khfxa;~"78Qm'
 
+    common_ground.app.id: "%env(APP_COMMONGROUND_ID)%"
     app_commonground_id: '%env(APP_COMMONGROUND_ID)%'
     app_commonground_key: '%env(APP_COMMONGROUND_KEY)%'
     app_commonground_secret: '%env(APP_COMMONGROUND_SECRET)%'

@@ -27,15 +27,32 @@ services:
     # please note that last definitions always *replace* previous ones
 
     'Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter': ~
+        
+        
+    #CommonGround Repositories
+    'Conduction\CommonGroundBundle\Repository\AuditTrailRepository':
+        autowire: true
+        tags: ['doctrine.repository_service']
 
+    #CommonGround Services
+    'Conduction\CommonGroundBundle\Service\CommonGroundService':
+        tags: ['conduction.commongroundservice.service']
+    'Conduction\CommonGroundBundle\Service\NLXLogService': ~
+
+    #CommonGround User Providers
+    'Conduction\CommonGroundBundle\Security\User\CommongroundApplicationProvider': ~
+    'Conduction\CommonGroundBundle\Security\User\CommongroundUserProvider': ~
+
+    #CommonGround Authenticators
+    'Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator': ~
+    'Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator': ~
+
+ 
     # We use a custom swagger decorator to add the commonground specific docs 
     'Conduction\CommonGroundBundle\Swagger\SwaggerDecorator':
         decorates: 'api_platform.swagger.normalizer.api_gateway'
         arguments: [ '@Conduction\CommonGroundBundle\Swagger\SwaggerDecorator.inner' ]
         autoconfigure: false
-        
-    #CommonGround Twig Extension
-    'Conduction\CommonGroundBundle\Twig\CommonGroundExtension':
-        tags: ['twig.extension']
-    'Conduction\CommonGroundBundle\Twig\CommonGroundRuntime':
-        tags: ['twig.runtime']
+    
+    #CommmonGround Controllers
+    'Conduction\CommonGroundBundle\Controllers\UserController': ~
