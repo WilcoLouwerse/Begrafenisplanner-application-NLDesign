@@ -9,7 +9,7 @@ info:
     - Enviroment: dev
     - Version: V.0.10
     - Repository: [online](https://github.com/ConductionNL/pan) / [zip](https://github.com/ConductionNL/pan/archive/master.zip)
-    - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pan-php) 
+    - Docker Image: [online](https://hub.docker.com/repository/docker/wilcolouwerse/bpui-php) 
     - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
     
     'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
@@ -2361,12 +2361,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-15 15:19:19'
+        example: '2020-05-15 15:45:48'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-15 15:19:19'
+        example: '2020-05-15 15:45:48'
     required: []
   AuditTrail-write:
     properties:
@@ -2414,12 +2414,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-15 15:19:19'
+        example: '2020-05-15 15:45:48'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-15 15:19:19'
+        example: '2020-05-15 15:45:48'
     required: []
   ChangeLog-write:
     properties:

@@ -2,21 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d7d99c9-86af-4102-a470-73b845bd8d6f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/templates/widgets/zz/artikelen_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/templates/widgets/zz/begraafplaats_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/templates/widgets/zz/belanghebbende_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/templates/widgets/zz/datumtijd_form.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/templates/widgets/zz/overledene_form.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/config/packages/common_ground.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/config/packages/common_ground.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Controller/ProcessController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/ProcessController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/process/load.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/process/load.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/widgets/processes/2bfb3cea-b5b5-459c-b3e0-e1100089a11a.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/widgets/processes/a8b8ce49-d5db-4270-9e42-4b47902fc817.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/widgets/processes/default.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/widgets/processes/default.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,6 +181,8 @@
       <workItem from="1589384143289" duration="15000" />
       <workItem from="1589443855244" duration="7130000" />
       <workItem from="1589531177494" duration="16680000" />
+      <workItem from="1589557315174" duration="246000" />
+      <workItem from="1589557637115" duration="52000" />
     </task>
     <servers />
   </component>
