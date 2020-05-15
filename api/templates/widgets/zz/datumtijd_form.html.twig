@@ -1,7 +1,7 @@
 <div class="content-background">
     <div class="content">
         <h2>Datum & Tijd</h2>
-        <p>Agenda van de begraafplaats: {{ selectedCemetery["reference"] }}</p>
+        <p>Agenda van de begraafplaats: {{ selectedBegraafplaats["reference"] }}</p>
         <script>
             var events = [
 
@@ -115,54 +115,52 @@
                     for (var i = 0; i < events.length;i++){
 
                         var startDate = events[i]['startDate'].substring(0, events[i]['startDate'].length-15);
-                        var startTime = events[i]['startDate'].substring(11, events[i]['startDate'].length-9);
-                        var endTime = events[i]['endDate'].substring(11, events[i]['endDate'].length-9);
-                        var urlEvent = events[i]['url'];
 
                         if(startDate == formatDayOfTheWeek(0)){
                             var row = maandagTabel.insertRow(1);
-                            var cell1 = row.insertCell(0);
-                            cell1.innerHTML = startTime + "/" + endTime;
-                            cell1.value = urlEvent;
+                            insertEvent(row, events[i])
                         }
                         if(startDate == formatDayOfTheWeek(1)){
                             var row = dinsdagTabel.insertRow(1);
-                            var cell1 = row.insertCell(0);
-                            cell1.innerHTML = startTime + "/" + endTime;
-                            cell1.value = urlEvent;
+                            insertEvent(row, events[i])
                         }
                         if(startDate == formatDayOfTheWeek(2)){
                             var row = woensdagTabel.insertRow(1);
-                            var cell1 = row.insertCell(0);
-                            cell1.innerHTML = startTime + "/" + endTime;
-                            cell1.value = urlEvent;
+                            insertEvent(row, events[i])
                         }
                         if(startDate == formatDayOfTheWeek(3)){
                             var row = donderdagTabel.insertRow(1);
-                            var cell1 = row.insertCell(0);
-                            cell1.innerHTML = startTime + "/" + endTime;
-                            cell1.value = urlEvent;
+                            insertEvent(row, events[i])
                         }
                         if(startDate == formatDayOfTheWeek(4)){
                             var row = vrijdagTabel.insertRow(1);
-                            var cell1 = row.insertCell(0);
-                            cell1.innerHTML = startTime + "/" + endTime;
-                            cell1.value = urlEvent;
+                            insertEvent(row, events[i])
                         }
                         if(startDate == formatDayOfTheWeek(5)){
                             var row = zaterdagTabel.insertRow(1);
-                            var cell1 = row.insertCell(0);
-                            cell1.innerHTML = startTime + "/" + endTime;
-                            cell1.value = urlEvent;
+                            insertEvent(row, events[i])
                         }
                         if(startDate == formatDayOfTheWeek(6)){
                             var row = zondagTabel.insertRow(1);
-                            var cell1 = row.insertCell(0);
-                            cell1.innerHTML = startTime + "/" + endTime;
-                            cell1.value = urlEvent;
+                            insertEvent(row, events[i])
                         }
                     }
 
+                }
+                function insertEvent(row, event)
+                {
+                    var startTime = event['startDate'].substring(11, event['startDate'].length-9);
+                    var endTime = event['endDate'].substring(11, event['endDate'].length-9);
+                    var urlEvent = event['url'];
+
+                    var cell1 = row.insertCell(0);
+                    if (urlEvent == "{{ selectedEvent['@id'] }}") {
+                        cell1.innerHTML = "<strong>" + startTime + "/" + endTime + "</strong>";
+                    }
+                    else {
+                        cell1.innerHTML = startTime + "/" + endTime;
+                    }
+                    cell1.value = urlEvent;
                 }
             </script>
 

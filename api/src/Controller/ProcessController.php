@@ -117,12 +117,27 @@ class ProcessController extends AbstractController
 
         if(
             key_exists('request',$variables) &&
-            key_exists('properties', $variables['request']) &&
-            key_exists('begraafplaats', $variables['request']['properties'])
+            key_exists('properties', $variables['request'])
         )
         {
-            $variables['selectedCemetery'] = $commonGroundService->getResource($variables['request']['properties']['begraafplaats']);
-            $variables['calendar'] = $commonGroundService->getResourceList($variables['selectedCemetery']['calendar']);
+            if (key_exists('begraafplaats', $variables['request']['properties']))
+            {
+                $variables['selectedBegraafplaats'] = $commonGroundService->getResource($variables['request']['properties']['begraafplaats']);
+            }
+            else{
+                $variables['selectedBegraafplaats'] = $commonGroundService->getResource(['component'=>'grc','type'=>'cemeteries','id'=>'b38e2efd-6f5a-4bba-b755-50accf15372f']);
+                $variables['selectedBegraafplaats']['reference'] = "Wognum (Kreekland), ER IS NOG GEEN BEGRAAFPLAATS GEKOZEN!";
+            }
+            $variables['selectedGemeente'] = $commonGroundService->getResource($variables['selectedBegraafplaats']['organization']);
+            $variables['calendar'] = $commonGroundService->getResource($variables['selectedBegraafplaats']['calendar']);
+            if (key_exists('grafsoort', $variables['request']['properties']))
+            {
+                $variables['selectedGrafsoort'] = $commonGroundService->getResource($variables['request']['properties']['grafsoort']);
+            }
+            if (key_exists('event', $variables['request']['properties']))
+            {
+                $variables['selectedEvent'] = $commonGroundService->getResource($variables['request']['properties']['event']);
+            }
         }
 
         $i = 0;
