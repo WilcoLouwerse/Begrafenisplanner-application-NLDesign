@@ -1,0 +1,123 @@
+<div class="content-background {{ backgroundColor }}">
+
+    <div class="content">
+        <form method="post" action="{{ path('app_zz_index') }}">
+
+            <p>Huidige woongegevens</p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="input__label" for="currentStreet">Straat</label>
+                    <input class="input__control input__control--text" id="currentStreet" type="text" name="currentStreet" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="input__label" for="currentHouseNumber">Huisnummer</label>
+                    <input class="input__control input__control--text" id="currentHouseNumber" type="text" name="currentHouseNumber" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="input__label" for="currentHouseNumberAffix">Toevoeging</label>
+                    <input class="input__control input__control--text" id="currentHouseNumberAffix" type="text" name="currentHouseNumberAffix" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="input__label" for="currentPostalCode">Postcode</label>
+                    <input class="input__control input__control--text" id="currentPostalCode" type="text" name="currentPostalCode" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="input__label" for="currentLocality">Plaats</label>
+                    <input class="input__control input__control--text" id="currentLocality" type="text" name="currentLocality" required>
+                </div>
+            </div>
+
+            <p>Persoonlijke gegevens</p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="input__label" for="givenName">Voornaam</label>
+                    <input class="input__control input__control--text" id="givenName" type="text" name="givenName" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="input__label" for="familyName">Achternaam</label>
+                    <input class="input__control input__control--text" id="familyName" type="text" name="familyName" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="input__label" for="email">E-mail</label>
+                    <input class="input__control input__control--text" id="email" type="text" name="email" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="input__label" for="telephone">Telefoonnummer</label>
+                    <input class="input__control input__control--text" id="telephone" type="tel" name="telephone">
+                </div>
+            </div>
+
+{#            Mogelijke manier om meer personen toe te voegen. #}
+
+{#            <button onclick="addPerson()"></button>#}
+
+{#            <div id="addPersonsDiv"></div>#}
+
+            <p>Nieuwe woongegevens</p>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="input__label" for="newStreet">Straat</label>
+                    <input class="input__control input__control--text" id="newStreet" type="text" name="newStreet" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="input__label" for="newHouseNumber">Huisnummer</label>
+                    <input class="input__control input__control--text" id="newHouseNumber" type="text" name="newHouseNumber" required>
+                </div>
+                <div class="col-md-3">
+                    <label class="input__label" for="newHouseNumberAffix">Toevoeging</label>
+                    <input class="input__control input__control--text" id="newHouseNumberAffix" type="text" name="newHouseNumberAffix" required>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="input__label" for="newPostalCode">Postcode</label>
+                    <input class="input__control input__control--text" id="newPostalCode" type="text" name="newPostalCode" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="input__label" for="newLocality">Plaats</label>
+                    <input class="input__control input__control--text" id="newLocality" type="text" name="newLocality" required>
+                </div>
+            </div>
+
+
+            <label for="owner">Eigenaar van de nieuwe woning?</label>
+            <input id="owner" type="checkbox" name="owner" value="true">
+
+            <label for="date">Datum verhuizing</label>
+            <input class="input__control input__control--text" id="date" type="date" name="date">
+
+            <input type="hidden" name="config" value="{{ configuration }}">
+
+            <input type="hidden" name="type" value="{{ type }}">
+
+            <button class="btn btn--primary" type="submit">Verstuur</button>
+        </form>
+    </div><!-- /.content -->
+</div><!-- /.content-background -->
+
+{# Mogelijk manier om meer personen toe te voegen UNFINISHED #}
+
+{#<script type="text/javascript">#}
+{#    var person = 0;#}
+{#    var maxPersons = 5;#}
+{#    var addPersonsDiv = document.getElementById(addPersonsDiv);#}
+
+{#    function addPerson() {#}
+{#        addPersonsDiv.appendChild(document.createTextNode("Persoon" + (i + 1)));#}
+
+{#        var input = document.createElement("input");#}
+{#        input.type = "text";#}
+{#        input.name = "person" + i;#}
+{#        addPersonsDiv.appendChild(input);#}
+{#    }#}
+{#</script>#}

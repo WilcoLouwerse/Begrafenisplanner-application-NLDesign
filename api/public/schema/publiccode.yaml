@@ -3,11 +3,11 @@ publiccodeYmlVersion: "0.2"
 name: bpui
 applicationSuite: commonground
 url: "https://github.com/ConductionNL/pan"
-landingURL: "pan.huwelijksplanner.online" 
+landingURL: "pan.conduction.nl" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
-softwareVersion: "V.0.9.10"
-releaseDate: "2020-13-05"
-logo: instemmingen.conduction.nl 
+softwareVersion: "V.0.10"
+releaseDate: "2020-15-05"
+logo: pan.conduction.nl 
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:
@@ -67,7 +67,7 @@ description:
 #          is and why one should need it.
 
     documentation: "https://github.com/ConductionNL/pan/blob/master/README.md"
-    apiDocumentation: "pan.huwelijksplanner.online"
+    apiDocumentation: "pan.conduction.nl"
 #
 #    features:
 #       - Very important feature

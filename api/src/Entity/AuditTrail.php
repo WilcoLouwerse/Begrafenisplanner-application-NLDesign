@@ -2,21 +2,18 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
-
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
-use Gedmo\Mapping\Annotation as Gedmo;
-
 use DateTime;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * An resource representing a log line.
@@ -32,7 +29,7 @@ use Ramsey\Uuid\UuidInterface;
  * @ApiResource(
  *     normalizationContext={"groups"={"read"}, "enable_max_depth"=true},
  *     denormalizationContext={"groups"={"write"}, "enable_max_depth"=true}
- * )  
+ * )
  * @ApiFilter(OrderFilter::class, properties={
  * 		"application","request",
  * 		"user",
@@ -47,7 +44,7 @@ use Ramsey\Uuid\UuidInterface;
  * 		"dateCreated",
  * 		"dateModified",
  * })
- * @ApiFilter(SearchFilter::class, properties={ 
+ * @ApiFilter(SearchFilter::class, properties={
  * 		"applicationId": "exact",
  * 		"request": "exact",
  * 		"user": "exact",
@@ -65,164 +62,164 @@ use Ramsey\Uuid\UuidInterface;
  */
 class AuditTrail
 {
-	/**
-	 * @var UuidInterface The UUID identifier of this object
-	 *
-	 * @example e2984465-190a-4562-829e-a8cca81aa35d
-	 *
-	 * @Assert\Uuid
-	 * @Groups({"read"})
-	 * @ORM\Id
-	 * @ORM\Column(type="uuid", unique=true)
-	 * @ORM\GeneratedValue(strategy="CUSTOM")
-	 * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
-	 */
-	private $id;
-	
-	/**
-	 * @var string A note conserning this log lin
-	 * 
-	 * @example This log line looks suspicius
-	 *
-	 * @Assert\Length(
-	 *      max = 2555
-	 * )
-	 * @Groups({"read","write"})
-	 * @ORM\Column(type="text", nullable=true)
-	 */
-	private $note;
+    /**
+     * @var UuidInterface The UUID identifier of this object
+     *
+     * @example e2984465-190a-4562-829e-a8cca81aa35d
+     *
+     * @Assert\Uuid
+     * @Groups({"read"})
+     * @ORM\Id
+     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     */
+    private $id;
 
-    /**    
-     * @var sting $application The application that made the request
-     * 
+    /**
+     * @var string A note conserning this log lin
+     *
+     * @example This log line looks suspicius
+     *
+     * @Assert\Length(
+     *      max = 2555
+     * )
+     * @Groups({"read","write"})
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $note;
+
+    /**
+     * @var sting The application that made the request
+     *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $application;
 
     /**
-     * @var sting $request The id of the request within that application
-     * 
+     * @var sting The id of the request within that application
+     *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $request;
 
     /**
-     * @var sting $user The user on behalf of wich the request was made
-     * 
+     * @var sting The user on behalf of wich the request was made
+     *
      * @Assert\Url
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true, name="username")
      */
     private $user;
 
     /**
-     * @var sting $subject ???
-     * 
+     * @var sting ???
+     *
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $subject;
 
     /**
-     * @var sting $process The procces on behalf of wich the request was made
-     * 
+     * @var sting The procces on behalf of wich the request was made
+     *
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $process;
 
     /**
-     * @var array $dataElements The moment this request was created
-     * 
-	 * @Groups({"read"})
+     * @var array The moment this request was created
+     *
+     * @Groups({"read"})
      * @ORM\Column(type="array", nullable=true)
      */
     private $dataElements = [];
 
     /**
-     * @var array $dataSubjects The moment this request was created
-     * 
-	 * @Groups({"read"})
+     * @var array The moment this request was created
+     *
+     * @Groups({"read"})
      * @ORM\Column(type="array", nullable=true)
      */
     private $dataSubjects = [];
 
     /**
-     * @var sting $resource The resource that was requested 
-     * 
+     * @var sting The resource that was requested
+     *
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $resource;
 
     /**
-     * @var sting $resourceType The type of the resource that was requested 
-     * 
+     * @var sting The type of the resource that was requested
+     *
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $resourceType;
 
     /**
-     * @var sting $route The moment this request was created
-     * 
+     * @var sting The moment this request was created
+     *
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $route;
 
     /**
-     * @var sting $endpoint The endpoint that the request was made to
-     * 
+     * @var sting The endpoint that the request was made to
+     *
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $endpoint;
 
     /**
-     * @var sting $method The method that was used
-     * 
+     * @var sting The method that was used
+     *
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=10)
      */
-    private $method; 
-    
+    private $method;
+
     /**
-     * @var sting $Accept The contentType that was reqousted
+     * @var sting The contentType that was reqousted
      *
      * @Assert\Length(
      *      max = 255
@@ -231,31 +228,31 @@ class AuditTrail
      * @ORM\Column(type="string", length=255)
      */
     private $accept;
-    
+
     /**
-     * @var sting $contentType The contentType that was suplieds
-     * 
+     * @var sting The contentType that was suplieds
+     *
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $contentType;
 
     /**
-     * @var sting $content The moment this request was created
-     * 
+     * @var sting The moment this request was created
+     *
      * @Assert\Length(
      *      max = 2555
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="text", nullable=true)
      */
     private $content;
-    
+
     /**
-     * @var sting $ip The moment this request was created
+     * @var sting The moment this request was created
      *
      * @Assert\Length(
      *      max = 255
@@ -266,66 +263,66 @@ class AuditTrail
     private $ip;
 
     /**
-     * @var string $session The moment this request was created
-     * 
+     * @var string The moment this request was created
+     *
      * @Assert\Length(
      *      max = 255
      * )
-	 * @Groups({"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="string", length=255)
      */
-    private $session;    
-    
+    private $session;
+
     /**
-     * @var array $headers The headers supplied by client
-     * 
-	 * @Groups({"read"})
+     * @var array The headers supplied by client
+     *
+     * @Groups({"read"})
      * @ORM\Column(type="array")
      */
     private $headers = [];
-    
+
     /**
-     * @var integer $statusCode The status code returned to client
-     * 
-	 * @example 200
-	 * 
-	 * @Groups({"read"})
+     * @var int The status code returned to client
+     *
+     * @example 200
+     *
+     * @Groups({"read"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $statusCode;
-    
+
     /**
-     * @var boolean $notFound Whether or not the reqousted endpoint was found
-     * 
-	 * @example false
-	 * 
-	 * @Groups({"read"})
+     * @var bool Whether or not the reqousted endpoint was found
+     *
+     * @example false
+     *
+     * @Groups({"read"})
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $notFound = false;
-    
+
     /**
-     * @var boolean $forbidden Whether or not the client was allowed to the reqousted endpoint
-     * 
-	 * @example false
-	 * 
-	 * @Groups({"read"})
+     * @var bool Whether or not the client was allowed to the reqousted endpoint
+     *
+     * @example false
+     *
+     * @Groups({"read"})
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $forbidden = false;
-    
+
     /**
-     * @var boolean $ok Whether or not there where any problems
-     * 
-	 * @example true
-	 * 
-	 * @Groups({"read"})
+     * @var bool Whether or not there where any problems
+     *
+     * @example true
+     *
+     * @Groups({"read"})
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $ok = true;
-    
+
     /**
-     * @var Datetime $dateCreated The moment this request was created
+     * @var Datetime The moment this request was created
      *
      * @Assert\DateTime
      * @Groups({"read"})
@@ -333,9 +330,9 @@ class AuditTrail
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateCreated;
-    
+
     /**
-     * @var Datetime $dateModified  The moment this request last Modified
+     * @var Datetime The moment this request last Modified
      *
      * @Assert\DateTime
      * @Groups({"read"})
@@ -343,17 +340,17 @@ class AuditTrail
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateModified;
-    
+
     public function getId(): Uuid
     {
-    	return $this->id;
+        return $this->id;
     }
-    
+
     public function setId(Uuid $id): self
     {
-    	$this->id = $id;
-    	
-    	return $this;
+        $this->id = $id;
+
+        return $this;
     }
 
     public function setApplication(?string $application): self
@@ -442,26 +439,26 @@ class AuditTrail
 
     public function setResource(?string $resource): self
     {
-    	$this->resource = $resource;
+        $this->resource = $resource;
 
         return $this;
     }
 
     public function getResourceType(): ?string
     {
-    	return $this->resourceType;
+        return $this->resourceType;
     }
 
     public function setResourceType(string $resourceType): self
     {
-    	$this->resourceType = $resourceType;
+        $this->resourceType = $resourceType;
 
         return $this;
     }
 
     public function getRoute(): ?string
     {
-    	return $this->resourceType;
+        return $this->resourceType;
     }
 
     public function setRoute(string $route): self
@@ -493,18 +490,18 @@ class AuditTrail
         $this->method = $method;
 
         return $this;
-    } 
-    
+    }
+
     public function getAccept(): ?string
     {
-    	return $this->accept;
+        return $this->accept;
     }
-    
+
     public function setAccept(string $accept): self
     {
-    	$this->accept= $accept;
-    	
-    	return $this;
+        $this->accept = $accept;
+
+        return $this;
     }
 
     public function getContentType(): ?string
@@ -530,17 +527,17 @@ class AuditTrail
 
         return $this;
     }
-    
+
     public function getIp(): ?string
     {
-    	return $this->ip;
+        return $this->ip;
     }
-    
+
     public function setIp(string $ip): self
     {
-    	$this->ip = $ip;
-    	
-    	return $this;
+        $this->ip = $ip;
+
+        return $this;
     }
 
     public function getSession(): ?string
@@ -554,88 +551,88 @@ class AuditTrail
 
         return $this;
     }
-    
+
     public function getHeaders(): ?array
     {
-    	return $this->headers;
+        return $this->headers;
     }
-    
+
     public function setHeaders(array $headers): self
     {
-    	$this->headers = $headers;
-    	
-    	return $this;
+        $this->headers = $headers;
+
+        return $this;
     }
-    
+
     public function getStatusCode(): ?int
     {
-    	return $this->statusCode;
+        return $this->statusCode;
     }
-    
+
     public function setStatusCode(int $statusCode): self
     {
-    	$this->statusCode = $statusCode;
-    	
-    	return $this;
+        $this->statusCode = $statusCode;
+
+        return $this;
     }
-    
+
     public function getNotFound(): ?bool
     {
-    	return $this->notFound;
+        return $this->notFound;
     }
-    
+
     public function setNotFound(?bool $notFound): self
     {
-    	$this->notFound = $notFound;
-    	
-    	return $this;
+        $this->notFound = $notFound;
+
+        return $this;
     }
-    
+
     public function getForbidden(): ?bool
     {
-    	return $this->forbidden;
+        return $this->forbidden;
     }
-    
+
     public function setForbidden(?bool $forbidden): self
     {
-    	$this->forbidden = $forbidden;
-    	
-    	return $this;
+        $this->forbidden = $forbidden;
+
+        return $this;
     }
-    
+
     public function getOk(): ?bool
     {
-    	return $this->ok;
+        return $this->ok;
     }
-    
+
     public function setOk(?bool $ok): self
     {
-    	$this->ok = $ok;
-    	
-    	return $this;
+        $this->ok = $ok;
+
+        return $this;
     }
-    
+
     public function getDateCreated(): ?\DateTimeInterface
     {
-    	return $this->dateCreated;
+        return $this->dateCreated;
     }
-    
+
     public function setDateCreated(\DateTimeInterface $dateCreated): self
     {
-    	$this->dateCreated= $dateCreated;
-    	
-    	return $this;
+        $this->dateCreated = $dateCreated;
+
+        return $this;
     }
-    
+
     public function getDateModified(): ?\DateTimeInterface
     {
-    	return $this->dateModified;
+        return $this->dateModified;
     }
-    
+
     public function setDateModified(\DateTimeInterface $dateModified): self
     {
-    	$this->dateModified = $dateModified;
-    	
-    	return $this;
+        $this->dateModified = $dateModified;
+
+        return $this;
     }
 }

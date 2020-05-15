@@ -33,14 +33,18 @@ services:
       - DATABASE_URL=mysql://api-platform:!ChangeMe!@db/api?serverVersion=10.1
       - APP_ENV=${APP_ENV}
       - APP_DEBUG=${APP_DEBUG} 
+      - APP_CACHE=${APP_CACHE}
       - APP_VERSION=${APP_VERSION}    
       - APP_NAME=${APP_NAME} 
       - APP_TITLE=${APP_TITLE}
+      - APP_ID=${APP_ID}
       - APP_DOMAIN=${APP_DOMAIN}
-      - APP_DOMAINS=${APP_DOMAINS}
+      - APP_SUBDOMAIN=${APP_SUBDOMAIN}
       - APP_DEMO=${APP_DEMO}
       - APP_REPRO=${APP_REPRO}
+      - APP_CONTAINER=${APP_CONTAINER}
       - APP_DESCRIPTION=${APP_DESCRIPTION}
+      - APP_TYPE=${APP_TYPE}
       - APP_LOGO=${APP_LOGO}
       - APP_HOME=${APP_HOME}
       - APP_COMMONGROUND_ID=${APP_COMMONGROUND_ID}
@@ -197,6 +201,19 @@ services:
       - db-mysql:/var/lib/mysql:rw 
     ports:
      - "3366:3306"
+
+  mercure:
+    # In production, you may want to use the managed version of Mercure, https://mercure.rocks
+    image: dunglas/mercure
+    environment:
+      # You should definitely change all these values in production
+      - JWT_KEY=!UnsecureChangeMe!
+      - ALLOW_ANONYMOUS=1
+      - CORS_ALLOWED_ORIGINS=*
+      - PUBLISH_ALLOWED_ORIGINS=http://localhost:1337,https://localhost:1338
+      - DEMO=1
+    ports:
+      - "1337:80"
 
 networks:
   nlx:

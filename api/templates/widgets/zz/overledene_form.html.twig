@@ -1,0 +1,123 @@
+<div class="content-background">
+    <div class="content">
+        <script>
+            /* Load tab component */
+            System.import('/uno/components/tabs/tabs.js').then(function (module) {
+                /* Select all .tab elements on the page */
+                var tabs = document.querySelectorAll('.tab');
+                /* Initialize all tabs */
+                for (var i = 0; i < tabs.length; i++) {
+                    new module.Tabs(tabs.item(i));
+                }
+            });
+        </script>
+        <script>
+            function FindBsn() {
+                var selectedbsn = document.getElementById("bsn").value;
+                alert("Selected bsnnummer is: " + selectedbsn);
+                document.getElementById("bsnnummer").textContent = selectedbsn;
+            }
+        </script>
+
+        <h2>Overledene</h2>
+
+        <!-- Page Break -->
+        <div style="height: 20px;"></div>
+
+        <ul class="tab tab--inline" role="tablist">
+            <li class="tab__tab tab__tab--active" role="tab" aria-controls="panel2-1" id="tab2-1"><a href="#panel2-1">Zoeken</a></li>
+            <li class="tab__tab" role="tab" aria-controls="panel2-2" id="tab2-2"><a href="#panel2-2">Invoeren</a></li>
+        </ul>
+
+        <!-- Page Break -->
+        <div style="height: 20px;"></div>
+
+        <div class="tab__content tab__content--inline">
+
+            <section class="tab__pane tab__pane--active" id="panel2-1" role="tabpanel" aria-labelledby="tab2-1">
+                <form class="form" method="post" action="#">
+                    <h3>Zoek op Bsnnummer</h3>
+                    <div class="input input--horizontal">
+
+                        <input required="" type="text" id="bsn" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
+                    </div>
+                    <div class="input">
+                        <button type="button" onclick="FindBsn()" class="btn btn--primary" name="select" value="bsn">Zoeken</button>
+                    </div>
+                </form>
+
+                <div>
+                    <p>bsn: 999999230</p>
+                    {% for ingeschrevenpersoon in ingeschrevenpersonen %}
+                        {% if ingeschrevenpersoon['burgerservicenummer'] == "999999230" %}
+                            <p>naam: {{ ingeschrevenpersoon['naam']['voornamen'] }} {{ ingeschrevenpersoon['naam']['geslachtsnaam'] }}</p>
+
+
+                            {% for geboorte in geboortes['hydra:member'] %}
+
+                                {% if geboorte['@id'] == ingeschrevenpersoon['geboorte']['@id']%}
+                                    <p>geboortedatum: {{ geboorte['datum'] }}</p>
+                                    {% set break = true %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% set break = true %}
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+            <section class="tab__pane" id="panel2-2" role="tabpanel" aria-labelledby="tab2-2">
+                <h3>Bsnnummer:</h3>
+                <div class="input input--horizontal">
+
+                    <input required="" type="text" id="bsnhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
+                </div>
+
+                <h3>Naam:</h3>
+                <div class="input input--horizontal">
+
+                    <input required="" type="text" id="naamhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--l">
+                </div>
+
+                <!-- Page Break -->
+                <div style="height: 20px;"></div>
+
+                <h3>Geboortedatum:</h3>
+                <div class="input">
+
+                    <div class="input__control-group">
+                        <div>
+                            <label class="input__hint" for="date_of_birth-d">dag</label>
+                            <input required="" aria-label="Geboortedag" title="Geboortedag" required="" type="number" min="1" max="31" id="date_of_birth-d" class="input__control input__control--two-characters input__control--linked input__control--text">
+                        </div>
+                        <div>
+                            <label class="input__hint" for="date_of_birth-m">maand</label>
+                            <input required="" aria-label="Geboortemaand" title="Geboortemaand" required="" type="number" min="1" max="12" id="date_of_birth-m" class="input__control input__control--two-characters input__control--linked input__control--text">
+                        </div>
+                        <div>
+                            <span class="input__hint" for="date_of_birth-y">jaar</span>
+                            <input required="" aria-label="Geboortejaar" title="Geboortejaar" required="" type="number" id="date_of_birth-y" class="input__control input__control--four-characters input__control--linked input__control--text">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input">
+                    <button type="submit" class="btn btn--primary" name="select" value="bsn">Selecteren</button>
+                </div>
+
+            </section>
+
+        </div>
+
+{#
+        <form class="form" method="post" action="#">
+            <div class="input">
+                <button type="submit" class="btn" name="submit" value="save">Opslaan</button> of naar de <a href="{{ path('app_begrafenisplannen_artikelen') }}">vorige stap</a>
+            </div>
+        </form>
+#}
+    </div><!-- /.content -->
+</div><!-- /.content-background -->

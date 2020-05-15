@@ -13,9 +13,7 @@
     <link rel="stylesheet" href="/uno/core/grid.css">
     <link rel="stylesheet" href="/uno/components/lists/lists.css">
     <link rel="stylesheet" href="/uno/components/header/header.css">
-    <link rel="stylesheet" href="/uno/components/footer/footer.css">
     <link rel="stylesheet" href="/uno/components/collapse/collapse.css">
-    <link rel="stylesheet" href="/uno/components/navigation/navigation.css">
     <link rel="stylesheet" href="/uno/components/navigation/breadcrumbs.css">
     <link rel="stylesheet" href="/uno/components/navigation/backlink.css">
     <link rel="stylesheet" href="/uno/components/navigation/sidenav.css">
@@ -24,36 +22,38 @@
     <link rel="stylesheet" href="/uno/components/button/button.css">
     <link rel="stylesheet" href="/uno/components/skiplink/skiplink.css">
     <link rel="stylesheet" href="/uno/components/tabs/tabs.css">
+    <link rel="stylesheet" href="/uno/components/footer/footer.css">
+    <link rel="stylesheet" href="/uno/components/navigation/navigation.css">
     <link rel="stylesheet" href="/css/main.css">
 
 
     <link rel="stylesheet" href="/uno/components/button/button.css">
-<link rel="stylesheet" href="/uno/components/card/card.css">
-<link rel="stylesheet" href="/uno/components/collapse/collapse.css">
-<link rel="stylesheet" href="/uno/components/form/checkbox.css">
-<link rel="stylesheet" href="/uno/components/form/filter.css">
-<link rel="stylesheet" href="/uno/components/form/form.css">
-<link rel="stylesheet" href="/uno/components/form/input.css">
-<link rel="stylesheet" href="/uno/components/form/radio.css">
-<link rel="stylesheet" href="/uno/components/hint/hint.css">
-<link rel="stylesheet" href="/uno/components/label/label.css">
-<link rel="stylesheet" href="/uno/components/list/definition-list.css">
-<link rel="stylesheet" href="/uno/components/list/list-card.css">
-<link rel="stylesheet" href="/uno/components/list/list-grid.css">
-<link rel="stylesheet" href="/uno/components/list/list-files.css">
-<link rel="stylesheet" href="/uno/components/list/list-notification.css">
-<link rel="stylesheet" href="/uno/components/list/list-subject.css">
-<link rel="stylesheet" href="/uno/components/list/list-search.css">
-<link rel="stylesheet" href="/uno/components/list/list-timeline.css">
-<link rel="stylesheet" href="/uno/components/list/list-filter.css">
-<link rel="stylesheet" href="/uno/components/meta/meta.css">
-<link rel="stylesheet" href="/uno/components/navigation/inpage.css">
-<link rel="stylesheet" href="/uno/components/notification/notification.css">
-<link rel="stylesheet" href="/uno/components/pagination/pagination.css">
-<link rel="stylesheet" href="/uno/components/quote/quote.css">
-<link rel="stylesheet" href="/uno/components/section/edit-section.css">
-<link rel="stylesheet" href="/uno/components/section/inner-section.css">
-<link rel="stylesheet" href="/uno/components/table/table.css">
+    <link rel="stylesheet" href="/uno/components/card/card.css">
+    <link rel="stylesheet" href="/uno/components/collapse/collapse.css">
+    <link rel="stylesheet" href="/uno/components/form/checkbox.css">
+    <link rel="stylesheet" href="/uno/components/form/filter.css">
+    <link rel="stylesheet" href="/uno/components/form/form.css">
+    <link rel="stylesheet" href="/uno/components/form/input.css">
+    <link rel="stylesheet" href="/uno/components/form/radio.css">
+    <link rel="stylesheet" href="/uno/components/hint/hint.css">
+    <link rel="stylesheet" href="/uno/components/label/label.css">
+    <link rel="stylesheet" href="/uno/components/list/definition-list.css">
+    <link rel="stylesheet" href="/uno/components/list/list-card.css">
+    <link rel="stylesheet" href="/uno/components/list/list-grid.css">
+    <link rel="stylesheet" href="/uno/components/list/list-files.css">
+    <link rel="stylesheet" href="/uno/components/list/list-notification.css">
+    <link rel="stylesheet" href="/uno/components/list/list-subject.css">
+    <link rel="stylesheet" href="/uno/components/list/list-search.css">
+    <link rel="stylesheet" href="/uno/components/list/list-timeline.css">
+    <link rel="stylesheet" href="/uno/components/list/list-filter.css">
+    <link rel="stylesheet" href="/uno/components/meta/meta.css">
+    <link rel="stylesheet" href="/uno/components/navigation/inpage.css">
+    <link rel="stylesheet" href="/uno/components/notification/notification.css">
+    <link rel="stylesheet" href="/uno/components/pagination/pagination.css">
+    <link rel="stylesheet" href="/uno/components/quote/quote.css">
+    <link rel="stylesheet" href="/uno/components/section/edit-section.css">
+    <link rel="stylesheet" href="/uno/components/section/inner-section.css">
+    <link rel="stylesheet" href="/uno/components/table/table.css">
 
 
 
@@ -81,15 +81,6 @@
     .btn--block{
     	width:100%;
     }
-
-    .footer__content{
-    	background-color: #009999;
-    }
-
-    .top-nav {
-    	background-color: #009999;
-    }
-
     </style>
 </head>
 </html>
@@ -106,6 +97,19 @@
 
     <main class="skiplink-target main" id="content" tabindex="-1">
         <div class="container">
+
+            <!-- the alert box -->
+            {% for label, messages in app.flashes() %}
+                {% for message in messages %}
+                    <div class="notification notification--{{ label }}">
+                        <div class="notification__content">
+                            <h2 class="notification__title">{{ message|trans|capitalize }}</h2>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+
           {% block content %}
 
           {% endblock %}
@@ -113,84 +117,9 @@
         </div>
     </main>
 
-    <div class="debug-container" aria-hidden="true">
-        <div class="container">
-            <div class="row">
-                <div class="debug">
-                    <input type="checkbox"/>
-
-                    <div class="col-xs-1">
-                        <div>
-                            1
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div class="col-md-dash-left">
-                            2
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div class="col-lg-dash-left col-lg-dash-list">
-                            3
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div>
-                            4
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div>
-                            5
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div>
-                            6
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div>
-                            7
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div>
-                            8
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div class="col-lg-dash-right">
-                            9
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div>
-                            10
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div class="col-md-dash-right">
-                            11
-                        </div>
-                    </div>
-                    <div class="col-xs-1">
-                        <div>
-                            12
-                        </div>
-                    </div>
-
-                    <div class="guide--center"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 	{% include "footer.html.twig" %}
 
 <script src="/js/highlight.pack.js"></script>
-<script src="/js/examples.js"></script>
-<script src="/js/debug.js"></script>
 
 <script>
     // Load collapse component

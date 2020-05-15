@@ -1,0 +1,143 @@
+<div class="content-background">
+    <div class="content">
+        <link rel="stylesheet" href="/node_modules/uno/dist/core/base.css">
+        <link rel="stylesheet" href="/node_modules/uno/dist/core/grid.css">
+        <link rel="stylesheet" href="/node_modules/uno/core/animations.css">
+        <link rel="stylesheet" href="/node_modules/uno/components/form/combobox.css">
+        <link rel="stylesheet" href="/node_modules/uno/components/form/form.css">
+        <link rel="stylesheet" href="/node_modules/uno/components/form/input.css">
+        <link rel="stylesheet" href="/node_modules/uno/components/form/filter.css">
+        <link rel="stylesheet" href="/node_modules/uno/components/list/list-filter.css">
+        <link rel="stylesheet" href="/node_modules/uno/components/spinner/spinner.css">
+        <script src="/node_modules/systemjs/dist/system.js"></script>
+        <script src="/node_modules/systemjs/dist/system.js"></script>
+        <script>
+            System.config({
+                packages: {
+                    '/': {
+                        defaultExtension: 'js'
+                    }
+                }
+            });
+        </script>
+        <script>
+            System.import('/uno/components/form/combobox.js').then(function (module) {
+                var gemeente_combobox = new module.Combobox(document.getElementById('gemeente_combobox'));
+                var begraafplaats_combobox = new module.Combobox(document.getElementById('begraafplaats_combobox'));
+                var grafsoort_combobox = new module.Combobox(document.getElementById('grafsoort_combobox'));
+
+                gemeente_combobox.allowUnknown = false;
+                gemeente_combobox.data = [
+                    {% for organization in organizations %}
+                    "{{ organization['name'] }}",
+                    {% endfor %}
+                ];
+
+                begraafplaats_combobox.allowUnknown = false;
+                begraafplaats_combobox.data = [
+                    {% for cemetery in cemeteries %}
+                    "{{ cemetery['reference'] }}",
+                    {% endfor %}
+                ];
+
+                grafsoort_combobox.allowUnknown = false;
+                grafsoort_combobox.data = ["Grafsoort1", "Grafsoort2", "Grafsoort3", "Grafsoort4", "Grafsoort5", "Grafsoort6", "Grafsoort7"];
+            });
+        </script>
+
+        <script>
+            function enableBegraafplaats()
+            {
+                var autocompleteBegraafplaats = document.getElementById("autocomplete-begraafplaats");
+                autocompleteBegraafplaats.disabled = false;
+                //document.getElementById("showAllButton-begraafplaats").disabled = false; //Hoe disable/enable ik de button en welk id heeft het?
+                document.getElementById("selectBegraafplaats").disabled = false;
+
+                var selectedGemeenteID = document.getElementById("autocomplete-gemeente").value;
+                for (var i=0; i < autocompleteBegraafplaats.length; i++)
+                {
+                    var begraafplaats = JSON.parse(autocompleteBegraafplaats[i].value);
+                    if (selectedGemeenteID == begraafplaats.Organization)
+                    {
+                        autocompleteBegraafplaats[i].hidden = false;
+                    }
+                    else
+                    {
+                        autocompleteBegraafplaats[i].hidden = true;
+                    }
+                }
+                autocompleteBegraafplaats.selectedIndex = 0;
+            }
+            function enableGrafsoort()
+            {
+                var autocompleteGrafsoort = document.getElementById("autocomplete-grafsoort");
+                autocompleteGrafsoort.disabled = false;
+                //document.getElementById("showAllButton-grafsoort").disabled = false; //Hoe disable/enable ik de button en welk id heeft het?
+                document.getElementById("selectGrafsoort").disabled = false;
+                //autocompleteGrafsoort.selectedIndex = 0;
+            }
+        </script>
+
+        <h2>Begraafplaats</h2>
+
+        <!-- Page Break -->
+        <div style="height: 20px;"></div>
+
+{#        <form class="form" method="post" action="#"> #}
+            <div class="input combobox" id="gemeente_combobox">
+                <h3 class="input__label" for="autocomplete-gemeente">Gemeente</h3>
+                <div class="input__hint">Selecteer een Gemeente</div>
+{#                <input class="combobox__input input__control input__control--text input__control--m input__control--select" id="autocomplete-gemeente"> #}
+                <select name="properties[gemeente]" id="autocomplete-gemeente" class="input__control input__control--m input__control--select">
+                    {% for organization in organizations %}
+                        <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="input">
+                <button type="button" onclick="enableBegraafplaats()" class="btn btn--primary" name="selectGemeente">Selecteren</button>
+            </div>
+
+            <div class="input combobox" id="begraafplaats_combobox">
+                <h3 class="input__label" for="autocomplete-begraafplaats">Begraafplaats</h3>
+                <div class="input__hint">Selecteer een Begraafplaats</div>
+{#                <input disabled="" class="combobox__input input__control input__control--text input__control--l input__control--select" id="autocomplete-begraafplaats"> #}
+                <select name="properties[begraafplaats]" disabled="" id="autocomplete-begraafplaats" class="input__control input__control--m input__control--select">
+                    <option hidden="" value='{"Cemetery":"Selecteer een Begraafplaats","Organization":"Selecteer een Begraafplaats"}'>Selecteer een Begraafplaats</option>
+                    {% for cemetery in cemeteries %}
+                        <option value='{"Cemetery":"{{ cemetery['@id'] }}","Organization":"{{ cemetery['organization'] }}"}'>{{ cemetery['reference'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="input">
+                <button disabled="" type="button" onclick="enableGrafsoort()" class="btn btn--primary" name="selectBegraafplaats" id="selectBegraafplaats">Selecteren</button>
+            </div>
+
+            <div class="input combobox" id="grafsoort_combobox">
+                <h3 class="input__label" for="autocomplete-grafsoort">Soort Graf</h3>
+                <div class="input__hint">Selecteer het Soort Graf</div>
+{#                <input disabled="" class="combobox__input input__control input__control--text input__control--l input__control--select" id="autocomplete-grafsoort"> #}
+                <select name="properties[grafsoort]" disabled="" id="autocomplete-grafsoort" class="input__control input__control--m input__control--select">
+                    <option hidden="" value="Selecteer het Soort Graf">Selecteer het Soort Graf</option>
+                    {% for grave_type in grave_types %}
+                        <option value="{{ grave_type['@id'] }}">{{ grave_type['reference'] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+{#
+            <div class="input">
+                <button disabled="" type="button" class="btn btn--primary" name="selectGrafsoort" id="selectGrafsoort">Selecteren</button>
+            </div>
+
+            <!-- Page Break -->
+            <div style="height: 20px;"></div>
+
+
+            <div class="input">
+                <button type="submit" class="btn" name="submit" value="save">Opslaan</button> of naar <a href="{{ path('app_default_index') }}">home</a>
+            </div>
+#}
+{#      </form#}
+
+    </div><!-- /.content -->
+</div><!-- /.content-background -->

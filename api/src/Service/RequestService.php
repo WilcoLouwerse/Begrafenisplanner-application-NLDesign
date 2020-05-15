@@ -5,12 +5,15 @@
 namespace App\Service;
 
 use GuzzleHttp\Client;
+use http\Env\Request;
 use http\Message;
 use Symfony\Component\Cache\Adapter\AdapterInterface as CacheInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use App\Service\CommonGroundService;
+use App\Service\ZgwService;
+use App\Service\CamundaService;
 
 class RequestService
 {
@@ -19,14 +22,18 @@ class RequestService
     private $client;
     private $session;
     private $commonGroundService;
+    private $zgwService;
+    private $camundaService;
     private $messageService;
 
-    public function __construct(ParameterBagInterface $params, CacheInterface $cache, SessionInterface $session, CommonGroundService $commonGroundService, MessageService $messageService)
+    public function __construct(ParameterBagInterface $params, CacheInterface $cache, SessionInterface $session, CommonGroundService $commonGroundService, ZgwService $zgwService, CamundaService $camundaService, MessageService $messageService)
     {
         $this->params = $params;
         $this->cache = $cache;
         $this->session= $session;
         $this->commonGroundService = $commonGroundService;
+        $this->zgwService = $zgwService;
+        $this->camundaService = $camundaService;
         $this->messageService = $messageService;
 
     }
@@ -62,14 +69,12 @@ class RequestService
         $request['status']='incomplete';
         $request['properties']= [];
 
-
-
-    	// juiste startpagina weergeven
+    	// Juiste startpagina weergeven
     	if(!array_key_exists ("currentStage", $request) && array_key_exists (0, $requestType['stages'])){
     		$request["currentStage"] = $requestType['stages'][0]['slug'];
     	}
 
-    	$request = $this->commonGroundService->createResource($request, $this->commonGroundService->getComponent('vrc')['href'].'/requests'); //HP Specifiek
+    	$request = $this->commonGroundService->createResource($request, ['component'=>'vrc', 'type'=>'requests']); //HP Specifiek
         if($user){
             $request['submitters'] = [['brp'=>$user['@id']]];
         }
@@ -81,6 +86,7 @@ class RequestService
 
     		// Lets transfer any properties that are both inthe parent and the child request
     		foreach($requestType['properties'] as $property){
+
                 $slug = $property['slug'];
 
                 // We have to find a better way to work with these two slugs, this hardcoded way stands in the way of more configurability
@@ -92,25 +98,31 @@ class RequestService
                 }
 
     			if(key_exists($slug, $requestParent['properties'])){
-
     				$request['properties'][$slug] = $requestParent['properties'][$slug];
     			}
     		}
+            $contact = $requestParent["submitters"][0]['person'];
+            $bsn = null;
     	}
-        //Maybe we should make contacts more generic
-        $contact = ['givenName'=>$user['naam']['voornamen'],'familyName'=>$user['naam']['geslachtsnaam']];
-    	$contact= $this->commonGroundService->createResource($contact, $this->commonGroundService->getComponent('cc')['href'].'/people');
+    	// If we dont have parent we need to mkae a contact
+        else{
+            //Maybe we should make contacts more generic
+            $contact = ['givenName'=>$user['naam']['voornamen'],'familyName'=>$user['naam']['geslachtsnaam']];
+            $contact= $this->commonGroundService->createResource($contact, $this->commonGroundService->getComponent('cc')['href'].'/people')['@id'];
+            $bsn = $user['burgerservicenummer'];
+        }
+        $request["submitters"][0]['person'] = $contact;
 
-    	$request["submitters"][0]['person'] = $contact['@id'];
 
+    	// Wat doet partners hier?
         if(!key_exists('partners', $request)){
 
             $assent = [];
             $assent['name'] = 'Instemming '.$requestType['name'];
             $assent['description'] = 'U bent automatisch toegevoegd aan een '.$requestType['name'].' verzoek omdat u deze zelf heeft opgestart';
-            $assent['contact'] = $contact['@id'];
+            $assent['contact'] = $contact;
             $assent['requester'] = $organization['@id'];
-            $assent['person'] = $user['burgerservicenummer'];
+            $assent['person'] = $bsn;
             $assent['request'] = $request['@id'];
             $assent['status'] = 'granted';
             $assent = $this->commonGroundService->createResource($assent, $this->commonGroundService->getComponent('irc')['href'].'/assents');
@@ -378,7 +390,13 @@ class RequestService
             }
 
             // Lets see is we have a value for this stage in our request and has a value
-            if (key_exists('properties', $request) && array_key_exists($stage['name'], $request['properties']) && $request['properties'][$stage['name']] != null) {
+            if (
+                key_exists('properties', $request)
+                &&
+                array_key_exists($stage['name'], $request['properties'])
+                &&
+                $request['properties'][$stage['name']] != null
+            ) {
 
                 // Let get the validation rules from the request type
 //                $arrIt = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($requestType['properties']));
@@ -419,5 +437,38 @@ class RequestService
         }
 
         return $requestType;
+    }
+
+    public function updateRequest($request, $url)
+    {
+        // Lets see if we need to make a case
+        if($request['status'] == 'submitted' && (!$request['cases'] || count($request['status']) == 0 )){
+            // Lets look at the request type
+            $requestType = $this->commonGroundService->getResource($request['requestType']);
+
+            if(array_key_exists('caseType', $requestType) && $requestType['caseType'] && $case = $this->caseFromRequest($request, $requestType['caseType'])){
+                // Lets double check if cases is already an array
+                if(!is_array( $request['cases'])){
+                    $request['cases'] = [];
+                }
+
+                $request['cases'][] = $case['@id'];
+            }
+        }
+
+        return $this->commongroundService->updateResource($request, $url);
+    }
+
+    public function caseFromRequest($request, string $caseType)
+    {
+        $case = [];
+        $case['zaaktype'] = $caseType;
+        $case['bronorganisatie'] = $this->commonGroundService->getResource($request->getOrganization())->getRsin();;
+        $case['verantwoordelijkeOrganisatie'] = $this->commonGroundService->getResource($request->getOrganization())->getRsin();
+        $case['omschrijving'] = $request->getName();
+        $case['startdatum'] = date('Y-m-d');
+
+        // Dan gaan we dus een zaak aanmaken
+        return $this->zgwService->createResource($case, $caseUrl);
     }
 }

@@ -1,0 +1,73 @@
+<div class="content-background {{ backgroundColor }}">
+
+    <div class="content">
+    {% if query.stage is not defined and (request.status si not defined or request.status == 'incomplete')%}
+        {% if query.request is defined %}{% set request = commonground_resource(query.request)  %}{% endif %}
+        {% if query.requestType is defined %}{% set requestType = commonground_resource(query.requestType)  %}{% endif %}
+        {% if query.proccesType is defined %}{% set requestType = commonground_resource(query.proccesType)  %}{% endif %}
+        <h2>{{ requestType.name }}</h2>
+
+        <p>{{ requestType.description }}</p>
+
+        <p>Voor de formulier heeft u de volgende documenten nodig:<br>
+            <ul>
+        {% if requestType.documents is defined and  requestType.documents|length > 0 %}
+            <li>{{ 'none'|translate }}</li>
+        {% else %}
+            {% for document in requestType.documents %}
+            <li>{{ document }}</li>
+            {% endfor %}
+        {% endif %}
+        </p>
+
+        <a class="btn" href="{{ path('slug', {'slug'=>slug,'requestType'=>requestType}) }}">{{ 'start'|translate }}</a>
+
+    {% endif %}
+    {% for stage in requestType.stages %}{% if query.stage is defined and query.stage == stage.id %}
+        <h2>{{ stage.name }}</h2>
+        <form class="form" method="post" action="#">
+            {% if  stage.description is defined and stage.description  is not empty %}<p>{{ stage.description }}</p>{% endif %}
+            {% for section in stage.sections %}
+            <h3>{{ section.name }}</h3>
+            {% if  section.description is defined and section.description  is not empty %}<p>{{ section.description }}</p>{% endif %}
+
+            {# en dan hier pas iets met de daadwerkelijke properties #}
+
+            <input type="hidden" id="@component" name="@component" value="vrc">
+            <input type="hidden" id="@type" name="@type" value="requests">
+            {% if  request.id is defined %}<input type="hidden" id="id" name="id" value="{{ request.id  }}">{% endif %}
+            {% if  request['id']  is defined %}<input type="hidden" id="@id" name ="@id" value="{{ request['id']  }}">{% endif %}
+        </form>
+        {% endfor %}
+    {% endif %}{% endfor %}
+    {% if query.stage == 'submit'  %}
+        <h2>{{ 'sign and submit'|translate }}</h2>
+
+            {# hier willen we een cool overzicht van het verzoek #}
+
+        <form class="form" method="post" action="#">
+            <div class="input">
+                <button type="submit" class="btn" name="submit" value="sign">{{ 'sign and submit'|translate }}</button>
+            </div>
+            <input type="hidden" id="@component" name="@component" value="vrc">
+            <input type="hidden" id="@type" name="@type" value="requests">
+            {% if  request.id is defined %}<input type="hidden" id="id" name="id" value="{{ request.id  }}">{% endif %}
+            {% if  request['id']  is defined %}<input type="hidden" id="@id" name ="@id" value="{{ request['id']  }}">{% endif %}
+
+        </form>
+    {% endif %}
+    {% if query.stage is not defined and request.status is defined and request.status =='submitted'  %}
+        <h2>{{ 'progressing'|translate }}</h2>
+        <p>{{ 'Your request is being processed, you can find aditional information below'|translate }}</p>
+
+        {# hier willen we zaak inforamtie weergeven #}
+    {% endif %}
+    {% if query.stage is not defined and request.status is defined and request.status =='processed '  %}
+        <h2>{{ 'processed'|translate }}</h2>
+        <p>{{ 'Your request has been processed, you can find the results below'|translate }}</p>
+    {% endif %}
+
+    </div><!-- /.content -->
+</div><!-- /.content-background -->
+
+{# hier willen we zaak inforamtie weergeven

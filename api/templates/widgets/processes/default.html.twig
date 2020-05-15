@@ -1,0 +1,14 @@
+<input type="hidden" name="submitters[0][brp]" value="{{ user['@id'] }}">
+<input type="hidden" name="requestType" value="{{ process.requestType }}">
+<input type="hidden" name="status" value="incomplete">
+<input type="hidden" name="organization" value="https://wrc.dev.begraven.zaakonline.nl/organizations/d736013f-ad6d-4885-b816-ce72ac3e1384">
+<input type="hidden" name="processType" value="{{ process['@id'] }}">
+{% if stage.next is defined and stage.next is not null %}
+    <input type="hidden" name="currentStage" value="{{ stage.next['@id'] }}">
+    {% else %}
+    <input type="hidden" name="next" value="indienen">
+{% endif %}
+{% if request is defined and request is not null %}
+    <input type="hidden" name="@id" value="{{ request['@id'] }}">
+{#    {{ dump(request) }}#}
+{% endif %}
