@@ -1,3 +1,7 @@
+parameters:
+    env(DATABASE_URL): 'postgres://api-platform:!ChangeMe!@db/api?serverVersion=10.1'
+    # Organisation stuff
+
 doctrine:
     dbal:
         # configure these for your database server
@@ -6,6 +10,7 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         types:
             uuid:  Ramsey\Uuid\Doctrine\UuidType
+            datetime:  App\Types\UTCDateTimeType  #We override the default doctrine datetime with a UTC based version
             incompleteDate:  App\Types\IncompleteDateType
             underInvestigation:  App\Types\UnderInvestigationType
             money: Tbbc\MoneyBundle\Type\MoneyType

@@ -8,31 +8,51 @@ settings:
   name: {{ app_name }}
   title: {{ app_title }}
   version: {{ app_version }}
+  id: {{ app_id }}
   description: '{{ app_description }}'
-  repro: {{ app_repro }}'
+  type: {{ app_type }}
+  repro: {{ app_repro }}
   demo: {{ app_demo }}
+  container: {{ app_container }}
+  domain: {{ app_domain }}
+  subdomain: {{ app_subdomain }}
+  organisationName: {{ organization_name }}
+  email: {{ organization_email }}
+  country: {{ organization_country }}
+  state: {{ organization_state }}
+  locality: {{ organization_locality }}
+  unit: {{ organization_unit }}
   env: {{ app_env }}
   debug: {{ app_debug }}
+  cache: {{ app_debug }}
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^(.+\.)?common-ground\.dev$|^(.+\.)?zaakonline\.nl$|^(.+\.)?conduction\.nl$|^example\.com$|^(.+\.)?178.128.142.152$|178.128.142.152|localhost'
+  trustedHosts: '{{ trusted_hosts }}'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
     - 10.0.0.0/8
     - 172.16.0.0/12
     - 192.168.0.0/16
-  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer  
+  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   loadbalancerEnabled: false
   # If you want to enable NLX you are requered to add the appropreate certificates to you nlx-settings folder (located in the /api folder)
   nlxInwayEnabled: {{ nlx_inway }}
-  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer  
+  # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   notificationEnabled: false
   audittrailEnabled: false
   authorisationEnabled: false
   healthEnabled: false
   archiveEnabled: false
-  
+
+security:
+  commongroundId: "{{ app_commonground_id }}"
+  commongroundKey: "{{ app_commonground_key }}"
+  applicationKey: "{{  app_application_key }}"
+  userKey: "{{ app_user_key }}"
+  authorisationProviderUser: {{ auth_provider_user }}
+  authorisationProviderApplication: {{ auth_provider_application }}
+
 
 php:
   repository: docker.io/conduction/protocomponent-php

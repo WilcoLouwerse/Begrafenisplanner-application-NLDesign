@@ -1,13 +1,35 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        chain_provider:
+            chain:
+                providers: [CommongroundApplicationProvider, CommongroundUserProvider]
+        commongroundApplicationProvider:
+            id: App\Security\User\CommongroundApplicationProvider
+        commongroundUserProvider:
+            id: App\Security\User\CommongroundUserProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
+        # In order to read the docs we must allow anonymous GET reqoust on root    
+        docs:
             anonymous: true
+            pattern:  ^/$
+            methods: [GET]
+        main:
+            provider: chain_provider
+            # comment this function out on crud enviroments
+            #logout:
+            #    path:   app_user_login            
+            #form_login:
+            #    login_path: app_user_login
+            #    check_path: app_user_login   
+            guard:
+                authenticators:
+                    - App\Security\CommongroundApplicationAuthenticator
+                    - App\Security\CommongroundUserAuthenticator  
+                entry_point: App\Security\CommongroundApplicationAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

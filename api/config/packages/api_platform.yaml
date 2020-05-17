@@ -4,8 +4,8 @@ parameters:
     # environment variables are not available yet.
     # You should not need to change this value.
     env(VARNISH_URL): ''
-    env(APP_VERSION): '
-    env(APP_NAME): '''
+    env(APP_VERSION): ''
+    env(APP_NAME): ''
     env(APP_TITLE): ''
     env(APP_DESCRIPTION): ''
     env(APP_REPRO): ''
@@ -20,7 +20,7 @@ parameters:
     env(CONTAINER_PROJECT_NAME): ''
     env(CONTAINER_REPRO): ''
 
-api_platform:
+api_platform:            
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
 
@@ -33,8 +33,8 @@ api_platform:
         - Enviroment: %env(APP_ENV)%
         - Version: %env(APP_VERSION)%
         - Repository: [online](%env(APP_REPRO)%) / [zip](%env(APP_REPRO)%/archive/master.zip)
-        - Docker Image: [online](%env(CONTAINER_REPRO)%) 
-        - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
+        - Docker Image: [online](%env(APP_CONTAINER)%) 
+        - Datamodel: [postman](/schema/%env(APP_NAME)%.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
         
         %env(APP_DESCRIPTION)%         
     
@@ -50,14 +50,24 @@ api_platform:
     
     # Lets confirm to JSON-HA: first, as per common ground. But allow other serializers
     formats:
-        jsonhal:  ['application/hal+json']
-        jsonld:   ['application/ld+json']
-        jsonapi:  ['application/vnd.api+json']
-        json:     ['application/json']
+        jsonld:   ['application/ld+json','application/json+ld']
+        jsonhal:  ['application/hal+json','application/json+hal']
+        jsonapi:  ['application/vnd.api+json','application/json+vnd.api']
+        json:     ['application/json', 'application/health+json','application/json+health']
         xml:      ['application/xml']
         yaml:     ['application/x-yaml']
         csv:      ['text/csv']
         html:     ['text/html']
+    patch_formats:
+        jsonld:     ['application/ld+json']
+        json:       ['application/json']
+        jsonhal:    ['application/hal+json']
+        jsonapi:    ['application/vnd.api+json']
+        jsonmerge:  ['application/merge-patch+json']
+        xml:        ['application/xml']
+        yaml:       ['applications/x-yaml']
+        csv:        ['text/csv']
+        html:       ['text/html']
     
     # Varnish integration, remove if unwanted
     # http_cache:

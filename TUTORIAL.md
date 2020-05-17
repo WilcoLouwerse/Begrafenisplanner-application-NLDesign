@@ -43,7 +43,7 @@ $ docker-compose up
 
 Your computer should now start up your local development environment. Don't worry about al the code coming by, let's just wait until it finishes. You're free to watch along and see what exactly docker is doing, you will know when it's finished when it tells you that it is ready to handle connections. 
 
-Open your browser type http://localhost/ as address and hit enter, you should now see your common ground component up and running.
+Open your browser type <http://localhost/> as address and hit enter, you should now see your common ground component up and running.
 
 ### Trouble shooting
 When spinning up components we make extensive use of the cashing of docker, and use volumes to represent server disks. When running in to unexpected trouble always remember to clear your local docker vm with the -a command (removing image cash)
@@ -74,7 +74,8 @@ We should now see a wizard that allows us to either make new entities, or add pa
 
 ## Keeping your repository up to date with the Conduction Common Ground component 
 
-There are basically three reasons why you should want to keep your repository up to date with the Conduction proto component
+There are basically three reasons why you should want to keep your repository up to date with the Conduction proto component:
+
 * Security, Conduction performs regular security updates on 
 * Functionality we strive to make regular 
 * Compliance, as discussions in the broader Common Ground community progress API standards might advance or change. Conduction will regularly update the Common Ground component with those changes. 
@@ -306,15 +307,9 @@ More information on using data fixtures can be found at the [symfony website](ht
 ## Sharing your work 
 A vital part of te common ground community is sharing your work, and telling other people what you are working. This way people can help you with problems that you run into. And keep tabs on any (security) updates that you make to you code. Sounds like a lot of work right?
 
-Wel it actually isn't, there is a specific common ground platform over at common-ground.dev that reads repositories and updates user. So the only thing we need to do is tell this platform that we have started a new common ground repository. And tell it when we have updates ours. We can do all that by simply adding a webhook to our component. 
+Wel it actually isn't, there is a specific common ground platform over at common-ground.dev that reads repositories and updates user. So the only thing we need to do is tell this platform that we have started a new common ground repository. How do we do that? Simple we use the name common ground (or commonground) in the discription of our repository. common-ground.dev should then pick up our repository within the hour.
 
-When using Github. To set up a webhook, go to the settings page of your repository or organization. From there, click Webhooks, then Add webhook. Use te following settings:
-* Payload URL: https://www.common-ground.dev/webhook/github
-* Content type: Application/JSON
-* Secret: [leave blanck]
-* Events: [just the push event]
-
-Now every time you update your repository the commonground dev page will alerted, rescan your repository and do al the appropriate platform actions. It just as easy as that.
+Another option that we have is to declare our repository on [publiccode](), to do this you need to copy the publiccode.yaml from the [api/public/schema](api/public/schema]) folder to your root folder (dont forget to redo this every time you make a major change to your repository concerning versioning or licencing).  
 
 
 Continues integration
