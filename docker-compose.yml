@@ -201,14 +201,6 @@ services:
       - db-mysql:/var/lib/mysql:rw 
     ports:
      - "3366:3306"
-  
-  # PHP Documentor
-  phpdoc:
-    image: phpdoc/phpdoc
-    depends_on:
-      - php
-    volumes:
-      - ./api:/data:rw
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks
