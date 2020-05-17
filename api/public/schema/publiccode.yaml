@@ -6,7 +6,7 @@ url: "https://github.com/ConductionNL/proto-component"
 landingURL: "pc.zaakonline.nl" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V.0.1"
-releaseDate: "2020-17-04"
+releaseDate: "2020-07-05"
 logo: pc.zaakonline.nl 
 monochromeLogo: img/logo-mono.svg
 
