@@ -201,9 +201,11 @@ parameters:
     # BasisAdressenGemeenten
     env(APP_COMMONGROUND_BAG_LOCATION): 'https://bag.basisregistraties.overheid.nl/api/v1/'
     env(APP_COMMONGROUND_BAG_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+
     # KamerVanKoophandel
     env(APP_COMMONGROUND_KVK_LOCATION): 'https://kvk.%env(APP_DOMAIN)%'
     env(APP_COMMONGROUND_KVK_APIKEY): '%env(APP_COMMONGROUND_KEY)%'
+
     common_ground.kvk.location: '%env(APP_COMMONGROUND_KVK_LOCATION)%'
     common_ground.kvk.apikey: '%env(APP_COMMONGROUND_KVK_APIKEY)%'
     # DienstWegverkeer
@@ -374,16 +376,14 @@ parameters:
             location: '%env(APP_COMMONGROUND_VTC_LOCATION)%'
             apikey: '%env(APP_COMMONGROUND_VTC_APIKEY)%'
         
-    common_ground.oas.type: service
-    common_ground.oas.host: irc.zaakonline.nl
-    common_ground.oas.servers:
-            -
-              description: Demo Omgeving
-              url: 'http://proto.demo.common-ground.dev'       
     common_ground.oas.externalDocs:
             -
-              description: OAS Documentatie
-              url: 'http://proto.demo.common-ground.dev'  
+              description: Developers Toolkit
+              url: 'http://www.common-ground.dev'
+            -
+              description: Appstore
+              url: 'https://appstore.commonground.nl/'
+
     common_ground.oas.developers:
             -
               name: Conduction

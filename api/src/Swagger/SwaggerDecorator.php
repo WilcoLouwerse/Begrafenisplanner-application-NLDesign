@@ -1,6 +1,7 @@
 <?php
 
 // api/src/Swagger/SwaggerDecorator.php
+// api/src/Swagger/SwaggerDecorator.php
 
 namespace App\Swagger;
 
@@ -156,10 +157,12 @@ final class SwaggerDecorator implements NormalizerInterface
         }
 
         if($this->params->get('app_env') == 'prod'){
-            $docs['servers'][] = ['name'=>$this->params->get('app_domain'),'url'=>''.$this->params->get('app_name').'.'.$this->params->get('app_domain'),];
+            $docs['host'] = $this->params->get('app_name').'.'.$this->params->get('app_domain');
+            //$docs['servers'][] = ['name'=>$this->params->get('app_domain'),'url'=>''.$this->params->get('app_name').'.'.$this->params->get('app_domain'),];
         }
         else{
-            $docs['servers'][] = ['name'=>$this->params->get('app_domain'),'url'=>''.$this->params->get('app_name').'.'.$this->params->get('app_env').'.'.$this->params->get('app_domain'),];
+            $docs['host'] = $this->params->get('app_name').'.'.$this->params->get('app_env').'.'.$this->params->get('app_domain');
+            //$docs['servers'][] = ['name'=>$this->params->get('app_domain'),'url'=>''.$this->params->get('app_name').'.'.$this->params->get('app_env').'.'.$this->params->get('app_domain'),];
         }
 
 
@@ -186,7 +189,7 @@ final class SwaggerDecorator implements NormalizerInterface
         }
 
         // Lets set the component type
-        $docs['x-commonground']['type'] = $this->params->get('common_ground.oas.type');
+        $docs['x-commonground']['type'] = $this->params->get('app_type');
 
         // Lets set the devolopers
         if (array_key_exists('developers', $docs['x-commonground'])) {

@@ -6,8 +6,7 @@ x-cache:
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
-    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-admin
-    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-client
+    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-phpdoc
 
 services:
   php:
@@ -193,7 +192,6 @@ services:
     
   db:
     image: mysql:5.7
-    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=example
       - MYSQL_DATABASE=api
@@ -203,6 +201,13 @@ services:
       - db-mysql:/var/lib/mysql:rw 
     ports:
      - "3366:3306"
+  
+  # PHP Documentor
+  phpdoc:
+    image: phpdoc/phpdoc
+    volumes:
+      - ./api:/api phpdoc/phpdoc:rw,cached
+      - ./docs:/data phpdoc/phpdoc:rw,cached
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks
