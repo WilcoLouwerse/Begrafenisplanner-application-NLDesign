@@ -15,7 +15,7 @@ settings:
   demo: pan.conduction.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: begraven.zaakonline.nl
-  subdomain: pan
+  subdomain: bpui
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
