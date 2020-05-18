@@ -137,33 +137,40 @@
             var autocompleteGrafsoort = document.getElementById("autocomplete-grafsoort");
             var selectedIndex = 0;
 
+            {% if selectedGemeente is defined %}
             for (var i=0; i < autocompleteGemeente.length; i++) {
                 if(autocompleteGemeente[i].value == "{{ selectedGemeente['@id'] }}") {
                     selectedIndex = i;
                 }
             }
+            {% endif %}
             autocompleteGemeente.selectedIndex = selectedIndex;
 
             setBegraafplaatsIndex();
 
+            {% if selectedGrafsoort is defined %}
             for (var i=0; i < autocompleteGrafsoort.length; i++) {
                 if(autocompleteGrafsoort[i].value == "{{ selectedGrafsoort['@id'] }}") {
                     selectedIndex = i;
                 }
             }
+            {% endif %}
             autocompleteGrafsoort.selectedIndex = selectedIndex;
 
+            {% if selectedBegraafplaats is defined %}
             if( "{{ selectedBegraafplaats['reference'] }}" == "Wognum (Kreekland), ER IS NOG GEEN BEGRAAFPLAATS GEKOZEN!" ) {
                 autocompleteGemeente.selectedIndex = 0;
                 autocompleteGrafsoort.selectedIndex = 0;
                 document.getElementById("autocomplete-begraafplaats").disabled = true;
                 autocompleteGrafsoort.disabled = true;
             }
+            {% endif %}
 
             function setBegraafplaatsIndex()
             {
                 var autocompleteBegraafplaats = document.getElementById("autocomplete-begraafplaats");
                 var selectedBegraafplaatsIndex = 0;
+                {% if selectedBegraafplaats is defined %}
                 for (var i=0; i < autocompleteBegraafplaats.length; i++) {
                     var begraafplaats = JSON.parse(autocompleteBegraafplaats[i].value);
                     if(begraafplaats.Cemetery == "{{ selectedBegraafplaats['@id'] }}") {
@@ -173,6 +180,7 @@
                 if( "{{ selectedBegraafplaats['reference'] }}" == "Wognum (Kreekland), ER IS NOG GEEN BEGRAAFPLAATS GEKOZEN!" ) {
                     selectedBegraafplaatsIndex = 0;
                 }
+                {% endif %}
                 autocompleteBegraafplaats.selectedIndex = selectedBegraafplaatsIndex;
             }
         </script>
