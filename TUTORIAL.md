@@ -340,6 +340,18 @@ Documentation and dockblocks
 -------
 You want both your redoc documentation and your code to be readable and reausable to other developers. To this effect we use docblok annotation. You can read more about that [here](https://docs.phpdoc.org/references/phpdoc/basic-syntax.html) but the basic is this, we supply each class and propery with a docblock contained within /\* \* / characters. At the very least we want to describe our properties, the expected results and example data (see the example under [audittrail](#audittrail)
 
+You can generate documantation trough docker-compose exec php php phpDocumentor.phar -d src -t public/docs
+
+### Adjusting your readme file 
+
+### Using docblocks for in code documentation
+
+### Setting up you Read the Docs page
+
+### Setting up github pages
+
+### Exposing your API documentation
+
 Audittrail
 -------
 As you might expect the proto-component ships with a neat function for generating audit trails, that basically exist of three parts. 

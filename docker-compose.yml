@@ -6,8 +6,8 @@ x-cache:
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
-    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-admin
-    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-client
+    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-phpdoc
+    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-sphinx
 
 services:
   php:
@@ -190,10 +190,17 @@ services:
   #    - POSTGRES_PASSWORD=!ChangeMe!
   #  volumes:
   #    - db-data:/var/lib/postgresql/data:rw
-    
+  
+  # From: https://hub.docker.com/r/phpdoc/phpdoc/
+  phpDocumentor:
+    image: phpdoc/phpdocs
+      
+  # From: tsgkadot/docker-doxygen    
+  sphinx:
+    image: tsgkadot/docker-doxygen
+      
   db:
     image: mysql:5.7
-    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=example
       - MYSQL_DATABASE=api
