@@ -80,11 +80,13 @@ spec:
                   configMapKeyRef:
                       name: {{ template "fullname" . }}
                       key: app-type
+            {{ if .Values.settings.id }}
             - name: APP_ID
               valueFrom:
                     configMapKeyRef:
                         name: {{ template "fullname" . }}
                         key: app-id
+            {{ end }}
             - name: APP_DEMO
               valueFrom:
                 configMapKeyRef:
