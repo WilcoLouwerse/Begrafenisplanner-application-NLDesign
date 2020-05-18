@@ -18,35 +18,42 @@ jobs:
               run: |
                   export ENV=${{ github.event.client_payload.environment }}
                   echo ::set-env name=APP_ENV::$ENV
-            - name: disable debugging
-              run: echo ::set-env name=DEBUG::0
-            - name: enable debugging 
-              if: github.event.client_payload.environment == 'dev'
-              run: echo ::set-env name=DEBUG::1
-            - name: Set APP_DOMAINS
+            - name: Set DEBUG
+              run: echo ::set-env name=DEBUG::${{ github.event.client_payload.debug }}
+            - name: Set AUTH_KEY
               run: |
-                  export DOMAINS=${{ github.event.client_payload.domains }}
-                  echo ::set-env name=APP_DOMAINS::$DOMAINS
+               export CACHE=${{ github.event.client_payload.cache }}
+               echo ::set-env name=APP_CACHE::$CACHE
+            - name: Set APP_DOMAIN
+              run: |
+                  export DOMAIN="${{ github.event.client_payload.domain }}"
+                  echo ::set-env name=APP_DOMAIN::$DOMAIN
             - name: Set DB_URL
               run: |
-                  export DBURL=${{ github.event.client_payload.dburl }}
+                  export DBURL="${{ github.event.client_payload.dburl }}"
                   echo ::set-env name=DB_URL::$DBURL
             # Het volgende moeten we misschien naar de secrets verkassen
             - name: Set AUTH_KEY
               run: |
-                  export AUTHKEY=${{ github.event.client_payload.dburl }}
+                  export AUTHKEY=${{ github.event.client_payload.authorization }}
                   echo ::set-env name=AUTH_KEY::$AUTHKEY
-            - name: Print variables
-              run: |
-                  printf "APP_NAME: \t\t $APP_NAME\nAPP_ENV: \t\t $APP_ENV\nDEBUG: \t\t $DEBUG\nAPP_DOMAINS: \t\t $APP_DOMAINS\nDB_URL: \t\t $DB_URL\nAUTH_KEY: \t\t $AUTH_KEY"
+#            - name: Print variables
+#              run: |
+#                  printf "APP_NAME: \t\t $APP_NAME\nAPP_ENV: \t\t $APP_ENV\nDEBUG: \t\t $DEBUG\nAPP_DOMAIN: \t\t $APP_DOMAIN\nDB_URL: \t\t $DB_URL\nAUTH_KEY: \t\t $AUTH_KEY"
             - name: Create kube config
-              uses: finnp/create-file-action@master
-              env:
-              FILE_NAME: "kubeconfig.yaml"
-              FILE_DATA: ${{ github.event.client_payload.kubeconfig }}
-            - name: Set correct helm version
-              if: (contains( github.ref, 'master' ) || contains( github.ref, 'staging' ) || contains( github.ref, 'development' )) && steps.kubeconfig.outputs.success == 'true'
-              run: helm init --upgrade --kubeconfig="kubeconfig.yaml"  
-            - name: Helm Install
+              id: kubeconfig
               run: |
-                  helm install $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domains=$APP_DOMAINS,postgresql.enabled=false,postgresql.url=$DB_URL
+                  if [ "${{ github.event.client_payload.kubeconfig }}" != "" ]; then
+                    printf "${{ github.event.client_payload.kubeconfig }}" > kubeconfig.yaml
+                    echo "##[set-output name=success]true"
+                  else
+                    echo "##[set-output name=success]false"
+                  fi 
+            - name: Set correct helm version
+              if: steps.kubeconfig.outputs.success == 'true'
+              run: curl -L https://git.io/get_helm.sh | bash -s -- --version v2.12.3 
+#            - run: helm version
+            - name: Helm Install
+              if: steps.kubeconfig.outputs.success == 'true'
+              run: |
+                  helm install --name $APP_NAME-$APP_ENV ./api/helm --namespace=$APP_ENV --kubeconfig=./kubeconfig.yaml --set settings.debug=$DEBUG,settings.env=$APP_ENV,settings.domain="$APP_DOMAIN",settings.cache="$APP_CACHE",security.commongroundKey=$AUTH_KEY,security.applicationKey=$AUTH-KEY,postgresql.enabled=false,postgresql.url="$DB_URL"

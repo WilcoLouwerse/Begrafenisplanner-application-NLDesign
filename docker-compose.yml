@@ -6,8 +6,8 @@ x-cache:
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-php
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx
     - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-varnish
-    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-admin
-    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-client
+    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-phpdoc
+    - ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-sphinx
 
 services:
   php:
@@ -33,15 +33,18 @@ services:
       - DATABASE_URL=mysql://api-platform:!ChangeMe!@db/api?serverVersion=10.1
       - APP_ENV=${APP_ENV}
       - APP_DEBUG=${APP_DEBUG} 
+      - APP_CACHE=${APP_CACHE}
       - APP_VERSION=${APP_VERSION}    
       - APP_NAME=${APP_NAME} 
       - APP_TITLE=${APP_TITLE}
+      - APP_ID=${APP_ID}
+      - APP_DOMAIN=${APP_DOMAIN}
       - APP_SUBDOMAIN=${APP_SUBDOMAIN}
-      - APP_DOMAINS=${APP_DOMAINS}
       - APP_DEMO=${APP_DEMO}
       - APP_REPRO=${APP_REPRO}
       - APP_CONTAINER=${APP_CONTAINER}
       - APP_DESCRIPTION=${APP_DESCRIPTION}
+      - APP_TYPE=${APP_TYPE}
       - APP_LOGO=${APP_LOGO}
       - APP_HOME=${APP_HOME}
       - APP_COMMONGROUND_ID=${APP_COMMONGROUND_ID}
@@ -65,6 +68,8 @@ services:
       - ARCHIVE_ENABLED=${ARCHIVE_ENABLED}
       - NLX_OUTWAY=${NLX_OUTWAY}
       - NLX_INWAY=${NLX_INWAY}
+      - APP_COMMONGROUND_ZRC_LOCATION=${APP_COMMONGROUND_ZRC_LOCATION}
+      - APP_COMMONGROUND_ZTC_LOCATION=${APP_COMMONGROUND_ZTC_LOCATION}
     ports:
       - "82:80"
 
@@ -185,10 +190,17 @@ services:
   #    - POSTGRES_PASSWORD=!ChangeMe!
   #  volumes:
   #    - db-data:/var/lib/postgresql/data:rw
-    
+  
+  # From: https://hub.docker.com/r/phpdoc/phpdoc/
+  phpDocumentor:
+    image: phpdoc/phpdocs
+      
+  # From: tsgkadot/docker-doxygen    
+  sphinx:
+    image: tsgkadot/docker-doxygen
+      
   db:
     image: mysql:5.7
-    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=example
       - MYSQL_DATABASE=api

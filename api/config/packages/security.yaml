@@ -5,18 +5,23 @@ security:
             chain:
                 providers: [CommongroundApplicationProvider, CommongroundUserProvider]
         commongroundApplicationProvider:
-            id: App\Security\User\CommongroundApplicationProvider
+            id: Conduction\CommonGroundBundle\Security\User\CommongroundApplicationProvider
         commongroundUserProvider:
-            id: App\Security\User\CommongroundUserProvider
+            id: Conduction\CommonGroundBundle\Security\User\CommongroundUserProvider
     firewalls:
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern: ^/(_(profiler|wdt)|css|images|js|docs)/
             security: false
         # In order to read the docs we must allow anonymous GET reqoust on root    
         docs:
             anonymous: true
-            pattern:  ^/$
+            pattern:  (^/$|^/docs|^/docs/$)
             methods: [GET]
+        # The mollie webhook does not have our API key
+        webhook:
+            anonymous: true
+            pattern: ^/payments/mollie_webhook
+            methods: [POST]
         main:
             provider: chain_provider
             # comment this function out on crud enviroments
@@ -27,9 +32,9 @@ security:
             #    check_path: app_user_login   
             guard:
                 authenticators:
-                    - App\Security\CommongroundApplicationAuthenticator
-                    - App\Security\CommongroundUserAuthenticator  
-                entry_point: App\Security\CommongroundApplicationAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
+                entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -40,5 +45,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+    # - { path: ^/admin, roles: ROLE_ADMIN }
+    # - { path: ^/profile, roles: ROLE_USER }

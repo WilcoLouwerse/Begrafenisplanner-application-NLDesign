@@ -8,17 +8,14 @@ settings:
   name: {{ app_name }}
   title: {{ app_title }}
   version: {{ app_version }}
+  id: {{ app_id }}
   description: '{{ app_description }}'
   type: {{ app_type }}
   repro: {{ app_repro }}
   demo: {{ app_demo }}
   container: {{ app_container }}
+  domain: {{ app_domain }}
   subdomain: {{ app_subdomain }}
-  domains:
-{% for domain in app_domains %}
-    - {{ domain }}
-{% endfor %}
-  domainsJson: {{ app_domains | json_encode()|raw }}
   organisationName: {{ organization_name }}
   email: {{ organization_email }}
   country: {{ organization_country }}
@@ -27,6 +24,7 @@ settings:
   unit: {{ organization_unit }}
   env: {{ app_env }}
   debug: {{ app_debug }}
+  cache: {{ app_debug }}
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '{{ trusted_hosts }}'
