@@ -1,7 +1,11 @@
 <div class="content-background">
     <div class="content">
         <h2>Datum & Tijd</h2>
+        {% if selectedBegraafplaats is defined %}
         <p>Agenda van de begraafplaats: {{ selectedBegraafplaats["reference"] }}</p>
+        {% else %}
+        <p>Agenda van de begraafplaats: ??? Er is nog geen begraafplaats geselecteerd!</p>
+        {% endif %}
         <script>
             var events = [
 
@@ -154,12 +158,16 @@
                     var urlEvent = event['url'];
 
                     var cell1 = row.insertCell(0);
+                    {% if selectedEvent is defined %}
                     if (urlEvent == "{{ selectedEvent['@id'] }}") {
                         cell1.innerHTML = "<strong>" + startTime + "/" + endTime + "</strong>";
                     }
                     else {
                         cell1.innerHTML = startTime + "/" + endTime;
                     }
+                    {% else %}
+                    cell1.innerHTML = startTime + "/" + endTime;
+                    {% endif %}
                     cell1.value = urlEvent;
                 }
             </script>
