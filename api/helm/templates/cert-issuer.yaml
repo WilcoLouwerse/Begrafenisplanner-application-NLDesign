@@ -11,7 +11,7 @@ metadata:
 spec:
   acme:
     email: {{ .Values.settings.email }}
-    http01: {}
+#    http01: {}
     privateKeySecretRef:
       name: letsencrypt-private-key
     server: https://acme-v02.api.letsencrypt.org/directory
