@@ -193,7 +193,7 @@ services:
   
   # From: https://hub.docker.com/r/phpdoc/phpdoc/
   phpDocumentor:
-    image: phpdoc/phpdocs
+    image: phpdoc/phpdoc
       
   # From: tsgkadot/docker-doxygen    
   sphinx:
