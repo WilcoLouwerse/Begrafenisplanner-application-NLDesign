@@ -194,6 +194,10 @@ services:
   # From: https://hub.docker.com/r/phpdoc/phpdoc/
   phpDocumentor:
     image: phpdoc/phpdoc
+    
+  helm:
+    image: alpine/helm:3.2.1
+    command: helm package /srv/api/helm && helm repo index ./api/helm
       
   # From: tsgkadot/docker-doxygen    
   sphinx:
