@@ -197,7 +197,10 @@ services:
     
   helm:
     image: alpine/helm:3.2.1
-    command: helm package /srv/api/helm && helm repo index ./api/helm
+    volumes: 
+      - ./api/helm:/apps
+    command: package /apps 
+    command: repo index /apps
       
   # From: tsgkadot/docker-doxygen    
   sphinx:
