@@ -8,13 +8,13 @@ settings:
   name: pc
   title: Proto component commonground
   version: V.0.1
-  id: 
+  id: &#039;&#039;
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: component
   repro: https://github.com/ConductionNL/proto-component
   demo: pc.zaakonline.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
-  domain: zuid-drecht.nl
+  domain: conduction.nl
   subdomain: pc
   organisationName: Conduction
   email: info@conduction.nl
@@ -27,7 +27,7 @@ settings:
   cache: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^localhost$|^127.0.0.1$|^(.+\.)?conduction\.nl$|^(.+\.)?zuid-drecht.nl$'
+  trustedHosts: '^localhost$|^127.0.0.1$|^(.+\.)?conduction\.nl$'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:

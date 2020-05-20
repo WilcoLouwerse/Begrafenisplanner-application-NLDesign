@@ -71,10 +71,6 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'php' ] || [ "$1" = 'bin/console' ]; then
 		echo "Updating Helm charts"
 		bin/console app:helm:update --location=/srv/api/helm --spec-version=3
 
-		echo "Creating Helm repository"
-		helm package /srv/api/helm $APP_NAME -d /srv/api/helm
-		helm repo index /srv/api/helm
-
 		# this should only be done in an build
 		echo "Updating publiccode charts"
 		bin/console app:publiccode:update --location=/srv/api/public/schema/ --spec-version=0.2
