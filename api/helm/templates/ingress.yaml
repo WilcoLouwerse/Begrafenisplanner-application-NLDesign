@@ -19,13 +19,26 @@ spec:
 #    - {{ .Values.settings.domain }}
     secretName: {{ include "name" . }}-{{ .Values.settings.env }}-cert
   rules:
-    {{- if eq $.Values.settings.env "prod" }}
+    {{- if eq $.Values.settings.env "prod" and !$.Values.settings.subdomain }}
     - host: {{ $.Values.settings.subdomain }}.{{ $.Values.settings.domain }}
       http:
           paths:
             - backend:
                 serviceName: {{ $.Values.settings.name }}
-                servicePort: 80            
+                servicePort: 80
+    {{- elseif eq $.Values.settings.env "prod" and $.Values.settings.subdomain }}
+    - host {{ $.Values.settings.domain }}
+      http:
+          paths:
+            - backend:
+                serviceName: {{ $.Values.settings.name }}
+                servicePort: 80
+    - host www.{{ $.Values.settings.domain }}
+      http:
+          paths:
+            - backend:
+                serviceName: {{ $.Values.settings.name }}
+                servicePort: 80
     {{- else }}      
     - host: {{ $.Values.settings.subdomain }}.{{ $.Values.settings.env }}.{{ $.Values.settings.domain }}
       http:
