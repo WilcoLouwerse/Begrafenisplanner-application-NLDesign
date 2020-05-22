@@ -2361,20 +2361,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-<<<<<<< HEAD
-        example: '2020-05-15 08:52:35'
-=======
-        example: '2020-05-15 08:16:16'
->>>>>>> feature
+        example: '2020-05-22 14:20:33'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-<<<<<<< HEAD
-        example: '2020-05-15 08:52:35'
-=======
-        example: '2020-05-15 08:16:16'
->>>>>>> feature
+        example: '2020-05-22 14:20:33'
     required: []
   AuditTrail-write:
     properties:
@@ -2422,20 +2414,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-<<<<<<< HEAD
-        example: '2020-05-15 08:52:35'
-=======
-        example: '2020-05-15 08:16:16'
->>>>>>> feature
+        example: '2020-05-22 14:20:33'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-<<<<<<< HEAD
-        example: '2020-05-15 08:52:35'
-=======
-        example: '2020-05-15 08:16:16'
->>>>>>> feature
+        example: '2020-05-22 14:20:33'
     required: []
   ChangeLog-write:
     properties:
@@ -2476,8 +2460,8 @@ securityDefinitions:
 host: irc.zaakonline.nl
 servers:
   -
-    name: begraven.zaakonline.nl
-    url: pan.dev.begraven.zaakonline.nl
+    name: processen.zaakonline.nl
+    url: pan.dev.processen.zaakonline.nl
 externalDocs:
   -
     description: 'OAS Documentatie'
