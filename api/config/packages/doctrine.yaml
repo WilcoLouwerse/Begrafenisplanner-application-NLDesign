@@ -40,4 +40,4 @@ doctrine:
                 is_bundle: false
                 prefix: Conduction\CommonGroundBundle\Entity
                 type: annotation
-                dir: "%kernel.root_dir%/../vendor/Conduction/CommonGroundBundle/Entity"
+                dir: "%kernel.root_dir%/../vendor/conduction/commongroundbundle/Entity"
