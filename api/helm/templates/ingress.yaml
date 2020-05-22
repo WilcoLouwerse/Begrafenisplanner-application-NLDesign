@@ -26,7 +26,7 @@ spec:
             - backend:
                 serviceName: {{ $.Values.settings.name }}
                 servicePort: 80
-    {{- else if eq $.Values.settings.env "prod" and $.Values.settings.subdomain }}
+    {{- else if eq $.Values.settings.env "prod" }}
     - host {{ $.Values.settings.domain }}
       http:
           paths:
