@@ -195,11 +195,16 @@ services:
   phpDocumentor:
     image: phpdoc/phpdoc
     
-  helm:
+  helmPackage:
     image: alpine/helm:3.2.1
     volumes: 
       - ./api/helm:/apps
     command: package /apps 
+    
+  helmIndex:
+    image: alpine/helm:3.2.1
+    volumes:
+      - ./api/helm:/apps
     command: repo index /apps
       
   # From: tsgkadot/docker-doxygen    
