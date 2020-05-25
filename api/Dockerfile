@@ -59,12 +59,15 @@ RUN set -eux; \
 	; \
 	pecl install \
 		apcu-${APCU_VERSION} \
+		redis \
 	; \
+	rm -rf /tmp/pear \
 	pecl clear-cache; \
 	docker-php-ext-enable \
 		apcu \
 		opcache \
 		mysqli \
+		redis \
 	; \
 	\
 	runDeps="$( \
@@ -125,11 +128,6 @@ VOLUME /srv/api/var
 
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
-
-# Install PHP Redis extension
-RUN pecl install -o -f redis \
-  &&  rm -rf /tmp/pear \
-  &&  docker-php-ext-enable redis
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
