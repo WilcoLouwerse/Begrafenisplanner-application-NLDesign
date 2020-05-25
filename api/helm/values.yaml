@@ -61,12 +61,13 @@ php:
     jwtSecret: ""
   env: prod
   secret: ""
+  replicaCount: 2
 
 nginx:
   repository: docker.io/conduction/protocomponent-nginx
   tag: latest
   pullPolicy: Always
-  replicaCount: 1
+  replicaCount: 2
 
 varnish:
   enabled: true
