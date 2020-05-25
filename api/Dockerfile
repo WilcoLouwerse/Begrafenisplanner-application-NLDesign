@@ -126,6 +126,11 @@ VOLUME /srv/api/var
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
+# Install PHP Redis extension
+RUN pecl install -o -f redis \
+  &&  rm -rf /tmp/pear \
+  &&  docker-php-ext-enable redis
+
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 

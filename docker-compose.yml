@@ -70,6 +70,8 @@ services:
       - NLX_INWAY=${NLX_INWAY}
       - APP_COMMONGROUND_ZRC_LOCATION=${APP_COMMONGROUND_ZRC_LOCATION}
       - APP_COMMONGROUND_ZTC_LOCATION=${APP_COMMONGROUND_ZTC_LOCATION}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     ports:
       - "82:80"
 
@@ -208,6 +210,9 @@ services:
     volumes:
       - ./api/helm:/apps
     command: repo index /apps
+    
+  redis:
+    image: redis:4-alpine
       
   # From: tsgkadot/docker-doxygen    
   sphinx:
