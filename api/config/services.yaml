@@ -47,6 +47,6 @@ services:
             #       - !php/const Redis::OPT_PREFIX
             #       - 'my_prefix'
 
-        Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
-            arguments:
-                - '@Redis'
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'
