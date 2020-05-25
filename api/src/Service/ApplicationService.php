@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-use App\Service\CommonGroundService;
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 
 class ApplicationService
 {
