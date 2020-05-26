@@ -59,12 +59,15 @@ RUN set -eux; \
 	; \
 	pecl install \
 		apcu-${APCU_VERSION} \
+		redis \
 	; \
+	rm -rf /tmp/pear \
 	pecl clear-cache; \
 	docker-php-ext-enable \
 		apcu \
 		opcache \
 		mysqli \
+		redis \
 	; \
 	\
 	runDeps="$( \
