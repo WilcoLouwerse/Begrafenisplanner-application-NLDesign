@@ -4,7 +4,9 @@
 # 		"php" stage	 		#
 #############################
 # The base stage for all our stages
+
 FROM conduction/pc-php:prod AS api_platform_php
+
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1

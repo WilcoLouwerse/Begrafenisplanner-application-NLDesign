@@ -70,6 +70,8 @@ services:
       - NLX_INWAY=${NLX_INWAY}
       - APP_COMMONGROUND_ZRC_LOCATION=${APP_COMMONGROUND_ZRC_LOCATION}
       - APP_COMMONGROUND_ZTC_LOCATION=${APP_COMMONGROUND_ZTC_LOCATION}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
     ports:
       - "82:80"
 
@@ -195,6 +197,23 @@ services:
   # From: https://hub.docker.com/r/phpdoc/phpdoc/
   phpDocumentor:
     image: phpdoc/phpdoc
+    
+  helmPackage:
+    image: alpine/helm:3.2.1
+    volumes: 
+      - ./api/helm:/apps
+    command: package /apps 
+    
+  helmIndex:
+    depends_on:
+      - helmPackage
+    image: alpine/helm:3.2.1
+    volumes:
+      - ./api/helm:/apps
+    command: repo index /apps
+    
+  redis:
+    image: redis:4-alpine
       
   # From: tsgkadot/docker-doxygen    
   sphinx:

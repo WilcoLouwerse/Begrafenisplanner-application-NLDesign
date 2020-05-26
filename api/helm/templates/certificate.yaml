@@ -1,15 +1,15 @@
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
-    name: {{ include "name" . }}-{{ .Values.settings.env }}-cert
+    name: {{ .Values.settings.name }}-{{ .Values.settings.env }}-cert
     labels:
-        app.kubernetes.io/name: {{ include "name" . }}
-        app.kubernetes.io/part-of: {{ include "name" . }}
+        app.kubernetes.io/name: {{ .Values.settings.name }}
+        app.kubernetes.io/part-of: {{ .Values.settings.name }}
         helm.sh/chart: {{ include "chart" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  secretName: {{ include "name" . }}-{{ .Values.settings.env }}-cert
+  secretName: {{ .Values.settings.name }}-{{ .Values.settings.env }}-cert
   duration: 24h
   renewBefore: 12h
   dnsNames:
@@ -24,5 +24,5 @@ spec:
   - {{ $.Values.settings.subdomain }}.{{ $.Values.settings.env }}.{{ $.Values.settings.domain }}    
   {{- end }}
   issuerRef:
-    name: {{ include "name" . }}-{{ .Values.settings.env }}-letsencrypt
+    name: {{ .Values.settings.name }}-{{ .Values.settings.env }}-letsencrypt
     kind: ClusterIssuer
