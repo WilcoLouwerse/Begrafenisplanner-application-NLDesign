@@ -76,6 +76,7 @@ services:
       - "82:80"
 
   api:
+    &nginx
     image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nginx:${APP_ENV}
     build:
       context: ./api
@@ -114,23 +115,23 @@ services:
     environment:
      - BACKENDS=php
       
-  nlx-outway:
-    image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-outway:${APP_ENV}
-    build:
-      context: ./api
-      target: api-nlx-outway
-    depends_on:
-      - nlx-postgres
-    volumes:
-      - ./api/nlx-setup:/certs:rw,cached
-    environment:
-      - DIRECTORY_INSPECTION_ADDRESS=directory-inspection-api.demo.nlx.io:443 
-      - TLS_NLX_ROOT_CERT=/certs/root.crt 
-      - TLS_ORG_CERT=/certs/org.crt 
-      - TLS_ORG_KEY=/certs/org.key 
-      - POSTGRES_DSN=postgres://postgres:postgres@nlx-postgres/txlog-db?sslmode=disable&connect_timeout=10
-    networks:
-      - nlx
+ # nlx-outway:
+ #   image: ${CONTAINER_REGISTRY_BASE}/${CONTAINER_PROJECT_NAME}-nlx-outway:${APP_ENV}
+ #   build:
+ #     context: ./api
+ #     target: api-nlx-outway
+ #   depends_on:
+ #     - nlx-postgres
+ #   volumes:
+ #     - ./api/nlx-setup:/certs:rw,cached
+ #   environment:
+ #     - DIRECTORY_INSPECTION_ADDRESS=directory-inspection-api.demo.nlx.io:443 
+ #     - TLS_NLX_ROOT_CERT=/certs/root.crt 
+ #     - TLS_ORG_CERT=/certs/org.crt 
+ #     - TLS_ORG_KEY=/certs/org.key 
+ #     - POSTGRES_DSN=postgres://postgres:postgres@nlx-postgres/txlog-db?sslmode=disable&connect_timeout=10
+ #   networks:
+ #     - nlx
     
  # Uncomment the follwoign lines if you want to deploy trough a docker-compose chart and wish to use an nlx inway
  # 
@@ -155,33 +156,33 @@ services:
  #     -  nlx
   
   # Comment out this service in production if you do not want to use nlx
-  nlx-postgres:
-    image: postgres:12
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: txlog-db
-      POSTGRES_USER: postgres
-    volumes:
-      - nlx-data-2:/var/lib/postgresql/data:rw
-    networks:
-      - nlx
+ # nlx-postgres:
+ #   image: postgres:12
+ #   environment:
+ #     POSTGRES_PASSWORD: postgres
+ #     POSTGRES_DB: txlog-db
+ #     POSTGRES_USER: postgres
+ #   volumes:
+ #     - nlx-data-2:/var/lib/postgresql/data:rw
+ #   networks:
+ #     - nlx
       
   # Comment out this service in production if you do not want to use nlx
-  txlog-db:
-    image: nlxio/txlog-db
-    depends_on:
-      - nlx-postgres
-      - nlx-outway
+  #txlog-db:
+  #  image: nlxio/txlog-db
+  #  depends_on:
+  #    - nlx-postgres
+  #    - nlx-outway
     # If you us this docker-compose file for production enviroments and want to us nlx-inway uncomment the following lins
     #  - nlx-inway
-    environment:
-      PGHOST: nlx-postgres
-      PGUSER: postgres
-      PGPASSWORD: postgres
-      PGDATABASE: txlog-db
-    command: /usr/local/bin/upgrade-db.sh
-    networks:
-      - nlx
+  #  environment:
+  #    PGHOST: nlx-postgres
+  #    PGUSER: postgres
+  #    PGPASSWORD: postgres
+  #    PGDATABASE: txlog-db
+  #  command: /usr/local/bin/upgrade-db.sh
+  #  networks:
+  #    - nlx
     
   #db:
   #  image: postgres:10-alpine
