@@ -233,7 +233,7 @@ services:
 
   mercure:
     # In production, you may want to use the managed version of Mercure, https://mercure.rocks
-    image: dunglas/mercure
+    image: dunglas/mercure:v0.9
     environment:
       # You should definitely change all these values in production
       - JWT_KEY=!UnsecureChangeMe!
