@@ -120,6 +120,23 @@ class ProcessController extends AbstractController
             key_exists('properties', $variables['request'])
         )
         {
+            foreach($variables['request']['properties'] as $key=>$property)
+            {
+                if (!is_array($property) && strpos($property, 'begraven.zaakonline.nl') !== false)
+                {
+                    $variables['request']['urlproperties'][$key] = $commonGroundService->getResource($property);
+                    if (key_exists('reference',$variables['request']['urlproperties'][$key]))
+                    {
+                        $variables['request']['urlproperties'][$key]['name'] = $variables['request']['urlproperties'][$key]['reference'];
+                    }
+                    if(key_exists('burgerservicenummer',$variables['request']['urlproperties'][$key]))
+                    {
+                        $variables['request']['urlproperties'][$key]['name'] = $variables['request']['urlproperties'][$key]['naam']['voornamen']." ".
+                            $variables['request']['urlproperties'][$key]['naam']['geslachtsnaam'];
+                    }
+                }
+            }
+
             if (key_exists('begraafplaats', $variables['request']['properties']))
             {
                 $variables['selectedBegraafplaats'] = $commonGroundService->getResource($variables['request']['properties']['begraafplaats']);
@@ -137,6 +154,14 @@ class ProcessController extends AbstractController
             if (key_exists('event', $variables['request']['properties']))
             {
                 $variables['selectedEvent'] = $commonGroundService->getResource($variables['request']['properties']['event']);
+            }
+            if (key_exists('overledene', $variables['request']['properties']))
+            {
+                $variables['selectedOverledene'] = $commonGroundService->getResource($variables['request']['properties']['overledene']);
+            }
+            if (key_exists('belanghebbende', $variables['request']['properties']))
+            {
+                $variables['selectedBelanghebbende'] = $commonGroundService->getResource($variables['request']['properties']['belanghebbende']);
             }
         }
         else {//de volgende code moet nog eens goed naar gekeken worden, dit is een tijdelijke oplossing voor een probleem, het hard wegzetten van een begraafplaats.

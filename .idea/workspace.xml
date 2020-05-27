@@ -2,11 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d7d99c9-86af-4102-a470-73b845bd8d6f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/api/public/uno/components/header/header_westfriesland.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/public/uno/components/header/header_westfriesland.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/public/uno/components/header/images/Logo_Westfriesland_me_ tekst_vector.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/public/uno/components/header/images/Logo_Westfriesland_vector.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/public/uno/components/header/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/uno/components/header/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/public/uno/components/header/header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/uno/components/header/header.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/Controller/ProcessController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/ProcessController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/widgets/zz/datumtijd_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/widgets/zz/datumtijd_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/header.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/process/load.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/process/load.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/widgets/zz/belanghebbende_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/widgets/zz/belanghebbende_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/widgets/zz/overledene_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/widgets/zz/overledene_form.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +29,20 @@
     <execution>
       <executable />
     </execution>
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -157,10 +182,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/api/templates/widgets/zz" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/api/public/uno/components/header" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\public\uno\components\header" />
+      <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\public\uno\components\header\images" />
       <recent name="K:\HTA Software\Common Ground\NLDesignHulpmiddelen\Proto-application-NLDesign-Verzoek\api\templates\widgets\zz" />
     </key>
   </component>
@@ -185,7 +212,10 @@
       <workItem from="1589557315174" duration="246000" />
       <workItem from="1589557637115" duration="52000" />
       <workItem from="1589557812499" duration="5307000" />
-      <workItem from="1589783212022" duration="3285000" />
+      <workItem from="1589783212022" duration="4537000" />
+      <workItem from="1590484024678" duration="2079000" />
+      <workItem from="1590579156244" duration="16215000" />
+      <workItem from="1590595468130" duration="11000" />
     </task>
     <servers />
   </component>
@@ -216,17 +246,17 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1588945886272" />
-    <state x="989" y="236" width="607" height="536" key="find.popup" timestamp="1589543396032">
+    <state x="989" y="236" width="607" height="536" key="find.popup" timestamp="1590590476617">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="989" y="236" width="607" height="536" key="find.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1589543396032" />
-    <state x="616" y="240" key="run.anything.popup" timestamp="1589554591027">
+    <state x="989" y="236" width="607" height="536" key="find.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1590590476617" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1590583923811">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" key="run.anything.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1589554591027" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1589787885227">
+    <state x="616" y="240" key="run.anything.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1590583923811" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1590581732234">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1589787885227" />
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1590581732234" />
   </component>
 </project>

@@ -12,10 +12,44 @@
             });
         </script>
         <script>
+            var ingeschrevenpersonen = [
+
+                {% for ingeschrevenpersoon in ingeschrevenpersonen %}
+                {
+                    bsn: '{{ ingeschrevenpersoon['burgerservicenummer'] }}',
+                    voornamen: '{{ ingeschrevenpersoon['naam']['voornamen'] }}',
+                    geslachtsnaam: '{{ ingeschrevenpersoon['naam']['geslachtsnaam'] }}',
+                    {% if ingeschrevenpersoon['geboorte']['datum']['date'] is defined %}
+                        geboortedatum: '{{ ingeschrevenpersoon['geboorte']['datum']['date'] }}',
+                    {% else %}
+                        geboortedatum: '',
+                    {% endif %}
+                    url: 'https://brp.dev.begraven.zaakonline.nl/ingeschrevenpersonen/uuid/{{ ingeschrevenpersoon['id'] }}'
+                },
+                {% endfor %}
+            ];
+        </script>
+        <script>
             function FindBsn() {
                 var selectedbsn = document.getElementById("bsn").value;
-                alert("Selected bsnnummer is: " + selectedbsn);
-                document.getElementById("bsnnummer").textContent = selectedbsn;
+                var selectedIngeschrevenpersoonBsn = "";
+
+                for (var i = 0; i < ingeschrevenpersonen.length;i++) {
+                    if(ingeschrevenpersonen[i]['bsn'] == selectedbsn){
+                        selectedIngeschrevenpersoonBsn = ingeschrevenpersonen[i]['url'];
+                        document.getElementById("p_bsn").innerHTML = "bsn: " + ingeschrevenpersonen[i]['bsn'];
+                        document.getElementById("p_naam").innerHTML = "naam: " + ingeschrevenpersonen[i]['voornamen'] + " " + ingeschrevenpersonen[i]['geslachtsnaam'];
+                        document.getElementById("p_geboortedatum").innerHTML = "geboortedatum: " + ingeschrevenpersonen[i]['geboortedatum'];
+                        break;
+                    }
+                }
+                if(selectedIngeschrevenpersoonBsn == "")
+                {
+                    alert("BSN niet gevonden!");
+                }
+
+                var selectedIngeschrevenpersoon = document.getElementById("selectedIngeschrevenpersoon");
+                selectedIngeschrevenpersoon.value = selectedIngeschrevenpersoonBsn;
             }
         </script>
 
@@ -35,37 +69,32 @@
         <div class="tab__content tab__content--inline">
 
             <section class="tab__pane tab__pane--active" id="panel2-1" role="tabpanel" aria-labelledby="tab2-1">
-                <form class="form" method="post" action="#">
-                    <h3>Zoek op Bsnnummer</h3>
-                    <div class="input input--horizontal">
+                <h3>Zoek op Bsnnummer</h3>
+                <div class="input input--horizontal">
 
-                        <input required="" type="text" id="bsn" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
-                    </div>
-                    <div class="input">
-                        <button type="button" onclick="FindBsn()" class="btn btn--primary" name="select" value="bsn">Zoeken</button>
-                    </div>
-                </form>
+                    <input type="text" id="bsn" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
+                </div>
+                <div class="input">
+                    <button type="button" onclick="FindBsn()" class="btn btn--primary" name="select" value="bsn">Zoeken</button>
+                </div>
 
                 <div>
-                    <p>bsn: 999999230</p>
-                    {% for ingeschrevenpersoon in ingeschrevenpersonen %}
-                        {% if ingeschrevenpersoon['burgerservicenummer'] == "999999230" %}
-                            <p>naam: {{ ingeschrevenpersoon['naam']['voornamen'] }} {{ ingeschrevenpersoon['naam']['geslachtsnaam'] }}</p>
-
-
-                            {% for geboorte in geboortes['hydra:member'] %}
-
-                                {% if geboorte['@id'] == ingeschrevenpersoon['geboorte']['@id']%}
-                                    <p>geboortedatum: {{ geboorte['datum'] }}</p>
-                                    {% set break = true %}
-                                {% endif %}
-                            {% endfor %}
-
-                            {% set break = true %}
-                        {% endif %}
-                    {% endfor %}
-
+                    <p id="p_bsn">bsn: </p>
+                    <p id="p_naam">naam: </p>
+                    <p id="p_geboortedatum">geboortedatum: </p>
                 </div>
+                <script>
+                    {% if selectedOverledene is defined %}
+                        document.getElementById("p_bsn").innerHTML = "bsn: {{ selectedOverledene['burgerservicenummer'] }}";
+                        document.getElementById("p_naam").innerHTML = "naam: {{ selectedOverledene['naam']['voornamen'] }} {{ selectedOverledene['naam']['geslachtsnaam'] }}";
+
+                        {% for ingeschrevenpersoon in ingeschrevenpersonen %}
+                            {% if ingeschrevenpersoon['burgerservicenummer'] == selectedOverledene['burgerservicenummer'] %}
+                                document.getElementById("p_geboortedatum").innerHTML = "geboortedatum: {{ ingeschrevenpersoon['geboorte']['datum']['date'] }}";
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </script>
 
             </section>
 
@@ -73,13 +102,13 @@
                 <h3>Bsnnummer:</h3>
                 <div class="input input--horizontal">
 
-                    <input required="" type="text" id="bsnhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
+                    <input type="text" id="bsnhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
                 </div>
 
                 <h3>Naam:</h3>
                 <div class="input input--horizontal">
 
-                    <input required="" type="text" id="naamhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--l">
+                    <input type="text" id="naamhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--l">
                 </div>
 
                 <!-- Page Break -->
@@ -91,15 +120,15 @@
                     <div class="input__control-group">
                         <div>
                             <label class="input__hint" for="date_of_birth-d">dag</label>
-                            <input required="" aria-label="Geboortedag" title="Geboortedag" required="" type="number" min="1" max="31" id="date_of_birth-d" class="input__control input__control--two-characters input__control--linked input__control--text">
+                            <input aria-label="Geboortedag" title="Geboortedag" type="number" min="1" max="31" id="date_of_birth-d" class="input__control input__control--two-characters input__control--linked input__control--text">
                         </div>
                         <div>
                             <label class="input__hint" for="date_of_birth-m">maand</label>
-                            <input required="" aria-label="Geboortemaand" title="Geboortemaand" required="" type="number" min="1" max="12" id="date_of_birth-m" class="input__control input__control--two-characters input__control--linked input__control--text">
+                            <input aria-label="Geboortemaand" title="Geboortemaand" type="number" min="1" max="12" id="date_of_birth-m" class="input__control input__control--two-characters input__control--linked input__control--text">
                         </div>
                         <div>
                             <span class="input__hint" for="date_of_birth-y">jaar</span>
-                            <input required="" aria-label="Geboortejaar" title="Geboortejaar" required="" type="number" id="date_of_birth-y" class="input__control input__control--four-characters input__control--linked input__control--text">
+                            <input aria-label="Geboortejaar" title="Geboortejaar" type="number" id="date_of_birth-y" class="input__control input__control--four-characters input__control--linked input__control--text">
                         </div>
                     </div>
                 </div>
@@ -111,6 +140,8 @@
             </section>
 
         </div>
+
+        <input hidden="" id="selectedIngeschrevenpersoon" name="properties[overledene]">
 
 {#
         <form class="form" method="post" action="#">
