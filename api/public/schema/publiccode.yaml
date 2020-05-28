@@ -5,7 +5,7 @@ applicationSuite: commonground
 url: "https://github.com/ConductionNL/pan"
 landingURL: "pan.conduction.nl" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
-softwareVersion: "V.0.10.2"
+softwareVersion: "V.0.1"
 releaseDate: "2020-28-05"
 logo: pan.conduction.nl 
 monochromeLogo: img/logo-mono.svg

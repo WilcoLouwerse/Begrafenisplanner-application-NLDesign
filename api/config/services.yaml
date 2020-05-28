@@ -27,43 +27,30 @@ services:
     # please note that last definitions always *replace* previous ones
 
     'Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter': ~
-    
+
     # We use a custom swagger decorator to add the commonground specific docs 
-    'App\Swagger\SwaggerDecorator':
+    'Conduction\CommonGroundBundle\Swagger\SwaggerDecorator':
         decorates: 'api_platform.swagger.normalizer.api_gateway'
-        arguments: [ '@App\Swagger\SwaggerDecorator.inner' ]
+        arguments: [ '@Conduction\CommonGroundBundle\Swagger\SwaggerDecorator.inner' ]
         autoconfigure: false
         
         
     'Conduction\CommonGroundBundle\Service\CommonGroundService': ~
     'Conduction\CommonGroundBundle\Service\NLXLogService': ~
 
-    #CommonGround Subscribers
-    #    audit.subscriber:
-    #        class: Conduction\CommonGroundBundle\Subscriber\AuditSubscriber
-    #        tags:
-    #            - { name: kernel.event_subscriber, connection: default }
-    #    audit.trail.subscriber:
-    #        class: Conduction\CommonGroundBundle\Subscriber\AuditTrailSubscriber
-    #        tags:
-    #            - { name: kernel.event_subscriber, connection: default }
-    change.log.subscriber:
-        class: Conduction\CommonGroundBundle\Subscriber\ChangeLogSubscriber
-        tags:
-            - { name: kernel.event_subscriber, connection: default }
-    fields.and.extend.subscriber:
-        class: Conduction\CommonGroundBundle\Subscriber\FieldsAndExtendSubscriber
-        tags:
-            - { name: kernel.event_subscriber, connection: default }
-    health.check.subscriber:
-        class: Conduction\CommonGroundBundle\Subscriber\HealthCheckSubscriber
-        tags:
-            - { name: kernel.event_subscriber, connection: default }
-    valid.on.subscriber:
-        class: Conduction\CommonGroundBundle\Subscriber\ValidOnSubscriber
-        tags:
-            - { name: kernel.event_subscriber, connection: default }
-    Conduction\CommonGroundBundle\Repository\AuditTrailSubscriber:
-        autowire: true
-        tags:
-            - { name: doctrine.repository_service }
+#    Redis:
+#        class: Redis
+#        calls:
+#            -   method: connect
+#                arguments:
+#                    - '%env(REDIS_HOST)%'
+#                    - '%env(int:REDIS_PORT)%'
+#            # If you need key prefix, uncomment line belows
+#            # - method: setOption
+#            #   arguments:
+#            #       - !php/const Redis::OPT_PREFIX
+#            #       - 'my_prefix'
+#
+#    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+#        arguments:
+#            - '@Redis'
