@@ -84,20 +84,28 @@ class ProcessController extends AbstractController
             $slug == 'home' &&
             key_exists('request',$variables) &&
             key_exists('currentStage', $variables['request']) &&
-            $variables['request']['currentStage']){
-                $variables['stage'] = $commonGroundService->getResource($variables['request']['currentStage']);
+            $variables['request']['currentStage'])
+        {
+            $variables['stage'] = $commonGroundService->getResource($variables['request']['currentStage']);
         }
         elseif($slug != 'home'){
             foreach($variables['process']['stages'] as $stage){
+
+
                 if($stage['slug'] == $slug){
+
                     $variables['stage'] = $stage;
                 }
+                if(!key_exists('stage',$variables))
+                    $variables['stage']['slug'] = $slug;
             }
         }
         else{
             foreach($variables['process']['stages'] as $stage){
+
                 if($stage['start'])
                     $variables['stage'] = $stage;
+
             }
         }
         $variables["slug"] = $slug;

@@ -20,15 +20,15 @@
         <form method="post" action="{{ path('app_process_load',{id:process.id}) }}">
         {% include 'widgets/processes/default.html.twig' %}
         {% include 'widgets/processes/'~process.id~'.html.twig' %}
-    {% if stage.slug == 'indienen' %}
+    {% if stage is defined and stage.slug == 'indienen' %}
     {% set slug = stage.slug %}
     {% endif %}
 
     {% if slug == 'indienen' %}
         {% include 'widgets/zz/submit.html.twig' %}
 
-    {% endif %}
-    {% if stage.sections is defined and stage.sections is not null %}
+
+    {% elseif stage.sections is defined and stage.sections is not null %}
 
         {% if stage.name == 'Begraafplaats' %}
             {% include 'widgets/zz/begraafplaats_form.html.twig' %}
