@@ -57,10 +57,11 @@ class ZZController extends AbstractController
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
-
-            // Passing the variables to the resource
             $resource = $request->request->all();
-            $configuration = $commonGroundService->saveResource($resource, ['component'=>$resource['@component'],'type'=>$resource['@type']]);
+            if (key_exists('@component', $resource)){
+                // Passing the variables to the resource
+                $configuration = $commonGroundService->saveResource($resource, ['component' => $resource['@component'], 'type' => $resource['@type']]);
+            }
         }
 
 
