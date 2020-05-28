@@ -4,11 +4,11 @@
     <list default="true" id="9d7d99c9-86af-4102-a470-73b845bd8d6f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/api/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/helm/index.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/index.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Controller/ProcessController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/ProcessController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,6 +161,9 @@
       <path value="$PROJECT_DIR$/api/vendor/fig/link-util" />
       <path value="$PROJECT_DIR$/api/vendor/behat/transliterator" />
       <path value="$PROJECT_DIR$/api/vendor/sensio/framework-extra-bundle" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/api/vendor/twig/extensions" />
+      <path value="$PROJECT_DIR$/api/vendor/doctrine/sql-formatter" />
     </include_path>
   </component>
   <component name="ProjectId" id="1bcxH9SIwdAMOG1I7amfLxGsp3V" />
@@ -173,7 +176,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TestComponenten/agendaservice" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -209,6 +212,7 @@
       <workItem from="1590595468130" duration="11000" />
       <workItem from="1590654960197" duration="286000" />
       <workItem from="1590655356695" duration="2863000" />
+      <workItem from="1590664134260" duration="1718000" />
     </task>
     <servers />
   </component>

@@ -4,8 +4,8 @@ metadata:
   name: {{ template "fullname" . }}
   #namespace: {{ .Values.settings.env }}
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}
-    app.kubernetes.io/part-of: {{ include "name" . }}
+    app.kubernetes.io/name: {{ .Values.settings.name }}
+    app.kubernetes.io/part-of: {{ .Values.settings.name }}
     helm.sh/chart: {{ include "chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
@@ -14,12 +14,13 @@ data:
   app-name: {{ .Values.settings.name | quote }}
   app-title: {{ .Values.settings.title | quote }}
   app-version: {{ .Values.settings.version | quote }}
+  {{ if .Values.settings.id }}
   app-id: {{ .Values.settings.id | quote }}
+  {{ end }}
   app-repro: {{ .Values.settings.repro | quote }}
   app-demo: {{ .Values.settings.demo | quote }}
   app-container: {{ .Values.settings.container | quote }}
   app-domain: {{ .Values.settings.domain | quote }} 
-  app-domains: {{ .Values.settings.domains | quote }} 
   app-domains-json: {{ .Values.settings.domainsJson | toJson | quote }}
   app-description: {{ .Values.settings.description | quote }}
   app-type: {{ .Values.settings.type | quote }}
@@ -43,7 +44,7 @@ data:
   cors-allow-origin: {{ .Values.settings.corsAllowOrigin | quote }}
   trusted-proxies: {{ join "," .Values.settings.trustedProxies }}
   trusted-hosts: {{ .Values.settings.trustedHosts | quote }}
-  php-service: {{ include "name" . }}-{{ .Values.settings.env }}-php  
+  php-service: {{ .Values.settings.name }}-{{ .Values.settings.env }}-php  
   varnish-url: {{ if .Values.varnish.enabled }}http://varnish{{ else }}{{ .Values.varnish.url | quote }}{{ end }}
   mercure-publish-url: {{ .Values.mercure.publishUrl | quote }}
   mercure-subscribe-url: {{ .Values.mercure.subscribeUrl | quote }}

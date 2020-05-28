@@ -1,31 +1,34 @@
 {{- if .Values.varnish.enabled -}}
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "name" . }}-varnish
+  name: {{ .Values.settings.name }}-varnish
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}-varnish
-    app.kubernetes.io/part-of: {{ include "name" . }}
+    app.kubernetes.io/name: {{ .Values.settings.name }}-varnish
+    app.kubernetes.io/part-of: {{ .Values.settings.name }}
     helm.sh/chart: {{ include "chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.settings.name }}-varnish
   replicas: {{ .Values.varnish.replicaCount }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "name" . }}-varnish
+        app.kubernetes.io/name: {{ .Values.settings.name }}-varnish
         helm.sh/chart: {{ include "chart" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
       containers:
-        - name: {{ include "name" . }}-varnish
+        - name: {{ .Values.settings.name }}-varnish
           image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-varnish:{{ .Values.settings.env }}"
           imagePullPolicy: {{ .Values.settings.pullPolicy }}
           env:
             - name: BACKENDS
-              value: {{ include "name" . }}-php
+              value: {{ .Values.settings.name }}-php
           #command: ["varnishd"]
           #args: ["-F", "-f", "/usr/local/etc/varnish/default.vcl", "-p", "http_resp_hdr_len=65536", "-p", "http_resp_size=98304"]
           ports:
