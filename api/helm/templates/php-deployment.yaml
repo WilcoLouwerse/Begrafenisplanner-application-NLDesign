@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ .Values.settings.name }}-php
-  replicas: 1
+  replicas: {{ .Values.php.replicaCount }}
   template:
     metadata:
       labels:
