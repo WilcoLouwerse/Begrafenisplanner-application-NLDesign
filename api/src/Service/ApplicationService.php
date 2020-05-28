@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-use App\Service\CommonGroundService;
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 
 class ApplicationService
 {
@@ -61,29 +61,29 @@ class ApplicationService
 
     	// Let handle posible request creation
     	$requestType = $this->request->request->get('requestType');
-    	if($requestType || $requestType=  $this->request->query->get('requestType')){
-
-    		$requestParent = $this->request->request->get('requestParent');
-    		if(!$requestParent){ $requestParent =  $this->request->query->get('requestParent');}
-
-    		$requestType = $this->commonGroundService->getResource($requestType);
-    		$request = $this->requestService->createFromRequestType($requestType, $requestParent);
-
-    		// Validate current reqoust type
-
-    		$requestType = $this->requestService->checkRequestType($request, $requestType);
-
-            $this->session->set('requestType', $requestType);
-            if($request != null)
-            {
-                $this->session->set('request', $request);
-                /* @todo translation */
-                $this->flash->add('success', 'Verzoek voor ' . $requestType['name'] . ' opgestart');
-            }
-            else{
-                $this->flash->add('failure', 'Kon geen verzoek voor '. $requestType['name']. ' opstarten, omdat er al een verzoek voor '.$requestType['name'].' actief is');
-            }
-    	}
+//    	if($requestType || $requestType=  $this->request->query->get('requestType')){
+//
+//    		$requestParent = $this->request->request->get('requestParent');
+//    		if(!$requestParent){ $requestParent =  $this->request->query->get('requestParent');}
+//
+//    		$requestType = $this->commonGroundService->getResource($requestType);
+//    		$request = $this->requestService->createFromRequestType($requestType, $requestParent);
+//
+//    		// Validate current reqoust type
+//
+//    		$requestType = $this->requestService->checkRequestType($request, $requestType);
+//
+//            $this->session->set('requestType', $requestType);
+//            if($request != null)
+//            {
+//                $this->session->set('request', $request);
+//                /* @todo translation */
+//                $this->flash->add('success', 'Verzoek voor ' . $requestType['name'] . ' opgestart');
+//            }
+//            else{
+//                $this->flash->add('failure', 'Kon geen verzoek voor '. $requestType['name']. ' opstarten, omdat er al een verzoek voor '.$requestType['name'].' actief is');
+//            }
+//    	}
 
 
     	// Lets handle the loading of a request

@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Service\ApplicationService;
 //use App\Service\RequestService;
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +16,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-use App\Service\CommonGroundService;
 
 /**
  * The Request controller handles any calls that have not been picked up by another controller, and wel try to handle the slug based against the wrc
@@ -30,7 +30,7 @@ class RequestController extends AbstractController
 	 * @Route("/load/{id}")
 	 * @Template
 	 */
-    public function loadAction(Session $session, string $slug = 'home',Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function loadAction(Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
 
@@ -42,7 +42,7 @@ class RequestController extends AbstractController
      * @Route("/start/{id}")
      * @Template
      */
-    public function startAction(Session $session, string $slug = 'home',Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function startAction(Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
 

@@ -4,7 +4,7 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
 
-    <title> Conduction | Developers</title>
+    <title> {{  commonground_application()['name']  }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="icon" href="/uno/components/favicon/ro-favicon-wit-0xffffff.png">
@@ -81,6 +81,8 @@
     .btn--block{
     	width:100%;
     }
+
+    {{ commonground_application()['style'] }}
     </style>
 </head>
 </html>
@@ -97,6 +99,19 @@
 
     <main class="skiplink-target main" id="content" tabindex="-1">
         <div class="container">
+
+            <!-- the alert box -->
+            {% for label, messages in app.flashes() %}
+                {% for message in messages %}
+                    <div class="notification notification--{{ label }}">
+                        <div class="notification__content">
+                            <h2 class="notification__title">{{ message|trans|capitalize }}</h2>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+
           {% block content %}
 
           {% endblock %}

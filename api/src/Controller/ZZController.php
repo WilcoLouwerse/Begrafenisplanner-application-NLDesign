@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Service\ApplicationService;
 //use App\Service\RequestService;
+use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +16,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-use App\Service\CommonGroundService;
 
 /**
  * The ZZ controller handles any calls that have not been picked up by another controller, and wel try to handle the slug based against the wrc
@@ -28,11 +28,13 @@ class ZZController extends AbstractController
 {
 
 	/**
+     * @Route("/", name="app_default_index")
 	 * @Route("/{slug}", requirements={"slug"=".+"}, name="slug")
 	 * @Template
 	 */
-    public function indexAction(Session $session, string $slug = 'home',Request $httpRequest, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function indexAction(Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
+        $content = false;
         $variables = $applicationService->getVariables();
 
         // Lets provide this data to the template
@@ -58,13 +60,18 @@ class ZZController extends AbstractController
 
             // Passing the variables to the resource
             $resource = $request->request->all();
-            $configuration = $commonGroundService->saveResource($resource, ['component'=>$resource['@component'],'type'=>>$resource['@type']]);
+            $configuration = $commonGroundService->saveResource($resource, ['component'=>$resource['@component'],'type'=>$resource['@type']]);
         }
 
 
         // Create the template
-        $template = $this->get('twig')->createTemplate($content);
-        $template = $template->render($variables);
+        if($content){
+            $template = $this->get('twig')->createTemplate($content);
+            $template = $template->render($variables);
+        }
+        else{
+            $template = $this->render('404.html.twig', $variables);
+        }
 
         return $response = new Response(
             $template,

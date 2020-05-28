@@ -1,17 +1,17 @@
 apiVersion: cert-manager.io/v1alpha2
 kind: ClusterIssuer
 metadata:
-    name: {{ include "name" . }}-{{ .Values.settings.env }}-letsencrypt
+    name: {{ .Values.settings.name }}-{{ .Values.settings.env }}-letsencrypt
     labels:
-        app.kubernetes.io/name: {{ include "name" . }}
-        app.kubernetes.io/part-of: {{ include "name" . }}
+        app.kubernetes.io/name: {{ .Values.settings.name }}
+        app.kubernetes.io/part-of: {{ .Values.settings.name }}
         helm.sh/chart: {{ include "chart" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   acme:
     email: {{ .Values.settings.email }}
-    http01: {}
+#    http01: {}
     privateKeySecretRef:
       name: letsencrypt-private-key
     server: https://acme-v02.api.letsencrypt.org/directory

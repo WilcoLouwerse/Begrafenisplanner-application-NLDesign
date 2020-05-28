@@ -27,9 +27,26 @@ services:
     # please note that last definitions always *replace* previous ones
 
     'Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter': ~
-    
+
     # We use a custom swagger decorator to add the commonground specific docs 
-    'App\Swagger\SwaggerDecorator':
+    'Conduction\CommonGroundBundle\Swagger\SwaggerDecorator':
         decorates: 'api_platform.swagger.normalizer.api_gateway'
-        arguments: [ '@App\Swagger\SwaggerDecorator.inner' ]
+        arguments: [ '@Conduction\CommonGroundBundle\Swagger\SwaggerDecorator.inner' ]
         autoconfigure: false
+
+#    Redis:
+#        class: Redis
+#        calls:
+#            -   method: connect
+#                arguments:
+#                    - '%env(REDIS_HOST)%'
+#                    - '%env(int:REDIS_PORT)%'
+#            # If you need key prefix, uncomment line belows
+#            # - method: setOption
+#            #   arguments:
+#            #       - !php/const Redis::OPT_PREFIX
+#            #       - 'my_prefix'
+#
+#    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+#        arguments:
+#            - '@Redis'
