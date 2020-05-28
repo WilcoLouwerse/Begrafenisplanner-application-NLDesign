@@ -20,6 +20,11 @@
                         </a>
                     </li>
                 {% endif %}
+                    <li class="nav__item">
+                        <a href="/process" title="Home" class="nav__link  ">
+                            <span>Processen</span>
+                        </a>
+                    </li>
                 {% if user is defined and user is not empty %}
                     <li class="nav__item"><a class="nav__link " href="{{ path('app_user_logout') }}">Uitloggen</a></li>
                 {% else %}
