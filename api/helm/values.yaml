@@ -7,14 +7,14 @@ settings:
   projectName: bpui
   name: bpui
   title: Begrafenisplanner
-  version: V.0.10
+  version: V.0.10.2
   id: 3f44c00e-d919-4f89-bd4c-b730c9b2620a
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
   repro: https://github.com/ConductionNL/pan
   demo: pan.conduction.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
-  domain: begraven.zaakonline.nl
+  domain: westfriesland.commonground.nu
   subdomain: bpui
   organisationName: Conduction
   email: info@conduction.nl

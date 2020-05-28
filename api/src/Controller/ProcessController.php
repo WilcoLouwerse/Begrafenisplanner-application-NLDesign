@@ -122,7 +122,7 @@ class ProcessController extends AbstractController
         {
             foreach($variables['request']['properties'] as $key=>$property)
             {
-                if (!is_array($property) && strpos($property, 'begraven.zaakonline.nl') !== false)
+                if (!is_array($property) && (strpos($property, 'begraven.zaakonline.nl') !== false || strpos($property, 'westfriesland.commonground.nu') !== false))
                 {
                     $variables['request']['urlproperties'][$key] = $commonGroundService->getResource($property);
                     if (key_exists('reference',$variables['request']['urlproperties'][$key]))

@@ -1,13 +1,13 @@
 openapi: 3.0.2
 info:
   title: Begrafenisplanner
-  version: V.0.10
+  version: V.0.10.2
   description: |
     API Details
     - Component: Begrafenisplanner
     - Reference: bpui
     - Enviroment: dev
-    - Version: V.0.10
+    - Version: V.0.10.2
     - Repository: [online](https://github.com/ConductionNL/pan) / [zip](https://github.com/ConductionNL/pan/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/wilcolouwerse/bpui-php) 
     - Datamodel: [postman](/schema/openapi.postman_collection) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [mwb](/schema/datamodel.mwb) 
@@ -2361,12 +2361,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-27 14:48:07'
+        example: '2020-05-28 09:44:14'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-27 14:48:07'
+        example: '2020-05-28 09:44:14'
     required: []
   AuditTrail-write:
     properties:
@@ -2414,12 +2414,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-05-27 14:48:07'
+        example: '2020-05-28 09:44:14'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-05-27 14:48:07'
+        example: '2020-05-28 09:44:14'
     required: []
   ChangeLog-write:
     properties:
@@ -2460,8 +2460,8 @@ securityDefinitions:
 host: irc.zaakonline.nl
 servers:
   -
-    name: begraven.zaakonline.nl
-    url: bpui.dev.begraven.zaakonline.nl
+    name: westfriesland.commonground.nu
+    url: bpui.dev.westfriesland.commonground.nu
 externalDocs:
   -
     description: 'OAS Documentatie'

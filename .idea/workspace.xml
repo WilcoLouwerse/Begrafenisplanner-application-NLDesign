@@ -2,22 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d7d99c9-86af-4102-a470-73b845bd8d6f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/api/public/uno/components/header/header_westfriesland.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/public/uno/components/header/header_westfriesland.scss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/public/uno/components/header/images/Logo_Westfriesland_me_ tekst_vector.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/public/uno/components/header/images/Logo_Westfriesland_vector.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/helm/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/Chart.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/public/uno/components/header/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/uno/components/header/header.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/public/uno/components/header/header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/uno/components/header/header.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/Controller/ProcessController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/ProcessController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/header.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/header.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/process/load.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/process/load.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/widgets/zz/belanghebbende_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/widgets/zz/belanghebbende_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/widgets/zz/overledene_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/widgets/zz/overledene_form.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,7 +173,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/api/public/uno/components/header" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TestComponenten/agendaservice" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -216,6 +207,8 @@
       <workItem from="1590484024678" duration="2079000" />
       <workItem from="1590579156244" duration="16215000" />
       <workItem from="1590595468130" duration="11000" />
+      <workItem from="1590654960197" duration="286000" />
+      <workItem from="1590655356695" duration="2863000" />
     </task>
     <servers />
   </component>
@@ -242,6 +235,10 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1590660276797">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1590660276797" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1588945886272">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
