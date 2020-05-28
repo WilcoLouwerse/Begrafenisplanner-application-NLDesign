@@ -273,6 +273,9 @@ parameters:
   # ContactMomentComponent
   env(APP_COMMONGROUND_CMC_LOCATION): "https://cmc.%env(APP_DOMAIN)%"
   env(APP_COMMONGROUND_CMC_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
+  # CommongroundRegistratieComponent
+  env(APP_COMMONGROUND_GRC_LOCATION): "https://grc.%env(APP_DOMAIN)%"
+  env(APP_COMMONGROUND_GRC_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
 
   # Test for commonground component by array
   common_ground.components:
@@ -437,6 +440,9 @@ parameters:
     cgrc:
       location: "%env(APP_COMMONGROUND_CGRC_LOCATION)%"
       apikey: "%env(APP_COMMONGROUND_CGRC_APIKEY)%"
+    grc:
+      location: "%env(APP_COMMONGROUND_GRC_LOCATION)%"
+      apikey: "%env(APP_COMMONGROUND_GRC_APIKEY)%"
     tc:
       location: "%env(APP_COMMONGROUND_TC_LOCATION)%"
       apikey: "%env(APP_COMMONGROUND_TC_APIKEY)%"
