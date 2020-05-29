@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d7d99c9-86af-4102-a470-73b845bd8d6f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/api/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/helm/bpui-0.1.0.tgz" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/bpui-0.1.0.tgz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/helm/index.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/index.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/default/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/default/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/process/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/process/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,14 +142,10 @@
       <path value="$PROJECT_DIR$/api/vendor/league/html-to-markdown" />
       <path value="$PROJECT_DIR$/api/vendor/sensiolabs/security-checker" />
       <path value="$PROJECT_DIR$/api/vendor/tbbc/money-bundle" />
-      <path value="$PROJECT_DIR$/api/vendor/lexik/jwt-authentication-bundle" />
-      <path value="$PROJECT_DIR$/api/vendor/jdorn/sql-formatter" />
       <path value="$PROJECT_DIR$/api/vendor/stof/doctrine-extensions-bundle" />
-      <path value="$PROJECT_DIR$/api/vendor/namshi/jose" />
       <path value="$PROJECT_DIR$/api/vendor/easyrdf/easyrdf" />
       <path value="$PROJECT_DIR$/api/vendor/sumup/sumup-ecom-php-sdk" />
       <path value="$PROJECT_DIR$/api/vendor/nikic/php-parser" />
-      <path value="$PROJECT_DIR$/api/vendor/lcobucci/jwt" />
       <path value="$PROJECT_DIR$/api/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/api/vendor/guzzlehttp/psr7" />
       <path value="$PROJECT_DIR$/api/vendor/guzzlehttp/promises" />
@@ -161,7 +157,6 @@
       <path value="$PROJECT_DIR$/api/vendor/fig/link-util" />
       <path value="$PROJECT_DIR$/api/vendor/behat/transliterator" />
       <path value="$PROJECT_DIR$/api/vendor/sensio/framework-extra-bundle" />
-      <path value="$PROJECT_DIR$/api/vendor/psr/http-message" />
       <path value="$PROJECT_DIR$/api/vendor/twig/extensions" />
       <path value="$PROJECT_DIR$/api/vendor/doctrine/sql-formatter" />
     </include_path>
@@ -176,10 +171,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/api/templates" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\templates" />
       <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\public\uno\components\header" />
       <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\public\uno\components\header\images" />
       <recent name="K:\HTA Software\Common Ground\NLDesignHulpmiddelen\Proto-application-NLDesign-Verzoek\api\templates\widgets\zz" />
@@ -213,6 +209,7 @@
       <workItem from="1590654960197" duration="286000" />
       <workItem from="1590655356695" duration="2863000" />
       <workItem from="1590664134260" duration="1718000" />
+      <workItem from="1590737708244" duration="1741000" />
     </task>
     <servers />
   </component>
@@ -247,10 +244,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1588945886272" />
-    <state x="989" y="236" width="607" height="536" key="find.popup" timestamp="1590590476617">
+    <state x="989" y="236" width="607" height="536" key="find.popup" timestamp="1590738012197">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="989" y="236" width="607" height="536" key="find.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1590590476617" />
+    <state x="989" y="236" width="607" height="536" key="find.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1590738012197" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1590583923811">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
