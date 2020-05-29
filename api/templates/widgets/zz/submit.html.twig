@@ -14,7 +14,9 @@
 
                     <div class="definition-list__description">
                         {% if property is iterable %}
-                            <p>{{ property[0] }}</p>
+                            {% for value in property %}
+                            <p>{{ value }}</p>
+                            {% endfor %}
                         {% elseif request.urlproperties is defined %}
                             {% for urlkey, urlproperty in request.urlproperties%}
                                 {% if key == urlkey %}
