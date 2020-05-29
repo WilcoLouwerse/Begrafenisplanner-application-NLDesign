@@ -25,6 +25,11 @@
                             <span>Processen</span>
                         </a>
                     </li>
+                    <li class="nav__item">
+                        <a href="/request" title="Home" class="nav__link  ">
+                            <span>Verzoeken</span>
+                        </a>
+                    </li>
                 {% if user is defined and user is not empty %}
                     <li class="nav__item"><a class="nav__link " href="{{ path('app_user_logout') }}">Uitloggen</a></li>
                 {% else %}

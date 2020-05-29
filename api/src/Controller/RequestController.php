@@ -28,26 +28,28 @@ class RequestController extends AbstractController
 {
 	/**
 	 * @Route("/load/{id}")
-	 * @Template
 	 */
-    public function loadAction(Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function loadAction($id, Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
-        $variables = $applicationService->getVariables();
-
-        // Lets provide this data to the template
-        $redirect = $request->query->get('redirect');
+        //$variables = $applicationService->getVariables();
+        $loadedRequest = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id]);//,['extend'=>'processType']);
+        $session->set('request', $loadedRequest);
+        //todo: extend subscriber gebruiken, cgs testen met query parameter
+        return $this->redirect($this->generateUrl('app_process_load',['id'=>$commonGroundService->getResource($loadedRequest['processType'])['id']]));
     }
 
     /**
-     * @Route("/start/{id}")
+     * @Route("/")
      * @Template
      */
-    public function startAction(Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function indexAction(Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
+        $variables['requests'] = $commonGroundService->getResourceList(['component'=>'vrc','type'=>'requests'],['submitters.brp'=>$variables['user']['@id']])['hydra:member'];
+//        var_dump($variables['requests']);
 
         // Lets provide this data to the template
-        $redirect = $request->query->get('redirect');
+        return $variables;
     }
 
 }
