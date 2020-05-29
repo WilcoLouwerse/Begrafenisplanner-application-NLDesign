@@ -43,47 +43,47 @@
       </trans-unit>
       <trans-unit id="2BxV9Jx" resname="saved">
         <source>saved</source>
-        <target>__saved</target>
+        <target>opgeslagen</target>
       </trans-unit>
       <trans-unit id="FGw_5pd" resname="could not be saved">
         <source>could not be saved</source>
-        <target>__could not be saved</target>
+        <target>kon niet opgeslagen worden</target>
       </trans-unit>
       <trans-unit id="QG7.sen" resname="created">
         <source>created</source>
-        <target>__created</target>
+        <target>aangemaakt</target>
       </trans-unit>
       <trans-unit id="jHE8PIT" resname="could not be created">
         <source>could not be created</source>
-        <target>__could not be created</target>
+        <target>kon niet aangemaakt worden</target>
       </trans-unit>
       <trans-unit id="gqNTf.D" resname="name">
         <source>name</source>
-        <target>__name</target>
+        <target>naam</target>
       </trans-unit>
       <trans-unit id="uAAShRz" resname="modified">
         <source>modified</source>
-        <target>__modified</target>
+        <target>aangepast</target>
       </trans-unit>
       <trans-unit id="BzwWNMS" resname="status">
         <source>status</source>
-        <target>__status</target>
+        <target>status</target>
       </trans-unit>
       <trans-unit id="zO0oxtw" resname="start">
         <source>start</source>
-        <target>__start</target>
+        <target>starten</target>
       </trans-unit>
       <trans-unit id="dUkL17k" resname="submit">
         <source>submit</source>
-        <target>__submit</target>
+        <target>indienen</target>
       </trans-unit>
       <trans-unit id="l6XSncR" resname="properties of the request">
         <source>properties of the request</source>
-        <target>__properties of the request</target>
+        <target>eigenschappen van het verzoek</target>
       </trans-unit>
       <trans-unit id="I3TZF5S" resname="cancel">
         <source>cancel</source>
-        <target>__cancel</target>
+        <target>annuleren</target>
       </trans-unit>
     </body>
   </file>
