@@ -32,10 +32,10 @@ class RequestController extends AbstractController
     public function loadAction($id, Session $session, string $slug = 'home',Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         //$variables = $applicationService->getVariables();
-        $loadedRequest = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id],['extend'=>'processType']);
+        $loadedRequest = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$id]);//,['extend'=>'processType']);
         $session->set('request', $loadedRequest);
-
-        return $this->redirect($this->generateUrl('app_process_load',['id'=>$loadedRequest['processType']['id']]));
+        //todo: extend subscriber gebruiken, cgs testen met query parameter
+        return $this->redirect($this->generateUrl('app_process_load',['id'=>$commonGroundService->getResource($loadedRequest['processType'])['id']]));
     }
 
     /**

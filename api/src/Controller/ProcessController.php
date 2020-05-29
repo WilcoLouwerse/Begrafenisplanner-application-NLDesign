@@ -51,24 +51,25 @@ class ProcessController extends AbstractController
         if($request->isMethod('POST')){
             $resource = $request->request->all();
             if(key_exists('organization',$resource)){
-                if(key_exists('request',$variables) && key_exists('properties',$variables['request'])){
+                if(key_exists('request',$variables) && key_exists('properties',$variables['request']) && key_exists('properties', $resource)){
                     $resource['properties'] = array_replace_recursive($variables['request']['properties'],$resource['properties']);
-                }
-                foreach($resource['properties'] as $key=>$property){
-                    if($key == 'begraafplaats' && is_string($resource['properties'][$key]) && is_array(json_decode($resource['properties'][$key], true)) && (json_last_error() == JSON_ERROR_NONE))
-                    {
-                        $resource['properties'][$key] = json_decode($resource['properties'][$key],true)['Cemetery'];
-                    }
-                    if(is_array($property)
-                        && key_exists('postalCode', $property)
-                        && key_exists('houseNumber',$property)
-                    ){
-                        $addresses = $commonGroundService->getResourceList(['component'=>'as','type'=>'adressen'],['postcode'=>$property['postalCode'],'huisnummer'=>$property['houseNumber'],'huisnummertoevoeging'=>$property['houseNumberSuffix']])['adressen'];
-                        if(empty($addresses)){
-                            $this->addFlash('error', "adres niet gevonden");
-                            unset($resource['properties'][$key]);
-                        }else{
-                            $resource['properties'][$key] = $addresses[0]['id'];
+                }elseif(key_exists('properties', $resource)){
+                    foreach($resource['properties'] as $key=>$property){
+                        if($key == 'begraafplaats' && is_string($resource['properties'][$key]) && is_array(json_decode($resource['properties'][$key], true)) && (json_last_error() == JSON_ERROR_NONE))
+                        {
+                            $resource['properties'][$key] = json_decode($resource['properties'][$key],true)['Cemetery'];
+                        }
+                        if(is_array($property)
+                            && key_exists('postalCode', $property)
+                            && key_exists('houseNumber',$property)
+                        ){
+                            $addresses = $commonGroundService->getResourceList(['component'=>'as','type'=>'adressen'],['postcode'=>$property['postalCode'],'huisnummer'=>$property['houseNumber'],'huisnummertoevoeging'=>$property['houseNumberSuffix']])['adressen'];
+                            if(empty($addresses)){
+                                $this->addFlash('error', "adres niet gevonden");
+                                unset($resource['properties'][$key]);
+                            }else{
+                                $resource['properties'][$key] = $addresses[0]['id'];
+                            }
                         }
                     }
                 }
