@@ -7,7 +7,7 @@
     <title> {{  commonground_application()['name']  }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link rel="icon" href="/uno/components/favicon/ro-favicon-wit-0xffffff.png">
+    <link rel="icon" href="/uno/components/favicon/Logo_Westfriesland_vector.svg">
 
     <link rel="stylesheet" href="/uno/core/base.css">
     <link rel="stylesheet" href="/uno/core/grid.css">
@@ -81,7 +81,9 @@
     	width:100%;
     }
 
-    {{ commonground_application()['style'] }}
+    {% if commonground_application()['style'] is defined and commonground_application()['style'] is not empty %}
+        {{ commonground_application()['style']['css'] }}
+    {% endif %}
     </style>
 </head>
 </html>
