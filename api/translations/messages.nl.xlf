@@ -41,6 +41,50 @@
         <source>reference</source>
         <target>kenmerk</target>
       </trans-unit>
+      <trans-unit id="2BxV9Jx" resname="saved">
+        <source>saved</source>
+        <target>__saved</target>
+      </trans-unit>
+      <trans-unit id="FGw_5pd" resname="could not be saved">
+        <source>could not be saved</source>
+        <target>__could not be saved</target>
+      </trans-unit>
+      <trans-unit id="QG7.sen" resname="created">
+        <source>created</source>
+        <target>__created</target>
+      </trans-unit>
+      <trans-unit id="jHE8PIT" resname="could not be created">
+        <source>could not be created</source>
+        <target>__could not be created</target>
+      </trans-unit>
+      <trans-unit id="gqNTf.D" resname="name">
+        <source>name</source>
+        <target>__name</target>
+      </trans-unit>
+      <trans-unit id="uAAShRz" resname="modified">
+        <source>modified</source>
+        <target>__modified</target>
+      </trans-unit>
+      <trans-unit id="BzwWNMS" resname="status">
+        <source>status</source>
+        <target>__status</target>
+      </trans-unit>
+      <trans-unit id="zO0oxtw" resname="start">
+        <source>start</source>
+        <target>__start</target>
+      </trans-unit>
+      <trans-unit id="dUkL17k" resname="submit">
+        <source>submit</source>
+        <target>__submit</target>
+      </trans-unit>
+      <trans-unit id="l6XSncR" resname="properties of the request">
+        <source>properties of the request</source>
+        <target>__properties of the request</target>
+      </trans-unit>
+      <trans-unit id="I3TZF5S" resname="cancel">
+        <source>cancel</source>
+        <target>__cancel</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
