@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9d7d99c9-86af-4102-a470-73b845bd8d6f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/bpui-0.1.0.tgz" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/bpui-0.1.0.tgz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/index.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/index.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/default/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/default/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/process/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/process/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/widgets/zz/artikelen_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/widgets/zz/artikelen_form.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +204,7 @@
       <workItem from="1590654960197" duration="286000" />
       <workItem from="1590655356695" duration="2863000" />
       <workItem from="1590664134260" duration="1718000" />
-      <workItem from="1590737708244" duration="1741000" />
+      <workItem from="1590737708244" duration="3230000" />
     </task>
     <servers />
   </component>
