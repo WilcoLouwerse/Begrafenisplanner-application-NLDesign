@@ -13,18 +13,20 @@
                     </div>
 
                     <div class="definition-list__description">
-                        <p>
                         {% if property is iterable %}
-                            {% for key, value in property %}
-                            {{ key }}: {{ value }}<br>
+                            <p>{{ property[0] }}</p>
+                        {% elseif request.urlproperties is defined %}
+                            {% for urlkey, urlproperty in request.urlproperties%}
+                                {% if key == urlkey %}
+                                    <p>{{ urlproperty.name }}</p>
+                                {% endif %}
                             {% endfor %}
                         {% else %}
-                            {{ property }}
+                            <p>{{ property }}</p>
                         {% endif %}
-                            </p>
                     </div>
 
-{# nieuwe code die bovenstaande zal vervangen: (W.I.P.) #}                    
+{# nieuwe code die bovenstaande zal vervangen: (W.I.P.) #}
 {#                    <div class="definition-list__description">
                         <p>
                             {% if property is iterable %}
