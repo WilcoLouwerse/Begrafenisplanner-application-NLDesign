@@ -474,12 +474,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ConductionNL/CommonGroundBundle.git",
-                "reference": "cb1a357252af9e5eaf59a949bd6c1f1a7ae8f98e"
+                "reference": "f24e0855f2d62778c158afb01c4a3eae473b3ed7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/cb1a357252af9e5eaf59a949bd6c1f1a7ae8f98e",
-                "reference": "cb1a357252af9e5eaf59a949bd6c1f1a7ae8f98e",
+                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/f24e0855f2d62778c158afb01c4a3eae473b3ed7",
+                "reference": "f24e0855f2d62778c158afb01c4a3eae473b3ed7",
                 "shasum": ""
             },
             "require": {
@@ -557,7 +557,7 @@
                 "postcode",
                 "rsin"
             ],
-            "time": "2020-05-29T11:05:52+00:00"
+            "time": "2020-05-29T13:20:11+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2472,16 +2472,16 @@
         },
         {
             "name": "mollie/mollie-api-php",
-            "version": "2.17.1",
+            "version": "v2.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mollie/mollie-api-php.git",
-                "reference": "8da462ff79fc5875cd1393bbc3602aebff73444d"
+                "reference": "f2cf1ccb6d3cf85e2ab33232d909866444323077"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mollie/mollie-api-php/zipball/8da462ff79fc5875cd1393bbc3602aebff73444d",
-                "reference": "8da462ff79fc5875cd1393bbc3602aebff73444d",
+                "url": "https://api.github.com/repos/mollie/mollie-api-php/zipball/f2cf1ccb6d3cf85e2ab33232d909866444323077",
+                "reference": "f2cf1ccb6d3cf85e2ab33232d909866444323077",
                 "shasum": ""
             },
             "require": {
@@ -2554,7 +2554,7 @@
                 "sofortbanking",
                 "subscriptions"
             ],
-            "time": "2020-05-18T07:42:25+00:00"
+            "time": "2020-05-29T12:48:05+00:00"
         },
         {
             "name": "moneyphp/money",
