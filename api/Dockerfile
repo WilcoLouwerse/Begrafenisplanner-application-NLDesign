@@ -1,88 +1,16 @@
 # the different stages of this Dockerfile are meant to be built into separate images
-# https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
-# https://docs.docker.com/compose/compose-file/#target
-
-
-# https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
-ARG PHP_VERSION=7.3
-ARG NGINX_VERSION=1.17
-ARG VARNISH_VERSION=6.2
-
 
 #############################
 # 		"php" stage	 		#
 #############################
 # The base stage for all our stages
-FROM php:${PHP_VERSION}-fpm-alpine AS api_platform_php
 
-# Note: Latest version of kubectl may be found at:
-# https://github.com/kubernetes/kubernetes/releases
-ENV KUBE_LATEST_VERSION="v1.17.3"
-# Note: Latest version of helm may be found at:
-# https://github.com/kubernetes/helm/releases
-ENV HELM_VERSION="v2.14.1"
+FROM conduction/pc-php:prod AS api_platform_php
 
-RUN apk add --no-cache ca-certificates bash git openssh curl \
-    && wget -q https://storage.googleapis.com/kubernetes-release/release/${KUBE_LATEST_VERSION}/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl \
-    && chmod +x /usr/local/bin/kubectl \
-    && wget -q https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz -O - | tar -xzO linux-amd64/helm > /usr/local/bin/helm \
-    && chmod +x /usr/local/bin/helm
-
-# persistent / runtime deps
-RUN apk add --no-cache \
-		acl \
-		file \
-		gettext \
-		git \
-	;
-
-ARG APCU_VERSION=5.1.17
-RUN set -eux; \
-	apk add --no-cache --virtual .build-deps \
-		$PHPIZE_DEPS \
-		icu-dev \
-		libzip-dev \
-		libpng-dev \
-		postgresql-dev \
-		zlib-dev \
-	; \
-	\
-	docker-php-ext-configure zip --with-libzip; \
-	docker-php-ext-install -j$(nproc) \
-		intl \
-		pdo_pgsql \
-		zip \
-		mysqli \
-		pdo_mysql \
-		pcntl \
-		gd \
-	; \
-	pecl install \
-		apcu-${APCU_VERSION} \
-	; \
-	pecl clear-cache; \
-	docker-php-ext-enable \
-		apcu \
-		opcache \
-		mysqli \
-	; \
-	\
-	runDeps="$( \
-		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
-			| tr ',' '\n' \
-			| sort -u \
-			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
-	)"; \
-	apk add --no-cache --virtual .api-phpexts-rundeps $runDeps; \
-	\
-	apk del .build-deps
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN ln -s $PHP_INI_DIR/php.ini-production $PHP_INI_DIR/php.ini
-COPY docker/php/conf.d/api-platform.ini $PHP_INI_DIR/conf.d/api-platform.ini
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # install Symfony Flex globally to speed up download of Composer packages (parallelized prefetching)
 RUN set -eux; \
 	composer global require "symfony/flex" --prefer-dist --no-progress --no-suggest --classmap-authoritative; \
@@ -101,12 +29,8 @@ RUN set -eux; \
 	composer install --prefer-dist --no-dev --no-scripts --no-progress --no-suggest; \
 	composer clear-cache
 
-# do not use .env files in production
-COPY .env ./
-RUN composer dump-env prod; \
-	rm .env
-
 # copy only specifically what we need
+COPY .env ./
 COPY helm helm/
 COPY bin bin/
 COPY config config/
@@ -129,34 +53,22 @@ RUN chmod +x /usr/local/bin/docker-entrypoint
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
-# Let update the docs to show the latest chages
-# RUN bin/console api:swagger:export --output=/srv/api/public/schema/openapi.yaml --yaml --spec-version=3
-# RUN bin/console app:publiccode:update --location=/srv/api/public/schema/ --spec-version=0.2
-
 #############################
 # 		"nginx" stage 		#
 #############################
 # depends on the "php" stage above, and with an litle bit of help from https://github.com/shiphp/nginx-env
-FROM shiphp/nginx-env AS api_platform_nginx
+FROM conduction/pc-nginx:prod AS api_platform_nginx
 
 # Due to our config we need a copy of the public folder for serving static content
 COPY docker/nginx/conf.d/default.conf.template /etc/nginx/conf.d/default.conf
 WORKDIR /srv/api
 COPY --from=api_platform_php /srv/api/public public/
 
-# Old code
-#FROM nginx:${NGINX_VERSION}-alpine AS api_platform_nginx
-#COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-#WORKDIR /srv/api
-#COPY --from=api_platform_php /srv/api/public public/
-
 #############################
 # 		"varnish" stage 	#
 #############################
 # does not depend on any of the above stages, but placed here to keep everything in one Dockerfile
-#FROM cooptilleuls/varnish:${VARNISH_VERSION}-alpine AS api_platform_varnish
-FROM eeacms/varnish AS api_platform_varnish
-#FROM varnish:6.3 AS api_platform_varnish
+FROM conduction/pc-varnish:prod AS api_platform_varnish
 
 COPY docker/varnish/conf/default.vcl /etc/varnish/conf.d/
 # Lets install envsubst

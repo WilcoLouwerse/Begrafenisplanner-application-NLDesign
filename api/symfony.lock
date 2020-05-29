@@ -112,6 +112,9 @@
     "doctrine/rst-parser": {
         "version": "0.1.0"
     },
+    "doctrine/sql-formatter": {
+        "version": "1.0.1"
+    },
     "easyrdf/easyrdf": {
         "version": "0.9.1"
     },
@@ -142,29 +145,11 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
-    "jdorn/sql-formatter": {
-        "version": "v1.2.17"
-    },
     "knplabs/knp-markdown-bundle": {
         "version": "1.8.1"
     },
-    "lcobucci/jwt": {
-        "version": "3.3.1"
-    },
     "league/html-to-markdown": {
         "version": "4.8.1"
-    },
-    "lexik/jwt-authentication-bundle": {
-        "version": "2.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "2.5",
-            "ref": "5b2157bcd5778166a5696e42f552ad36529a07a6"
-        },
-        "files": [
-            "config/packages/lexik_jwt_authentication.yaml"
-        ]
     },
     "michelf/php-markdown": {
         "version": "1.9.0"
@@ -174,9 +159,6 @@
     },
     "moneyphp/money": {
         "version": "v1.3.0"
-    },
-    "namshi/jose": {
-        "version": "7.2.3"
     },
     "nelmio/cors-bundle": {
         "version": "1.5",
@@ -575,6 +557,18 @@
     },
     "tbbc/money-bundle": {
         "version": "v3.1.9"
+    },
+    "twig/extensions": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "a86723ee8d8b2f9437c8ce60a5546a1c267da5ed"
+        },
+        "files": [
+            "config/packages/twig_extensions.yaml"
+        ]
     },
     "twig/twig": {
         "version": "v2.11.3"
