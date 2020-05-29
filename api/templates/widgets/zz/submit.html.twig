@@ -13,20 +13,43 @@
                     </div>
 
                     <div class="definition-list__description">
-                        <p>
                         {% if property is iterable %}
-                            {% for key, value in property %}
-                            {{ key }}: {{ value }}<br>
+                            <p>{{ property[0] }}</p>
+                        {% elseif request.urlproperties is defined %}
+                            {% for urlkey, urlproperty in request.urlproperties%}
+                                {% if key == urlkey %}
+                                    <p>{{ urlproperty.name }}</p>
+                                {% endif %}
                             {% endfor %}
                         {% else %}
-                            {{ property }}
+                            <p>{{ property }}</p>
                         {% endif %}
-                            </p>
                     </div>
+
+{# nieuwe code die bovenstaande zal vervangen: (W.I.P.) #}
+{#                    <div class="definition-list__description">
+                        <p>
+                            {% if property is iterable %}
+                                {% for key, value in property %}
+                                    {{ key }}: {{ value }}<br>
+                                {% endfor %}
+                            {% else %}
+                                {% if commonground_is_resource(property) %}
+                                    {% set property = commonground_resource(property) %}
+                                    {% if property.name is defined %}
+                                        {{ property.name }}
+                                    {% elseif property.reference is defined %}
+                                        {{ property.reference }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ property }}
+                                {% endif %}
+                            {% endif %}
+                        </p>
+                    </div>#}
 
                 </li>
             {% endfor %}
-
             </ul>
         {% endif %}
 

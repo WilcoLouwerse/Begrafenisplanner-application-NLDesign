@@ -64,6 +64,9 @@
         {% endif %}
     {% endif %}
             {% if slug != 'indienen' %}
+        <!-- Page Break -->
+        <div style="height: 20px;"></div>
+
         <div class="col-md-4">
             <button class="btn btn--block" name="submit">Opslaan</button>
         </div><!-- /.col -->
@@ -155,7 +158,7 @@
                 </div>
             </div>
 
-            {% if request is defined %}
+            {% if request is defined and slug != 'indienen' %}
             <!-- Page Break -->
             <div style="height: 20px"></div>
 

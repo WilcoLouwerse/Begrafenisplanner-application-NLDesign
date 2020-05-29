@@ -4,19 +4,7 @@
     <list default="true" id="fe4cc900-e4e2-457b-b849-b6ac8a3d8a6b" name="Default Changelist" comment="">
       <change afterPath="$PROJECT_DIR$/api/templates/request/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/api/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/bpui-0.1.0.tgz" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/bpui-0.1.0.tgz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/index.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/index.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/pan-0.1.0.tgz" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/pan-0.1.0.tgz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/helm/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/helm/values.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/public/schema/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/openapi.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/public/schema/publiccode.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/Controller/RequestController.php" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/Controller/RequestController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/process/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/process/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/templates/widgets/processes/default.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/widgets/processes/default.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/translations/messages.nl.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/api/translations/messages.nl.xlf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/translations/messages.nl.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/api/translations/messages.nl.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/templates/widgets/zz/begraafplaats_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/api/templates/widgets/zz/begraafplaats_form.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,10 +167,11 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/api/templates" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/api/public/uno/components/favicon" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\public\uno\components\favicon" />
       <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\templates" />
       <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\public\uno\components\header" />
       <recent name="K:\HTA Software\Common Ground\Begrafenisplanner-application-NLDesign\api\public\uno\components\header\images" />
@@ -252,9 +241,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1588945886272" />
-    <state x="989" y="236" width="607" height="536" key="find.popup" timestamp="1590743506522">
+    <state x="989" y="236" width="854" height="536" key="find.popup" timestamp="1590759221196">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="989" y="236" width="854" height="536" key="find.popup/-1600.172.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1590759221196" />
     <state x="989" y="236" width="607" height="536" key="find.popup/-1600.187.1600.860/0.0.1920.1040@0.0.1920.1040" timestamp="1590743506522" />
     <state x="616" y="240" key="run.anything.popup" timestamp="1590583923811">
       <screen x="0" y="0" width="1920" height="1040" />
