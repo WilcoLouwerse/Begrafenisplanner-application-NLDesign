@@ -8,26 +8,33 @@
 
             <div class="content-background" >
             	<div class="content">
+                    {% if user is defined and user is not null %}
                     <table class="table table-hover">
                         <thead>
                         <tr>
                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'description'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'created'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'modified'|trans|capitalize }}</th>
                             <th scope="col">{{ 'status'|trans|capitalize }}</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for resource in processes %}
+                        {% for resource in requests %}
                             <tr>
-                                <td>{{ resource.name }}</td>
-                                <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.description }}{% endif %}</td>
-                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_process_load', {id: resource.id}) }}"><b>{{ 'start'|trans|capitalize }}</b></a></td>
+                                <td>{{ resource.reference }}</td>
+                                <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}</td>
+                                <td>{% if resource.dateModified is defined and resource.dateModified is not null %}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}</td>
+                                <td>{{ resource.status }}</td>
+                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_request_load', {id: resource.id}) }}"><b>{{ 'resume'|trans|capitalize }}</b></a></td>
 
                             </tr>
                         {% endfor %}
                         </tbody>
                     </table>
+                    {% else %}
+                    Log in om uw verzoeken te kunnen bekijken
+                    {% endif %}
                 </div><!-- /.content -->
             </div><!-- /.content-background -->
         </div><!-- /.col -->
