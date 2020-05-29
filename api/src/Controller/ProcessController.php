@@ -159,15 +159,15 @@ class ProcessController extends AbstractController
             {
                 $variables['selectedGrafsoort'] = $commonGroundService->getResource($variables['request']['properties']['grafsoort']);
             }
-            if (key_exists('event', $variables['request']['properties']))
+            if (key_exists('event', $variables['request']['properties']) && !empty($variables['request']['properties']['event']))
             {
                 $variables['selectedEvent'] = $commonGroundService->getResource($variables['request']['properties']['event']);
             }
-            if (key_exists('overledene', $variables['request']['properties']))
+            if (key_exists('overledene', $variables['request']['properties']) && !empty($variables['request']['properties']['overledene']))
             {
                 $variables['selectedOverledene'] = $commonGroundService->getResource($variables['request']['properties']['overledene']);
             }
-            if (key_exists('belanghebbende', $variables['request']['properties']))
+            if (key_exists('belanghebbende', $variables['request']['properties']) && !empty($variables['request']['properties']['belanghebbende']))
             {
                 $variables['selectedBelanghebbende'] = $commonGroundService->getResource($variables['request']['properties']['belanghebbende']);
             }
