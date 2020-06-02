@@ -51,8 +51,11 @@
         <script>
             function enableBegraafplaats()
             {
+                var autocompleteGemeente = document.getElementById("autocomplete-gemeente");
                 var autocompleteBegraafplaats = document.getElementById("autocomplete-begraafplaats");
-                autocompleteBegraafplaats.disabled = false;
+                if(autocompleteGemeente.selectedIndex != 0) {
+                    autocompleteBegraafplaats.disabled = false;
+                }
                 //document.getElementById("showAllButton-begraafplaats").disabled = false; //Hoe disable/enable ik de button en welk id heeft het?
                 //document.getElementById("selectBegraafplaats").disabled = false;
 
@@ -74,8 +77,11 @@
             }
             function enableGrafsoort()
             {
+                var autocompleteBegraafplaats = document.getElementById("autocomplete-begraafplaats");
                 var autocompleteGrafsoort = document.getElementById("autocomplete-grafsoort");
-                autocompleteGrafsoort.disabled = false;
+                if(autocompleteBegraafplaats.selectedIndex != 0) {
+                    autocompleteGrafsoort.disabled = false;
+                }
                 //document.getElementById("showAllButton-grafsoort").disabled = false; //Hoe disable/enable ik de button en welk id heeft het?
                 //document.getElementById("selectGrafsoort").disabled = false;
             }
