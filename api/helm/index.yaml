@@ -3,10 +3,10 @@ entries:
   bpui:
   - apiVersion: v1
     appVersion: V.0.10.2
-    created: "2020-05-29T16:23:49.3106393Z"
+    created: "2020-06-02T07:52:50.632901559Z"
     description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
       interface beschikbaar.&#039;'
-    digest: 64ac80809b4b2846a935602a23b1f17ac243cee17471f800e2b74452cf07b1d8
+    digest: 2955d6d7a97f917e2fe0a4cdeef7d9e54da450f27422760d7445ce31185f4add
     home: pan.conduction.nl
     icon: pan.conduction.nl
     name: bpui
@@ -16,7 +16,7 @@ entries:
   pan:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-05-29T16:23:49.3156922Z"
+    created: "2020-06-02T07:52:50.63713756Z"
     description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
       interface beschikbaar.&#039;'
     digest: a51d0f31d4100cd5535e7f910c0f784f29ccc3475b93c0c3da77311cdaac8ee1
@@ -26,4 +26,4 @@ entries:
     urls:
     - pan-0.1.0.tgz
     version: 0.1.0
-generated: "2020-05-29T16:23:49.3060589Z"
+generated: "2020-06-02T07:52:50.629714559Z"
