@@ -41,25 +41,13 @@
         <source>reference</source>
         <target>kenmerk</target>
       </trans-unit>
-      <trans-unit id="2BxV9Jx" resname="saved">
-        <source>saved</source>
-        <target>opgeslagen</target>
-      </trans-unit>
-      <trans-unit id="FGw_5pd" resname="could not be saved">
-        <source>could not be saved</source>
-        <target>kon niet opgeslagen worden</target>
+      <trans-unit id="gqNTf.D" resname="name">
+        <source>name</source>
+        <target>naam</target>
       </trans-unit>
       <trans-unit id="QG7.sen" resname="created">
         <source>created</source>
         <target>aangemaakt</target>
-      </trans-unit>
-      <trans-unit id="jHE8PIT" resname="could not be created">
-        <source>could not be created</source>
-        <target>kon niet aangemaakt worden</target>
-      </trans-unit>
-      <trans-unit id="gqNTf.D" resname="name">
-        <source>name</source>
-        <target>naam</target>
       </trans-unit>
       <trans-unit id="uAAShRz" resname="modified">
         <source>modified</source>
@@ -68,6 +56,22 @@
       <trans-unit id="BzwWNMS" resname="status">
         <source>status</source>
         <target>status</target>
+      </trans-unit>
+      <trans-unit id="qDoxMg2" resname="resume">
+        <source>resume</source>
+        <target>hervat</target>
+      </trans-unit>
+      <trans-unit id="2BxV9Jx" resname="saved">
+        <source>saved</source>
+        <target>opgeslagen</target>
+      </trans-unit>
+      <trans-unit id="FGw_5pd" resname="could not be saved">
+        <source>could not be saved</source>
+        <target>kon niet opgeslagen worden</target>
+      </trans-unit>
+      <trans-unit id="jHE8PIT" resname="could not be created">
+        <source>could not be created</source>
+        <target>kon niet aangemaakt worden</target>
       </trans-unit>
       <trans-unit id="zO0oxtw" resname="start">
         <source>start</source>
@@ -84,6 +88,10 @@
       <trans-unit id="I3TZF5S" resname="cancel">
         <source>cancel</source>
         <target>annuleren</target>
+      </trans-unit>
+      <trans-unit id="yQRveje" resname="description">
+        <source>description</source>
+        <target>omschrijving</target>
       </trans-unit>
     </body>
   </file>
