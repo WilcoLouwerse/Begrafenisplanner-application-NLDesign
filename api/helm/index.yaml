@@ -19,7 +19,7 @@ entries:
     created: "2020-05-29T16:23:49.3156922Z"
     description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
       interface beschikbaar.&#039;'
-    digest: a51d0f31d4100cd5535e7f910c0f784f29ccc3475b93c0c3da77311cdaac8ee1
+    digest: 7fb785b78c4fe056fe34ccc47ebb162d66f8eb90287735a71846698cf9f9498e
     home: pan.conduction.nl
     icon: pan.conduction.nl
     name: pan
