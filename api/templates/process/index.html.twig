@@ -23,7 +23,7 @@
                             <tr>
                                 <td>{{ resource.name }}</td>
                                 <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.description }}{% endif %}</td>
-                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_process_load', {id: resource.id}) }}"><b>{{ 'start'|trans|capitalize }}</b></a></td>
+                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_process_start', {id: resource.id}) }}"><b>{{ 'start'|trans|capitalize }}</b></a></td>
 
                             </tr>
                         {% endfor %}
