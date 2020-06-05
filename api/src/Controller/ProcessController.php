@@ -143,19 +143,6 @@ class ProcessController extends AbstractController
                 }
             }
 
-            if (key_exists('begraafplaats', $variables['request']['properties']))
-            {
-                $variables['selectedBegraafplaats'] = $commonGroundService->getResource($variables['request']['properties']['begraafplaats']); //Dit mag eigenlijk al weg
-            }
-            else{//de volgende code moet nog eens goed naar gekeken worden, dit is een tijdelijke oplossing voor een probleem, het hard wegzetten van een begraafplaats.
-                $variables['selectedBegraafplaats'] = $commonGroundService->getResource(['component'=>'grc','type'=>'cemeteries','id'=>'2556c084-0687-4ca1-b098-e4f0a7292ae8']);
-                $variables['selectedBegraafplaats']['reference'] = "Wognum (Kreekland), ER IS NOG GEEN BEGRAAFPLAATS GEKOZEN!";
-            }
-            $variables['calendar'] = $commonGroundService->getResource($variables['selectedBegraafplaats']['calendar']);
-            if (key_exists('event', $variables['request']['properties']) && !empty($variables['request']['properties']['event']))
-            {
-                $variables['selectedEvent'] = $commonGroundService->getResource($variables['request']['properties']['event']);
-            }
             if (key_exists('overledene', $variables['request']['properties']) && !empty($variables['request']['properties']['overledene']))
             {
                 $variables['selectedOverledene'] = $commonGroundService->getResource($variables['request']['properties']['overledene']);
@@ -165,11 +152,7 @@ class ProcessController extends AbstractController
                 $variables['selectedBelanghebbende'] = $commonGroundService->getResource($variables['request']['properties']['belanghebbende']);
             }
         }
-        else {//de volgende code moet nog eens goed naar gekeken worden, dit is een tijdelijke oplossing voor een probleem, het hard wegzetten van een begraafplaats.
-            $variables['selectedBegraafplaats'] = $commonGroundService->getResource(['component'=>'grc','type'=>'cemeteries','id'=>'2556c084-0687-4ca1-b098-e4f0a7292ae8']);
-            $variables['selectedBegraafplaats']['reference'] = "Wognum (Kreekland), ER IS NOG GEEN BEGRAAFPLAATS GEKOZEN!";
-            $variables['calendar'] = $commonGroundService->getResource($variables['selectedBegraafplaats']['calendar']);
-        }
+
 
         $i = 0;
         while(true) {
