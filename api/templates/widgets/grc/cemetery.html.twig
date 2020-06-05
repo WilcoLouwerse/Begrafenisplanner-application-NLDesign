@@ -1,0 +1,47 @@
+<script>
+    function enableGrafsoort()
+    {
+        var dropdownBegraafplaats = document.getElementById("dropdown-begraafplaats");
+        var dropdownGrafsoort = document.getElementById("dropdown-grafsoort");
+        if(dropdownBegraafplaats.selectedIndex != 0) {
+            dropdownGrafsoort.disabled = false;
+        }
+    }
+</script>
+{% set cemeteries = commonground_resource_list({'component':'grc', 'type':'cemeteries'})['hydra:member'] %}
+<div class="input combobox" id="begraafplaats_combobox">
+    <div class="input__hint">Selecteer een Begraafplaats</div>
+    <select name="properties[begraafplaats]" onclick="enableGrafsoort()" id="dropdown-begraafplaats" class="input__control input__control--m input__control--select">
+        <option hidden="" value='{"Cemetery":"Selecteer een Begraafplaats","Organization":"Selecteer een Begraafplaats"}'>Selecteer een Begraafplaats</option>
+        {% for cemetery in cemeteries %}
+            <option value='{"Cemetery":"{{ cemetery['@id'] }}","Organization":"{{ cemetery['organization'] }}"}'>{{ cemetery['reference'] }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<script>
+    var dropdownGemeente = document.getElementById("dropdown-gemeente");
+    var dropdownGrafsoort = document.getElementById("dropdown-grafsoort");
+
+    setBegraafplaatsIndex();
+
+    function setBegraafplaatsIndex()
+    {
+        var dropdownBegraafplaats = document.getElementById("dropdown-begraafplaats");
+        var selectedBegraafplaatsIndex = 0;
+        {% if request.properties.begraafplaats is defined and request.properties.begraafplaats is not empty %}
+        for (var i=0; i < dropdownBegraafplaats.length; i++) {
+            var begraafplaats = JSON.parse(dropdownBegraafplaats[i].value);
+            if(begraafplaats.Cemetery == "{{ request.properties.begraafplaats }}") {
+                selectedBegraafplaatsIndex = i;
+            }
+        }
+        {% else %}
+        dropdownGemeente.selectedIndex = 0;
+        dropdownGrafsoort.selectedIndex = 0;
+        document.getElementById("dropdown-begraafplaats").disabled = true;
+        dropdownGrafsoort.disabled = true;
+        {% endif %}
+        dropdownBegraafplaats.selectedIndex = selectedBegraafplaatsIndex;
+    }
+</script>

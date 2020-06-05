@@ -121,19 +121,6 @@ class ProcessController extends AbstractController
         }
         $variables["slug"] = $slug;
 
-        $variables['cemeteries'] = [];
-        $variables['organizations'] = $commonGroundService->getResourceList(['component'=>'wrc','type'=>'organizations'])['hydra:member'];
-        $variables['grave_types'] = $commonGroundService->getResourceList(['component'=>'grc','type'=>'grave_types'])['hydra:member'];
-
-        $cemeteries = $commonGroundService->getResourceList(['component'=>'grc','type'=>'cemeteries']);
-        if(key_exists("hydra:view", $cemeteries)) {
-            $lastPageCemeteries = (int) str_replace("/cemeteries?page=", "", $cemeteries["hydra:view"]["hydra:last"]);
-            for ($i = 1; $i <= $lastPageCemeteries; $i++) {
-                $variables['cemeteries'] = array_merge($variables['cemeteries'], $commonGroundService->getResourceList(['component'=>'grc','type'=>'cemeteries'], ['page'=>$i])["hydra:member"]);
-            }
-        }
-        else {$variables["cemeteries"] = $cemeteries["hydra:member"];}
-
         if(
             key_exists('request',$variables) &&
             key_exists('properties', $variables['request'])
@@ -158,18 +145,13 @@ class ProcessController extends AbstractController
 
             if (key_exists('begraafplaats', $variables['request']['properties']))
             {
-                $variables['selectedBegraafplaats'] = $commonGroundService->getResource($variables['request']['properties']['begraafplaats']);
+                $variables['selectedBegraafplaats'] = $commonGroundService->getResource($variables['request']['properties']['begraafplaats']); //Dit mag eigenlijk al weg
             }
             else{//de volgende code moet nog eens goed naar gekeken worden, dit is een tijdelijke oplossing voor een probleem, het hard wegzetten van een begraafplaats.
                 $variables['selectedBegraafplaats'] = $commonGroundService->getResource(['component'=>'grc','type'=>'cemeteries','id'=>'2556c084-0687-4ca1-b098-e4f0a7292ae8']);
                 $variables['selectedBegraafplaats']['reference'] = "Wognum (Kreekland), ER IS NOG GEEN BEGRAAFPLAATS GEKOZEN!";
             }
-            $variables['selectedGemeente'] = $commonGroundService->getResource($variables['selectedBegraafplaats']['organization']);
             $variables['calendar'] = $commonGroundService->getResource($variables['selectedBegraafplaats']['calendar']);
-            if (key_exists('grafsoort', $variables['request']['properties']))
-            {
-                $variables['selectedGrafsoort'] = $commonGroundService->getResource($variables['request']['properties']['grafsoort']);
-            }
             if (key_exists('event', $variables['request']['properties']) && !empty($variables['request']['properties']['event']))
             {
                 $variables['selectedEvent'] = $commonGroundService->getResource($variables['request']['properties']['event']);

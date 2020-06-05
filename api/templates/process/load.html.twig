@@ -29,8 +29,8 @@
 
     {% elseif stage.sections is defined and stage.sections is not null %}
 
-        {% if stage.name == 'Begraafplaats' %}
-            {% include 'widgets/zz/begraafplaats_form.html.twig' %}
+        {% if stage.name == 'BegraafplaatsTEMP' %}
+            {# include 'widgets/zz/begraafplaats_form.html.twig' #}
         {% elseif stage.name == 'Datum en tijd' %}
             {% include 'widgets/zz/datumtijd_form.html.twig' %}
         {% elseif stage.name == 'Artikelen' %}
@@ -52,13 +52,18 @@
                                 {% include 'widgets/zz/address.html.twig' %}
                             {% elseif property.format == 'date' %}
                                 {% include 'widgets/zz/date.html.twig' %}
+                            {% elseif property.iri == 'wrc/organizations'%}
+                                {% include 'widgets/wrc/organizations.html.twig' %}
+                            {% elseif property.iri == 'grc/cemetery'%}
+                                {% include 'widgets/grc/cemetery.html.twig' %}
+                            {% elseif property.iri == 'grc/grave_type'%}
+                                {% include 'widgets/grc/grave_type.html.twig' %}
                             {% endif %}
                         {% endfor %}
 
     {#                    <a class="btn" href="{{ path('app_request_data') }}">Begin</a>#}
 
                     </div><!-- /.content -->
-
                 </div><!-- /.content-background -->
             {% endfor %}
         {% endif %}
