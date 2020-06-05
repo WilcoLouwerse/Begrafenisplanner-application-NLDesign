@@ -13,7 +13,9 @@
     var dropdownGrafsoort = document.getElementById("dropdown-grafsoort");
     var selectedIndex = 0;
 
-    {% if request.properties.grafsoort is defined and request.properties.grafsoort is not empty %}
+    {% if request.properties.begraafplaats is not defined or request.properties.begraafplaats is empty %}
+    dropdownGrafsoort.disabled = true;
+    {% elseif request.properties.grafsoort is defined and request.properties.grafsoort is not empty %}
     for (var i=0; i < dropdownGrafsoort.length; i++) {
         if(dropdownGrafsoort[i].value == "{{ request.properties.grafsoort }}") {
             selectedIndex = i;
