@@ -13,23 +13,6 @@
                     </div>
 
                     <div class="definition-list__description">
-                        {% if property is iterable %}
-                            {% for value in property %}
-                            <p>{{ value }}</p>
-                            {% endfor %}
-                        {% elseif request.urlproperties is defined %}
-                            {% for urlkey, urlproperty in request.urlproperties%}
-                                {% if key == urlkey %}
-                                    <p>{{ urlproperty.name }}</p>
-                                {% endif %}
-                            {% endfor %}
-                        {% else %}
-                            <p>{{ property }}</p>
-                        {% endif %}
-                    </div>
-
-{# nieuwe code die bovenstaande zal vervangen: (W.I.P.) #}
-{#                    <div class="definition-list__description">
                         <p>
                             {% if property is iterable %}
                                 {% for key, value in property %}
@@ -38,17 +21,19 @@
                             {% else %}
                                 {% if commonground_is_resource(property) %}
                                     {% set property = commonground_resource(property) %}
-                                    {% if property.name is defined %}
-                                        {{ property.name }}
+                                    {% if property.naam.voornamen is defined and property.naam.geslachtsnaam is defined %}
+                                        {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
                                     {% elseif property.reference is defined %}
                                         {{ property.reference }}
+                                    {% elseif property.name is defined %}
+                                        {{ property.name }}
                                     {% endif %}
                                 {% else %}
                                     {{ property }}
                                 {% endif %}
                             {% endif %}
                         </p>
-                    </div>#}
+                    </div>
 
                 </li>
             {% endfor %}

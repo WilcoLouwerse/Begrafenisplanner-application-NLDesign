@@ -126,23 +126,6 @@ class ProcessController extends AbstractController
             key_exists('properties', $variables['request'])
         )
         {
-            foreach($variables['request']['properties'] as $key=>$property)
-            {
-                if (!is_array($property) && (strpos($property, 'begraven.zaakonline.nl') !== false || strpos($property, 'westfriesland.commonground.nu') !== false))
-                {
-                    $variables['request']['urlproperties'][$key] = $commonGroundService->getResource($property);
-                    if (key_exists('reference',$variables['request']['urlproperties'][$key]))
-                    {
-                        $variables['request']['urlproperties'][$key]['name'] = $variables['request']['urlproperties'][$key]['reference'];
-                    }
-                    if(key_exists('burgerservicenummer',$variables['request']['urlproperties'][$key]))
-                    {
-                        $variables['request']['urlproperties'][$key]['name'] = $variables['request']['urlproperties'][$key]['naam']['voornamen']." ".
-                            $variables['request']['urlproperties'][$key]['naam']['geslachtsnaam'];
-                    }
-                }
-            }
-
             if (key_exists('overledene', $variables['request']['properties']) && !empty($variables['request']['properties']['overledene']))
             {
                 $variables['selectedOverledene'] = $commonGroundService->getResource($variables['request']['properties']['overledene']);

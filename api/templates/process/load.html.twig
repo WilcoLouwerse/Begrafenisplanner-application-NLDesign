@@ -33,8 +33,7 @@
             {# include 'widgets/zz/begraafplaats_form.html.twig' #}
         {% elseif stage.name == 'Datum en tijdTEMP' %}
             {#include 'widgets/zz/datumtijd_form.html.twig' #}
-        {% elseif stage.name == 'Artikelen' %}
-            {% include 'widgets/pdc/offer.html.twig' %}
+        {% elseif stage.name == 'ArtikelenTEMP' %}
             {# include 'widgets/zz/artikelen_form.html.twig' #}
         {% elseif stage.name == 'Overledene' %}
             {% include 'widgets/zz/overledene_form.html.twig' %}
@@ -61,6 +60,8 @@
                                 {% include 'widgets/grc/grave_type.html.twig' %}
                             {% elseif property.iri == 'arc/event'%}
                                 {% include 'widgets/arc/event.html.twig' %}
+                            {% elseif property.name == 'artikelen'%}
+                                {% include 'widgets/pdc/offer.html.twig' %}
                         {% endif %}
                         {% endfor %}
 
@@ -181,17 +182,26 @@
                                     {{ key }}
                                 </div>
                                 <div class="definition-list__description">
-                                    {% if property is iterable %}
-                                        <p>{{ property[0] }}</p>
-                                    {% elseif request.urlproperties is defined %}
-                                        {% for urlkey, urlproperty in request.urlproperties%}
-                                            {% if key == urlkey %}
-                                                <p>{{ urlproperty.name }}</p>
+                                    <p>
+                                        {% if property is iterable %}
+                                            {% for key, value in property %}
+                                                {{ key }}: {{ value }}<br>
+                                            {% endfor %}
+                                        {% else %}
+                                            {% if commonground_is_resource(property) %}
+                                                {% set property = commonground_resource(property) %}
+                                                {% if property.naam.voornamen is defined and property.naam.geslachtsnaam is defined %}
+                                                    {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
+                                                {% elseif property.reference is defined %}
+                                                    {{ property.reference }}
+                                                {% elseif property.name is defined %}
+                                                    {{ property.name }}
+                                                {% endif %}
+                                            {% else %}
+                                                {{ property }}
                                             {% endif %}
-                                        {% endfor %}
-                                    {% else %}
-                                        <p>{{ property }}</p>
-                                    {% endif %}
+                                        {% endif %}
+                                    </p>
                                 </div>
                             </li>
                         {% endfor %}
