@@ -35,9 +35,9 @@
             {#include 'widgets/zz/datumtijd_form.html.twig' #}
         {% elseif stage.name == 'ArtikelenTEMP' %}
             {# include 'widgets/zz/artikelen_form.html.twig' #}
-        {% elseif stage.name == 'Overledene' %}
+        {% elseif stage.name == 'OverledeneTEMP' %}
             {% include 'widgets/zz/overledene_form.html.twig' %}
-        {% elseif stage.name == 'Belanghebbende' %}
+        {% elseif stage.name == 'BelanghebbendeTEMP' %}
             {% include 'widgets/zz/belanghebbende_form.html.twig' %}
         {% else %}
             {% for section in stage.sections %}
@@ -62,6 +62,8 @@
                                 {% include 'widgets/arc/event.html.twig' %}
                             {% elseif property.name == 'artikelen'%}
                                 {% include 'widgets/pdc/offer.html.twig' %}
+                            {% elseif property.iri == 'brp/ingeschrevenpersoon'%}
+                                {% include 'widgets/brp/ingeschreven_persoon.html.twig' %}
                         {% endif %}
                         {% endfor %}
 

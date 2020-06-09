@@ -136,21 +136,7 @@ class ProcessController extends AbstractController
             }
         }
 
-
-        $i = 0;
-        while(true) {
-            $todayDate = new \DateTime("now");
-            $dayToCheck = $todayDate->modify('-'.$i.' days');
-            if ($dayToCheck->format('N')== 1) {
-                $variables['lastMonday'] = $dayToCheck;
-                break;
-            }
-            else {$i++;}
-        }
-
-        $variables['ingeschrevenpersonen'] = $commonGroundService->getResourceList(['component'=>'brp','type'=>'ingeschrevenpersonen']);
-        $variables['geboortes'] = $commonGroundService->getResourceList(['component'=>'brp','type'=>'geboortes']);
-
+        
         return $variables;
     }
 

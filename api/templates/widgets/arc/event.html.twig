@@ -10,6 +10,7 @@
     <p>Agenda van de begraafplaats: {{ begraafplaats.reference }}</p>
 
     {% set calendar = commonground_resource(begraafplaats.calendar) %}
+    {% set lastMonday = 'now' | date_modify('monday this week') %}
     <script>
         var events = [
 
@@ -27,9 +28,8 @@
             {% endfor %}
         ];
 
-    </script>
 
-    {#        <form class="form" method="post" action="#">#}
+    </script>
     <div class="col-md-4  col-sm-12">
         <div class="input">
             <label class="input__label" for="week">Selecteer hier een week:</label>
