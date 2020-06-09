@@ -80,7 +80,7 @@
             <button class="btn btn--block" name="submit">Opslaan</button>
         </div><!-- /.col -->
                 {% endif %}
-            {% if stage.previous is defined and stage.previous is not null and stage.previous is not false %}
+            {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}
             <div class="col-md-4">
             <a class="btn btn--primary btn--block" href="{{ path('app_process_slug',{id: process.id, slug: stage.previous.slug}) }}">Terug naar {{ stage.previous.name }}</a>
             </div>
