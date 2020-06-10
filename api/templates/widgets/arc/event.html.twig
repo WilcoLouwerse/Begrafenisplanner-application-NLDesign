@@ -189,6 +189,9 @@
                         var selectedtime = cell.innerHTML;
                         alert("Selected event: " + selectedtime);
 
+                        {# showChangeTableHeader();??? TODO:set all other cells to not <strong>! #}
+                        cell.innerHTML = "<strong>" + selectedtime + "</strong>"
+
                         var selectedEvent = document.getElementById("selectedEvent");
                         selectedEvent.value = cell.value;
                     };
