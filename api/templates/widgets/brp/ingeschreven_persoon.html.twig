@@ -12,6 +12,11 @@
             });
         </script>
         {% set ingeschrevenpersonen = commonground_resource_list({'component':'brp', 'type':'ingeschrevenpersonen'}) %}
+
+
+        {% if request.properties.overledene is defined and request.properties.overledene is not empty %}
+            {% set selectedPersoon = commonground_resource(request.properties.overledene) %}
+        {% endif %}
         <script>
             var ingeschrevenpersonen = [
 
@@ -25,7 +30,7 @@
                     {% else %}
                     geboortedatum: '',
                     {% endif %}
-                    url: 'https://brp.dev.begraven.zaakonline.nl/ingeschrevenpersonen/uuid/{{ ingeschrevenpersoon['id'] }}'
+                    url: 'https://brp.dev.westfriesland.commonground.nu/ingeschrevenpersonen/uuid/{{ ingeschrevenpersoon['id'] }}'
                 },
                 {% endfor %}
             ];
@@ -85,12 +90,12 @@
                     <p id="p_geboortedatum">geboortedatum: </p>
                 </div>
                 <script>
-                    {% if selectedOverledene is defined %}
-                    document.getElementById("p_bsn").innerHTML = "bsn: {{ selectedOverledene['burgerservicenummer'] }}";
-                    document.getElementById("p_naam").innerHTML = "naam: {{ selectedOverledene['naam']['voornamen'] }} {{ selectedOverledene['naam']['geslachtsnaam'] }}";
+                    {% if selectedPersoon is defined %}
+                    document.getElementById("p_bsn").innerHTML = "bsn: {{ selectedPersoon['burgerservicenummer'] }}";
+                    document.getElementById("p_naam").innerHTML = "naam: {{ selectedPersoon['naam']['voornamen'] }} {{ selectedPersoon['naam']['geslachtsnaam'] }}";
 
                     {% for ingeschrevenpersoon in ingeschrevenpersonen %}
-                    {% if ingeschrevenpersoon['burgerservicenummer'] == selectedOverledene['burgerservicenummer'] %}
+                    {% if ingeschrevenpersoon['burgerservicenummer'] == selectedPersoon['burgerservicenummer'] %}
                     document.getElementById("p_geboortedatum").innerHTML = "geboortedatum: {{ ingeschrevenpersoon['geboorte']['datum']['date'] }}";
                     {% endif %}
                     {% endfor %}
@@ -142,7 +147,7 @@
 
         </div>
 
-        <input hidden="" id="selectedIngeschrevenpersoon" name="properties[overledene]">
+        <input hidden="" id="selectedIngeschrevenpersoon" name="properties[{{ property.name }}]">
 
         {#
                 <form class="form" method="post" action="#">

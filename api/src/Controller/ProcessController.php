@@ -120,23 +120,7 @@ class ProcessController extends AbstractController
             }
         }
         $variables["slug"] = $slug;
-
-        if(
-            key_exists('request',$variables) &&
-            key_exists('properties', $variables['request'])
-        )
-        {
-            if (key_exists('overledene', $variables['request']['properties']) && !empty($variables['request']['properties']['overledene']))
-            {
-                $variables['selectedOverledene'] = $commonGroundService->getResource($variables['request']['properties']['overledene']);
-            }
-            if (key_exists('belanghebbende', $variables['request']['properties']) && !empty($variables['request']['properties']['belanghebbende']))
-            {
-                $variables['selectedBelanghebbende'] = $commonGroundService->getResource($variables['request']['properties']['belanghebbende']);
-            }
-        }
-
-
+        
         return $variables;
     }
 
