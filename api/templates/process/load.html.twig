@@ -29,50 +29,40 @@
 
     {% elseif stage.sections is defined and stage.sections is not null %}
 
-        {% if stage.name == 'BegraafplaatsTEMP' %}
-            {# include 'widgets/zz/begraafplaats_form.html.twig' #}
-        {% elseif stage.name == 'Datum en tijdTEMP' %}
-            {#include 'widgets/zz/datumtijd_form.html.twig' #}
-        {% elseif stage.name == 'ArtikelenTEMP' %}
-            {# include 'widgets/zz/artikelen_form.html.twig' #}
-        {% elseif stage.name == 'OverledeneTEMP' %}
-            {% include 'widgets/zz/overledene_form.html.twig' %}
-        {% elseif stage.name == 'BelanghebbendeTEMP' %}
-            {% include 'widgets/zz/belanghebbende_form.html.twig' %}
-        {% else %}
-            {% for section in stage.sections %}
-                <div class="content-background">
-                    <div class="content">
-                        <h2>{{ section.name }}</h2>
-                        {% for property in section.properties %}
-                            {% set property = commonground_resource(property) %}
-                            {% if property.type == 'array' and property.format == 'bsn' %}
-                                {% include 'widgets/zz/person.html.twig' %}
-                            {% elseif property.format == 'bag' %}
-                                {% include 'widgets/zz/address.html.twig' %}
-                            {% elseif property.format == 'date' %}
-                                {% include 'widgets/zz/date.html.twig' %}
-                            {% elseif property.iri == 'wrc/organizations'%}
-                                {% include 'widgets/wrc/organizations.html.twig' %}
-                            {% elseif property.iri == 'grc/cemetery'%}
-                                {% include 'widgets/grc/cemetery.html.twig' %}
-                            {% elseif property.iri == 'grc/grave_type'%}
-                                {% include 'widgets/grc/grave_type.html.twig' %}
-                            {% elseif property.iri == 'arc/event'%}
-                                {% include 'widgets/arc/event.html.twig' %}
-                            {% elseif property.name == 'artikelen'%}
-                                {% include 'widgets/pdc/offer.html.twig' %}
-                            {% elseif property.iri == 'brp/ingeschrevenpersoon'%}
-                                {% include 'widgets/brp/ingeschreven_persoon.html.twig' %}
-                        {% endif %}
-                        {% endfor %}
+        {% for section in stage.sections %}
+            <div class="content-background">
+                <div class="content">
+                    <h2>{{ section.name }}</h2>
+                    {% for property in section.properties %}
+                        {% set property = commonground_resource(property) %}
+                        {% if property.type == 'array' and property.format == 'bsn' %}
+                            {% include 'widgets/zz/person.html.twig' %}
+                        {% elseif property.format == 'bag' %}
+                            {% include 'widgets/zz/address.html.twig' %}
+                        {% elseif property.format == 'date' %}
+                            {% include 'widgets/zz/date.html.twig' %}
+                        {% elseif property.iri == 'wrc/organizations'%}
+                            {% include 'widgets/wrc/organizations.html.twig' %}
+                        {% elseif property.iri == 'grc/cemetery'%}
+                            {% include 'widgets/grc/cemetery.html.twig' %}
+                        {% elseif property.iri == 'grc/grave_type'%}
+                            {% include 'widgets/grc/grave_type.html.twig' %}
+                        {% elseif property.iri == 'arc/event'%}
+                            {% include 'widgets/arc/event.html.twig' %}
+                        {% elseif property.name == 'artikelen'%}
+                            {% include 'widgets/pdc/offer.html.twig' %}
+                        {% elseif property.iri == 'brp/ingeschrevenpersoon'%}
+                            {% include 'widgets/brp/ingeschreven_persoon.html.twig' %}
+                        {% elseif property.iri == 'irc/assent'%}
+                            {% include 'widgets/irc/assent.html.twig' %}
+                    {% endif %}
+                    {% endfor %}
 
-    {#                    <a class="btn" href="{{ path('app_request_data') }}">Begin</a>#}
+{#                    <a class="btn" href="{{ path('app_request_data') }}">Begin</a>#}
 
-                    </div><!-- /.content -->
-                </div><!-- /.content-background -->
-            {% endfor %}
-        {% endif %}
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+        {% endfor %}
     {% endif %}
             {% if slug != 'indienen' %}
         <!-- Page Break -->

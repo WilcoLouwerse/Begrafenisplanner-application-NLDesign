@@ -12,7 +12,6 @@
             });
         </script>
         {% set ingeschrevenpersonen = commonground_resource_list({'component':'brp', 'type':'ingeschrevenpersonen'}) %}
-        {% set geboortes = commonground_resource_list({'component':'brp', 'type':'geboortes'}) %}
         <script>
             var ingeschrevenpersonen = [
 
@@ -55,7 +54,7 @@
             }
         </script>
 
-        <h2>Overledene</h2>
+        <h2>{{ property.title }}</h2>
 
         <!-- Page Break -->
         <div style="height: 20px;"></div>
