@@ -2,13 +2,11 @@
 {% if process.name == 'Begraven'%}
     {% if request.properties.begraafplaats is defined and request.properties.begraafplaats is not empty %}
 
-
-
-        {% if request.properties.event is defined and request.properties.event is not empty %}
-            {% set selectedEvent = commonground_resource(request.properties.event) %}
-        {% endif %}
-        {% set begraafplaats = commonground_resource(request.properties.begraafplaats) %}
-        <p>Agenda van de begraafplaats: {{ begraafplaats.reference }}</p>
+    {% if request.properties.event is defined and request.properties.event is not empty %}
+        {% set selectedEvent = commonground_resource(request.properties.event) %}
+    {% endif %}
+    {% set begraafplaats = commonground_resource(request.properties.begraafplaats) %}
+    <p>Agenda van de begraafplaats: {{ begraafplaats.reference }}</p>
 
         {% set calendar = commonground_resource(begraafplaats.calendar) %}
         {% set lastMonday = 'now' | date_modify('monday this week') %}

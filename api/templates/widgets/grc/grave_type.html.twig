@@ -1,8 +1,8 @@
 {% set grave_types = commonground_resource_list({'component':'grc', 'type':'grave_types'})['hydra:member'] %}
 <div class="input combobox" id="grafsoort_combobox">
-    <div class="input__hint">Selecteer het Soort Graf</div>
+    <div class="input__hint">Selecteer het {{ property.title }}</div>
     <select name="properties[grafsoort]" id="dropdown-grafsoort" class="input__control input__control--m input__control--select">
-        <option hidden="" value="Selecteer het Soort Graf">Selecteer het Soort Graf</option>
+        <option hidden="" value="Selecteer het {{ property.title }}">Selecteer het {{ property.title }}</option>
         {% for grave_type in grave_types %}
             <option value="{{ grave_type['@id'] }}">{{ grave_type['reference'] }}</option>
         {% endfor %}
