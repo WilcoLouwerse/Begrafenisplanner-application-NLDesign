@@ -1,7 +1,7 @@
 <script>
     function enableBegraafplaats()
     {
-        var dropdownGemeente = document.getElementById("dropdown-gemeente");
+        var dropdownGemeente = document.getElementById("dropdown-{{ property.name }}");
         var dropdownBegraafplaats = document.getElementById("dropdown-begraafplaats");
         if(dropdownGemeente.selectedIndex != 0) {
             dropdownBegraafplaats.disabled = false;
@@ -10,7 +10,7 @@
         //De volgende code is tijdelijk tot dat er door middel van commonground_resource_list gefilterd kan worden op begraafplaatsen van de geselecteerde gemeente.
         //Op het moment worden ook niet alle begraafplaatsen hiermee ingeladen zoals dat eerst wel ging via de controller.
         var selectedIndex = 0;
-        var selectedGemeenteID = document.getElementById("dropdown-gemeente").value;
+        var selectedGemeenteID = document.getElementById("dropdown-{{ property.name }}").value;
         for (var i=0; i < dropdownBegraafplaats.length; i++)
         {
             var begraafplaats = JSON.parse(dropdownBegraafplaats[i].value);
@@ -45,7 +45,7 @@
 </div>
 
 <script>
-    var dropdownGemeente = document.getElementById("dropdown-gemeente");
+    var dropdownGemeente = document.getElementById("dropdown-{{ property.name }}");
     var selectedIndex = 0;
 
     {% if request.properties.gemeente is defined and request.properties.gemeente is not empty %}
