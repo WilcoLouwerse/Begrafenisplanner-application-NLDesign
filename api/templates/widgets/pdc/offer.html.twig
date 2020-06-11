@@ -1,23 +1,27 @@
-<h3>{{ section.description }}</h3>
-<fieldset class="input filter" id="artikelen">
-    <legend class="filter__title">{{ property.title }}:</legend>
-    <ul class="input__group-list">
-        <li class="input__group input__group--checkbox">
-            {#                        TODO: Dit is vreselijk lelijk: dit moeten twee properties worden met IRI pdc/Offer en format array, die automatisch worden gevuld uit het PDC#}
-            {#                        Aan de hand van de gekozen begraafplaats en de daarbijhorende artikelen ^ (W.I.P.) #}
-            <h3>Bijzettingsartikelen</h3>
-            <ul>
-                <li><input type="checkbox" class="input__control input__control--checkbox" id="option1" name="properties[bijzettingsartikelen][]" value="asverstrooiing"><label for="option1" class="input__label input__label--checkbox"> Asverstrooiing</label></li>
-                <li><input type="checkbox" class="input__control input__control--checkbox" id="option2" name="properties[bijzettingsartikelen][]" value="asbus"><label for="option2" class="input__label input__label--checkbox"> Bijzetting Asbus</label></li>
-            </ul>
-        </li>
-        <li class="input__group input__group--checkbox">
-            <h3>Diversen</h3>
-            <ul>
-                <li><input type="checkbox" class="input__control input__control--checkbox" id="Veld1" name="properties[diversen][]" value="orgel"><label for="Veld1" class="input__label input__label--checkbox"> Gebruik Orgel</label></li>
-                <li><input type="checkbox" class="input__control input__control--checkbox" id="Veld2" name="properties[diversen][]" value="koffiekamer"><label for="Veld2" class="input__label input__label--checkbox"> Gebruik Koffiekamer</label></li>
-                <li><input type="checkbox" class="input__control input__control--checkbox" id="Veld3" name="properties[diversen][]" value="CD"><label for="Veld3" class="input__label input__label--checkbox"> CD</label></li>
-            </ul>
-        </li>
-    </ul>
-</fieldset>
+{% if process.name == "Begraven" and ( request.properties.begraafplaats is not defined or request.properties.begraafplaats is empty ) %}
+    <p>Er is nog geen begraafplaats geselecteerd!</p>
+{% else %}
+    <h3>{{ section.description }}</h3>
+    <fieldset class="input filter" id="artikelen">
+        <legend class="filter__title">{{ property.title }}:</legend>
+        <ul class="input__group-list">
+            <li class="input__group input__group--checkbox">
+                {#                        TODO: Dit is vreselijk lelijk: dit moeten twee properties worden met IRI pdc/Offer en format array, die automatisch worden gevuld uit het PDC#}
+                {#                        Aan de hand van de gekozen begraafplaats en de daarbijhorende artikelen ^ (W.I.P.) #}
+                <h3>Bijzettingsartikelen</h3>
+                <ul>
+                    <li><input type="checkbox" class="input__control input__control--checkbox" id="option1" name="properties[bijzettingsartikelen][]" value="asverstrooiing"><label for="option1" class="input__label input__label--checkbox"> Asverstrooiing</label></li>
+                    <li><input type="checkbox" class="input__control input__control--checkbox" id="option2" name="properties[bijzettingsartikelen][]" value="asbus"><label for="option2" class="input__label input__label--checkbox"> Bijzetting Asbus</label></li>
+                </ul>
+            </li>
+            <li class="input__group input__group--checkbox">
+                <h3>Diversen</h3>
+                <ul>
+                    <li><input type="checkbox" class="input__control input__control--checkbox" id="Veld1" name="properties[diversen][]" value="orgel"><label for="Veld1" class="input__label input__label--checkbox"> Gebruik Orgel</label></li>
+                    <li><input type="checkbox" class="input__control input__control--checkbox" id="Veld2" name="properties[diversen][]" value="koffiekamer"><label for="Veld2" class="input__label input__label--checkbox"> Gebruik Koffiekamer</label></li>
+                    <li><input type="checkbox" class="input__control input__control--checkbox" id="Veld3" name="properties[diversen][]" value="CD"><label for="Veld3" class="input__label input__label--checkbox"> CD</label></li>
+                </ul>
+            </li>
+        </ul>
+    </fieldset>
+{% endif %}

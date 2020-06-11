@@ -1,34 +1,37 @@
 
-{% if process.name == 'Begraven'%}
+{% if process.name == "Begraven" and ( request.properties.begraafplaats is not defined or request.properties.begraafplaats is empty ) %}
+    <p>Er is nog geen begraafplaats geselecteerd!</p>
+{% else %}
     {% if request.properties.begraafplaats is defined and request.properties.begraafplaats is not empty %}
-
-    {% if request.properties.event is defined and request.properties.event is not empty %}
-        {% set selectedEvent = commonground_resource(request.properties.event) %}
-    {% endif %}
-    {% set begraafplaats = commonground_resource(request.properties.begraafplaats) %}
-    <p>Agenda van de begraafplaats: {{ begraafplaats.reference }}</p>
-
+        {% set begraafplaats = commonground_resource(request.properties.begraafplaats) %}
+        <p>Agenda van de begraafplaats: {{ begraafplaats.reference }}</p>
         {% set calendar = commonground_resource(begraafplaats.calendar) %}
+    {% endif %}
+
+    {% if calendar is defined %}
+        {% if request.properties.event is defined and request.properties.event is not empty %}
+            {% set selectedEvent = commonground_resource(request.properties.event) %}
+        {% endif %}
+
         {% set lastMonday = 'now' | date_modify('monday this week') %}
         <script>
-            var events = [
+        var events = [
 
-                {% for event in calendar['events'] %}
-                {% if date(event['startDate']) >= date(lastMonday) and date(event['startDate']) <= date(lastMonday|date_modify("+20 days"))%}
-                {
-                    name: '{{ event['name'] }}',
-                    startDate: '{{ event['startDate'] }}',
-                    endDate: '{{ event['endDate'] }}',
-                    id: '{{ event['id'] }}',
-                    url: '{{ event['@id'] }}'
-                },
+            {% for event in calendar['events'] %}
+            {% if date(event['startDate']) >= date(lastMonday) and date(event['startDate']) <= date(lastMonday|date_modify("+20 days"))%}
+            {
+                name: '{{ event['name'] }}',
+                startDate: '{{ event['startDate'] }}',
+                endDate: '{{ event['endDate'] }}',
+                id: '{{ event['id'] }}',
+                url: '{{ event['@id'] }}'
+            },
 
-                {% endif %}
-                {% endfor %}
-            ];
-
-
+            {% endif %}
+            {% endfor %}
+        ];
         </script>
+
         <div class="col-md-4  col-sm-12">
             <div class="input">
                 <label class="input__label" for="week">Selecteer hier een week:</label>
@@ -206,9 +209,7 @@
             }
         </script>
     {% else %}
-        <p>Er is nog geen begraafplaats geselecteerd!</p>
+        <p>Dit werkt nog niet voor dit process.</p>
     {% endif %}
-{% else %}
-    <p>Dit is een ander proces dan begraven!</p>
 {% endif %}
 
