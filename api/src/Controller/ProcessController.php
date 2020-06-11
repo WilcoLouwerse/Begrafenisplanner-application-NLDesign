@@ -65,10 +65,6 @@ class ProcessController extends AbstractController
                     $resource['properties'] = array_replace_recursive($variables['request']['properties'],$resource['properties']);
                 }elseif(key_exists('properties', $resource)){
                     foreach($resource['properties'] as $key=>$property){
-                        if($key == 'begraafplaats' && is_string($resource['properties'][$key]) && is_array(json_decode($resource['properties'][$key], true)) && (json_last_error() == JSON_ERROR_NONE))
-                        {
-                            $resource['properties'][$key] = json_decode($resource['properties'][$key],true)['Cemetery'];
-                        }
                         if(is_array($property)
                             && key_exists('postalCode', $property)
                             && key_exists('houseNumber',$property)
@@ -120,7 +116,7 @@ class ProcessController extends AbstractController
             }
         }
         $variables["slug"] = $slug;
-        
+
         return $variables;
     }
 
