@@ -16,7 +16,7 @@
                         <p>
                             {% if property is iterable %}
                                 {% for key, value in property %}
-                                    {{ key }}: {{ value }}<br>
+                                    {{ value }}<br>
                                 {% endfor %}
                             {% else %}
                                 {% if commonground_is_resource(property) %}

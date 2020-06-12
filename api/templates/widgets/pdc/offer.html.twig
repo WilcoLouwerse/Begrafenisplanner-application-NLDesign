@@ -5,7 +5,6 @@
         {% set begraafplaats = commonground_resource(request.properties.begraafplaats) %}
         {% set groups = commonground_resource_list({'component':'pdc', 'type':'groups'}, {'sourceOrganization': request.properties.begraafplaats })['hydra:member'] %}
     {% endif %}
-
     {% if groups is defined and groups is not empty %}
         <h3>{{ section.description }}</h3>
         <fieldset class="input filter" id="{{ property.name }}">
@@ -17,7 +16,7 @@
                         <ul>
                             {% for product in group.products %}
                                 {% for offer in product.offers %}
-                                    <li><input type="checkbox" class="input__control input__control--checkbox" name="properties[{{ group.name }}][]" id="{{ offer.name | replace({' ':''}) }}"><label for="{{ offer.name | replace({' ':''}) }}" class="input__label input__label--checkbox"> {{ offer.name }}</label></li>
+                                    <li><input type="checkbox" class="input__control input__control--checkbox" value="{{ offer.name }}" name="properties[{{ group.name }}][]" id="{{ offer.name | replace({' ':''}) }}"><label for="{{ offer.name | replace({' ':''}) }}" class="input__label input__label--checkbox">{{ offer.name }}</label></li>
                                 {% endfor %}
                             {% endfor %}
                         </ul>
@@ -27,6 +26,6 @@
         </fieldset>
     {% else %}
         <p>Dit werkt nog niet voor het process {{ process.name }}.</p>
-        <p>(of er zijn geen product groepen voor {{ property.name }} aanwezig)</p>
+        <p>Of er zijn geen product groepen voor {{ property.name }} aanwezig.</p>
     {% endif %}
 {% endif %}

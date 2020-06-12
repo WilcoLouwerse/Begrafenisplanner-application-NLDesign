@@ -112,9 +112,6 @@
     "doctrine/rst-parser": {
         "version": "0.1.0"
     },
-    "doctrine/sql-formatter": {
-        "version": "1.0.1"
-    },
     "easyrdf/easyrdf": {
         "version": "0.9.1"
     },
@@ -144,6 +141,9 @@
     },
     "guzzlehttp/psr7": {
         "version": "1.5.2"
+    },
+    "jdorn/sql-formatter": {
+        "version": "v1.2.17"
     },
     "knplabs/knp-markdown-bundle": {
         "version": "1.8.1"
@@ -422,9 +422,6 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
-    },
-    "symfony/polyfill-php80": {
-        "version": "v1.17.0"
     },
     "symfony/process": {
         "version": "v4.3.1"
