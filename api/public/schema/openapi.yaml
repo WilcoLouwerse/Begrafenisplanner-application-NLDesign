@@ -1,13 +1,13 @@
 openapi: 3.0.2
 info:
   title: Begrafenisplanner
-  version: V.0.10.4
+  version: V.0.10.5
   description: |
     API Details
     - Component: Begrafenisplanner
     - Reference: bpui
     - Enviroment: dev
-    - Version: V.0.10.4
+    - Version: V.0.10.5
     - Repository: [online](https://github.com/ConductionNL/pan) / [zip](https://github.com/ConductionNL/pan/archive/master.zip)
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
     - Datamodel: [postman](/schema/bpui.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
@@ -2361,12 +2361,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-06-12 09:47:19'
+        example: '2020-06-16 10:47:28'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-06-12 09:47:19'
+        example: '2020-06-16 10:47:28'
     required: []
   AuditTrail-write:
     properties:
@@ -2414,12 +2414,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-06-12 09:47:19'
+        example: '2020-06-16 10:47:28'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-06-12 09:47:19'
+        example: '2020-06-16 10:47:28'
     required: []
   ChangeLog-write:
     properties:

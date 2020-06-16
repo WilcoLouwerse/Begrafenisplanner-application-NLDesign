@@ -2,7 +2,7 @@
 {% if process.name == "Begraven" and ( request.properties.begraafplaats is not defined or request.properties.begraafplaats is empty ) %}
     <p>Er is nog geen begraafplaats geselecteerd!</p>
 {% else %}
-    {% if request.properties.begraafplaats is defined and request.properties.begraafplaats is not empty %}
+    {% if process.name == "Begraven" %}
         {% set begraafplaats = commonground_resource(request.properties.begraafplaats) %}
         <p>Agenda van de begraafplaats: {{ begraafplaats.reference }}</p>
         {% set calendar = commonground_resource(begraafplaats.calendar) %}

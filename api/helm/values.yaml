@@ -7,7 +7,7 @@ settings:
   projectName: bpui
   name: bpui
   title: Begrafenisplanner
-  version: V.0.10.4
+  version: V.0.10.5
   id: 3f44c00e-d919-4f89-bd4c-b730c9b2620a
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application

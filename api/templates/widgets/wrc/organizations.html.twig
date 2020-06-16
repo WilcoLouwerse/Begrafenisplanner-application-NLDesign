@@ -41,7 +41,15 @@
     <select name="properties[{{property.name}}]" {# onclick="enableBegraafplaats()" #} id="dropdown-{{property.name}}" class="input__control input__control--m input__control--select">
         <option hidden="" value=''>Selecteer een {{property.title}}</option>
         {% for organization in organizations %}
-            <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
+            {% if organization.contact is defined and organization.contact is not empty %}
+                {% set contact = commonground_resource(organization.contact) %}
+                {% if process.name == "Begraven" and contact.type != "Gemeente" %}
+                {% else %}
+                    <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
+                {% endif %}
+            {% else %}
+                <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
+            {% endif %}
         {% endfor %}
     </select>
 </div>
