@@ -3,29 +3,31 @@
 # Declare variables to be passed into your templates.
 
 settings:
-  registryBase: docker.io/conduction
-  projectName: pan
-  name: pan
-  title: Proto Applicatie NL Design
-  version: V.0.1
+  registryBase: docker.io/wilcolouwerse
+  projectName: bpui
+  name: bpui
+  title: Begrafenisplanner
+  version: V.0.10.5
+  id: 3f44c00e-d919-4f89-bd4c-b730c9b2620a
   description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
-  repro: 'https://github.com/ConductionNL/pan'
-  domain: 'pan.zaakonline.nl'
-  domains:
-    - zaakonline.nl
-  domainsJson: ["zaakonline.nl"]
+  type: application
+  repro: https://github.com/ConductionNL/pan
+  demo: pan.conduction.nl
+  container: https://hub.docker.com/repository/docker/conduction/pc-php
+  domain: westfriesland.commonground.nu
+  subdomain: bpui
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
   state: Noord-Holland
   locality: Amsterdam
-  unit: Common-Ground  
-  demo: pan.huwelijksplanner.online
+  unit: Common-Ground
   env: dev
   debug: 1
+  cache: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^(.+\.)?conduction\.nl$|^(.+\.)?huwelijksplanner\.online$|^(.+\.)?larping\.eu$|^(.+\.)?common-ground\.dev$|^(.+\.)?trouwplanner\.online$|^(.+\.)?zaakonline\.nl$|localhost'
+  trustedHosts: '^localhost$|^127.0.0.1$|^(.+\.)?conduction\.nl$|^(.+\.)zaakonline.nl$'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
@@ -39,14 +41,15 @@ settings:
   # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   notificationEnabled: false
   audittrailEnabled: false
+  authorisationEnabled: false
   healthEnabled: false
   archiveEnabled: false
 
 security:
-  commongroundId: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
-  commongroundKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
-  applicationKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
-  userKey: 45c1a4b6-59d3-4a6e-86bf-88a872f35845
+  commongroundId: "3f44c00e-d919-4f89-bd4c-b730c9b2620a"
+  commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
+  applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
+  userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   authorisationProviderUser: https://uc.conduction.nl
   authorisationProviderApplication: https://uc.conduction.nl
 
@@ -58,12 +61,13 @@ php:
     jwtSecret: ""
   env: prod
   secret: ""
+  replicaCount: 2
 
 nginx:
   repository: docker.io/conduction/protocomponent-nginx
   tag: latest
   pullPolicy: Always
-  replicaCount: 1
+  replicaCount: 2
 
 varnish:
   enabled: true

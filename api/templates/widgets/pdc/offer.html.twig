@@ -1,0 +1,82 @@
+{% if process.name == "Begraven" and ( request.properties.begraafplaats is not defined or request.properties.begraafplaats is empty ) %}
+    <p>Er is nog geen begraafplaats geselecteerd!</p>
+{% elseif property.name == 'artikelen'%} {# TODO: dit moet: property.type == 'array' worden #}
+    {% if process.name == "Begraven" %}
+        {% set begraafplaats = commonground_resource(request.properties.begraafplaats) %}
+        {% set groups = commonground_resource_list({'component':'pdc', 'type':'groups'}, {'sourceOrganization': request.properties.begraafplaats })['hydra:member'] %}
+    {% endif %}
+    {% if groups is defined and groups is not empty %}
+        <h3>{{ section.description }}</h3>
+        <fieldset class="input filter" id="{{ property.name }}">
+            <legend class="filter__title">{{ property.title }}:</legend>
+            <ul class="input__group-list">
+                {% for group in groups %}
+                    <li class="input__group input__group--checkbox">
+                        <h3>{{ group.name }}</h3>
+                        <ul>
+                            {% for product in group.products %}
+                                {% for offer in product.offers %}
+                                    <li><input type="checkbox" class="input__control input__control--checkbox" value="{{ offer.name }}" name="properties[{{ group.name }}][]" id="{{ offer.name | replace({' ':''}) }}"><label for="{{ offer.name | replace({' ':''}) }}" class="input__label input__label--checkbox">{{ offer.name }}</label></li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </fieldset>
+    {% else %}
+        <p>Dit werkt nog niet voor het process {{ process.name }}.</p>
+        <p>Of er zijn geen product groepen voor {{ property.name }} aanwezig
+        {% if process.name == "Begraven" %}
+            bij deze begraafplaats
+        {% endif %}
+        .</p>
+    {% endif %}
+{% elseif property.type == 'string' %}
+    {% if process.name == "Begraven" %}
+        {% set begraafplaats = commonground_resource(request.properties.begraafplaats) %}
+        {% set group = commonground_resource(begraafplaats.graveTypes) %}
+    {% endif %}
+
+    {% if group is defined and group is not empty %}
+        <div class="input combobox" id="{{ property.name }}_combobox">
+            <div class="input__hint">Selecteer het {{ property.title }}</div>
+            {# TODO: Grafsoort hier onder naar property.name verranderen, maar daarvoor moet het process_type eerst aangepast worden naar grave_type zoals ook de property.name van grafsoort is #}
+            <select name="properties[grafsoort]" id="dropdown-{{ property.name }}" class="input__control input__control--m input__control--select">
+                <option hidden="" value=''>Selecteer het {{ property.title }}</option>
+                {% for product in group.products %}
+                    {% for offer in product.offers %}
+                        <option value="{{ offer['@id'] }}">{{ offer['name'] }}</option>
+                    {% endfor %}
+                {% endfor %}
+            </select>
+        </div>
+    {% else %}
+        <p>Dit werkt nog niet voor het process {{ process.name }}.</p>
+        <p>Of er is geen product groep voor {{ property.name }} aanwezig
+            {% if process.name == "Begraven" %}
+                bij deze begraafplaats
+            {% endif %}
+            .</p>
+    {% endif %}
+
+    {% if process.name == "Begraven" %}
+        <script>
+            var dropdownGrafsoort = document.getElementById("dropdown-{{ property.name }}");
+            var selectedIndex = 0;
+
+            {% if request.properties.begraafplaats is not defined or request.properties.begraafplaats is empty %} //Dit is voor wanneer gemeente, begraafplaats en grafsoort in een stage staan
+            dropdownGrafsoort.disabled = true;
+            {% elseif request.properties.grafsoort is defined and request.properties.grafsoort is not empty %}
+            for (var i=0; i < dropdownGrafsoort.length; i++) {
+                if(dropdownGrafsoort[i].value == "{{ request.properties.grafsoort }}") {
+                    selectedIndex = i;
+                }
+            }
+            {% endif %}
+            dropdownGrafsoort.selectedIndex = selectedIndex;
+        </script>
+    {% endif %}
+{% else %}
+    <p>Dit werkt nog niet voor het process {{ process.name }} met property {{ property.name }}.</p>
+{% endif %}

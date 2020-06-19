@@ -1,0 +1,160 @@
+<div class="content-background">
+    <div class="content">
+        <script>
+            /* Load tab component */
+            System.import('/uno/components/tabs/tabs.js').then(function (module) {
+                /* Select all .tab elements on the page */
+                var tabs = document.querySelectorAll('.tab');
+                /* Initialize all tabs */
+                for (var i = 0; i < tabs.length; i++) {
+                    new module.Tabs(tabs.item(i));
+                }
+            });
+        </script>
+        {% set ingeschrevenpersonen = commonground_resource_list({'component':'brp', 'type':'ingeschrevenpersonen'}) %}
+
+
+        {% if request.properties.overledene is defined and request.properties.overledene is not empty %}
+            {% set selectedPersoon = commonground_resource(request.properties.overledene) %}
+        {% endif %}
+        <script>
+            var ingeschrevenpersonen = [
+
+                {% for ingeschrevenpersoon in ingeschrevenpersonen %}
+                {
+                    bsn: '{{ ingeschrevenpersoon['burgerservicenummer'] }}',
+                    voornamen: '{{ ingeschrevenpersoon['naam']['voornamen'] }}',
+                    geslachtsnaam: '{{ ingeschrevenpersoon['naam']['geslachtsnaam'] }}',
+                    {% if ingeschrevenpersoon['geboorte']['datum']['date'] is defined %}
+                    geboortedatum: '{{ ingeschrevenpersoon['geboorte']['datum']['date'] }}',
+                    {% else %}
+                    geboortedatum: '',
+                    {% endif %}
+                    url: 'https://brp.dev.westfriesland.commonground.nu/ingeschrevenpersonen/uuid/{{ ingeschrevenpersoon['id'] }}'
+                },
+                {% endfor %}
+            ];
+        </script>
+        <script>
+            function FindBsn() {
+                var selectedbsn = document.getElementById("bsn").value;
+                var selectedIngeschrevenpersoonBsn = "";
+
+                for (var i = 0; i < ingeschrevenpersonen.length;i++) {
+                    if(ingeschrevenpersonen[i]['bsn'] == selectedbsn){
+                        selectedIngeschrevenpersoonBsn = ingeschrevenpersonen[i]['url'];
+                        document.getElementById("p_bsn").innerHTML = "bsn: " + ingeschrevenpersonen[i]['bsn'];
+                        document.getElementById("p_naam").innerHTML = "naam: " + ingeschrevenpersonen[i]['voornamen'] + " " + ingeschrevenpersonen[i]['geslachtsnaam'];
+                        document.getElementById("p_geboortedatum").innerHTML = "geboortedatum: " + ingeschrevenpersonen[i]['geboortedatum'];
+                        break;
+                    }
+                }
+                if(selectedIngeschrevenpersoonBsn == "")
+                {
+                    alert("BSN niet gevonden!");
+                }
+
+                var selectedIngeschrevenpersoon = document.getElementById("selectedIngeschrevenpersoon");
+                selectedIngeschrevenpersoon.value = selectedIngeschrevenpersoonBsn;
+            }
+        </script>
+
+        <h2>{{ property.title }}</h2>
+
+        <!-- Page Break -->
+        <div style="height: 20px;"></div>
+
+        <ul class="tab tab--inline" role="tablist">
+            <li class="tab__tab tab__tab--active" role="tab" aria-controls="panel2-1" id="tab2-1"><a href="#panel2-1">Zoeken</a></li>
+            <li class="tab__tab" role="tab" aria-controls="panel2-2" id="tab2-2"><a href="#panel2-2">Invoeren</a></li>
+        </ul>
+
+        <!-- Page Break -->
+        <div style="height: 20px;"></div>
+
+        <div class="tab__content tab__content--inline">
+
+            <section class="tab__pane tab__pane--active" id="panel2-1" role="tabpanel" aria-labelledby="tab2-1">
+                <h3>Zoek op Bsnnummer</h3>
+                <div class="input input--horizontal">
+
+                    <input type="text" id="bsn" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
+                </div>
+                <div class="input">
+                    <button type="button" onclick="FindBsn()" class="btn btn--primary" name="select" value="bsn">Zoeken</button>
+                </div>
+
+                <div>
+                    <p id="p_bsn">bsn: </p>
+                    <p id="p_naam">naam: </p>
+                    <p id="p_geboortedatum">geboortedatum: </p>
+                </div>
+                <script>
+                    {% if selectedPersoon is defined %}
+                    document.getElementById("p_bsn").innerHTML = "bsn: {{ selectedPersoon['burgerservicenummer'] }}";
+                    document.getElementById("p_naam").innerHTML = "naam: {{ selectedPersoon['naam']['voornamen'] }} {{ selectedPersoon['naam']['geslachtsnaam'] }}";
+
+                    {% for ingeschrevenpersoon in ingeschrevenpersonen %}
+                    {% if ingeschrevenpersoon['burgerservicenummer'] == selectedPersoon['burgerservicenummer'] %}
+                    document.getElementById("p_geboortedatum").innerHTML = "geboortedatum: {{ ingeschrevenpersoon['geboorte']['datum']['date'] }}";
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </script>
+
+            </section>
+
+            <section class="tab__pane" id="panel2-2" role="tabpanel" aria-labelledby="tab2-2">
+                <h3>Bsnnummer:</h3>
+                <div class="input input--horizontal">
+
+                    <input type="text" id="bsnhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
+                </div>
+
+                <h3>Naam:</h3>
+                <div class="input input--horizontal">
+
+                    <input type="text" id="naamhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--l">
+                </div>
+
+                <!-- Page Break -->
+                <div style="height: 20px;"></div>
+
+                <h3>Geboortedatum:</h3>
+                <div class="input">
+
+                    <div class="input__control-group">
+                        <div>
+                            <label class="input__hint" for="date_of_birth-d">dag</label>
+                            <input aria-label="Geboortedag" title="Geboortedag" type="number" min="1" max="31" id="date_of_birth-d" class="input__control input__control--two-characters input__control--linked input__control--text">
+                        </div>
+                        <div>
+                            <label class="input__hint" for="date_of_birth-m">maand</label>
+                            <input aria-label="Geboortemaand" title="Geboortemaand" type="number" min="1" max="12" id="date_of_birth-m" class="input__control input__control--two-characters input__control--linked input__control--text">
+                        </div>
+                        <div>
+                            <span class="input__hint" for="date_of_birth-y">jaar</span>
+                            <input aria-label="Geboortejaar" title="Geboortejaar" type="number" id="date_of_birth-y" class="input__control input__control--four-characters input__control--linked input__control--text">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input">
+                    <button type="submit" class="btn btn--primary" name="select" value="bsn">Selecteren</button>
+                </div>
+
+            </section>
+
+        </div>
+
+        <input hidden="" id="selectedIngeschrevenpersoon" name="properties[{{ property.name }}]">
+
+        {#
+                <form class="form" method="post" action="#">
+                    <div class="input">
+                        <button type="submit" class="btn" name="submit" value="save">Opslaan</button> of naar de <a href="{{ path('app_begrafenisplannen_artikelen') }}">vorige stap</a>
+                    </div>
+                </form>
+        #}
+    </div><!-- /.content -->
+</div><!-- /.content-background -->

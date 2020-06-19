@@ -8,23 +8,23 @@ settings:
   name: {{ app_name }}
   title: {{ app_title }}
   version: {{ app_version }}
+  id: {{ app_id }}
   description: '{{ app_description }}'
-  repro: '{{ app_repro }}'
-  domain: '{{ app_domain }}'
-  domains:
-{% for domain in app_domains %}
-    - {{ domain }}
-{% endfor %}
-  domainsJson: {{ app_domains | json_encode()|raw }}
+  type: {{ app_type }}
+  repro: {{ app_repro }}
+  demo: {{ app_demo }}
+  container: {{ app_container }}
+  domain: {{ app_domain }}
+  subdomain: {{ app_subdomain }}
   organisationName: {{ organization_name }}
   email: {{ organization_email }}
   country: {{ organization_country }}
   state: {{ organization_state }}
   locality: {{ organization_locality }}
-  unit: {{ organization_unit }}  
-  demo: {{ app_demo }}
+  unit: {{ organization_unit }}
   env: {{ app_env }}
   debug: {{ app_debug }}
+  cache: {{ app_debug }}
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '{{ trusted_hosts }}'
@@ -41,14 +41,15 @@ settings:
   # If you are runnig a single component on a kubernetes cluster you can just easaliy enable the load balancer, if not you need to set up a multi component load balancer
   notificationEnabled: false
   audittrailEnabled: false
+  authorisationEnabled: false
   healthEnabled: false
   archiveEnabled: false
 
 security:
-  commongroundId: {{ app_commonground_id }}
-  commongroundKey: {{ app_commonground_key }}
-  applicationKey: {{  app_application_key }}
-  userKey: {{ app_user_key }}
+  commongroundId: "{{ app_commonground_id }}"
+  commongroundKey: "{{ app_commonground_key }}"
+  applicationKey: "{{  app_application_key }}"
+  userKey: "{{ app_user_key }}"
   authorisationProviderUser: {{ auth_provider_user }}
   authorisationProviderApplication: {{ auth_provider_application }}
 
@@ -60,12 +61,13 @@ php:
     jwtSecret: ""
   env: prod
   secret: ""
+  replicaCount: 2
 
 nginx:
   repository: docker.io/conduction/protocomponent-nginx
   tag: latest
   pullPolicy: Always
-  replicaCount: 1
+  replicaCount: 2
 
 varnish:
   enabled: true

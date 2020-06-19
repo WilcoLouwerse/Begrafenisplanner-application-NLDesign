@@ -1,26 +1,29 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "name" . }}-php
+  name: {{ .Values.settings.name }}-php
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}-php
-    app.kubernetes.io/part-of: {{ include "name" . }}
+    app.kubernetes.io/name: {{ .Values.settings.name }}-php
+    app.kubernetes.io/part-of: {{ .Values.settings.name }}
     helm.sh/chart: {{ include "chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.settings.name }}-php
+  replicas: {{ .Values.php.replicaCount }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "name" . }}-php
-        app.kubernetes.io/part-of: {{ include "name" . }}
+        app.kubernetes.io/name: {{ .Values.settings.name }}-php
+        app.kubernetes.io/part-of: {{ .Values.settings.name }}
         helm.sh/chart: {{ include "chart" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
       containers:
-        - name: {{ include "name" . }}-php
+        - name: {{ .Values.settings.name }}-php
           image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-php:{{ .Values.settings.env }}"
           imagePullPolicy: {{ .Values.settings.pullPolicy }}
           ports:
@@ -72,21 +75,49 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: debug
+            - name: APP_TYPE
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: app-type
+            {{ if .Values.settings.id }}
+            - name: APP_ID
+              valueFrom:
+                    configMapKeyRef:
+                        name: {{ template "fullname" . }}
+                        key: app-id
+            {{ end }}
             - name: APP_DEMO
               valueFrom:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-demo
-            - name: APP_DOMAIN
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: app-domain
             - name: APP_DOMAINS
               valueFrom:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-domains-json
+
+            - name: APP_REPRO
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: app-repro
+            - name: APP_CONTAINER
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: app-container
+            - name: APP_DOMAIN
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: app-domain
+            - name: APP_CASH
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: cache      
             # organization
             - name: ORGANIZATION_NAME
               valueFrom:
@@ -152,7 +183,7 @@ spec:
                   name: {{ template "fullname" . }}
                   key: cors-allow-origin
             - name: VARNISH_URL
-              value: {{ include "name" . }}-varnish
+              value: {{ .Values.settings.name }}-varnish
             - name: APP_SECRET
               valueFrom:
                 secretKeyRef:
@@ -198,16 +229,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "fullname" . }}
                   key: app_user_key
-            - name: AUTH_PROVIDER_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: auth_provider_user
-            - name: AUTH_PROVIDER_APPLICATION
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "fullname" . }}
-                  key: auth_provider_application
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

@@ -1,0 +1,172 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+
+    <div class="row">
+
+        <div class="col-md-8">
+            {% if user is not empty%}
+            <div class="content-background" >
+            	<div class="content">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'description'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for resource in processes %}
+                            <tr>
+                                <td>{{ resource.name }}</td>
+                                <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.description }}{% endif %}</td>
+                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_process_start', {id: resource.id}) }}"><b>{{ 'start'|trans|capitalize }}</b></a></td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+            {% endif %}
+        </div><!-- /.col -->
+
+        <div class="col-md-4">
+            {% if user is not empty%}
+                <div class="content-background">
+
+                    <div class="content">
+                        <h2>Uw gegevens</h2>
+                        <ul class="definition-list">
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Voornamen
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ user.naam.voornamen }}</p>
+                                </div>
+                            </li>
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Achternaam
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ user.naam.geslachtsnaam }}</p>
+                                </div>
+                            </li>
+                            {% if user.naam.voorvoegsel is not empty%}
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">
+                                        Voorvoegsel
+                                    </div>
+                                    <div class="definition-list__description">
+                                        <p>{{ user.naam.voorvoegsel }}</p>
+                                    </div>
+                                </li>
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">
+                                        Leeftijd
+                                    </div>
+                                    <div class="definition-list__description">
+                                        <p>{{ user.leeftijd }}</p>
+                                    </div>
+                                </li>
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">
+                                        Geslacht
+                                    </div>
+                                    <div class="definition-list__description">
+                                        <p>{{ user.geslachtsaanduiding }}</p>
+                                    </div>
+                                </li>
+                            {% endif %}
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Addres
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ user.verblijfplaats.straatnaam }} {{ user.verblijfplaats.huisnummer }}{{ user.verblijfplaats.huisletter }}{{ user.verblijfplaats.huisnummertoevoeging }}
+                                        <br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Page Break -->
+                <div style="height: 20px"></div>
+
+            {% endif %}
+
+            <!--
+            <div class="content-background background--geel">
+                <div class="content">
+                    <button class="btn btn--primary">Primaire knop</button>
+                </div>
+            </div>
+
+
+            <div class="content-background background--donkergeel">
+                <div class="content">
+                	<button class="btn btn--primary">Primaire knop</button>
+
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+
+{#<div class="row">#}
+{#        <div class="col-md-12">#}
+{#            <h2> Uitgelicht</h2>#}
+{#            <ul class="list list--card">#}
+{#                <li class="card">#}
+{#                    <a href="{{ path('app_challenge_index') }}" class="card__content">#}
+{#                        <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>#}
+{#                        <div class="card__body">#}
+{#                            <span class="card__title">Challenges</span>#}
+{#                            Bekijk challanges en beloningen vanuit de overheid#}
+{#                        </div>#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="card">#}
+{#                    <a href="{{ path('app_pitch_index') }}" class="card__content">#}
+{#                        <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>#}
+{#                        <div class="card__body">#}
+{#                        	<span class="card__title">Pitches</span>#}
+{#                        	Bekijk goede ideën vanuit de communitys#}
+{#                        </div>#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li class="card">#}
+{#                    <a href="{{ path('app_news_index') }}" class="card__content">#}
+{#                        <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>#}
+{#                        <div class="card__body">#}
+{#                        	<span class="card__title">Nieuws</span>#}
+{#                        	Volg het laatste nieuws#}
+{#                        </div>#}
+{#                    </a>#}
+{#                </li>#}
+{#            </ul>#}
+{#        </div>#}
+{#    </div>#}
+
+    <script>
+        /* Load collapse component */
+        System.import('/uno/components/collapse/collapse.js').then(function (module) {
+
+            /* Select all collapsible elements on the page */
+            var elements = document.querySelectorAll('main [x-uno-collapse]');
+
+            /* Initialize all collapses */
+            for (var i = 0; i < elements.length; i++) {
+                new module.Collapse(elements.item(i));
+            }
+        });
+
+    </script>
+
+{% endblock %}

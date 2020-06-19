@@ -1,0 +1,30 @@
+{% if request.properties.begraafplaats is defined and request.properties.begraafplaats is not empty %}
+    {% set grave_types = commonground_resource_list({'component':'grc', 'type':'grave_types'})['hydra:member'] %}
+    <div class="input combobox" id="grafsoort_combobox">
+        <div class="input__hint">Selecteer het {{ property.title }}</div>
+        <select name="properties[grafsoort]" id="dropdown-grafsoort" class="input__control input__control--m input__control--select">
+            <option hidden="" value=''>Selecteer het {{ property.title }}</option>
+            {% for grave_type in grave_types %}
+                <option value="{{ grave_type['@id'] }}">{{ grave_type['reference'] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <script>
+        var dropdownGrafsoort = document.getElementById("dropdown-grafsoort");
+        var selectedIndex = 0;
+
+        {% if request.properties.begraafplaats is not defined or request.properties.begraafplaats is empty %} //Dit is voor wanneer gemeente, begraafplaats en grafsoort in een stage staan
+        dropdownGrafsoort.disabled = true;
+        {% elseif request.properties.grafsoort is defined and request.properties.grafsoort is not empty %}
+        for (var i=0; i < dropdownGrafsoort.length; i++) {
+            if(dropdownGrafsoort[i].value == "{{ request.properties.grafsoort }}") {
+                selectedIndex = i;
+            }
+        }
+        {% endif %}
+        dropdownGrafsoort.selectedIndex = selectedIndex;
+    </script>
+{% else %}
+    <p>Er is nog geen begraafplaats geselecteerd!</p>
+{% endif %}

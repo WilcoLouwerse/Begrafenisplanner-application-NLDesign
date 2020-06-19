@@ -10,11 +10,16 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         types:
             uuid:  Ramsey\Uuid\Doctrine\UuidType
-            datetime:  App\Types\UTCDateTimeType  #We override the default doctrine datetime with a UTC based version
-            incompleteDate:  App\Types\IncompleteDateType
-            underInvestigation:  App\Types\UnderInvestigationType
+            datetime:  Conduction\CommonGroundBundle\Types\UTCDateTimeType  #We override the default doctrine datetime with a UTC based version
+            incompleteDate:  Conduction\CommonGroundBundle\Types\IncompleteDateType
+            underInvestigation:  Conduction\CommonGroundBundle\Types\UnderInvestigationType
             money: Tbbc\MoneyBundle\Type\MoneyType
     orm:
+        dql:
+            datetime_functions:
+                DAY: DoctrineExtensions\Query\Mysql\Day
+                MONTH: DoctrineExtensions\Query\Mysql\Month
+                YEAR: DoctrineExtensions\Query\Mysql\Year
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
@@ -31,3 +36,8 @@ doctrine:
                 dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
                 alias: GedmoLoggable # (optional) it will default to the name set for the mapping
                 is_bundle: false
+            conduction_common_ground_bundle:
+                is_bundle: false
+                prefix: Conduction\CommonGroundBundle\Entity
+                type: annotation
+                dir: "%kernel.root_dir%/../vendor/conduction/commongroundbundle/Entity"

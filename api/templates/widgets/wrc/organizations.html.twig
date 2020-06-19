@@ -1,0 +1,69 @@
+<script>
+    //de volgende functie word momenteel niet gebruikt, dit was alleen nodig wanneer gemeente, begraafplaats en grafsoort in dezelfde stage zaten.
+    function enableBegraafplaats()
+    {
+        var dropdownGemeente = document.getElementById("dropdown-{{ property.name }}");
+        var dropdownBegraafplaats = document.getElementById("dropdown-begraafplaats");
+        if(dropdownGemeente.selectedIndex != 0) {
+            dropdownBegraafplaats.disabled = false;
+        }
+
+        //De volgende code is tijdelijk tot dat er door middel van commonground_resource_list gefilterd kan worden op begraafplaatsen van de geselecteerde gemeente.
+        //Op het moment worden ook niet alle begraafplaatsen hiermee ingeladen zoals dat eerst wel ging via de controller. (max 30)
+        var selectedIndex = 0;
+        var selectedGemeenteID = document.getElementById("dropdown-{{ property.name }}").value;
+        for (var i=0; i < dropdownBegraafplaats.length; i++)
+        {
+            {% if request.properties.gemeente is defined %}
+            if (selectedGemeenteID == {{ request.properties.gemeente }})
+            {
+                dropdownBegraafplaats[i].hidden = false
+                {% if request.properties.begraafplaats is defined and request.properties.begraafplaats is not empty %}
+                if (dropdownBegraafplaats[i].value == "{{ request.properties.begraafplaats }}")
+                {
+                    var selectedIndex = i;
+                }
+                {% endif %}
+            }
+            else
+            {
+                dropdownBegraafplaats[i].hidden = true;
+            }
+            {% endif %}
+        }
+        dropdownBegraafplaats.selectedIndex = selectedIndex;
+    }
+</script>
+
+{% set organizations = commonground_resource_list({'component':'wrc', 'type':'organizations'})['hydra:member'] %}
+<div class="input combobox" id="{{property.name}}_combobox">
+    <div class="input__hint">Selecteer een {{property.title}}</div>
+    <select name="properties[{{property.name}}]" {# onclick="enableBegraafplaats()" #} id="dropdown-{{property.name}}" class="input__control input__control--m input__control--select">
+        <option hidden="" value=''>Selecteer een {{property.title}}</option>
+        {% for organization in organizations %}
+            {% if organization.contact is defined and organization.contact is not empty %}
+                {% set contact = commonground_resource(organization.contact) %}
+                {% if process.name == "Begraven" and contact.type != "Gemeente" %}
+                {% else %}
+                    <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
+                {% endif %}
+            {% else %}
+                <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div>
+
+<script>
+    var dropdownGemeente = document.getElementById("dropdown-{{ property.name }}");
+    var selectedIndex = 0;
+
+    {% if request.properties.gemeente is defined and request.properties.gemeente is not empty %}
+    for (var i=0; i < dropdownGemeente.length; i++) {
+        if(dropdownGemeente[i].value == "{{ request.properties.gemeente }}") {
+            selectedIndex = i;
+        }
+    }
+    {% endif %}
+    dropdownGemeente.selectedIndex = selectedIndex;
+</script>

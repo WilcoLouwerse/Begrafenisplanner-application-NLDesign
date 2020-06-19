@@ -1,150 +1,87 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-
-
-    <div class="row">
-
-        <div class="col-md-8 col-sm-12">
-
-            <div class="content-background" >
-                <div class="content">
-                    <h2>Begrafenisplanner</h2>
-                    <p>Tekst...<br>
-                    Meer tekst...</p>
-{#                    <ul>#}
-{#                        <li>Vertrouwen (overheid beheerd gegevens, digi&rsquo;s, herkenbaarheid)</li>#}
-{#                        <li>&Eacute;&eacute;n loket (waar vanuit meerdere diensten van gegevens kunnen worden voorzien)</li>#}
-{#                        <li>Deelbaarheid (burger kan gegevens inzien en ontsluiten)</li>#}
-{#                        <li>Opensource</li>#}
-{#                        <li>Nieuwe technologie (alles aan de hand van gecontaineriseerde rest api&rsquo;s en microservices)</li>#}
-{#                    </ul>#}
-{#                    <p>Dit alles kan worden gerealiseerd door een escalatie van de door gemeenten onder commonground gerealiseerde architectuur.</p>#}
-
-                </div><!-- /.content -->
-            </div><!-- /.content-background -->
-        </div><!-- /.col -->
-
-        <div class="col-md-4  col-sm-12">
-
-            {% if user is not empty%}
-                <div class="content-background">
-
-                    <div class="content">
-                        <h2>Uw gegevens</h2>
-                        <ul class="definition-list">
-                            <li class="definition-list__item definition-list__item--horizontal">
-                                <div class="definition-list__title">
-                                    Voornamen
-                                </div>
-                                <div class="definition-list__description">
-                                    <p>{{ user.naam.voornamen }}</p>
-                                </div>
-                            </li>
-                            <li class="definition-list__item definition-list__item--horizontal">
-                                <div class="definition-list__title">
-                                    Achternaam
-                                </div>
-                                <div class="definition-list__description">
-                                    <p>{{ user.naam.geslachtsnaam }}</p>
-                                </div>
-                            </li>
-                            {% if user.naam.voorvoegsel is not empty%}
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
-                                        Voorvoegsel
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>{{ user.naam.voorvoegsel }}</p>
-                                    </div>
-                                </li>
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
-                                        Leeftijd
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>{{ user.leeftijd }}</p>
-                                    </div>
-                                </li>
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
-                                        Geslacht
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>{{ user.geslachtsaanduiding }}</p>
-                                    </div>
-                                </li>
-                            {% endif %}
-                            <li class="definition-list__item definition-list__item--horizontal">
-                                <div class="definition-list__title">
-                                    Addres
-                                </div>
-                                <div class="definition-list__description">
-                                    <p>{{ user.verblijfplaats.straatnaam }} {{ user.verblijfplaats.huisnummer }}{{ user.verblijfplaats.huisletter }}{{ user.verblijfplaats.huisnummertoevoeging }}
-                                        <br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Page Break -->
-                <div style="height: 20px"></div>
-
-            {% endif %}
-
-            <!--
-            <div class="content-background background--geel">
-                <div class="content">
-                    <button class="btn btn--primary">Primaire knop</button>
-                </div>
-            </div>
-
-
-            <div class="content-background background--donkergeel">
-                <div class="content">
-                	<button class="btn btn--primary">Primaire knop</button>
-
-                </div>
-            </div>
-            -->
-        </div>
-    </div>
-    {#
 <div class="row">
-        <div class="col-md-12">
-            <h2> Uitgelicht</h2>
-            <ul class="list list--card">
-                <li class="card">
-                    <a href="{{  path('app_challenge_index') }}" class="card__content">
-                        <div class="card__thumb" style="background-image: url('https://picsum.photos/id/1/200')"></div>
-                        <div class="card__body">
-                            <span class="card__title">Ik heb hulp nodig</span>
-                            Heeft u behoefte aan hulp? Bijvoorbeeld omdat u geen eten meer in huis heeft, of ergens niet uit komt? <br><br> Lees hier hoe u aan hulp kan komen.
-                        </div>
-                    </a>
-                </li>
-                <li class="card">
-                    <a href="{{   path('app_pitch_index') }}" class="card__content">
-                        <div class="card__thumb" style="background-image: url('https://picsum.photos/id/1/200')"></div>
-                        <div class="card__body">
-                            <span class="card__title">Ik wil helpen</span>
-                            Wilt u hulp aanbieden aan uw buren of gemeenschap? Bijvoorbeeld omdat u beschikt over bepaalde vaardigheden of inventaris. <br><br>Lees hier hoe u dat kenbaar kan maken.
-                        </div>
-                    </a>
-                </li>
-                <li class="card">
-                    <a href="{{ path('app_news_index') }}" class="card__content">
-                        <div class="card__thumb" style="background-image: url('https://picsum.photos/id/1/200')"></div>
-                        <div class="card__body">
-                            <span class="card__title">Ik denk dat ik Corona heb</span>
-                            Vermoedt u dat u zelf besmet bent met het corona virus? <br><br><br>  Lees dan hier wat u moet doen
-                        </div>
-                    </a>
-                </li>
-            </ul>
-        </div> <!-- /.col -->
-    </div> <!-- /.col -->
-    #}
 
+    <div class="col-md-8 col-sm-12">
+        <div class="content-background" >
+            <div class="content">
+                <h2>Begrafenisplanner (in development)</h2>
+                <br>
+                <h3>DISCLAIMER</h3>
+
+                <p>Dit is geen eindproduct maar een test en demo omgeving van de Begrafenisplanner. <br>
+                    Voor meer informatie over dit project: <a href="https://github.com/VNG-Realisatie/Begrafenisplanner">Klik hier</a></p>
+
+            </div><!-- /.content -->
+        </div><!-- /.content-background -->
+    </div><!-- /.col -->
+
+    <div class="col-md-4  col-sm-12">
+
+        {% if user is not empty%}
+            <div class="content-background">
+
+                <div class="content">
+                    <h2>Uw gegevens</h2>
+                    <ul class="definition-list">
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Voornamen
+                            </div>
+                            <div class="definition-list__description">
+                                <p>{{ user.naam.voornamen }}</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Achternaam
+                            </div>
+                            <div class="definition-list__description">
+                                <p>{{ user.naam.geslachtsnaam }}</p>
+                            </div>
+                        </li>
+                        {% if user.naam.voorvoegsel is not empty%}
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Voorvoegsel
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ user.naam.voorvoegsel }}</p>
+                                </div>
+                            </li>
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Leeftijd
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ user.leeftijd }}</p>
+                                </div>
+                            </li>
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Geslacht
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ user.geslachtsaanduiding }}</p>
+                                </div>
+                            </li>
+                        {% endif %}
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Addres
+                            </div>
+                            <div class="definition-list__description">
+                                <p>{{ user.verblijfplaats.straatnaam }} {{ user.verblijfplaats.huisnummer }}{{ user.verblijfplaats.huisletter }}{{ user.verblijfplaats.huisnummertoevoeging }}
+                                    <br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        {% endif %}
+    </div>
+
+</div>
 {% endblock %}

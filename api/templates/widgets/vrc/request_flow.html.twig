@@ -1,0 +1,16 @@
+<div class="content-background {{ backgroundColor }}">
+    <div class="content">
+        {% if query.request is defined %}{% set request = commonground_resource(query.request)  %}{% endif %}
+        {% if query.requestType is defined %}{% set requestType = commonground_resource(query.request)  %}{% endif %}
+        <h2>{{ stages|translate }}</h2>
+        <ul class="list list--timeline list--timeline-compact">
+            <li class="list__item {% if query.stage is not defined %}list__item--active{% endif %}"><a href="">{{ 'overview'|translate }}</a></li>
+            {% for stage in requestType.stages %}
+                <li class="list__item {% if query.stage is defined and query.stage == stage.id %}list__item--active{% endif %}"><a href="">{{ stage.name|e }}</a></li>
+            {% endfor %}
+            <li class="list__item {% if query.stage is defined and squery.stage == 'submit' %}list__item--active{% endif %}"><a href="">{{ 'submit'|translate }}</a></li>
+            <li class="list__item list__item--disabled">{{ 'in progress'|translate }}</li>
+            <li class="list__item list__item--disabled">{{ 'processed'|translate }}</li>
+        </ul>
+    </div>
+</div>

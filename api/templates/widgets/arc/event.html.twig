@@ -1,0 +1,215 @@
+
+{% if process.name == "Begraven" and ( request.properties.begraafplaats is not defined or request.properties.begraafplaats is empty ) %}
+    <p>Er is nog geen begraafplaats geselecteerd!</p>
+{% else %}
+    {% if process.name == "Begraven" %}
+        {% set begraafplaats = commonground_resource(request.properties.begraafplaats) %}
+        <p>Agenda van de begraafplaats: {{ begraafplaats.reference }}</p>
+        {% set calendar = commonground_resource(begraafplaats.calendar) %}
+    {% endif %}
+
+    {% if calendar is defined %}
+        {% if request.properties.event is defined and request.properties.event is not empty %}
+            {% set selectedEvent = commonground_resource(request.properties.event) %}
+        {% endif %}
+
+        {% set lastMonday = 'now' | date_modify('monday this week') %}
+        <script>
+        var events = [
+
+            {% for event in calendar['events'] %}
+            {% if date(event['startDate']) >= date(lastMonday) and date(event['startDate']) <= date(lastMonday|date_modify("+20 days"))%}
+            {
+                name: '{{ event['name'] }}',
+                startDate: '{{ event['startDate'] }}',
+                endDate: '{{ event['endDate'] }}',
+                id: '{{ event['id'] }}',
+                url: '{{ event['@id'] }}'
+            },
+
+            {% endif %}
+            {% endfor %}
+        ];
+        </script>
+
+        <div class="col-md-4  col-sm-12">
+            <div class="input">
+                <label class="input__label" for="week">Selecteer hier een week:</label>
+                <select onchange="showChangeTableHeader()" id="week" name="week" class="input__control input__control--m input__control--select "  required="">
+                    <option value="{{ lastMonday|date('d m Y') }}">{{ lastMonday|date('d/m') }} - {{ lastMonday|date_modify("+6 days")|date('d/m') }}, 2020</option>
+                    <option value="{{ lastMonday|date_modify("+7 days")|date('d m Y') }}">{{  lastMonday|date_modify("+7 days")|date('d/m') }} - {{ lastMonday|date_modify("+13 days")|date('d/m') }}, 2020</option>
+                    <option value="{{ lastMonday|date_modify("+14 days")|date('d m Y') }}">{{  lastMonday|date_modify("+14 days")|date('d/m') }} - {{ lastMonday|date_modify("+20 days")|date('d/m') }}, 2020</option>
+                </select>
+            </div>
+        </div>
+
+        <table class="table table--hoverable">
+            <caption>Selecteer hier een tijd:</caption>
+            <tbody>
+            <thead>
+            <tr>
+                <td>
+                    <table id="MaandagTabel" onmouseover="addRowHandlers(this.id)">
+                        <tr><th id="THMaandag">Ma</th></tr>
+
+                    </table>
+                </td>
+                <td>
+                    <table id="DinsdagTabel" onmouseover="addRowHandlers(this.id)">
+                        <tr><th id="THDinsdag">Di</th></tr>
+                    </table>
+                </td>
+                <td>
+                    <table id="WoensdagTabel" onmouseover="addRowHandlers(this.id)">
+                        <tr><th id="THWoensdag">Wo</th></tr>
+                    </table>
+                </td>
+                <td>
+                    <table id="DonderdagTabel" onmouseover="addRowHandlers(this.id)">
+                        <tr><th id="THDonderdag">Do</th></tr>
+                    </table>
+                </td>
+                <td>
+                    <table id="VrijdagTabel" onmouseover="addRowHandlers(this.id)">
+                        <tr><th id="THVrijdag">Vr</th></tr>
+                    </table>
+                </td>
+                <td>
+                    <table id="ZaterdagTabel" onmouseover="addRowHandlers(this.id)">
+                        <tr><th id="THZaterdag">Za</th></tr>
+                    </table>
+                </td>
+                <td>
+                    <table id="ZondagTabel" onmouseover="addRowHandlers()">
+                        <tr><th id="THZondag">Zo</th></tr>
+                    </table>
+                </td>
+            </tr>
+            </thead>
+            </tbody>
+        </table>
+        <script>
+            showChangeTableHeader();
+
+            function formatDayOfTheWeek(i) {
+
+                var formatDayOfTheWeek = document.getElementById('week').value;
+                var split = formatDayOfTheWeek.split(' ');
+                formatDayOfTheWeek = new Date(split[2], parseInt(split[1]) - 1, parseInt(split[0]), 0, 0, 0, 0);
+                var day = formatDayOfTheWeek.getDate();
+                formatDayOfTheWeek.setDate(day + i);
+                var fdotwformat = formatDayOfTheWeek.getFullYear() + '-'
+                    + ('0' + (formatDayOfTheWeek.getMonth()+1)).slice(-2) + '-'
+                    + ('0' + formatDayOfTheWeek.getDate()).slice(-2);
+
+                return fdotwformat;
+            }
+            function showChangeTableHeader(selectedTime) {
+
+                var maandagTabel = document.getElementById("MaandagTabel");
+                var dinsdagTabel = document.getElementById("DinsdagTabel");
+                var woensdagTabel = document.getElementById("WoensdagTabel");
+                var donderdagTabel = document.getElementById("DonderdagTabel");
+                var vrijdagTabel = document.getElementById("VrijdagTabel");
+                var zaterdagTabel = document.getElementById("ZaterdagTabel");
+                var zondagTabel = document.getElementById("ZondagTabel");
+
+                for(var i = maandagTabel.rows.length - 1; i > 0; i--) { maandagTabel.deleteRow(i);}
+                for(var i = dinsdagTabel.rows.length - 1; i > 0; i--) { dinsdagTabel.deleteRow(i);}
+                for(var i = woensdagTabel.rows.length - 1; i > 0; i--) { woensdagTabel.deleteRow(i);}
+                for(var i = donderdagTabel.rows.length - 1; i > 0; i--) { donderdagTabel.deleteRow(i);}
+                for(var i = vrijdagTabel.rows.length - 1; i > 0; i--) { vrijdagTabel.deleteRow(i);}
+                for(var i = zaterdagTabel.rows.length - 1; i > 0; i--) { zaterdagTabel.deleteRow(i);}
+                for(var i = zondagTabel.rows.length - 1; i > 0; i--) { zondagTabel.deleteRow(i);}
+
+                for (var i = 0; i < events.length;i++){
+
+                    var startDate = events[i]['startDate'].substring(0, events[i]['startDate'].length-15);
+
+                    if(startDate == formatDayOfTheWeek(0)){
+                        var row = maandagTabel.insertRow(1);
+                        insertEvent(row, events[i], selectedTime)
+                    }
+                    if(startDate == formatDayOfTheWeek(1)){
+                        var row = dinsdagTabel.insertRow(1);
+                        insertEvent(row, events[i], selectedTime)
+                    }
+                    if(startDate == formatDayOfTheWeek(2)){
+                        var row = woensdagTabel.insertRow(1);
+                        insertEvent(row, events[i], selectedTime)
+                    }
+                    if(startDate == formatDayOfTheWeek(3)){
+                        var row = donderdagTabel.insertRow(1);
+                        insertEvent(row, events[i], selectedTime)
+                    }
+                    if(startDate == formatDayOfTheWeek(4)){
+                        var row = vrijdagTabel.insertRow(1);
+                        insertEvent(row, events[i], selectedTime)
+                    }
+                    if(startDate == formatDayOfTheWeek(5)){
+                        var row = zaterdagTabel.insertRow(1);
+                        insertEvent(row, events[i], selectedTime)
+                    }
+                    if(startDate == formatDayOfTheWeek(6)){
+                        var row = zondagTabel.insertRow(1);
+                        insertEvent(row, events[i], selectedTime)
+                    }
+                }
+
+            }
+            function insertEvent(row, event, selectedTime)
+            {
+                var startTime = event['startDate'].substring(11, event['startDate'].length-9);
+                var endTime = event['endDate'].substring(11, event['endDate'].length-9);
+                var urlEvent = event['url'];
+
+                var cell1 = row.insertCell(0);
+                {% if selectedEvent is defined %}
+                if (urlEvent == "{{ selectedEvent['@id'] }}") {
+                    cell1.innerHTML = "<strong>" + startTime + "/" + endTime + "</strong>";
+                }
+                else {
+                    cell1.innerHTML = startTime + "/" + endTime;
+                }
+                {% else %}
+                cell1.innerHTML = startTime + "/" + endTime;
+                if(typeof selectedTime != 'undefined')
+                {
+                    if (cell1.innerHTML.includes(selectedTime))
+                    {
+                        cell1.innerHTML = "<strong>" + selectedTime + "</strong>";
+                    }
+                }
+                {% endif %}
+                cell1.value = urlEvent;
+            }
+        </script>
+
+        <input hidden="" id="selectedEvent" name="properties[event]">
+        <script>
+            function addRowHandlers(id) {
+                var table = document.getElementById(id);
+                var rows = table.getElementsByTagName("tr");
+                for (i = 0; i < rows.length; i++) {
+                    var currentRow = table.rows[i];
+                    var createClickHandler = function(row) {
+                        return function() {
+                            var cell = row.getElementsByTagName("td")[0];
+                            var selectedTime = cell.innerText;
+                            alert("Selected event: " + selectedTime);
+
+                            showChangeTableHeader(selectedTime);
+
+                            var selectedEvent = document.getElementById("selectedEvent");
+                            selectedEvent.value = cell.value;
+                        };
+                    };
+                    currentRow.onclick = createClickHandler(currentRow);
+                }
+            }
+        </script>
+    {% else %}
+        <p>Dit werkt nog niet voor het process {{ process.name }}.</p>
+    {% endif %}
+{% endif %}
+

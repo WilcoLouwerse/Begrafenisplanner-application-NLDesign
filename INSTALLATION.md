@@ -2,35 +2,16 @@
 This document dives a little bit deeper into installing your component on a kubernetes cluster, looking for information on setting up your component on a local machine? Take a look at the [tutorial](TUTORIAL.md) instead. 
 
 ## Setting up helm
-
-
-
-## Setting up tiller
-Create the tiller service account:
-
+We first need to be sure the stable repository of helm and kubernetes is added. We do this using the following command:
 ```CLI
-$ kubectl -n kube-system create serviceaccount tiller --kubeconfig="api/helm/kubeconfig.yaml"
+$ helm repo list
 ```
 
-Next, bind the tiller service account to the cluster-admin role:
+If in the output there is no repository 'stable' we need to add it:
+
 ```CLI
-$ kubectl create clusterrolebinding tiller --clusterrole cluster-admin --serviceaccount=kube-system:tiller --kubeconfig="api/helm/kubeconfig.yaml"
+$ helm repo add stable https://kubernetes-charts.storage.googleapis.com
 ```
-
-Now we can run helm init, which installs Tiller on our cluster, along with some local housekeeping tasks such as downloading the stable repo details:
-```CLI
-$ helm init --service-account tiller --kubeconfig="kubeconfig.yaml"
-```
-
-To verify that Tiller is running, list the pods in the kube-system namespace:
-```CLI
-$ kubectl get pods --namespace kube-system --kubeconfig="kubeconfig.yaml"
-```
-
-The Tiller pod name begins with the prefix tiller-deploy-.
-
-Now that we've installed both Helm components, we're ready to use helm to install our first application.
-
 
 ## Setting up ingress
 We need at least one nginx controller per kubernetes kluster, doh optionally we could set on up on a per namebase basis
@@ -49,7 +30,7 @@ $ kubectl describe ingress pc-dev-ingress -n=kube-system --kubeconfig="kubeconfi
 After we installed helm and tiller we can easily use both to install kubernetes dashboard
 
 ```CLI
-$ helm install stable/kubernetes-dashboard --name dashboard --kubeconfig="kubeconfig.yaml" --namespace="kube-system"
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml --kubeconfig=kubeconfig.yaml
 ```
 
 But before we can login to tiller we need a token, we can get one of those trough the secrets. Get yourself a secret list by running the following command
@@ -57,11 +38,6 @@ But before we can login to tiller we need a token, we can get one of those troug
 $ kubectl -n kube-system get secret  --kubeconfig="kubeconfig.yaml"
 ```
 
-Because we just bound tiller to our admin account and use tiller (trough helm) to manage our code deployment it makes sense to use the tiller token, lets look at the tiller secret (it should look something like "tiller-token-XXXXX" and ask for the corresponding token. 
-
-```CLI
-$ kubectl -n kube-system describe secrets tiller-token-xxxxx  --kubeconfig="kubeconfig.yaml"
-```
 
 This should return the token, copy it to somewhere save (just the token not the other returned information) and start up a dashboard connection
 
@@ -79,7 +55,6 @@ http://localhost:8001/api/v1/namespaces/kube-system/services/https:dashboard-kub
 https://cert-manager.io/docs/installation/kubernetes/
  
 ```CLI
-$ kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.12/deploy/manifests/00-crds.yaml --kubeconfig="kubeconfig.yaml"
 $ kubectl create namespace cert-manager --kubeconfig="kubeconfig.yaml"
 ```
  
@@ -87,7 +62,7 @@ $ kubectl create namespace cert-manager --kubeconfig="kubeconfig.yaml"
  
 ```CLI
 $ helm repo add jetstack https://charts.jetstack.io
-$ helm install --name cert-manager --namespace cert-manager --version v0.12.0 \ jetstack/cert-manager --kubeconfig="kubeconfig.yaml"
+$ helm install cert-manager --namespace cert-manager --version v0.15.0 jetstack/cert-manager --set installCRDS=true --kubeconfig="kubeconfig.yaml"
 ```
 
 lets check if everything is working
@@ -105,23 +80,23 @@ $ helm dependency update ./api/helm
 
 If you want to create a new instance
 ```CLI
-$ helm install --name instemmingen-dev ./api/helm  --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
-$ helm install --name instemmingen-stag ./api/helm --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
-$ helm install --name instemmingen-prod ./api/helm --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
+$ helm install --name pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
+$ helm install --name pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
+$ helm install --name pc-prod ./api/helm --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
 ```
 
 Or update if you want to update an existing one
 ```CLI
-$ helm upgrade instemmingen-dev ./api/helm  --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
-$ helm upgrade instemmingen-stag ./api/helm --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
-$ helm upgrade instemmingen-prod ./api/helm --kubeconfig="api/helm/zaakonline-kubeconfig.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
+$ helm upgrade pc-dev ./api/helm  --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=dev  --set settings.env=dev,settings.debug=1
+$ helm upgrade pc-stag ./api/helm --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=stag --set settings.env=stag,settings.debug=0
+$ helm upgrade pc-prod ./api/helm --kubeconfig="api/helm/kubeconfig-digi.yaml" --namespace=prod --set settings.env=prod,settings.debug=0
 ```
 
 Or del if you want to delete an existing  one
 ```CLI
-$ helm del instemmingen-dev  --purge --kubeconfig="api/helm/zaakonline-kubeconfig.yaml"
-$ helm del instemmingen-stag --purge --kubeconfig="api/helm/zaakonline-kubeconfig.yaml"  
-$ helm del instemmingen-prod --purge --kubeconfig="api/helm/zaakonline-kubeconfig.yaml"  
+$ helm del pc-dev  --purge --kubeconfig="api/helm/kubeconfig-digi.yaml" 
+$ helm del pc-stag --purge --kubeconfig="api/helm/kubeconfig-digi.yaml" 
+$ helm del pc-prod --purge --kubeconfig="api/helm/kubeconfig-digi.yaml" 
 ```
 
 Note that you can replace common ground with the namespace that you want to use (normally the name of your component).

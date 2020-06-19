@@ -1,0 +1,48 @@
+<div class="content-background">
+    <div class="content">
+        <h2>{{ 'submit'|trans|capitalize }}</h2>
+
+        {% if request is defined and request is not null %}
+            {% set requestType = commonground_resource(request.requestType) %}
+            <h3>{{ 'properties of the request'|trans|capitalize }}</h3>
+            <ul class="definition-list">
+            {% for key, property in request.properties %}
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        {{ key }}
+                    </div>
+
+                    <div class="definition-list__description">
+                        <p>
+                            {% if property is iterable %}
+                                {% for key, value in property %}
+                                    {{ value }}<br>
+                                {% endfor %}
+                            {% else %}
+                                {% if commonground_is_resource(property) %}
+                                    {% set property = commonground_resource(property) %}
+                                    {% if property.naam.voornamen is defined and property.naam.geslachtsnaam is defined %}
+                                        {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
+                                    {% elseif property.reference is defined %}
+                                        {{ property.reference }}
+                                    {% elseif property.name is defined %}
+                                        {{ property.name }}
+                                    {% endif %}
+                                {% else %}
+                                    {{ property }}
+                                {% endif %}
+                            {% endif %}
+                        </p>
+                    </div>
+
+                </li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+
+    </div>
+</div>
+ {% if request is defined and request is not null and request.status != 'submitted' %}
+<button name="status" id="status_submit" value="submitted" class="btn btn--block">{{ 'submit'|trans|capitalize }}</button>
+ {% endif %}
+<button name="status" id="status_cancel" value="cancelled" class="btn btn--block btn--primary">{{ 'cancel'|trans|capitalize }}</button>

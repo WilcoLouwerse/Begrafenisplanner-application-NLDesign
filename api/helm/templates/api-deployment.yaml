@@ -1,37 +1,40 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "name" . }}-nginx
+  name: {{ .Values.settings.name }}-nginx
   labels:
-    app.kubernetes.io/name: {{ include "name" . }}-nginx
-    app.kubernetes.io/part-of: {{ include "name" . }}
+    app.kubernetes.io/name: {{ .Values.settings.name }}-nginx
+    app.kubernetes.io/part-of: {{ .Values.settings.name }}
     helm.sh/chart: {{ include "chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
+  selector:
+      matchLabels:
+          app.kubernetes.io/name: {{ .Values.settings.name }}-nginx
   replicas: 1
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "name" . }}-nginx
-        app.kubernetes.io/part-of: {{ include "name" . }}
+        app.kubernetes.io/name: {{ .Values.settings.name }}-nginx
+        app.kubernetes.io/part-of: {{ .Values.settings.name }}
         helm.sh/chart: {{ include "chart" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/managed-by: {{ .Release.Service }}
     spec:
       containers:
-        - name: {{ include "name" . }}-nginx
+        - name: {{ .Values.settings.name }}-nginx
           image: "{{ .Values.settings.registryBase }}/{{ .Values.settings.projectName }}-nginx:{{ .Values.settings.env }}"
           imagePullPolicy: {{ .Values.settings.pullPolicy }}
           ports:
             - containerPort: 80
           env:
             - name: PHP_SERVICE
-              value: {{ include "name" . }}-php
+              value: {{ .Values.settings.name }}-php
             - name: NGINX_HOST
-              value: {{ include "name" . }}-php
+              value: {{ .Values.settings.name }}-php
             - name: BACKENDS
-              value: {{ include "name" . }}-php
+              value: {{ .Values.settings.name }}-php
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

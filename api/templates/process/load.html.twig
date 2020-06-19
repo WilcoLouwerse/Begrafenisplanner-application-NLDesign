@@ -1,0 +1,262 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    {% if user is defined and user is not null %}
+    <section class="row">
+        <div class="col-md-12">
+            <div class="content">
+
+                <header class="content__header">
+                    <a class="backlink" href="{{ path('app_process_index') }}">Home</a>
+                    <header class="content__header">
+                        <h1 class="content__header-title">{{ process.name }}</h1>
+                    </header>
+                </header>
+            </div><!-- ./content -->
+        </div><!-- ./col -->
+    </section>
+    <div class="row">
+    <div class="col-md-8  col-sm-12">
+        <form method="post" action="{{ path('app_process_load',{id:process.id}) }}">
+        {% include 'widgets/processes/default.html.twig' %}
+        {% include 'widgets/processes/'~process.id~'.html.twig' %}
+    {% if stage is defined and stage.slug == 'indienen' %}
+    {% set slug = stage.slug %}
+    {% endif %}
+
+    {% if slug == 'indienen' %}
+        {% include 'widgets/zz/submit.html.twig' %}
+
+    {% elseif stage.sections is defined and stage.sections is not null %}
+
+        {% for section in stage.sections %}
+            <div class="content-background">
+                <div class="content">
+                    <h2>{{ section.name }}</h2>
+                    {% for property in section.properties %}
+                        {% set property = commonground_resource(property) %}
+                        {% if property.type == 'array' and property.format == 'bsn' %}
+                            {% include 'widgets/zz/person.html.twig' %}
+                        {% elseif property.format == 'bag' %}
+                            {% include 'widgets/zz/address.html.twig' %}
+                        {% elseif property.format == 'date' %}
+                            {% include 'widgets/zz/date.html.twig' %}
+                        {% elseif property.iri == 'wrc/organizations'%}
+                            {% include 'widgets/wrc/organizations.html.twig' %}
+                        {% elseif property.iri == 'grc/cemetery'%}
+                            {% include 'widgets/grc/cemetery.html.twig' %}
+                        {% elseif property.iri == 'grc/grave_type'%}
+                            {% include 'widgets/grc/grave_type.html.twig' %}
+                        {% elseif property.iri == 'arc/event'%}
+                            {% include 'widgets/arc/event.html.twig' %}
+                        {% elseif property.name == 'artikelen'%}
+                            {% include 'widgets/pdc/offer.html.twig' %}
+                        {% elseif property.iri == 'brp/ingeschrevenpersoon'%}
+                            {% include 'widgets/brp/ingeschreven_persoon.html.twig' %}
+                        {% elseif property.iri == 'irc/assent'%}
+                            {% include 'widgets/irc/assent.html.twig' %}
+                    {% endif %}
+                    {% endfor %}
+
+{#                    <a class="btn" href="{{ path('app_request_data') }}">Begin</a>#}
+
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+        {% endfor %}
+    {% endif %}
+            {% if slug != 'indienen' %}
+        <!-- Page Break -->
+        <div style="height: 20px;"></div>
+
+        <div class="col-md-4">
+            <button class="btn btn--block" name="submit">Opslaan</button>
+        </div><!-- /.col -->
+                {% endif %}
+            {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}
+            <div class="col-md-4">
+            <a class="btn btn--primary btn--block" href="{{ path('app_process_slug',{id: process.id, slug: stage.previous.slug}) }}">Terug naar {{ stage.previous.name }}</a>
+            </div>
+                {% endif %}
+        </form>
+    </div><!-- /.col -->
+
+        <div class="col-md-4  col-sm-12">
+            <div class="content-background">
+
+                <div class="content">
+                    <h2>Uw gegevens</h2>
+
+    				<ul class="definition-list">
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							 Voornamen
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.naam.voornamen }}</p>
+    						</div>
+    					</li>
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Achternaam
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.naam.geslachtsnaam }}</p>
+    						</div>
+    					</li>
+                        {% if user.naam.voorvoegsel is not empty%}
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Voorvoegsel
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.naam.voorvoegsel }}</p>
+    						</div>
+    					</li>
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Leeftijd
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.leeftijd }}</p>
+    						</div>
+    					</li>
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Geslacht
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.geslachtsaanduiding }}</p>
+    						</div>
+    					</li>
+    					{% endif %}
+    					<li class="definition-list__item definition-list__item--horizontal">
+    						<div class="definition-list__title">
+    							Adres
+    						</div>
+    						<div class="definition-list__description">
+    							<p>{{ user.verblijfplaats.straatnaam }} {{ user.verblijfplaats.huisnummer }}{{ user.verblijfplaats.huisletter }}{{ user.verblijfplaats.huisnummertoevoeging }}
+    							<br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}</p>
+    						</div>
+    					</li>
+    				</ul>
+                </div>
+            </div>
+
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+
+            <div class="content-background">
+                <div class="content">
+                    <h2>Stappen</h2>
+                 	<ul class="list list--timeline list--timeline-compact">
+                		<li class="list__item list__item">Instructie</li>
+                		{% for iteratedStage in process.stages %}
+                        <li class="list__item {% if stage.slug == iteratedStage.slug %}list__item--active{% endif %}"><a href="{{ path('app_process_slug',{id:process.id,slug:iteratedStage.slug}) }}">{{ iteratedStage.name }}</a></li>
+                        {% endfor %}
+                		<li class="list__item list__item--disabled" >In behandeling</li>
+                		<li class="list__item list__item--disabled">Uitsluitsel</li>
+                	</ul>
+                </div>
+            </div>
+
+            {% if request is defined and slug != 'indienen' %}
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+
+            <div class="content-background">
+                <div class="content">
+                    <h2>{{ process.name }}</h2>
+                    {% if request.properties is defined %}
+                        <ul class="definition-list">
+                        {% for key, property in request.properties%}
+                            {% if property is defined and property is not empty %}
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">
+                                        {{ key }}
+                                    </div>
+                                    <div class="definition-list__description">
+                                        <p>
+                                            {% if property is iterable %}
+                                                {% for key, value in property %}
+                                                    {{ value }}<br>
+                                                {% endfor %}
+                                            {% else %}
+                                                {% if commonground_is_resource(property) %}
+                                                    {% set property = commonground_resource(property) %}
+                                                    {% if property.naam.voornamen is defined and property.naam.geslachtsnaam is defined %}
+                                                        {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
+                                                    {% elseif property.reference is defined %}
+                                                        {{ property.reference }}
+                                                    {% elseif property.name is defined %}
+                                                        {{ property.name }}
+                                                    {% endif %}
+                                                {% else %}
+                                                    {{ property }}
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!--
+            <div class="content-background background--geel">
+                <div class="content">
+                    <button class="btn btn--primary">Primaire knop</button>
+                </div>
+            </div>
+
+
+            <div class="content-background background--donkergeel">
+                <div class="content">
+                	<button class="btn btn--primary">Primaire knop</button>
+
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+	{#
+<div class="row">
+        <div class="col-md-12">
+            <h2> Uitgelicht</h2>
+            <ul class="list list--card">
+                <li class="card">
+                    <a href="{{  path('app_challenge_index') }}" class="card__content">
+                        <div class="card__thumb" style="background-image: url('https://picsum.photos/id/1/200')"></div>
+                        <div class="card__body">
+                            <span class="card__title">Ik heb hulp nodig</span>
+                            Heeft u behoefte aan hulp? Bijvoorbeeld omdat u geen eten meer in huis heeft, of ergens niet uit komt? <br><br> Lees hier hoe u aan hulp kan komen.
+                        </div>
+                    </a>
+                </li>
+                <li class="card">
+                    <a href="{{   path('app_pitch_index') }}" class="card__content">
+                        <div class="card__thumb" style="background-image: url('https://picsum.photos/id/1/200')"></div>
+                        <div class="card__body">
+                        	<span class="card__title">Ik wil helpen</span>
+                        	Wilt u hulp aanbieden aan uw buren of gemeenschap? Bijvoorbeeld omdat u beschikt over bepaalde vaardigheden of inventaris. <br><br>Lees hier hoe u dat kenbaar kan maken.
+                        </div>
+                    </a>
+                </li>
+                <li class="card">
+                    <a href="{{ path('app_news_index') }}" class="card__content">
+                        <div class="card__thumb" style="background-image: url('https://picsum.photos/id/1/200')"></div>
+                        <div class="card__body">
+                        	<span class="card__title">Ik denk dat ik Corona heb</span>
+                        	Vermoedt u dat u zelf besmet bent met het corona virus? <br><br><br>  Lees dan hier wat u moet doen
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div> <!-- /.col -->
+    </div> <!-- /.col -->
+    #}
+{% endif %}
+{% endblock %}
