@@ -16,7 +16,7 @@ settings:
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: westfriesland.commonground.nu
   subdomain: bpui
-  organisationName: Conductionz
+  organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
   state: Noord-Holland
@@ -27,7 +27,7 @@ settings:
   cache: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^localhost$|^127.0.0.1$|^(.+\.)?conduction\.nl$|^(.+\.)zaakonline.nl$'
+  trustedHosts: '^.+$'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:
