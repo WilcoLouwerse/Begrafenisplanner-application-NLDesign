@@ -103,8 +103,9 @@ class ProcessController extends AbstractController
 
                     $variables['stage'] = $stage;
                 }
-                if(!key_exists('stage',$variables))
+                if(!key_exists('stage',$variables)){
                     $variables['stage']['slug'] = $slug;
+                }
             }
         }
         else{

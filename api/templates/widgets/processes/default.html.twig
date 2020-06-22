@@ -1,7 +1,7 @@
 <input type="hidden" name="submitters[0][brp]" value="{{ user['@id'] }}">
 <input type="hidden" name="requestType" value="{{ process.requestType }}">
 <input type="hidden" name="status" value="incomplete">
-<input type="hidden" name="organization" value="https://wrc.processen.zaakonline.nl/organizations/f7622fa0-ce98-45c0-8942-407f3ac2c2f3">
+<input type="hidden" name="organization" value="{{ commonground_resource(process.requestType)['organization'] }}">
 <input type="hidden" name="processType" value="{{ process['@id'] }}">
 {% if stage.next is defined and stage.next is not null and stage.next != false %}
     <input type="hidden" name="currentStage" value="{{ stage.next['@id'] }}">

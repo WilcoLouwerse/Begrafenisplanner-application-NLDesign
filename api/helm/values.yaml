@@ -27,7 +27,7 @@ settings:
   cache: 1
   replicaCount: 1
   corsAllowOrigin: ['*']
-  trustedHosts: '^localhost$|^127.0.0.1$|^(.+\.)?conduction\.nl$|^(.+\.)zaakonline.nl$'
+  trustedHosts: '^.+$'
   pullPolicy: Always
   # You will need these proxies on kubernetes
   trustedProxies:

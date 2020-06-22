@@ -35,7 +35,9 @@
 {% elseif property.type == 'string' %}
     {% if process.name == "Begraven" %}
         {% set begraafplaats = commonground_resource(request.properties.begraafplaats) %}
-        {% set group = commonground_resource(begraafplaats.graveTypes) %}
+        {% if begraafplaats.graveTypes is defined and begraafplaats.graveTypes is not empty %}
+            {% set group = commonground_resource(begraafplaats.graveTypes) %}
+        {% endif %}
     {% endif %}
 
     {% if group is defined and group is not empty %}
@@ -79,4 +81,9 @@
     {% endif %}
 {% else %}
     <p>Dit werkt nog niet voor het process {{ process.name }} met property {{ property.name }}.</p>
+    <p>Of er is geen product groep voor {{ property.name }} aanwezig
+        {% if process.name == "Begraven" %}
+            bij deze begraafplaats
+        {% endif %}
+        .</p>
 {% endif %}
