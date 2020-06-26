@@ -149,6 +149,13 @@
 
         <input hidden="" id="selectedIngeschrevenpersoon" name="properties[{{ property.name }}]">
 
+        {% if selectedPersoon is defined %}
+            <script>
+                var selectedIngeschrevenpersoon = document.getElementById("selectedIngeschrevenpersoon");
+                selectedIngeschrevenpersoon.value = '{{ request.properties.overledene }}'; {# TODO: this needs to be selectedPersoon['@id'] to be abstract, but this is currently not possible #}
+            </script>
+        {% endif %}
+
         {#
                 <form class="form" method="post" action="#">
                     <div class="input">
