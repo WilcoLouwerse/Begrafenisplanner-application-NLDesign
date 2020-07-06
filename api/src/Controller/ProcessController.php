@@ -120,7 +120,6 @@ class ProcessController extends AbstractController
 
         return $variables;
     }
-
 }
 
 
